@@ -1,10 +1,17 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/home";
+import GeneralNavigation from "./components/Navigation/generalNavigation";
+import RequestForm from "./pages/requestForm";
 
 function App() {
   return (
     <BrowserRouter>
-      <div>hello world</div>
+      <GeneralNavigation />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/new" element={<RequestForm />} />
+      </Routes>
     </BrowserRouter>
   );
 }

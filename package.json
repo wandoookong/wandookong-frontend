@@ -138,5 +138,8 @@
       "jest-watch-typeahead/testname"
     ],
     "resetMocks": true
+  },
+  "devDependencies": {
+    "react-responsive": "^9.0.0-beta.8"
   }
 }
