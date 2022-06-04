@@ -5,7 +5,7 @@ export default function GeneralNavigation() {
   return (
     <>
       <div>완두콩</div>
-      <Link to="/new">완두콩 만들기</Link>
+      <Link to="/request">완두콩 만들기</Link>
       <div>로그인</div>
     </>
   );

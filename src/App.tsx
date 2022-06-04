@@ -10,7 +10,7 @@ function App() {
       <GeneralNavigation />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/new" element={<RequestForm />} />
+        <Route path="/request" element={<RequestForm />} />
       </Routes>
     </BrowserRouter>
   );

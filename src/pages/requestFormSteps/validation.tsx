@@ -1,26 +1,25 @@
 import React from "react";
-import { isEmpty } from "../../@types/utility/typeGuard";
 
-export const categoryValidation = () => {
-  return isEmpty(formInfos.category);
+const required = (value: string) => {
+  return value.length > 0;
 };
 
-export const categoryValidates = {
-  validation: categoryValidation,
+const categoryValidates = {
+  validation: required,
   errorMessage: "카테고리를 선택하세요.",
 };
 
 export const onChangeCategory = (e) => {
-  const value = e.currentTarget.value as HTMLInputElement
-  return { ...formInfos, category: value };
+  const value = e.currentTarget.value as HTMLInputElement;
+  return { category: value };
 };
 
-export const onNextStep = () => {
-  let result = "a";
-  const isValid = categoryValidates.validation();
+export const onNextStepValidation = (data) => {
+  let result = "";
+  const isValid = categoryValidates.validation(data);
   if (!isValid) {
-    console.log(isValid);
-    return (result = categoryValidates.errorMessage);
+    result = categoryValidates.errorMessage;
+    return result;
   }
   return result;
 };

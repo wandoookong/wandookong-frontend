@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import MediaQuery from "react-responsive";
 import BackNavigation from "../components/Navigation/backNavigation";
-import { isEmpty } from "../@types/utility/typeGuard";
 import CategoryStep from "./requestFormSteps/categoryStep";
 
 export default function RequestForm() {
   const [step, setStep] = useState(1);
+  const stepController = { step, setStep };
   const [formInfos, setFormInfos] = useState({
     category: "",
     title: "",
@@ -16,6 +16,7 @@ export default function RequestForm() {
 
   useEffect(() => {
     console.log(formInfos);
+    console.log(step);
   }, [formInfos]);
 
   const onNext = () => {
@@ -32,7 +33,7 @@ export default function RequestForm() {
     <div>
       <MediaQuery maxWidth={360}>
         <BackNavigation />
-        {step === 1 && <CategoryStep formInfos={formInfos} setStep={setStep} />}
+        {step === 1 && <CategoryStep formInfos={formInfos} setForm={setFormInfos} stepController={stepController} />}
         {step === 2 && (
           <div>
             <h1>완두콩을 잘 설명할 수 있는 제목을 알려주세요.</h1>
