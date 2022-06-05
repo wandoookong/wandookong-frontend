@@ -1,8 +1,5 @@
 import React from "react";
-
-const required = (value: string) => {
-  return value.length > 0;
-};
+import { required } from "../../@types/utility/typeGuard";
 
 const categoryValidates = {
   validation: required,
@@ -14,9 +11,9 @@ export const onChangeCategory = (e) => {
   return { category: value };
 };
 
-export const onNextStepValidation = (data) => {
-  let result = "";
-  const isValid = categoryValidates.validation(data);
+export const categoryValidation = (value) => {
+  let result: string = "";
+  const isValid: boolean = categoryValidates.validation(value);
   if (!isValid) {
     result = categoryValidates.errorMessage;
     return result;

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { isEmpty } from "../../@types/utility/typeGuard";
-import { onChangeCategory, onNextStepValidation } from "./validation";
+import { onChangeCategory, categoryValidation } from "./validation";
+import Button from "../../components/Form/button";
+import { Header } from "../../components/Form/header";
 
 export default function CategoryStep({ formInfos, stepController, setForm }) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -11,14 +13,10 @@ export default function CategoryStep({ formInfos, stepController, setForm }) {
   };
 
   const onNext = () => {
-    const categoryErrorMessage = onNextStepValidation(formInfos.category);
+    const categoryErrorMessage = categoryValidation(formInfos.category);
     setErrorMessage(categoryErrorMessage);
-    next(errorMessage);
-  };
-
-  const next = (value) => {
-    if (value.length === 0) {
-      return stepController.setStep(stepController.step + 1);
+    if (!isEmpty(formInfos.category)) {
+      stepController.setStep(stepController.step + 1);
     }
   };
 
@@ -29,18 +27,33 @@ export default function CategoryStep({ formInfos, stepController, setForm }) {
   }, [formInfos.category]);
 
   return (
-    <div>
-      <h1>카테고리 선택</h1>
+    <>
+      <Header />
       <label>
-        <input type="radio" name="category" value="portfolio" onChange={onChange} />
+        <input
+          type="radio"
+          name="category"
+          value="portfolio"
+          checked={formInfos.category === "portfolio" ? true : false}
+          onChange={onChange}
+        />
         포트폴리오
+        <p>간단한 설명이 들어갑니다.</p>
       </label>
       <label>
-        <input type="radio" name="category" value="side-project" onChange={onChange} />
+        <input
+          type="radio"
+          name="category"
+          value="side-project"
+          checked={formInfos.category === "side-project" ? true : false}
+          onChange={onChange}
+        />
         사이드프로젝트
+        <p>간단한 설명이 들어갑니다.</p>
       </label>
       {!isEmpty(errorMessage) && <p>{errorMessage}</p>}
       <button onClick={onNext}>다음</button>
-    </div>
+      <Button />
+    </>
   );
 }

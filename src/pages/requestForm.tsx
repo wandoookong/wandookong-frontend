@@ -16,7 +16,6 @@ export default function RequestForm() {
 
   useEffect(() => {
     console.log(formInfos);
-    console.log(step);
   }, [formInfos]);
 
   const onNext = () => {
