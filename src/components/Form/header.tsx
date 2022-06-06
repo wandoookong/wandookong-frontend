@@ -1,13 +1,14 @@
 import styled from "@emotion/styled";
 
-export function Header() {
+export function Header({ title }) {
   const Wrap = styled.div`
     display: block;
     width: 100%;
     height: auto;
-    padding: 0 0 12px 0;
+    padding: 0 0 24px 0;
     background: #ffffff;
   `;
+
   const Header = styled.h1`
     margin: 0;
     font-size: 30px;
@@ -17,9 +18,37 @@ export function Header() {
 
   return (
     <Wrap>
-      <Header>
-        어떤 완두콩을 <br /> 만들고 싶으신가요?
-      </Header>
+      <Header>{title}</Header>
+    </Wrap>
+  );
+}
+
+export function HeaderSubText({ title, subText }) {
+  const Wrap = styled.div`
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: 24px;
+    background: #ffffff;
+  `;
+
+  const Header = styled.h1`
+    margin: 0 0 8px 0;
+    font-size: 30px;
+    line-height: 1.5;
+    white-space: pre-line;
+  `;
+
+  const SubText = styled.p`
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+  `;
+
+  return (
+    <Wrap>
+      <Header>{title}</Header>
+      <SubText>{subText}</SubText>
     </Wrap>
   );
 }
