@@ -37,7 +37,7 @@ export default function Chrun({ setModal }) {
     <Dim onClick={onClick}>
       <Box>
         <Title>
-          <b>완두콩이 거의 다 완료되었어요!</b> <br />
+          <b>완두콩 작성이 거의 다 완료되었어요!</b> <br />
           지금 돌아가면 작성 사항이 모두 삭제됩니다. 작성한 내용을 삭제하시겠습니까?
         </Title>
         <button onClick={onClick}>닫기</button>

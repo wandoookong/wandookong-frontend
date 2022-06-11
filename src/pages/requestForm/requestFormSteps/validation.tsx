@@ -50,3 +50,18 @@ export const myRoleValidation = (value) => {
   }
   return result;
 };
+
+const roles = {
+  validation: required,
+  errorMessage: "1개 이상의 포지션을 선택하세요.",
+};
+
+export const rolesValidation = (value) => {
+  let result: string = "";
+  const isValid: boolean = roles.validation(value);
+  if (!isValid) {
+    result = roles.errorMessage;
+    return result;
+  }
+  return result;
+};

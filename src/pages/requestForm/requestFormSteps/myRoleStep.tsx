@@ -5,13 +5,18 @@ import { DoubleButton } from "../../../components/Form/button";
 import { Header } from "../../../components/Form/header";
 import ErrorMessage from "../../../components/Form/errorMessage";
 import { CircleRadioButton } from "../../../components/Form/radioButton";
+import { roleData } from "./roleData";
 
-export default function MyPositionStep({ formInfos, stepController, setForm: setFormInfos }) {
+export default function MyRoleStep({ formInfos, stepController, setForm: setFormInfos }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onChange = (e) => {
     const myRole = onChangeRequestInfos(e);
     setFormInfos({ ...formInfos, myRole });
+    if (formInfos.roles.includes(myRole)) {
+      const rolesList = formInfos.roles.filter((role) => role !== myRole);
+      setFormInfos({ ...formInfos, roles: [...rolesList] });
+    }
   };
 
   const onNextStep = () => {
@@ -32,20 +37,12 @@ export default function MyPositionStep({ formInfos, stepController, setForm: set
     }
   }, [formInfos.myRole]);
 
-  const roleData = [
-    { key: 1, label: "앱 개발자", value: "app" },
-    { key: 2, label: "웹 프론트", value: "web_front" },
-    { key: 3, label: "백엔드 개발자", value: "back_end" },
-    { key: 4, label: "UX/UI 디자이너", value: "ux_ui" },
-    { key: 5, label: "서비스 기획자", value: "pm" },
-  ];
-
   return (
     <>
       <Header title="아이린님의 포지션은 무엇인가요?" />
       {roleData.map((role) => (
         <CircleRadioButton
-          key={role.key}
+          key={role.id}
           label={role.label}
           value={role.value}
           checked={formInfos.myRole === role.value ? true : false}

@@ -77,6 +77,7 @@ export function CircleRadioButton({ label, value, checked, ...rest }) {
   const Label = styled.label`
     display: inline-block;
     margin-right: 24px;
+    white-space: pre-line;
 
     ${() => {
       if (!checked) {
@@ -118,6 +119,69 @@ export function CircleRadioButton({ label, value, checked, ...rest }) {
     <Label>
       <Image />
       <Input type="radio" name="myRole" value={value} checked={checked} {...rest} />
+      {label}
+    </Label>
+  );
+}
+
+export function CircleCheckbox({ label, value, checked, disabled, ...rest }) {
+  const Label = styled.label`
+    display: inline-block;
+    margin-right: 24px;
+    white-space: pre-line;
+    ${() => {
+      if (!checked) {
+        return css`
+          color: #999;
+        `;
+      }
+      return css`
+        font-weight: 500;
+        color: #3ed209;
+      `;
+    }}
+    ${() => {
+      if (disabled) {
+        return css`
+          color: #ddd;
+        `;
+      }
+    }}
+  `;
+
+  const Image = styled.div`
+    width: 52px;
+    height: 52px;
+    margin: 0 0 12px 0;
+    border: 0;
+    border-radius: 50px;
+    ${() => {
+      if (disabled) {
+        return css`
+          background: rgba(0, 0, 0, 0.05);
+        `;
+      }
+    }}
+    ${() => {
+      if (!checked) {
+        return css`
+          background: #eee;
+        `;
+      }
+      return css`
+        background: #3ed209;
+      `;
+    }}
+  `;
+
+  const Input = styled.input`
+    display: none;
+  `;
+
+  return (
+    <Label>
+      <Image />
+      <Input type="checkbox" name="roles" value={value} checked={checked} disabled={disabled} {...rest} />
       {label}
     </Label>
   );
