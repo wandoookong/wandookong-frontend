@@ -12,11 +12,12 @@ export default function MyRoleStep({ formInfos, stepController, setForm: setForm
 
   const onChange = (e) => {
     const myRole = onChangeRequestInfos(e);
-    setFormInfos({ ...formInfos, myRole });
-    if (formInfos.roles.includes(myRole)) {
-      const rolesList = formInfos.roles.filter((role) => role !== myRole);
-      setFormInfos({ ...formInfos, roles: [...rolesList] });
+    if (formInfos.members[myRole] === 1) {
+      setFormInfos({ ...formInfos, myRole, members: { ...formInfos.members, [myRole]: 0 } });
+      return;
     }
+    setFormInfos({ ...formInfos, myRole });
+    return;
   };
 
   const onNextStep = () => {

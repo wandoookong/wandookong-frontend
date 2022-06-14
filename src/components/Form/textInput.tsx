@@ -16,6 +16,7 @@ const Input = styled.input`
     outline: none;
     border-bottom: 2px solid #000;
   `;
+
 export function TextInput({ value, ...rest }) {
   const LengthInfo = styled.p`
     margin: 0;

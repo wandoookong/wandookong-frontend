@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
 import Chrun from "../../pages/requestForm/requestFormSteps/churn";
+import HomeIcon from "@mui/icons-material/home";
 
 export function Navigation({ step, formInfos }) {
   const [modal, setModal] = useState(false);
@@ -32,7 +33,7 @@ export function Navigation({ step, formInfos }) {
       border-radius: 20px;
     }
     ::-webkit-progress-value {
-      background-color: #41df09;
+      background-color: #47b561;
       border-radius: 20px;
     }
     // animation: progress 1.5s ease-in-out;
@@ -51,6 +52,7 @@ export function Navigation({ step, formInfos }) {
       {modal && <Chrun setModal={setModal} />}
       <Wrap>
         <Content onClick={onClick}>&lt;</Content>
+        <HomeIcon />
         <ProgressBar value={value} max="100" />
       </Wrap>
     </>

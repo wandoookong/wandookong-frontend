@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { isEmpty } from "../../../@types/utility/typeGuard";
-import { myRoleValidation, onChangeRequestInfos, rolesValidation } from "./validation";
+import { myRoleValidation, onChangeRequestInfos, roles, rolesValidation } from "./validation";
 import { DoubleButton } from "../../../components/Form/button";
 import { Header } from "../../../components/Form/header";
 import ErrorMessage from "../../../components/Form/errorMessage";
@@ -14,19 +14,18 @@ export default function RolesStep({ formInfos, stepController, setForm: setFormI
     const value = onChangeRequestInfos(e);
     if (!e.target.disabled) {
       if (e.target.checked) {
-        setFormInfos({ ...formInfos, roles: [...formInfos.roles, value] });
+        setFormInfos({ ...formInfos, members: { ...formInfos.members, [value]: 1 } });
       } else if (!e.target.checked) {
-        const rolesList = formInfos.roles.filter((role) => role !== value);
-        setFormInfos({ ...formInfos, roles: [...rolesList] });
+        setFormInfos({ ...formInfos, members: { ...formInfos.members, [value]: 0 } });
       }
     }
     return;
   };
 
   const onNextStep = () => {
-    const rolesErrorMessage = rolesValidation(formInfos.roles);
+    const rolesErrorMessage = rolesValidation(formInfos.members);
     setErrorMessage(rolesErrorMessage);
-    if (!isEmpty(formInfos.roles)) {
+    if (roles.validation(formInfos.members)) {
       stepController.setStep(stepController.step + 1);
     }
   };
@@ -36,11 +35,10 @@ export default function RolesStep({ formInfos, stepController, setForm: setFormI
   };
 
   useEffect(() => {
-    if (!isEmpty(formInfos.roles)) {
+    if (!isEmpty(formInfos.members)) {
       setErrorMessage("");
     }
-  }, [formInfos.roles]);
-
+  }, [formInfos.members]);
   return (
     <>
       <Header title="함께 하고 싶은 콩을 선택해주세요" />
@@ -49,9 +47,9 @@ export default function RolesStep({ formInfos, stepController, setForm: setFormI
           key={role.id}
           label={role.label}
           value={role.value}
-          checked={formInfos.roles.includes(role.value) ? true : false}
+          checked={formInfos.members[role.value] === 1 ? true : false}
           onChange={onChange}
-          disabled={role.value == formInfos.myRole ? true : false}
+          disabled={formInfos.myRole === role.value ? true : false}
         />
       ))}
       {!isEmpty(errorMessage) && <ErrorMessage text={errorMessage} />}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { isEmpty } from "../../../@types/utility/typeGuard";
 import { DoubleButton } from "../../../components/Form/button";
-import { HeaderSubText } from "../../../components/Form/header";
+import { Header } from "../../../components/Form/header";
 import ErrorMessage from "../../../components/Form/errorMessage";
 import { TextInput } from "../../../components/Form/textInput";
 import { onChangeRequestInfos, titleValidation } from "./validation";
@@ -34,7 +34,7 @@ export default function TitleStep({ formInfos, stepController, setForm }) {
 
   return (
     <>
-      <HeaderSubText title={`아이린님의 완두콩 제목을 알려주세요!`} subText="간단한 설명이 들어갑니다." />
+      <Header title={`아이린님의 완두콩 제목을 알려주세요!`} />
       <TextInput placeholder="예) 완두콩 프로젝트 팀원 모집" value={formInfos.title} onChange={onChange} />
       {!isEmpty(errorMessage) && <ErrorMessage text={errorMessage} />}
       <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevStep} onNextStep={onNextStep} />

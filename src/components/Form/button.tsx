@@ -10,8 +10,8 @@ export function SingleButton({ label, onClick }) {
     height: 52px;
     border-radius: 12px;
     border: 0;
-    background: #41df09;
-    box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.1);
+    background: #47b561;
+    // box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.1);
     font-size: 16px;
     font-weight: bold;
     color: #ffffff;
@@ -33,14 +33,14 @@ export function DoubleButton({ prevLabel, nextLabel, onPrevStep, onNextStep }) {
     flex: 1;
     width: 100%;
     height: 52px;
-    margin-right: 8px;
+    margin-right: 18px;
     border-radius: 12px;
-    border: 0;
-    background: #ccc;
-    box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ccc;
+    background: #fff;
+    // box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.1);
     font-size: 16px;
     font-weight: bold;
-    color: #ffffff;
+    color: #999;
   `;
 
   const NextButton = styled.button`
@@ -49,8 +49,8 @@ export function DoubleButton({ prevLabel, nextLabel, onPrevStep, onNextStep }) {
     height: 52px;
     border-radius: 12px;
     border: 0;
-    background: #41df09;
-    box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.1);
+    background: #47b561;
+    // box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.1);
     font-size: 16px;
     font-weight: bold;
     color: #ffffff;

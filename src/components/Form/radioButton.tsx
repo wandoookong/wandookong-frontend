@@ -20,7 +20,7 @@ export function RadioButton({ label, description, checked, ...rest }) {
       }
       return css`
         background: #fff;
-        border: 2px solid #41df09;
+        border: 2px solid #47b561;
       `;
     }}
   `;
@@ -36,7 +36,7 @@ export function RadioButton({ label, description, checked, ...rest }) {
         `;
       }
       return css`
-        color: #3ed209;
+        color: #47b561;
       `;
     }}
   `;
@@ -57,7 +57,7 @@ export function RadioButton({ label, description, checked, ...rest }) {
         `;
       }
       return css`
-        color: #3ed209;
+        color: #47b561;
       `;
     }}
   `;
@@ -87,7 +87,7 @@ export function CircleRadioButton({ label, value, checked, ...rest }) {
       }
       return css`
         font-weight: 500;
-        color: #3ed209;
+        color: #47b561;
       `;
     }}
   `;
@@ -106,7 +106,7 @@ export function CircleRadioButton({ label, value, checked, ...rest }) {
         `;
       }
       return css`
-        background: #3ed209;
+        background: #47b561;
       `;
     }}
   `;
@@ -137,7 +137,7 @@ export function CircleCheckbox({ label, value, checked, disabled, ...rest }) {
       }
       return css`
         font-weight: 500;
-        color: #3ed209;
+        color: #47b561;
       `;
     }}
     ${() => {
@@ -169,7 +169,7 @@ export function CircleCheckbox({ label, value, checked, disabled, ...rest }) {
         `;
       }
       return css`
-        background: #3ed209;
+        background: #47b561;
       `;
     }}
   `;
