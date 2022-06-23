@@ -1,57 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { isEmpty } from "../../../@types/utility/typeGuard";
-import { myRoleValidation, onChangeRequestInfos } from "./validation";
+import { myRoleValidation } from "./validation";
 import { DoubleButton } from "../../../components/Form/button";
 import { Header } from "../../../components/Form/header";
 import ErrorMessage from "../../../components/Form/errorMessage";
 import { CircleRadioButton } from "../../../components/Form/radioButton";
 import { roleData } from "./roleData";
+import { useRequestFormReducer } from "../hooks/useRequestFormReducer";
 
-export default function MyRoleStep({ formInfos, stepController, setForm: setFormInfos }) {
+interface Props {
+  onPrevious(): void;
+  onNext(): void;
+}
+
+export default function MyRoleStep({ onNext, onPrevious }: Props) {
+  const { state, onChangeRole } = useRequestFormReducer();
   const [errorMessage, setErrorMessage] = useState("");
 
-  const onChange = (e) => {
-    const myRole = onChangeRequestInfos(e);
-    if (formInfos.members[myRole] === 1) {
-      setFormInfos({ ...formInfos, myRole, members: { ...formInfos.members, [myRole]: 0 } });
-      return;
-    }
-    setFormInfos({ ...formInfos, myRole });
-    return;
-  };
-
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => onChangeRole(e.currentTarget.value as Role);
   const onNextStep = () => {
-    const myRoleErrorMessage = myRoleValidation(formInfos.myRole);
+    const myRoleErrorMessage = myRoleValidation(state.myRole);
     setErrorMessage(myRoleErrorMessage);
-    if (!isEmpty(formInfos.myRole)) {
-      stepController.setStep(stepController.step + 1);
+    if (!isEmpty(state.myRole)) {
+      onNext();
     }
-  };
-
-  const onPrevStep = () => {
-    stepController.setStep(stepController.step - 1);
   };
 
   useEffect(() => {
-    if (!isEmpty(formInfos.myRole)) {
+    if (!isEmpty(state.myRole)) {
       setErrorMessage("");
     }
-  }, [formInfos.myRole]);
+  }, [state.myRole]);
 
   return (
     <>
-      <Header title="아이린님의 포지션은 무엇인가요?" />
+      <Header title={`아이린님의 포지션은 \n 무엇인가요?`} />
       {roleData.map((role) => (
         <CircleRadioButton
           key={role.id}
           label={role.label}
           value={role.value}
-          checked={formInfos.myRole === role.value ? true : false}
+          checked={state.myRole === role.value}
           onChange={onChange}
         />
       ))}
       {!isEmpty(errorMessage) && <ErrorMessage text={errorMessage} />}
-      <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevStep} onNextStep={onNextStep} />
+      <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </>
   );
 }

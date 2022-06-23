@@ -76,7 +76,10 @@ export function RadioButton({ label, description, checked, ...rest }) {
 export function CircleRadioButton({ label, value, checked, ...rest }) {
   const Label = styled.label`
     display: inline-block;
-    margin-right: 24px;
+    margin: 0 20px 20px 0;
+    padding: 0;
+    width: 60px;
+    text-align: center;
     white-space: pre-line;
 
     ${() => {
@@ -95,7 +98,8 @@ export function CircleRadioButton({ label, value, checked, ...rest }) {
   const Image = styled.div`
     width: 52px;
     height: 52px;
-    margin: 0 0 12px 0;
+    margin-bottom: 12px;
+    padding: 0;
     border: 0;
     border-radius: 50px;
 
@@ -127,8 +131,12 @@ export function CircleRadioButton({ label, value, checked, ...rest }) {
 export function CircleCheckbox({ label, value, checked, disabled, ...rest }) {
   const Label = styled.label`
     display: inline-block;
-    margin-right: 24px;
+    margin: 0 20px 20px 0;
+    padding: 0;
+    width: 60px;
+    text-align: center;
     white-space: pre-line;
+
     ${() => {
       if (!checked) {
         return css`
@@ -155,6 +163,7 @@ export function CircleCheckbox({ label, value, checked, disabled, ...rest }) {
     margin: 0 0 12px 0;
     border: 0;
     border-radius: 50px;
+
     ${() => {
       if (disabled) {
         return css`
