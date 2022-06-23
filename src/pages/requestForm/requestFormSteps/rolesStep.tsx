@@ -1,59 +1,54 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { isEmpty } from "../../../@types/utility/typeGuard";
-import { myRoleValidation, onChangeRequestInfos, roles, rolesValidation } from "./validation";
+import { roles, rolesValidation } from "./validation";
 import { DoubleButton } from "../../../components/Form/button";
 import { Header } from "../../../components/Form/header";
 import ErrorMessage from "../../../components/Form/errorMessage";
-import { CircleCheckbox, CircleRadioButton } from "../../../components/Form/radioButton";
+import { CircleCheckbox } from "../../../components/Form/radioButton";
 import { roleData } from "./roleData";
+import { useRequestFormReducer } from "../hooks/useRequestFormReducer";
 
-export default function RolesStep({ formInfos, stepController, setForm: setFormInfos }) {
+interface Props {
+  onPrevious(): void;
+  onNext(): void;
+}
+
+export default function RolesStep({ onNext, onPrevious }: Props) {
+  const { state, onChangeMembers } = useRequestFormReducer();
   const [errorMessage, setErrorMessage] = useState("");
 
-  const onChange = (e) => {
-    const value = onChangeRequestInfos(e);
-    if (!e.target.disabled) {
-      if (e.target.checked) {
-        setFormInfos({ ...formInfos, members: { ...formInfos.members, [value]: 1 } });
-      } else if (!e.target.checked) {
-        setFormInfos({ ...formInfos, members: { ...formInfos.members, [value]: 0 } });
-      }
-    }
-    return;
-  };
+  const onChange = (e: ChangeEvent<HTMLInputElement>) =>
+    onChangeMembers(e.currentTarget.value as keyof AcceptableMembers);
 
   const onNextStep = () => {
-    const rolesErrorMessage = rolesValidation(formInfos.members);
+    const rolesErrorMessage = rolesValidation(state.members);
     setErrorMessage(rolesErrorMessage);
-    if (roles.validation(formInfos.members)) {
-      stepController.setStep(stepController.step + 1);
+    if (roles.validation(state.members)) {
+      onNext();
     }
-  };
-
-  const onPrevStep = () => {
-    stepController.setStep(stepController.step - 1);
   };
 
   useEffect(() => {
-    if (!isEmpty(formInfos.members)) {
+    if (!isEmpty(state.members)) {
       setErrorMessage("");
     }
-  }, [formInfos.members]);
+  }, [state.members]);
+
   return (
     <>
-      <Header title="함께 하고 싶은 콩을 선택해주세요" />
+      <Header title={`함께 하고 싶은 콩을 \n 선택해주세요`} />
       {roleData.map((role) => (
         <CircleCheckbox
           key={role.id}
           label={role.label}
           value={role.value}
-          checked={formInfos.members[role.value] === 1 ? true : false}
+          checked={state.members[role.value] === 1}
           onChange={onChange}
-          disabled={formInfos.myRole === role.value ? true : false}
+          disabled={state.myRole === role.value}
         />
       ))}
       {!isEmpty(errorMessage) && <ErrorMessage text={errorMessage} />}
-      <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevStep} onNextStep={onNextStep} />
+      <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </>
   );
 }

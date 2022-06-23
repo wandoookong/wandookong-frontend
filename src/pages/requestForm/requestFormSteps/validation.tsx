@@ -72,14 +72,29 @@ export const rolesValidation = (value) => {
 
 const description = {
   validation: required,
-  errorMessage: "설명을 작성해주세요",
+  errorMessage: "완두콩 설명을 작성하세요.",
 };
 
 export const descriptionValidation = (value) => {
   let result: string = "";
-  const isValid: boolean = roles.validation(value);
+  const isValid: boolean = description.validation(value);
   if (!isValid) {
     result = description.errorMessage;
+    return result;
+  }
+  return result;
+};
+
+const contact = {
+  validation: required,
+  errorMessage: "연락 정보를 입력하세요.",
+};
+
+export const contactValidation = (value) => {
+  let result: string = "";
+  const isValid: boolean = contact.validation(value);
+  if (!isValid) {
+    result = contact.errorMessage;
     return result;
   }
   return result;

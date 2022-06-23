@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { ModalButton } from "../../../components/Form/button";
 
 export default function Chrun({ setModal }) {
   const Dim = styled.div`
@@ -27,6 +28,7 @@ export default function Chrun({ setModal }) {
   const Title = styled.p`
     margin: 0;
     padding: 0;
+    font-size: 16px;
   `;
 
   const onClick = () => {
@@ -38,9 +40,9 @@ export default function Chrun({ setModal }) {
       <Box>
         <Title>
           <b>완두콩 작성이 거의 다 완료되었어요!</b> <br />
-          지금 돌아가면 작성 사항이 모두 삭제됩니다. 작성한 내용을 삭제하시겠습니까?
+          <span>지금 돌아가면 작성 사항이 모두 삭제됩니다. 작성한 내용을 삭제하시겠습니까?</span>
         </Title>
-        <button onClick={onClick}>닫기</button>
+        <ModalButton label="닫기" onClick={onClick} />
       </Box>
     </Dim>
   );

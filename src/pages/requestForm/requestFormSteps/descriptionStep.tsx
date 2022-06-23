@@ -1,28 +1,48 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { DoubleButton } from "../../../components/Form/button";
-import { descriptionValidation, rolesValidation } from "./validation";
+import { descriptionValidation } from "./validation";
 import { isEmpty } from "../../../@types/utility/typeGuard";
+import { Header } from "../../../components/Form/header";
+import ErrorMessage from "../../../components/Form/errorMessage";
+import { TextArea } from "../../../components/Form/textInput";
+import { useRequestFormReducer } from "../hooks/useRequestFormReducer";
 
-export default function DescriptionStep({ formInfos, stepController, setForm: setFormInfos }) {
+interface Props {
+  onPrevious(): void;
+  onNext(): void;
+}
+
+export default function DescriptionStep({ onNext, onPrevious }: Props) {
+  const { state, onChangeDescription } = useRequestFormReducer();
   const [errorMessage, setErrorMessage] = useState("");
 
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => onChangeDescription(e.currentTarget.value);
+
   const onNextStep = () => {
-    // const descriptionErrorMessage = descriptionValidation(formInfos.description);
-    // setErrorMessage(descriptionErrorMessage);
-    // if (!isEmpty(formInfos.description)) {
-    //   stepController.setStep(stepController.step + 1);
-    // }
+    const descriptionErrorMessage = descriptionValidation(state.description);
+    setErrorMessage(descriptionErrorMessage);
+    if (!isEmpty(state.description)) {
+      onNext();
+    }
   };
 
-  const onPrevStep = () => {
-    stepController.setStep(stepController.step - 1);
-  };
+  useEffect(() => {
+    if (!isEmpty(state.description)) {
+      setErrorMessage("");
+    }
+  }, [state.description]);
 
   return (
     <div>
-      <h1>완두콩을 잘 설명할 수 있는 제목을 알려주세요.</h1>
-      <textarea placeholder="어떤 콩들을 필요로 하시나요?" />
-      <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevStep} onNextStep={onNextStep} />
+      <Header title={`완두콩에 대해 \n 조금 더 알려주시겠어요?`} />
+      {/*TODO textarea style 작성*/}
+      <TextArea
+        placeholder="완두콩의 목표, 팀 문화, 자격요건 등 자유롭게 작성해주세요! "
+        onChange={onChange}
+        value={state.description}
+      />
+      <ErrorMessage text={errorMessage} />
+      <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </div>
   );
 }
