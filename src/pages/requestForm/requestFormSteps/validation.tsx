@@ -1,11 +1,6 @@
 import React from "react";
 import { required } from "../../../@types/utility/typeGuard";
 
-export const onChangeRequestInfos = (e) => {
-  const value = e.currentTarget.value;
-  return value;
-};
-
 const categoryValidates = {
   validation: required,
   errorMessage: "카테고리를 선택하세요.",
