@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { isEmpty } from "../../../@types/utility/typeGuard";
 import { categoryValidation } from "./validation";
-import { SingleButton } from "../../../components/Form/button";
-import { Header } from "../../../components/Form/header";
-import { RadioButton } from "../../../components/Form/radioButton";
-import ErrorMessage from "../../../components/Form/errorMessage";
+import { Header } from "../../../components/form/header/header";
+import { RadioButton } from "../../../components/form/radioButton";
+import ErrorMessage from "../../../components/form/errorMessage";
 import { useRequestFormReducer } from "../hooks/useRequestFormReducer";
+import { SingleButton } from "../../../components/form/button/singleButton";
 
 interface Props {
   onPrevious(): void;

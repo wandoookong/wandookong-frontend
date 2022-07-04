@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigation } from "../../components/Form/navigation";
+import { Navigation } from "../../components/form/navigation";
 import CategoryStep from "./requestFormSteps/categoryStep";
 import TitleStep from "./requestFormSteps/titleStep";
 import MyRoleStep from "./requestFormSteps/myRoleStep";

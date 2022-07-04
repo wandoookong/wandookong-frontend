@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/home";
+import Home from "./pages/home/home";
 import RequestForm from "./pages/requestForm/requestForm";
 import NotFound from "./pages/not-found/NotFound";
 import GeneralNavigation from "./components/Navigation/generalNavigation";

@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { DoubleButton } from "../../../components/Form/button";
-import { Header } from "../../../components/Form/header";
+import { Header } from "../../../components/form/header/header";
 import { contactValidation } from "./validation";
-import { TextInput } from "../../../components/Form/textInput";
+import { TextInput } from "../../../components/form/textInput/textInput";
 import { isEmpty } from "../../../@types/utility/typeGuard";
-import ErrorMessage from "../../../components/Form/errorMessage";
+import ErrorMessage from "../../../components/form/errorMessage";
 import { useRequestFormReducer } from "../hooks/useRequestFormReducer";
+import { DoubleButton } from "../../../components/form/button/doubleButton";
 
 interface Props {
   onPrevious(): void;

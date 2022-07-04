@@ -1,9 +1,6 @@
 import React from "react";
-import GoogleLogin from "react-google-login";
-import GoogleButton from "./components/googleButton";
-import axios from "axios";
-import { SingleButton } from "../../components/Form/button";
 import { useNavigate } from "react-router-dom";
+import { SingleButton } from "../../components/form/button/singleButton";
 
 export default function Login() {
   const navigate = useNavigate();

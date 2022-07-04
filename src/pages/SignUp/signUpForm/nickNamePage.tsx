@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Header } from "../../../components/Form/header";
-import { TextInput } from "../../../components/Form/textInput";
-import { SingleButton } from "../../../components/Form/button";
+import { SingleButton } from "../../../components/form/button/singleButton";
+import { Header } from "../../../components/form/header/header";
+import { TextInput } from "../../../components/form/textInput/textInput";
 
 export default function NickNamePage({ onNext }) {
   const [value, setValue] = useState("");

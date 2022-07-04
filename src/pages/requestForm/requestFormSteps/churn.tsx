@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { ModalButton } from "../../../components/Form/button";
+import { ModalButton } from "../../../components/form/button/modalButton";
 
 export default function Chrun({ setModal }) {
   const Dim = styled.div`

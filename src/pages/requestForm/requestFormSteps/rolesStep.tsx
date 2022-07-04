@@ -1,12 +1,12 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { isEmpty } from "../../../@types/utility/typeGuard";
 import { roles, rolesValidation } from "./validation";
-import { DoubleButton } from "../../../components/Form/button";
-import { Header } from "../../../components/Form/header";
-import ErrorMessage from "../../../components/Form/errorMessage";
-import { CircleCheckbox } from "../../../components/Form/radioButton";
+import { Header } from "../../../components/form/header/header";
+import ErrorMessage from "../../../components/form/errorMessage";
+import { CircleCheckbox } from "../../../components/form/radioButton";
 import { roleData } from "./roleData";
 import { useRequestFormReducer } from "../hooks/useRequestFormReducer";
+import { DoubleButton } from "../../../components/form/button/doubleButton";
 
 interface Props {
   onPrevious(): void;
