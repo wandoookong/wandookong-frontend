@@ -11,7 +11,7 @@ export default function Login() {
     navigate("/sign-up");
   };
 
-  const onSignIn = (response) => {
+  window["handleCredentialResponse"] = (response) => {
     console.log(response);
   };
 
@@ -20,7 +20,7 @@ export default function Login() {
       <div
         id="g_id_onload"
         data-client_id="572618992504-dm52b32m1e7pclkn3h9bm3ccksi0aqtc.apps.googleusercontent.com"
-        data-callback="onSignIn"
+        data-callback="handleCredentialResponse"
         data-auto_prompt="false"
       />
       <div
@@ -31,6 +31,7 @@ export default function Login() {
         data-text="sign_in_with"
         data-shape="rectangular"
         data-logo_alignment="left"
+        data-callback="onSignIn"
         data-locale="ko_KR"
       />
       <SingleButton onClick={onClick} label="다음으로 건너뛰기" />
