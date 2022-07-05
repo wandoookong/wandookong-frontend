@@ -2,8 +2,21 @@ import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
+  position: sticky;
+  top: 0;
   width: auto;
-  padding: 57px 20px 0 20px;
+  padding: 57px 20px 20px 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+  //animation: backgroundColor 3s infinite;
+  z-index: 900;
+  @keyframes backgroundColor {
+    0% {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+    100% {
+      background: #fffdf5;
+    }
+  }
 `;
 
 const ContentWrapper = styled.div`

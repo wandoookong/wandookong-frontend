@@ -2,11 +2,13 @@ import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
+  position: absolute;
+  top: 0;
   width: 100%;
-  height: 150px;
+  height: 280px;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 0 0 8px 8px;
-  padding: 20px;
+  padding: 200px 20px 20px 20px;
   box-sizing: border-box;
   button {
     margin: 0;
