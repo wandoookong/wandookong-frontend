@@ -9,14 +9,14 @@ const Container = styled.div`
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
   //animation: backgroundColor 3s infinite;
   z-index: 900;
-  @keyframes backgroundColor {
-    0% {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
-    }
-    100% {
-      background: #fffdf5;
-    }
-  }
+  //@keyframes backgroundColor {
+  //  0% {
+  //    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+  //  }
+  //  100% {
+  //    background: #fffdf5;
+  //  }
+  //}
 `;
 
 const ContentWrapper = styled.div`
@@ -68,7 +68,7 @@ export const HomeHeader = () => {
         <RightWrapper>
           <button onClick={() => navigate("/request")}>완두콩 만들기</button>
           <AlarmIcon onClick={() => navigate("/")} />
-          <MyPageIcon onClick={() => navigate("/")} />
+          <MyPageIcon onClick={() => navigate("/login")} />
         </RightWrapper>
       </ContentWrapper>
     </Container>

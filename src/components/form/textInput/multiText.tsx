@@ -4,9 +4,10 @@ const MultiText = styled.textarea`
   box-sizing: border-box;
   width: 100%;
   height: 200px;
-  border: 2px solid #ddd;
-  border-radius: 2px;
-  padding: 20x;
+  border: 2px solid #dbd6c5;
+  border-radius: 8px;
+  padding: 16px 12px;
+  background: none;
 
   &:focus {
     outline: none;
@@ -14,16 +15,16 @@ const MultiText = styled.textarea`
   }
 
   ::-webkit-input-placeholder {
-    color: #ccc;
+    color: #c1b897;
   }
   ::-moz-placeholder {
-    color: #ccc;
+    color: #c1b897;
   }
   :-ms-input-placeholder {
-    color: #ccc;
+    color: #c1b897;
   }
   :-moz-placeholder {
-    color: #ccc;
+    color: #c1b897;
   }
 `;
 

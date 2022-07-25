@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
 const FilterWrapper = styled.div`
+  position: relative;
   margin: 32px 20px 0 20px;
   padding-bottom: 8px;
   border-bottom: 1px solid #f0ebd8;
@@ -23,6 +24,7 @@ const FilterContent = styled.div`
     margin: 0 20px 0 0;
   }
 `;
+
 const FilterButtons = styled.div`
   display: flex;
   align-items: center;

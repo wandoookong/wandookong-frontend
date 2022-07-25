@@ -22,6 +22,9 @@ const DayCounter = styled.p`
   position: absolute;
   top: 16px;
   right: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #f47026;
 `;
 
 const RuleWrapper = styled.div`
@@ -42,6 +45,9 @@ const RuleImage = styled.div`
   height: 48px;
   background: #d3eef5;
   border-radius: 28px;
+  p {
+    white-space: nowrap;
+  }
 `;
 
 export default function RequestItem({ position }) {

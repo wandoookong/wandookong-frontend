@@ -3,10 +3,11 @@ import { isEmpty } from "../../../@types/utility/typeGuard";
 import { roles, rolesValidation } from "./validation";
 import { Header } from "../../../components/form/header/header";
 import ErrorMessage from "../../../components/form/errorMessage";
-import { CircleCheckbox } from "../../../components/form/radioButton";
 import { roleData } from "./roleData";
 import { useRequestFormReducer } from "../hooks/useRequestFormReducer";
 import { DoubleButton } from "../../../components/form/button/doubleButton";
+import { Wrapper } from "../../../components/form/radioButton/circleRadioButton";
+import { CircleCheckbox } from "../../../components/form/CircleCheckboxButton";
 
 interface Props {
   onPrevious(): void;
@@ -37,17 +38,19 @@ export default function RolesStep({ onNext, onPrevious }: Props) {
   return (
     <>
       <Header title={`함께 하고 싶은 콩을 \n 선택해주세요`} />
-      {roleData.map((role) => (
-        <CircleCheckbox
-          key={role.id}
-          label={role.label}
-          value={role.value}
-          checked={state.members[role.value] === 1}
-          onChange={onChange}
-          disabled={state.myRole === role.value}
-        />
-      ))}
       {!isEmpty(errorMessage) && <ErrorMessage text={errorMessage} />}
+      <Wrapper>
+        {roleData.map((role) => (
+          <CircleCheckbox
+            key={role.id}
+            label={role.label}
+            value={role.value}
+            checked={state.members[role.value] === 1}
+            onChange={onChange}
+            disabled={state.myRole === role.value}
+          />
+        ))}
+      </Wrapper>
       <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </>
   );

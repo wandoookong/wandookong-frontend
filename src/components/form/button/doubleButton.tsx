@@ -14,12 +14,11 @@ const PrevButton = styled.button`
   height: 52px;
   margin-right: 18px;
   border-radius: 12px;
-  border: 2px solid #ccc;
-  background: #fff;
-  // box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid #47b561;
+  background: #faf7eb;
   font-size: 16px;
   font-weight: bold;
-  color: #999;
+  color: #47b561;
 `;
 
 const NextButton = styled.button`
@@ -29,17 +28,27 @@ const NextButton = styled.button`
   border-radius: 12px;
   border: 0;
   background: #47b561;
-  // box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.1);
   font-size: 16px;
   font-weight: bold;
   color: #ffffff;
 `;
 
+const Container = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 113px;
+`;
+
 export function DoubleButton({ prevLabel, nextLabel, onPrevStep, onNextStep }) {
   return (
-    <Wrap>
-      <PrevButton onClick={onPrevStep}>{prevLabel}</PrevButton>
-      <NextButton onClick={onNextStep}>{nextLabel}</NextButton>
-    </Wrap>
+    <Container>
+      <Wrap>
+        <PrevButton onClick={onPrevStep}>{prevLabel}</PrevButton>
+        <NextButton onClick={onNextStep}>{nextLabel}</NextButton>
+      </Wrap>
+    </Container>
   );
 }

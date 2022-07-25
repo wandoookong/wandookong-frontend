@@ -6,6 +6,7 @@ import MyRoleStep from "./requestFormSteps/myRoleStep";
 import RolesStep from "./requestFormSteps/rolesStep";
 import DescriptionStep from "./requestFormSteps/descriptionStep";
 import Contact from "./requestFormSteps/contact";
+import Layout from "../../components/layout/layout";
 
 export default function RequestForm() {
   const [step, setStep] = useState(1);
@@ -18,14 +19,16 @@ export default function RequestForm() {
   };
 
   return (
-    <form>
+    <Layout>
       <Navigation step={step} />
-      {step === 1 && <CategoryStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
-      {step === 2 && <TitleStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
-      {step === 3 && <MyRoleStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
-      {step === 4 && <RolesStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
-      {step === 5 && <DescriptionStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
-      {step === 6 && <Contact onPrevious={onPreviousHandler} onNext={onSubmit} />}
-    </form>
+      <form>
+        {step === 1 && <CategoryStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
+        {step === 2 && <TitleStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
+        {step === 3 && <MyRoleStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
+        {step === 4 && <RolesStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
+        {step === 5 && <DescriptionStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
+        {step === 6 && <Contact onPrevious={onPreviousHandler} onNext={onSubmit} />}
+      </form>
+    </Layout>
   );
 }

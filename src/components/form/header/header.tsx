@@ -10,6 +10,7 @@ const Wrap = styled.div`
     font-size: 30px;
     line-height: 1.5;
     white-space: pre-line;
+    color: #242c35;
   }
 `;
 

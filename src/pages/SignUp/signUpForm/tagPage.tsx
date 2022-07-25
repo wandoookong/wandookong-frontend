@@ -1,7 +1,7 @@
 import React from "react";
 import { DoubleButton } from "../../../components/form/button/doubleButton";
+import { CircleCheckbox } from "../../../components/form/CircleCheckboxButton";
 import { Header } from "../../../components/form/header/header";
-import { CircleCheckbox } from "../../../components/form/radioButton";
 import { tagKeywords } from "../../requestForm/requestFormSteps/roleData";
 
 export default function TagPage({ onNext, onPrev }) {

@@ -2,9 +2,9 @@ import styled from "@emotion/styled";
 
 export default function ErrorMessage({ text }) {
   const Message = styled.p`
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
-    color: #ff334b;
+    color: #f47026;
   `;
   return <Message>{text}</Message>;
 }

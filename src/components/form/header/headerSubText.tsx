@@ -13,6 +13,7 @@ const Header = styled.h1`
   font-size: 30px;
   line-height: 1.5;
   white-space: pre-line;
+  color: #242c35;
 `;
 
 const SubText = styled.p`

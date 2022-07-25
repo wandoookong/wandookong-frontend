@@ -35,13 +35,13 @@ export default function DescriptionStep({ onNext, onPrevious }: Props) {
   return (
     <div>
       <Header title={`완두콩에 대해 \n 조금 더 알려주시겠어요?`} />
+      <ErrorMessage text={errorMessage} />
       {/*TODO textarea style 작성*/}
       <TextArea
         placeholder="완두콩의 목표, 팀 문화, 자격요건 등 자유롭게 작성해주세요! "
         onChange={onChange}
         value={state.description}
       />
-      <ErrorMessage text={errorMessage} />
       <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </div>
   );

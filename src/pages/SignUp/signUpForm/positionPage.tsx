@@ -1,7 +1,7 @@
 import React from "react";
 import { DoubleButton } from "../../../components/form/button/doubleButton";
 import { Header } from "../../../components/form/header/header";
-import { CircleRadioButton } from "../../../components/form/radioButton";
+import { CircleRadioButton } from "../../../components/form/radioButton/circleRadioButton";
 import { career, position } from "../../requestForm/requestFormSteps/roleData";
 
 export default function PositionPage({ onNext, onPrev }) {

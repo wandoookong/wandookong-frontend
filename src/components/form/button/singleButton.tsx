@@ -15,6 +15,19 @@ const Button = styled.button`
   color: #ffffff;
 `;
 
+const Container = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 113px;
+`;
+
 export function SingleButton({ label, onClick }) {
-  return <Button onClick={onClick}>{label}</Button>;
+  return (
+    <Container>
+      <Button onClick={onClick}>{label}</Button>
+    </Container>
+  );
 }

@@ -34,9 +34,9 @@ export default function TitleStep({ onPrevious, onNext }: Props) {
 
   return (
     <>
-      <Header title={`완두콩 제목을 \n 알려주세요!`} />
-      <TextInput placeholder="예) 완두콩 프로젝트 팀원 모집" value={state.title} onChange={onChange} />
+      <Header title={`완두콩 제목을 알려주세요!`} />
       {!isEmpty(errorMessage) && <ErrorMessage text={errorMessage} />}
+      <TextInput placeholder="함께 재미난 프로젝트 하실 분들 찾습니다! :)" value={state.title} onChange={onChange} />
       <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </>
   );
