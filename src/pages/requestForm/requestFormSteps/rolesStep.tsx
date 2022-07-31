@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { isEmpty } from "../../../@types/utility/typeGuard";
-import { roles, rolesValidation } from "./validation";
+import { roles, rolesValidation } from "../validation/validation";
 import { Header } from "../../../components/form/header/header";
 import ErrorMessage from "../../../components/form/errorMessage";
 import { roleData } from "./roleData";
@@ -37,7 +37,7 @@ export default function RolesStep({ onNext, onPrevious }: Props) {
 
   return (
     <>
-      <Header title={`함께 하고 싶은 콩을 \n 선택해주세요`} />
+      <Header title={`함께 하고 싶은 멤버 콩을 \n 선택해주세요`} />
       {!isEmpty(errorMessage) && <ErrorMessage text={errorMessage} />}
       <Wrapper>
         {roleData.map((role) => (

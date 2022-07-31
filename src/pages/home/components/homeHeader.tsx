@@ -1,23 +1,9 @@
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-
-const Container = styled.div`
-  position: sticky;
-  top: 0;
-  width: auto;
-  padding: 57px 20px 20px 20px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
-  //animation: backgroundColor 3s infinite;
-  z-index: 900;
-  //@keyframes backgroundColor {
-  //  0% {
-  //    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
-  //  }
-  //  100% {
-  //    background: #fffdf5;
-  //  }
-  //}
-`;
+import { css } from "@emotion/react";
+import NotificationIcon from "@mui/icons-material/Notifications";
+import AccountIcon from "@mui/icons-material/AccountCircle";
+import { useEffect, useState } from "react";
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -44,31 +30,64 @@ const RightWrapper = styled.div`
     font-weight: 700;
     color: #fff;
   }
+  span {
+    margin-left: 22px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #242c35;
+  }
 `;
 
-const AlarmIcon = styled.div`
-  margin-left: 20px;
-  width: 24px;
-  height: 24px;
-  background: red;
-`;
-const MyPageIcon = styled.div`
-  margin-left: 20px;
-  width: 24px;
-  height: 24px;
-  background: blue;
-`;
-
-export const HomeHeader = () => {
+export const HomeHeader = ({ ...rest }) => {
   const navigate = useNavigate();
+  const [scroll, setScroll] = useState(false);
+  const handleScroll = () => {
+    if (window.scrollY >= 320) {
+      return setScroll(true);
+    }
+    return setScroll(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, true);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const Container = styled.div`
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 57px 20px 15px 20px;
+    z-index: 900;
+
+    ${() => {
+      if (!scroll) {
+        return css`
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+        `;
+      }
+      return css`
+        background: linear-gradient(180deg, #faf7eb 0.01%, rgba(250, 247, 235, 0.04) 95.83%);
+        box-shadow: 0px -3px 10px rgba(199, 196, 186, 0.25);
+        backdrop-filter: blur(150px);
+      `;
+    }}
+  `;
+
   return (
     <Container>
       <ContentWrapper>
         <h1 onClick={() => navigate("/")}>완두콩</h1>
         <RightWrapper>
-          <button onClick={() => navigate("/request")}>완두콩 만들기</button>
-          <AlarmIcon onClick={() => navigate("/")} />
-          <MyPageIcon onClick={() => navigate("/login")} />
+          {scroll && <button onClick={() => navigate("/request")}>완두콩 만들기</button>}
+          <span onClick={() => navigate("/login")}>로그인</span>
+          {/*{rest && (*/}
+          {/*  <div>*/}
+          {/*    <NotificationIcon onClick={() => navigate("/")} sx={{ fontSize: 24, ml: 2 }} />*/}
+          {/*    <AccountIcon onClick={() => navigate("/login")} sx={{ fontSize: 24, ml: 2 }} />*/}
+          {/*  </div>*/}
+          {/*)}*/}
         </RightWrapper>
       </ContentWrapper>
     </Container>

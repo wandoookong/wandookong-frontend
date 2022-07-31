@@ -8,10 +8,12 @@ const Wrapper = styled.div`
   border-radius: 8px;
   div {
     p {
+      font-family: Pretendard;
       font-size: 12px;
       color: #3f3f3f;
     }
     h2 {
+      font-family: Pretendard;
       font-size: 16px;
       margin: 0;
     }
@@ -22,6 +24,7 @@ const DayCounter = styled.p`
   position: absolute;
   top: 16px;
   right: 12px;
+  font-family: Pretendard;
   font-size: 12px;
   font-weight: 500;
   color: #f47026;
@@ -31,6 +34,7 @@ const RuleWrapper = styled.div`
   display: flex;
   margin: 12px 0 0 0;
   p {
+    font-family: Pretendard;
     font-size: 14px;
     font-weight: 500;
     text-align: center;

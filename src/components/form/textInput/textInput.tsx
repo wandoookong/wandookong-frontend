@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { isEmpty } from "../../../@types/utility/typeGuard";
 
 const Input = styled.input`
   display: block;
@@ -8,6 +9,7 @@ const Input = styled.input`
   padding: 16px 12px;
   border: 2px solid #dbd6c5;
   border-radius: 8px;
+  font-family: Pretendard;
   font-size: 14px;
   transition: 0.2s;
   background: none;
@@ -41,15 +43,16 @@ const LengthInfo = styled.p`
   color: #dbd6c5;
 `;
 
-const maxLength = 20;
-
 export function TextInput({ value, ...rest }) {
+  const maxLength = rest.maxLength;
   return (
     <>
       <Input type="text" maxLength={maxLength} value={value} {...rest} />
-      <LengthInfo>
-        {value.length}/{maxLength}
-      </LengthInfo>
+      {isEmpty(maxLength) && (
+        <LengthInfo>
+          {value.length}/{maxLength}
+        </LengthInfo>
+      )}
     </>
   );
 }

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { isEmpty } from "../../../@types/utility/typeGuard";
-import { myRoleValidation } from "./validation";
+import { myRoleValidation } from "../validation/validation";
 import { Header } from "../../../components/form/header/header";
 import ErrorMessage from "../../../components/form/errorMessage";
 import { roleData } from "./roleData";

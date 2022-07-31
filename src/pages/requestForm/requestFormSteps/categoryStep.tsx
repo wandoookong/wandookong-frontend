@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { isEmpty } from "../../../@types/utility/typeGuard";
-import { categoryValidation } from "./validation";
+import { categoryValidation } from "../validation/validation";
 import { Header } from "../../../components/form/header/header";
 import { RadioButton } from "../../../components/form/radioButton/radioButton";
 import ErrorMessage from "../../../components/form/errorMessage";

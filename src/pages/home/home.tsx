@@ -1,17 +1,10 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { HomeHeader } from "./components/homeHeader";
 import { Carousel } from "./components/carousel";
 import Filter from "./components/filter";
 import RequestItem from "./components/requestItem";
 import styled from "@emotion/styled";
-
-const rules = [
-  { id: 1, label: "앱 개발", gradientStart: "#fff", gradientEnd: "000" },
-  { id: 2, label: "웹 프론트", gradientStart: "#fff", gradientEnd: "000" },
-  { id: 3, label: "백엔드", gradientStart: "#fff", gradientEnd: "000" },
-  { id: 4, label: "UX/UI", gradientStart: "#fff", gradientEnd: "000" },
-  { id: 5, label: "서비스\n기획", gradientStart: "#fff", gradientEnd: "000" },
-];
+import { roleData } from "../requestForm/requestFormSteps/roleData";
 
 const Container = styled.div`
   position: absolute;
@@ -22,16 +15,40 @@ const Container = styled.div`
 `;
 
 export default function Home() {
+  const [teamData, setTeamData] = useState([]);
+  const [checked, setChecked] = useState(false);
+
+  // const onClick = (e) => {
+  //   if()
+  //   setChecked(e.currentTarget.name);
+  // };
+
+  // useEffect(() => {
+  //   (async function () {
+  //     const response = await TeamApi();
+  //     if (!response.success) {
+  //       alert(response.message);
+  //       return;
+  //     }
+  //     setTeamData(response.data);
+  //   })();
+  // }, []);
+
   return (
     <div>
       <HomeHeader />
       <Container>
         <Carousel />
-        <Filter />
-        <RequestItem position={rules} />
-        <RequestItem position={rules} />
-        <RequestItem position={rules} />
+        <Filter checked={checked} />
+        <RequestItem position={roleData} />
+        <RequestItem position={roleData} />
+        <RequestItem position={roleData} />
+        <RequestItem position={roleData} />
+        <RequestItem position={roleData} />
       </Container>
     </div>
   );
+}
+function TeamApi() {
+  throw new Error("Function not implemented.");
 }

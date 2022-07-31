@@ -10,6 +10,7 @@ const Button = styled.button`
   border-radius: 12px;
   border: 0;
   background: #47b561;
+  font-family: Pretendard;
   font-size: 16px;
   font-weight: bold;
   color: #ffffff;

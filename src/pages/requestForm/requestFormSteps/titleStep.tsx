@@ -3,7 +3,7 @@ import { isEmpty } from "../../../@types/utility/typeGuard";
 import { Header } from "../../../components/form/header/header";
 import ErrorMessage from "../../../components/form/errorMessage";
 import { TextInput } from "../../../components/form/textInput/textInput";
-import { titleValidation } from "./validation";
+import { titleValidation } from "../validation/validation";
 import { useRequestFormReducer } from "../hooks/useRequestFormReducer";
 import { DoubleButton } from "../../../components/form/button/doubleButton";
 
@@ -36,7 +36,12 @@ export default function TitleStep({ onPrevious, onNext }: Props) {
     <>
       <Header title={`완두콩 제목을 알려주세요!`} />
       {!isEmpty(errorMessage) && <ErrorMessage text={errorMessage} />}
-      <TextInput placeholder="함께 재미난 프로젝트 하실 분들 찾습니다! :)" value={state.title} onChange={onChange} />
+      <TextInput
+        placeholder="함께 재미난 프로젝트 하실 분들 찾습니다! :)"
+        value={state.title}
+        maxLength="20"
+        onChange={onChange}
+      />
       <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </>
   );

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
-import Chrun from "../../pages/requestForm/requestFormSteps/churn";
+import Chrun from "../../pages/requestForm/requestFormSteps/modal/churn";
 import CloseIcon from "@mui/icons-material/Close";
 
 const Wrap = styled.div`

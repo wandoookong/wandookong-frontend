@@ -4,12 +4,12 @@ const Wrap = styled.div`
   display: block;
   width: 100%;
   height: auto;
-  margin-bottom: 24px;
-  background: #ffffff;
+  margin-bottom: 22px;
 `;
 
 const Header = styled.h1`
-  margin: 0 0 8px 0;
+  margin: 0 0 39px 0;
+  font-family: Pretendard;
   font-size: 30px;
   line-height: 1.5;
   white-space: pre-line;
@@ -19,7 +19,8 @@ const Header = styled.h1`
 const SubText = styled.p`
   margin: 0;
   font-size: 16px;
-  color: #555;
+  font-weight: 400;
+  color: #8b8b8b;
 `;
 
 export function HeaderSubText({ title, subText }) {

@@ -9,6 +9,7 @@ export function RadioButton({ label, description, checked, ...rest }) {
     margin-bottom: 8px;
     padding: 12px 12px;
     border-radius: 4px;
+    font-family: Pretendard;
     font-size: 16px;
     font-weight: 500;
 
@@ -41,7 +42,7 @@ export function RadioButton({ label, description, checked, ...rest }) {
   `;
 
   const SubText = styled.p`
-    margin: 0;
+    margin: 0 39px 0 0;
     font-size: 12px;
     font-weight: 400;
     color: #242c35;
@@ -55,7 +56,7 @@ export function RadioButton({ label, description, checked, ...rest }) {
         {label}
         <div>
           <SubText>{description}</SubText>
-          {checked && <CheckIcon sx={{ fontSize: 24, ml: 3.5 }} />}
+          {checked && <CheckIcon sx={{ fontSize: 24, m: 0 }} />}
         </div>
       </Label>
     </Wrap>

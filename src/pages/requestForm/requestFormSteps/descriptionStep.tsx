@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { descriptionValidation } from "./validation";
+import { descriptionValidation } from "../validation/validation";
 import { isEmpty } from "../../../@types/utility/typeGuard";
 import { Header } from "../../../components/form/header/header";
 import ErrorMessage from "../../../components/form/errorMessage";
@@ -34,7 +34,7 @@ export default function DescriptionStep({ onNext, onPrevious }: Props) {
 
   return (
     <div>
-      <Header title={`완두콩에 대해 \n 조금 더 알려주시겠어요?`} />
+      <Header title={`완두콩에 대해 조금만 더 알려주시겠어요? `} />
       <ErrorMessage text={errorMessage} />
       {/*TODO textarea style 작성*/}
       <TextArea

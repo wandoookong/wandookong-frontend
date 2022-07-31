@@ -5,9 +5,9 @@ import CheckIcon from "@mui/icons-material/Check";
 export function CircleCheckbox({ label, value, checked, disabled, ...rest }) {
   const Label = styled.label`
     display: inline-block;
-    margin: 0 20px 20px 0;
+    margin: 0 15px 20px 0;
     padding: 0;
-    width: 60px;
+    width: 53px;
     text-align: center;
     white-space: pre-line;
     font-size: 14px;
@@ -35,9 +35,9 @@ export function CircleCheckbox({ label, value, checked, disabled, ...rest }) {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 52px;
-    height: 52px;
-    margin: 0 0 12px 0;
+    width: 51px;
+    height: 51px;
+    margin: 0 0 8px 0;
     border: 0;
     border-radius: 50px;
     font-size: 16px;
