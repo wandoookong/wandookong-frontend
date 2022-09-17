@@ -1,6 +1,10 @@
 import { useEffect } from "react";
+import { useAuth } from "../../context/provideGoogleLogin";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!document.getElementById("id__google_onSignIn")) {
       const script = document.createElement("script");
@@ -16,9 +20,11 @@ export default function Login() {
       document.body.appendChild(script2);
     }
   }, []);
-
   // global로 넣어줘야 해서, module에 있는 함수를 사용할 수가 없네요. ㅠㅠ
   // script tag도 동적으로 만들어줘야 하고, 이게 더 간단할줄 알았더니 더 번거로워졌어요.
+
+  const auth = useAuth();
+
   function onSignIn(googleUser) {
     // import 오류가 나서 여기서 다시 정의합니다. ㅠㅠ
     const ACCESS_TOKEN_NAME = "w_d_k_t";
@@ -43,8 +49,10 @@ export default function Login() {
         } else if (userSocialId) {
           // new user
           console.log("new user");
+          // auth.setUserInfo(userSocialId);
           // 회원가입 페이지로 이동합니다.
-          window.location.href = "/signUp";
+          // window.location.href = "/signUp";
+          navigate("/signUp");
         } else {
           throw new Error("no userSocialId, no accessToken.");
         }

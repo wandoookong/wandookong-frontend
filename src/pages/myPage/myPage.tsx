@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/layout/layout";
-import MyInfo from "./components/MyInfo";
-import MyTeam from "./components/MyTeam";
-import MyPageEtc from "./components/MyPageEtc";
+import MyInfo from "./components/myInfo";
+import MyTeam from "./components/myTeam";
+import MyPageEtc from "./components/myPageEtc";
 import UserApi from "../../api/userApi";
 import { UserMeReturnType } from "../../api/types/userType";
 import MyTeamApi from "../../api/myTeamApi";

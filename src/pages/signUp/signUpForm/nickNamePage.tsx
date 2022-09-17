@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { SingleButton } from "../../../components/form/button/singleButton";
 import { Header } from "../../../components/form/header/header";
 import { TextInput } from "../../../components/form/textInput/textInput";
@@ -17,6 +17,7 @@ export default function NickNamePage({ onNext }: Props) {
     setValue(e.currentTarget.value);
   };
 
+  //TODO 닉네임 체크 api/users/nickname/check
   const onClick = () => {
     const errorMessage = titleValidation(value);
     setError(errorMessage);

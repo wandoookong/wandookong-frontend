@@ -22,7 +22,7 @@ export default function RequestForm() {
     <Layout>
       <Navigation step={step} />
       <form>
-        {step === 1 && <CategoryStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
+        {step === 1 && <CategoryStep onNext={onNextHandler} />}
         {step === 2 && <TitleStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
         {step === 3 && <MyRoleStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
         {step === 4 && <RolesStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}

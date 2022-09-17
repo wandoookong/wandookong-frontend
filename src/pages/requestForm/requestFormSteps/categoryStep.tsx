@@ -8,7 +8,6 @@ import { useRequestFormReducer } from "../hooks/useRequestFormReducer";
 import { SingleButton } from "../../../components/form/button/singleButton";
 
 interface Props {
-  onPrevious(): void;
   onNext(): void;
 }
 
@@ -18,7 +17,8 @@ export default function CategoryStep({ onNext }: Props) {
 
   const onChange = (e) => onChangeTeamCategory(e.currentTarget.value);
 
-  const onNextStep = () => {
+  const onNextStep = (e) => {
+    e.preventDefault();
     const categoryErrorMessage = categoryValidation(state.teamCategory);
     setErrorMessage(categoryErrorMessage);
     if (!isEmpty(state.teamCategory)) {
@@ -30,6 +30,7 @@ export default function CategoryStep({ onNext }: Props) {
     if (!isEmpty(state.teamCategory)) {
       setErrorMessage("");
     }
+    console.log("category->", state.teamCategory);
   }, [state.teamCategory]);
 
   return (

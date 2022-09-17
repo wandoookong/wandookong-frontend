@@ -9,6 +9,13 @@ import TagPage from "./signUpForm/tagPage";
 export default function SignUp() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [signUpInfo, setSignUpInfo] = useState({
+    userSocialId: "",
+    nickname: "",
+    roleMain: "",
+    careerRange: [],
+    tageNameList: "",
+  });
 
   const onPreviousHandler = () => setStep((step) => step - 1);
   const onNextHandler = () => setStep((step) => step + 1);
