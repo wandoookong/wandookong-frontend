@@ -5,7 +5,6 @@ import Filter from "./components/filter";
 import RequestItem from "./components/requestItem";
 import styled from "@emotion/styled";
 import { roleData } from "../requestForm/requestFormSteps/roleData";
-import TeamApi from "../../api/teamApi";
 
 const Container = styled.div`
   position: absolute;
@@ -26,12 +25,12 @@ export default function Home() {
 
   // useEffect(() => {
   //   (async function () {
-  //     const response = await TeamApi.getTeamList();
-  // if (!response) {
-  //   alert(response.message);
-  //   return;
-  // }
-  // setTeamData(response.list);
+  //     const response = await TeamApi();
+  //     if (!response.success) {
+  //       alert(response.message);
+  //       return;
+  //     }
+  //     setTeamData(response.data);
   //   })();
   // }, []);
 
@@ -49,4 +48,7 @@ export default function Home() {
       </Container>
     </div>
   );
+}
+function TeamApi() {
+  throw new Error("Function not implemented.");
 }

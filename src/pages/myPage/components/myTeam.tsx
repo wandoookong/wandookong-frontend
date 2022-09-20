@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useContext, useState } from "react";
-import { MyPageContext } from "../myPage";
+import { MyPageContext } from "../MyPage";
 import { useNavigate } from "react-router-dom";
 import { TEAM_CATEGORY } from "../../../api/types/fieldType";
 
