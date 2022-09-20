@@ -4,7 +4,7 @@ export const roleData = [
   { id: 3, label: "백앤드", value: "back_end", gradient: "137.26deg, #C2D83B 0%, #65BC46 104.28%" },
   { id: 4, label: "UX/UI", value: "ux_ui", gradient: "137.26deg, #FFCA02 0%, #648D00 104.28%" },
   { id: 5, label: "서비스 \n 기획", value: "product", gradient: "132.5deg, #005200 -1.08%, #403D40 100%" },
-];
+] as const;
 
 export const position = [
   { id: 1, label: "개발자", value: "dev" },

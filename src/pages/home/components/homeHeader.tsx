@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import { css } from "@emotion/react";
-import NotificationIcon from "@mui/icons-material/Notifications";
-import AccountIcon from "@mui/icons-material/AccountCircle";
 import { useEffect, useState } from "react";
 
 const ContentWrapper = styled.div`
@@ -42,7 +40,7 @@ export const HomeHeader = ({ ...rest }) => {
   const navigate = useNavigate();
   const [scroll, setScroll] = useState(false);
   const handleScroll = () => {
-    if (window.scrollY >= 320) {
+    if (window.scrollY >= 220) {
       return setScroll(true);
     }
     return setScroll(false);

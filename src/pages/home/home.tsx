@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { HomeHeader } from "./components/homeHeader";
 import { Carousel } from "./components/carousel";
 import Filter from "./components/filter";
@@ -16,7 +16,7 @@ const Container = styled.div`
 
 export default function Home() {
   const [teamData, setTeamData] = useState([]);
-  const [checked, setChecked] = useState(false);
+  const [roleDetailFilters, setRoleDetailFilters] = useState<RoleDetail[]>([]);
 
   // const onClick = (e) => {
   //   if()
@@ -39,7 +39,7 @@ export default function Home() {
       <HomeHeader />
       <Container>
         <Carousel />
-        <Filter checked={checked} />
+        <Filter setFilters={setRoleDetailFilters} filters={roleDetailFilters} />
         <RequestItem position={roleData} />
         <RequestItem position={roleData} />
         <RequestItem position={roleData} />
