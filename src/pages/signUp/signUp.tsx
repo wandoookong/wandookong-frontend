@@ -12,10 +12,11 @@ export default function SignUp() {
 
   const onPreviousHandler = () => setStep((step) => step - 1);
   const onNextHandler = () => setStep((step) => step + 1);
-
   const onClick = () => {
     navigate("/");
   };
+
+  const;
 
   return (
     <Layout>
