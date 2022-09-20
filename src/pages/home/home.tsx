@@ -49,6 +49,6 @@ export default function Home() {
     </div>
   );
 }
-function TeamApi() {
-  throw new Error("Function not implemented.");
-}
+// function TeamApi() {
+//   throw new Error("Function not implemented.");
+// }

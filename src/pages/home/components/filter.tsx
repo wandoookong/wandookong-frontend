@@ -1,5 +1,8 @@
 import styled from "@emotion/styled";
 import { roleData } from "../../requestForm/requestFormSteps/roleData";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import TeamFilter from "../../../api/teamFilter";
 
 interface Props {
   filters: RoleDetail[];
@@ -7,6 +10,28 @@ interface Props {
 }
 
 export default function Filter({ filters, setFilters }: Props) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [filterResult, setFilterResult] = useState({});
+
+  useEffect(() => {
+    if (filters.length !== 0) {
+      navigate(`?${filters[0]}`);
+      return;
+    }
+    return navigate("/");
+  }, [filters]);
+
+  useEffect(() => {
+    (async function () {
+      const response = await TeamFilter(location.search);
+      // if (response.status !== 200) {
+      //   return alert("다시 시도해주세요.");
+      // }
+      setFilterResult(response);
+    })();
+  }, [location]);
+
   return (
     <FilterWrapper>
       <h3>완두콩 찾기</h3>
