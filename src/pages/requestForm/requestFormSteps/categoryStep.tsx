@@ -4,33 +4,33 @@ import { categoryValidation } from "../validation/validation";
 import { Header } from "../../../components/form/header/header";
 import { RadioButton } from "../../../components/form/radioButton/radioButton";
 import ErrorMessage from "../../../components/form/errorMessage";
-import { useRequestFormReducer } from "../hooks/useRequestFormReducer";
 import { SingleButton } from "../../../components/form/button/singleButton";
 
 interface Props {
+  category: TeamCategory;
   onPrevious(): void;
   onNext(): void;
+  onChange(category: TeamCategory): void;
 }
 
-export default function CategoryStep({ onNext }: Props) {
-  const { state, onChangeTeamCategory } = useRequestFormReducer();
+export default function CategoryStep({ onNext, onChange, category }: Props) {
   const [errorMessage, setErrorMessage] = useState("");
 
-  const onChange = (e) => onChangeTeamCategory(e.currentTarget.value);
+  const onChangeHandler = (e) => onChange(e.currentTarget.value);
 
-  const onNextStep = () => {
-    const categoryErrorMessage = categoryValidation(state.teamCategory);
+  const onNextStep = (e) => {
+    const categoryErrorMessage = categoryValidation(category);
     setErrorMessage(categoryErrorMessage);
-    if (!isEmpty(state.teamCategory)) {
+    if (!isEmpty(category)) {
       onNext();
     }
   };
 
   useEffect(() => {
-    if (!isEmpty(state.teamCategory)) {
+    if (!isEmpty(category)) {
       setErrorMessage("");
     }
-  }, [state.teamCategory]);
+  }, [category]);
 
   return (
     <>
@@ -38,15 +38,15 @@ export default function CategoryStep({ onNext }: Props) {
       {!isEmpty(errorMessage) && <ErrorMessage text={errorMessage} />}
       <RadioButton
         value="portfolio"
-        onChange={onChange}
-        checked={state.teamCategory === "portfolio"}
+        onChange={onChangeHandler}
+        checked={category === "portfolio"}
         label="포트폴리오"
         description="짦은 기간동안 진행되는 프로젝트입니다. 비슷한 포지션이나 목표를 갖고 있는 콩들과 색다른 경험을 쌓을 수 있어요. "
       />
       <RadioButton
         value="side_project"
-        onChange={onChange}
-        checked={state.teamCategory === "side_project"}
+        onChange={onChangeHandler}
+        checked={category === "side_project"}
         label="사이드 프로젝트"
         description="운영까지 이뤄지는 서비스를 만드는 프로젝트입니다. 다양한 포지션 콩들과 협업할 수 있습니다."
       />

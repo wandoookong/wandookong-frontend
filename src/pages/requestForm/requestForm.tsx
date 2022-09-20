@@ -7,9 +7,11 @@ import RolesStep from "./requestFormSteps/rolesStep";
 import DescriptionStep from "./requestFormSteps/descriptionStep";
 import Contact from "./requestFormSteps/contact";
 import Layout from "../../components/layout/layout";
+import { useRequestFormReducer } from "./hooks/useRequestFormReducer";
 
 export default function RequestForm() {
   const [step, setStep] = useState(1);
+  const { state, onChangeTeamCategory } = useRequestFormReducer();
 
   const onPreviousHandler = () => setStep((step) => step - 1);
   const onNextHandler = () => setStep((step) => step + 1);
@@ -21,8 +23,15 @@ export default function RequestForm() {
   return (
     <Layout>
       <Navigation step={step} />
-      <form>
-        {step === 1 && <CategoryStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
+      <form onSubmit={(e) => e.preventDefault()}>
+        {step === 1 && (
+          <CategoryStep
+            category={state.teamCategory}
+            onChange={onChangeTeamCategory}
+            onPrevious={onPreviousHandler}
+            onNext={onNextHandler}
+          />
+        )}
         {step === 2 && <TitleStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
         {step === 3 && <MyRoleStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
         {step === 4 && <RolesStep onPrevious={onPreviousHandler} onNext={onNextHandler} />}
