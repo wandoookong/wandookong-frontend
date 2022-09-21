@@ -54,7 +54,6 @@
     "react-app-polyfill": "^3.0.0",
     "react-dev-utils": "^12.0.1",
     "react-dom": "^18.1.0",
-    "react-google-login": "^5.2.2",
     "react-refresh": "^0.11.0",
     "react-router-dom": "^6.3.0",
     "react-svg-loader": "^3.0.3",
@@ -147,7 +146,9 @@
     "resetMocks": true
   },
   "devDependencies": {
+    "@types/qs": "^6.9.7",
     "customize-cra": "^1.0.0",
+    "qs": "^6.11.0",
     "react-app-rewired": "^2.2.1",
     "react-responsive": "^9.0.0-beta.8"
   },

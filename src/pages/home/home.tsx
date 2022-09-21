@@ -6,22 +6,12 @@ import RequestItem from "./components/requestItem";
 import styled from "@emotion/styled";
 import { roleData } from "../requestForm/requestFormSteps/roleData";
 
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-`;
-
 export default function Home() {
-  const [teamData, setTeamData] = useState([]);
-  const [roleDetailFilters, setRoleDetailFilters] = useState<RoleDetail[]>([]);
-
-  // const onClick = (e) => {
-  //   if()
-  //   setChecked(e.currentTarget.name);
-  // };
+  // const [teamData, setTeamData] = useState([]);
+  const [filters, setFilters] = useState<TeamFilters>({
+    roleDetail: "",
+    teamCategory: "",
+  });
 
   // useEffect(() => {
   //   (async function () {
@@ -39,7 +29,7 @@ export default function Home() {
       <HomeHeader />
       <Container>
         <Carousel />
-        <Filter setFilters={setRoleDetailFilters} filters={roleDetailFilters} />
+        <Filter filters={filters} setFilters={setFilters} />
         <RequestItem position={roleData} />
         <RequestItem position={roleData} />
         <RequestItem position={roleData} />
@@ -52,3 +42,11 @@ export default function Home() {
 // function TeamApi() {
 //   throw new Error("Function not implemented.");
 // }
+
+const Container = styled.div`
+  position: absolute;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+`;

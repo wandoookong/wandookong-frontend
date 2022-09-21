@@ -3,10 +3,11 @@ import { roleData } from "../../requestForm/requestFormSteps/roleData";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import TeamFilter from "../../../api/teamFilter";
+import qs from "qs";
 
 interface Props {
-  filters: RoleDetail[];
-  setFilters(value: RoleDetail[]): void;
+  filters: TeamFilters;
+  setFilters(value: TeamFilters): void;
 }
 
 export default function Filter({ filters, setFilters }: Props) {
@@ -14,23 +15,34 @@ export default function Filter({ filters, setFilters }: Props) {
   const location = useLocation();
   const [filterResult, setFilterResult] = useState({});
 
+  const query = qs.parse(location.search, { ignoreQueryPrefix: true });
+
   useEffect(() => {
-    if (filters.length !== 0) {
-      navigate(`?${filters[0]}`);
+    if (filters.roleDetail.length !== 0) {
+      navigate(`?roleDetail=${filters.roleDetail}`);
       return;
     }
     return navigate("/");
-  }, [filters]);
+  }, [filters.roleDetail]);
 
   useEffect(() => {
-    (async function () {
-      const response = await TeamFilter(location.search);
-      // if (response.status !== 200) {
-      //   return alert("다시 시도해주세요.");
-      // }
-      setFilterResult(response);
-    })();
-  }, [location]);
+    if (filters.teamCategory.length !== 0) {
+      navigate(`?teamCategory=${filters.teamCategory}`);
+      return;
+    }
+    return navigate("/");
+  }, [filters.teamCategory]);
+
+  // useEffect(() => {
+  //   (async function () {
+  //     const response = await TeamFilter(query);
+  // TODO status 200이 아닌 경우
+  // if (response.status !== 200) {
+  //   return alert("다시 시도해주세요.");
+  // }
+  //     setFilterResult(response);
+  //   })();
+  // }, [location]);
 
   return (
     <FilterWrapper>
@@ -39,11 +51,15 @@ export default function Filter({ filters, setFilters }: Props) {
         <FilterContent>
           <LabelWrapper>
             <p>직군콩 |</p>
-            <Label checked={filters.length === 0} onClick={() => setFilters([])}>
+            <Label checked={filters.roleDetail.length === 0} onClick={() => setFilters({ ...filters, roleDetail: "" })}>
               전체
             </Label>
             {roleData.map((role) => (
-              <Label key={role.id} checked={filters.includes(role.value)} onClick={() => setFilters([role.value])}>
+              <Label
+                key={role.id}
+                checked={filters.roleDetail === role.value}
+                onClick={() => setFilters({ ...filters, roleDetail: role.value })}
+              >
                 {role.label}
                 <input type="radio" />
               </Label>
@@ -53,9 +69,25 @@ export default function Filter({ filters, setFilters }: Props) {
         <FilterContent>
           <LabelWrapper>
             <p>카테고리 |</p>
-            <Label checked={true}>전체</Label>
-            <Label checked={false}>포트폴리오</Label>
-            <Label checked={false}>사이드 프로젝트</Label>
+            <Label
+              checked={filters.teamCategory.length === 0}
+              onClick={() => setFilters({ ...filters, teamCategory: "" })}
+            >
+              전체
+            </Label>
+            <Label
+              checked={filters.teamCategory === "portfolio"}
+              onClick={() => setFilters({ ...filters, teamCategory: "portfolio" })}
+            >
+              포트폴리오
+              <input type="radio" />
+            </Label>
+            <Label
+              checked={filters.teamCategory === "side_project"}
+              onClick={() => setFilters({ ...filters, teamCategory: "side_project" })}
+            >
+              사이드 프로젝트 <input type="radio" />
+            </Label>
           </LabelWrapper>
         </FilterContent>
       </ContentWrapper>
