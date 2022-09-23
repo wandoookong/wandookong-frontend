@@ -15,11 +15,11 @@ export default function Filter({ filters, setFilters }: Props) {
   const location = useLocation();
   const [filterResult, setFilterResult] = useState({});
 
-  const query = qs.parse(location.search, { ignoreQueryPrefix: true });
-
   useEffect(() => {
     if (filters.roleDetail.length !== 0) {
-      navigate(`?roleDetail=${filters.roleDetail}`);
+      const query = qs.parse(location.search, { ignoreQueryPrefix: true });
+      const parsedQuery = { ...query, roleDetail: filters.roleDetail };
+      navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
       return;
     }
     return navigate("/");
@@ -27,7 +27,9 @@ export default function Filter({ filters, setFilters }: Props) {
 
   useEffect(() => {
     if (filters.teamCategory.length !== 0) {
-      navigate(`?teamCategory=${filters.teamCategory}`);
+      const query = qs.parse(location.search, { ignoreQueryPrefix: true });
+      const parsedQuery = { ...query, teamCategory: filters.teamCategory };
+      navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
       return;
     }
     return navigate("/");

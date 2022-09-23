@@ -11,7 +11,7 @@ export function CircleRadioButton({ label, value, checked, ...rest }) {
     display: inline-block;
     margin: 0 15px 20px 0;
     padding: 0;
-    width: 53px;
+    width: 56px;
     text-align: center;
     font-family: Pretendard;
     font-size: 14px;

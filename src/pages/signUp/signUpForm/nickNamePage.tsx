@@ -35,7 +35,7 @@ export default function NickNamePage({ nickname, onChange, onNext }: Props) {
   const onClick = () => {
     const errorMessage = nicknameValidation(nickname);
     setError(errorMessage);
-    if (isEmpty(errorMessage)) {
+    if (!isEmpty(nickname)) {
       onNext();
     }
   };
