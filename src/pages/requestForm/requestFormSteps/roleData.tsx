@@ -19,13 +19,13 @@ export const career = [
 ];
 
 export const tagKeywords = [
-  { id: 1, label: "꼼꼼함", value: "gomgom" },
-  { id: 2, label: "성실함", value: "sungsil" },
-  { id: 3, label: "친절함", value: "kindness" },
-  { id: 4, label: "시간관리", value: "accurate" },
-  { id: 5, label: "논리적\n사고", value: "logical" },
-  { id: 6, label: "문제정의", value: "problem" },
-  { id: 7, label: "끈기", value: "gungi" },
-  { id: 8, label: "추진력", value: "initiative" },
-  { id: 9, label: "리더쉽", value: "leadership" },
+  { id: 1, label: "꼼꼼함", value: "꼼꼼함" },
+  { id: 2, label: "성실함", value: "성실함" },
+  { id: 3, label: "친절함", value: "친절함" },
+  { id: 4, label: "시간관리", value: "시간관리" },
+  { id: 5, label: "논리적\n사고", value: "논리적사고" },
+  { id: 6, label: "문제정의", value: "문제정의" },
+  { id: 7, label: "끈기", value: "끈기" },
+  { id: 8, label: "추진력", value: "추진력" },
+  { id: 9, label: "리더쉽", value: "리더쉽" },
 ];

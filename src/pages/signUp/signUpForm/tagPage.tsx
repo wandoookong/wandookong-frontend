@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DoubleButton } from "../../../components/form/button/doubleButton";
 import { CircleCheckbox } from "../../../components/form/CircleCheckboxButton";
 import { Header } from "../../../components/form/header/header";
@@ -13,9 +13,9 @@ interface Props {
 }
 
 export default function TagPage({ nickname, tags, onChange, onNext, onPrev }: Props) {
-  const onClickHandler = () => {
+  useEffect(() => {
     console.log(tags);
-  };
+  }, [tags]);
 
   return (
     <>
@@ -25,9 +25,9 @@ export default function TagPage({ nickname, tags, onChange, onNext, onPrev }: Pr
         <CircleCheckbox
           key={tag.id}
           label={tag.label}
-          checked={false}
-          value={tag.label}
-          onClick={onClickHandler}
+          checked={tags.includes(tag.value)}
+          value={tag.value}
+          onChange={() => onChange(tag.value)}
           disabled={false}
         />
       ))}

@@ -13,38 +13,32 @@ interface Props {
 export default function Filter({ filters, setFilters }: Props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const [filterResult, setFilterResult] = useState({});
 
   useEffect(() => {
+    const query = qs.parse(location.search, { ignoreQueryPrefix: true });
     if (filters.roleDetail.length !== 0) {
-      const query = qs.parse(location.search, { ignoreQueryPrefix: true });
       const parsedQuery = { ...query, roleDetail: filters.roleDetail };
       navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
       return;
     }
-    return navigate("/");
+    const parsedQuery = { ...query };
+    delete parsedQuery.roleDetail;
+    navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
+    return;
   }, [filters.roleDetail]);
 
   useEffect(() => {
+    const query = qs.parse(location.search, { ignoreQueryPrefix: true });
     if (filters.teamCategory.length !== 0) {
-      const query = qs.parse(location.search, { ignoreQueryPrefix: true });
       const parsedQuery = { ...query, teamCategory: filters.teamCategory };
       navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
       return;
     }
-    return navigate("/");
+    const parsedQuery = { ...query };
+    delete parsedQuery.teamCategory;
+    navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
+    return;
   }, [filters.teamCategory]);
-
-  // useEffect(() => {
-  //   (async function () {
-  //     const response = await TeamFilter(query);
-  // TODO status 200이 아닌 경우
-  // if (response.status !== 200) {
-  //   return alert("다시 시도해주세요.");
-  // }
-  //     setFilterResult(response);
-  //   })();
-  // }, [location]);
 
   return (
     <FilterWrapper>
@@ -60,7 +54,9 @@ export default function Filter({ filters, setFilters }: Props) {
               <Label
                 key={role.id}
                 checked={filters.roleDetail === role.value}
-                onClick={() => setFilters({ ...filters, roleDetail: role.value })}
+                onClick={() => {
+                  setFilters({ ...filters, roleDetail: role.value });
+                }}
               >
                 {role.label}
                 <input type="radio" />

@@ -29,10 +29,9 @@ function reducer(state: State, action: Actions) {
         [action.key]: action.value,
       };
     case "ON_CHANGE_TAG_ACTION":
-      return {
-        ...state,
-        tagNameList: [...state.tagNameList, action.value],
-      };
+      return state.tagNameList.includes(action.value)
+        ? { ...state, tagNameList: [...state.tagNameList.filter((value) => value !== action.value)] }
+        : { ...state, tagNameList: [...state.tagNameList, action.value] };
     default:
       return state;
   }
