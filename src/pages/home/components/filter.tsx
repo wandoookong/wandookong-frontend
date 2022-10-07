@@ -144,6 +144,7 @@ const Label = styled.label<{ checked: boolean }>`
   font-family: Pretendard;
   color: #242c35;
   font-size: 12px;
+  box-shadow: 0px 1px 3px rgba(181, 191, 197, 0.3);
   input {
     display: none;
   }

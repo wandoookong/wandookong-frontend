@@ -148,6 +148,7 @@
   "devDependencies": {
     "@types/qs": "^6.9.7",
     "customize-cra": "^1.0.0",
+    "dayjs": "^1.11.5",
     "qs": "^6.11.0",
     "react-app-rewired": "^2.2.1",
     "react-responsive": "^9.0.0-beta.8"

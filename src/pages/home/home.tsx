@@ -6,25 +6,27 @@ import RequestItem from "./components/requestItem";
 import styled from "@emotion/styled";
 import { roleData } from "../requestForm/requestFormSteps/roleData";
 import TeamFilter from "../../api/teamFilter";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { TeamListReturnType, TeamReturnType } from "../../api/types/teamType";
+import TeamApi from "../../api/teamApi";
 
 export default function Home() {
-  // const [teamData, setTeamData] = useState({});
   const location = useLocation();
+  const [teamData, setTeamData] = useState<TeamListReturnType>({ list: [] });
   const [filters, setFilters] = useState<TeamFilters>({
     roleDetail: "",
     teamCategory: "",
   });
 
-  // useEffect(() => {
-  //   (async function () {
-  //     const response = await TeamFilter();
-  //     if (response.status !== 200) {
-  //       return alert("다시 시도해주세요.");
-  //     }
-  //     return console.log(response);
-  //   })();
-  // }, [location]);
+  useEffect(() => {
+    (async function () {
+      const response = await TeamApi.getTeamList();
+      setTeamData(response);
+      // if (response.status !== 200) {
+      //   return alert("다시 시도해주세요.");
+      // }
+    })();
+  }, [location]);
 
   return (
     <div>
@@ -32,18 +34,11 @@ export default function Home() {
       <Container>
         <Carousel />
         <Filter filters={filters} setFilters={setFilters} />
-        <RequestItem position={roleData} />
-        <RequestItem position={roleData} />
-        <RequestItem position={roleData} />
-        <RequestItem position={roleData} />
-        <RequestItem position={roleData} />
+        {teamData.list.length !== 0 ? <RequestItem content={teamData.list[0]} /> : <p>불러오는 중입니다.</p>}
       </Container>
     </div>
   );
 }
-// function TeamApi() {
-//   throw new Error("Function not implemented.");
-// }
 
 const Container = styled.div`
   position: absolute;

@@ -10,11 +10,13 @@ import MyProfilePage from "./pages/myProfilePage/MyProfilePage";
 import MyCurrentOpenTeamPage from "./pages/myCurrentOpenTeamPage/MyCurrentOpenTeamPage";
 import MyTeamHistoryPage from "./pages/myTeamHistoryPage/MyTeamHistoryPage";
 import MyTeamPartyPage from "./pages/myTeamPartyPage/MyTeamPartyPage";
+import { TeamDetail } from "./pages/teamDetail/teamDetail";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/:teamId" element={<TeamDetail />} />
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />

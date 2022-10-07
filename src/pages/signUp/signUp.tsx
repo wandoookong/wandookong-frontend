@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/layout";
 import { useNavigate } from "react-router-dom";
 import Navigation from "./components/navigation";
@@ -10,7 +10,8 @@ import { useSignUpReducer } from "./hooks/useSignUpReducer";
 export default function SignUp() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const { state, onChangeNickname, onChangeRoleMain, onChangeCareerRange, onChangeTagNameList } = useSignUpReducer();
+  const { state, onChangeUserSocialId, onChangeNickname, onChangeRoleMain, onChangeCareerRange, onChangeTagNameList } =
+    useSignUpReducer();
 
   const onPreviousHandler = () => setStep((step) => step - 1);
   const onNextHandler = () => setStep((step) => step + 1);
@@ -18,7 +19,14 @@ export default function SignUp() {
     navigate("/");
   };
 
-  // const userSocialId = document.cookie;
+  const getUserGoogleId = (): number | null => {
+    const value = document.cookie.match("(^|;) ?" + "userGoogleId=([^;]*)(;|$)");
+    return value ? parseInt(value[2]) : null;
+  };
+
+  // useEffect(() => {
+  //   onChangeUserSocialId(getUserGoogleId());
+  // }, []);
 
   return (
     <Layout>
