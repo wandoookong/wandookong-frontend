@@ -1,6 +1,6 @@
 import React from "react";
 import { ApplyMemberReturnType } from "../../api/types/teamMemberType";
-import ApplyMember from "./components/ApplyMember";
+import ApplyMember from "./components/ApplyMember/ApplyMember";
 
 type ApplyMemberContainerContextType = {
   applyMember: ApplyMemberReturnType;

@@ -5,7 +5,7 @@ import RequestForm from "./pages/requestForm/requestForm";
 import NotFound from "./pages/not-found/NotFound";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signUp/signUp";
-import MyPage from "./pages/myPage/myPage";
+import MyPage from "./pages/myPage/components/MyPage";
 import MyProfilePage from "./pages/myProfilePage/MyProfilePage";
 import MyCurrentOpenTeamPage from "./pages/myCurrentOpenTeamPage/MyCurrentOpenTeamPage";
 import MyTeamHistoryPage from "./pages/myTeamHistoryPage/MyTeamHistoryPage";

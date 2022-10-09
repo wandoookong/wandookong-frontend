@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../../components/layout/layout";
 import { CurrentOpenTeamReturnType } from "../../api/types/teamType";
 import MyTeamApi from "../../api/myTeamApi";
@@ -6,6 +6,9 @@ import TeamMemberApi from "../../api/teamMemberApi";
 import { AllowMemberListReturnType, ApplyMemberListReturnType } from "../../api/types/teamMemberType";
 import ApplyMemberContainer from "./ApplyMemberContainer";
 import AllowMemberContainer from "./AllowMemberContainer";
+import Header from "./components/Header";
+import MyTeamInfo from "./components/MyTeamInfo";
+import TabBar from "./components/TabBar";
 
 export type PageModeType = "apply" | "allow";
 
@@ -61,22 +64,18 @@ export default function MyCurrentOpenTeamPage() {
         <div>loading...</div>
       ) : (
         <>
-          <div>
-            <div>{currentOpenTeam.teamCategory === "portfolio" ? "포트폴리오" : "사이드 프로젝트"}</div>
-            <div>{currentOpenTeam.closeDueYmd}</div>
-            <div>{currentOpenTeam.title}</div>
-          </div>
-          <div>
-            <button onClick={(e) => onClickTab(e, "apply")}>신청자</button>
-            {pageMode === "apply" && <div>----</div>}
-            <button onClick={(e) => onClickTab(e, "allow")}>참여자</button>
-            {pageMode === "allow" && <div>----</div>}
-          </div>
+          <Header />
+          <MyTeamInfo {...currentOpenTeam} />
+          <TabBar pageMode={pageMode} onClickTab={onClickTab} />
           <>
             {pageMode === "apply" ? (
-              applyMemberList.list.map((applyMember) => <ApplyMemberContainer {...applyMember} />)
+              applyMemberList.list.map((applyMember) => (
+                <ApplyMemberContainer key={applyMember.teamMemberId} {...applyMember} />
+              ))
             ) : pageMode === "allow" ? (
-              allowMemberList.list.map((allowMember) => <AllowMemberContainer {...allowMember} />)
+              allowMemberList.list.map((allowMember) => (
+                <AllowMemberContainer key={allowMember.teamMemberId} {...allowMember} />
+              ))
             ) : (
               <div>404</div>
             )}
