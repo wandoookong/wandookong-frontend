@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { CAREER_RANGE, ROLE_MAIN } from "../../../api/types/fieldType";
-import { MyPageContext } from "./MyPage";
+import { MyPageContext } from "../MyPage";
 
 export default function MyInfo() {
   const { isLoading, meInfo } = useContext(MyPageContext);

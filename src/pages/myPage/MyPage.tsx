@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../../../components/layout/layout";
-import MyInfo from "./MyInfo";
-import MyTeam from "./MyTeam";
-import MyPageEtc from "./MyPageEtc";
-import UserApi from "../../../api/userApi";
-import { UserMeReturnType } from "../../../api/types/userType";
-import MyTeamApi from "../../../api/myTeamApi";
-import { CurrentOpenTeamReturnType } from "../../../api/types/teamType";
+import Layout from "../../components/layout/layout";
+import MyInfo from "./components/MyInfo";
+import MyTeam from "./components/MyTeam";
+import MyPageEtc from "./components/MyPageEtc";
+import UserApi from "../../api/userApi";
+import { UserMeReturnType } from "../../api/types/userType";
+import MyTeamApi from "../../api/myTeamApi";
+import { CurrentOpenTeamReturnType } from "../../api/types/teamType";
 
 type MyPageContextType = {
   isLoading: boolean;
