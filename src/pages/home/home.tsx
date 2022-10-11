@@ -28,13 +28,19 @@ export default function Home() {
     })();
   }, [location]);
 
+  //TODO 헤더 로그인 여부에 따라 변경
+
   return (
     <div>
       <HomeHeader />
       <Container>
         <Carousel />
         <Filter filters={filters} setFilters={setFilters} />
-        {teamData.list.length !== 0 ? <RequestItem content={teamData.list[0]} /> : <p>불러오는 중입니다.</p>}
+        {teamData.list.length === 0 && <p>불러오는 중입니다.</p>}
+        {teamData.list.length > 0 &&
+          teamData.list.map((teamDataList) => (
+            <RequestItem key={teamDataList.teamId} teamId={teamDataList.teamId} content={teamDataList} />
+          ))}
       </Container>
     </div>
   );

@@ -9,28 +9,29 @@ import { DoubleButton } from "../../../components/form/button/doubleButton";
 import { CircleRadioButton, Wrapper } from "../../../components/form/radioButton/circleRadioButton";
 
 interface Props {
+  myRole: Role;
+  onChangeRole(value: string): void;
   onPrevious(): void;
   onNext(): void;
 }
 
-export default function MyRoleStep({ onNext, onPrevious }: Props) {
-  const { state, onChangeRole } = useRequestFormReducer();
+export default function MyRoleStep({ myRole, onChangeRole, onNext, onPrevious }: Props) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => onChangeRole(e.currentTarget.value as Role);
   const onNextStep = () => {
-    const myRoleErrorMessage = myRoleValidation(state.myRole);
+    const myRoleErrorMessage = myRoleValidation(myRole);
     setErrorMessage(myRoleErrorMessage);
-    if (!isEmpty(state.myRole)) {
+    if (!isEmpty(myRole)) {
       onNext();
     }
   };
 
   useEffect(() => {
-    if (!isEmpty(state.myRole)) {
+    if (!isEmpty(myRole)) {
       setErrorMessage("");
     }
-  }, [state.myRole]);
+  }, [myRole]);
 
   return (
     <>
@@ -42,7 +43,7 @@ export default function MyRoleStep({ onNext, onPrevious }: Props) {
             key={role.id}
             label={role.label}
             value={role.value}
-            checked={state.myRole === role.value}
+            checked={myRole === role.value}
             onChange={onChange}
             gradient={role.gradient}
           />

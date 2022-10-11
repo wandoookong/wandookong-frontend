@@ -1,5 +1,14 @@
 import styled from "@emotion/styled";
 
+export function HeaderSubText({ title, subText }) {
+  return (
+    <Wrap>
+      <Header>{title}</Header>
+      <SubText>{subText}</SubText>
+    </Wrap>
+  );
+}
+
 const Wrap = styled.div`
   display: block;
   width: 100%;
@@ -22,12 +31,3 @@ const SubText = styled.p`
   font-weight: 400;
   color: #8b8b8b;
 `;
-
-export function HeaderSubText({ title, subText }) {
-  return (
-    <Wrap>
-      <Header>{title}</Header>
-      <SubText>{subText}</SubText>
-    </Wrap>
-  );
-}

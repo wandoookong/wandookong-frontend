@@ -8,29 +8,30 @@ import { DoubleButton } from "../../../components/form/button/doubleButton";
 import { TextArea } from "../../../components/form/textInput/multiText";
 
 interface Props {
+  description: string;
+  onChangeDescription(value: string): void;
   onPrevious(): void;
   onNext(): void;
 }
 
-export default function DescriptionStep({ onNext, onPrevious }: Props) {
-  const { state, onChangeDescription } = useRequestFormReducer();
+export default function DescriptionStep({ description, onChangeDescription, onNext, onPrevious }: Props) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => onChangeDescription(e.currentTarget.value);
 
   const onNextStep = () => {
-    const descriptionErrorMessage = descriptionValidation(state.description);
+    const descriptionErrorMessage = descriptionValidation(description);
     setErrorMessage(descriptionErrorMessage);
-    if (!isEmpty(state.description)) {
+    if (!isEmpty(description)) {
       onNext();
     }
   };
 
   useEffect(() => {
-    if (!isEmpty(state.description)) {
+    if (!isEmpty(description)) {
       setErrorMessage("");
     }
-  }, [state.description]);
+  }, [description]);
 
   return (
     <div>
@@ -40,7 +41,7 @@ export default function DescriptionStep({ onNext, onPrevious }: Props) {
       <TextArea
         placeholder="완두콩의 목표, 팀 문화, 자격요건 등 자유롭게 작성해주세요! "
         onChange={onChange}
-        value={state.description}
+        value={description}
       />
       <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </div>

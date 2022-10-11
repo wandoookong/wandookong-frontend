@@ -1,7 +1,38 @@
 import styled from "@emotion/styled";
 import { roleData } from "../../requestForm/requestFormSteps/roleData";
+import { css } from "@emotion/react";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+
+type roleMemberCount = {
+  roleMemberCount: number;
+};
+
+//TODO active/inactive 표시, 디데이, 필터 api
+
+export default function RequestItem({ teamId, content }) {
+  const navigate = useNavigate();
+
+  return (
+    <Wrapper onClick={(e) => navigate(`/${teamId}`)}>
+      <TitleWrapper>
+        {content.teamCategory === "portfolio" ? <p>포트폴리오</p> : <p>사이드 프로젝트</p>}
+        <h2>{content.title}</h2>
+      </TitleWrapper>
+      <DayCounter>
+        <p>D-6</p>
+      </DayCounter>
+      <RoleWrapper>
+        {content.teamCapacityList.map((role) => (
+          <RoleContent key={content.teamCapacityId}>
+            <RoleImage roleMemberCount={role.roleMemberCount} />
+            <p>{role.roleDetail}</p>
+          </RoleContent>
+        ))}
+      </RoleWrapper>
+    </Wrapper>
+  );
+}
 
 const Wrapper = styled.div`
   position: relative;
@@ -57,44 +88,25 @@ const RoleContent = styled.div`
   margin-right: 14px;
 `;
 
-const RoleImage = styled.div`
+const RoleImage = styled.div<roleMemberCount>`
   width: 48px;
   height: 48px;
   margin: 0;
-  background: #d3eef5;
   border-radius: 28px;
   + p {
     margin-top: 10px;
     font-wieght: 300;
     white-space: nowrap;
   }
+  ${(props) => {
+    if (!props.roleMemberCount) {
+      return css`
+        background: linear-gradient(137.26deg, #ffca02 0%, #648d00 104.28%);
+      `;
+    }
+    return css`
+      background: #47b561;
+      opacity: 80%;
+    `;
+  }}
 `;
-
-export default function RequestItem({ content }) {
-  const navigate = useNavigate();
-  const labelFinder = (role) => {
-    const label = roleData.filter((value) => value.value == role);
-  };
-
-  labelFinder("ux_ui");
-
-  return (
-    <Wrapper key={content.teamCapacityId} onClick={() => navigate(`/${content.teamCapacityId}`)}>
-      <TitleWrapper>
-        {content.teamCategory === "portfolio" ? <p>포트폴리오</p> : <p>사이드 프로젝트</p>}
-        <h2>{content.title}</h2>
-      </TitleWrapper>
-      <DayCounter>
-        <p>D-6</p>
-      </DayCounter>
-      <RoleWrapper>
-        {content.teamCapacityList.map((role) => (
-          <RoleContent key={content.teamCapacityId}>
-            <RoleImage />
-            <p>{role.roleDetail}</p>
-          </RoleContent>
-        ))}
-      </RoleWrapper>
-    </Wrapper>
-  );
-}

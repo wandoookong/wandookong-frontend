@@ -3,6 +3,29 @@ import { useState } from "react";
 import Chrun from "../../pages/requestForm/requestFormSteps/modal/churn";
 import CloseIcon from "@mui/icons-material/Close";
 
+interface Props {
+  step: number;
+}
+
+export function Navigation({ step }: Props) {
+  const [modal, setModal] = useState(false);
+
+  const onClick = () => {
+    setModal(!modal);
+  };
+  const value = Math.round((100 / 6) * step);
+
+  return (
+    <>
+      {modal && <Chrun setModal={setModal} />}
+      <Wrap>
+        <ProgressBar value={value} max="100" />
+        <CloseIcon sx={{ fontSize: 28, ml: 1 }} onClick={onClick} />
+      </Wrap>
+    </>
+  );
+}
+
 const Wrap = styled.div`
   display: flex;
   width: auto;
@@ -36,26 +59,3 @@ const ProgressBar = styled.progress`
     }
   }
 `;
-
-interface Props {
-  step: number;
-}
-
-export function Navigation({ step }: Props) {
-  const [modal, setModal] = useState(false);
-
-  const onClick = () => {
-    setModal(!modal);
-  };
-  const value = Math.round((100 / 6) * step);
-
-  return (
-    <>
-      {modal && <Chrun setModal={setModal} />}
-      <Wrap>
-        <ProgressBar value={value} max="100" />
-        <CloseIcon sx={{ fontSize: 28, ml: 1 }} onClick={onClick} />
-      </Wrap>
-    </>
-  );
-}

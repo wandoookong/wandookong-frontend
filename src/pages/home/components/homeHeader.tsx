@@ -3,39 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 
-const ContentWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  h1 {
-    font-size: 24px;
-    font-weight: 700;
-    margin: 0;
-  }
-`;
-
-const RightWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  button {
-    width: 92px;
-    height: 29px;
-    border: none;
-    border-radius: 8px;
-    background: #47b561;
-    font-size: 14px;
-    font-weight: 700;
-    color: #fff;
-  }
-  span {
-    margin-left: 22px;
-    font-size: 14px;
-    font-weight: 700;
-    color: #242c35;
-  }
-`;
-
 export const HomeHeader = ({ ...rest }) => {
   const navigate = useNavigate();
   const [scroll, setScroll] = useState(false);
@@ -91,3 +58,36 @@ export const HomeHeader = ({ ...rest }) => {
     </Container>
   );
 };
+
+const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+  }
+`;
+
+const RightWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  button {
+    width: 92px;
+    height: 29px;
+    border: none;
+    border-radius: 8px;
+    background: #47b561;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+  }
+  span {
+    margin-left: 22px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #242c35;
+  }
+`;

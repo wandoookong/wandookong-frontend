@@ -10,30 +10,32 @@ import { Wrapper } from "../../../components/form/radioButton/circleRadioButton"
 import { CircleCheckbox } from "../../../components/form/CircleCheckboxButton";
 
 interface Props {
+  myRole: Role;
+  members: AcceptableMembers;
+  onChangeMembers(value: keyof AcceptableMembers): void;
   onPrevious(): void;
   onNext(): void;
 }
 
-export default function RolesStep({ onNext, onPrevious }: Props) {
-  const { state, onChangeMembers } = useRequestFormReducer();
+export default function RolesStep({ members, myRole, onChangeMembers, onNext, onPrevious }: Props) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) =>
     onChangeMembers(e.currentTarget.value as keyof AcceptableMembers);
 
   const onNextStep = () => {
-    const rolesErrorMessage = rolesValidation(state.members);
+    const rolesErrorMessage = rolesValidation(members);
     setErrorMessage(rolesErrorMessage);
-    if (roles.validation(state.members)) {
+    if (roles.validation(members)) {
       onNext();
     }
   };
 
   useEffect(() => {
-    if (!isEmpty(state.members)) {
+    if (!isEmpty(members)) {
       setErrorMessage("");
     }
-  }, [state.members]);
+  }, [members]);
 
   return (
     <>
@@ -45,9 +47,9 @@ export default function RolesStep({ onNext, onPrevious }: Props) {
             key={role.id}
             label={role.label}
             value={role.value}
-            checked={state.members[role.value] === 1}
+            checked={members[role.value] === 1}
             onChange={onChange}
-            disabled={state.myRole === role.value}
+            disabled={myRole === role.value}
           />
         ))}
       </Wrapper>

@@ -9,29 +9,30 @@ import { DoubleButton } from "../../../components/form/button/doubleButton";
 import { HeaderSubText } from "../../../components/form/header/headerSubText";
 
 interface Props {
+  contact: string;
+  onChangeContact(value: string): void;
   onPrevious(): void;
   onNext(): void;
 }
 
-export default function Contact({ onNext, onPrevious }: Props) {
-  const { state, onChangeContact } = useRequestFormReducer();
+export default function Contact({ contact, onChangeContact, onNext, onPrevious }: Props) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => onChangeContact(e.currentTarget.value);
 
   const onNextStep = () => {
-    const contactErrorMessage = contactValidation(state.contact);
+    const contactErrorMessage = contactValidation(contact);
     setErrorMessage(contactErrorMessage);
-    if (!isEmpty(state.contact)) {
+    if (!isEmpty(contact)) {
       onNext();
     }
   };
 
   useEffect(() => {
-    if (!isEmpty(state.contact)) {
+    if (!isEmpty(contact)) {
       setErrorMessage("");
     }
-  }, [state.contact]);
+  }, [contact]);
 
   return (
     <>
@@ -40,11 +41,7 @@ export default function Contact({ onNext, onPrevious }: Props) {
         subText="해당 정보는 수락한 멤버 콩들 한테만 공개됩니다. "
       />
       <ErrorMessage text={errorMessage} />
-      <TextInput
-        value={state.contact}
-        onChange={onChange}
-        placeholder="카톡 ID, 이메일, 오픈 채팅 링크 등을 첨부해주세요."
-      />
+      <TextInput value={contact} onChange={onChange} placeholder="카톡 ID, 이메일, 오픈 채팅 링크 등을 첨부해주세요." />
       <DoubleButton prevLabel="이전" nextLabel="완료" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </>
   );

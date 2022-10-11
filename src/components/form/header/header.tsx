@@ -1,5 +1,13 @@
 import styled from "@emotion/styled";
 
+export function Header({ title }) {
+  return (
+    <Wrap>
+      <h1>{title}</h1>
+    </Wrap>
+  );
+}
+
 const Wrap = styled.div`
   display: block;
   width: 100%;
@@ -14,11 +22,3 @@ const Wrap = styled.div`
     color: #242c35;
   }
 `;
-
-export function Header({ title }) {
-  return (
-    <Wrap>
-      <h1>{title}</h1>
-    </Wrap>
-  );
-}

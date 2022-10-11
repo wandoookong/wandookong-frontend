@@ -62,6 +62,9 @@ export default function Filter({ filters, setFilters }: Props) {
                 <input type="radio" />
               </Label>
             ))}
+            <EmptySpace>
+              <Label checked={true} title="이거다" />
+            </EmptySpace>
           </LabelWrapper>
         </FilterContent>
         <FilterContent>
@@ -92,6 +95,10 @@ export default function Filter({ filters, setFilters }: Props) {
     </FilterWrapper>
   );
 }
+
+const EmptySpace = styled.div`
+  opacity: 0;
+`;
 
 const FilterWrapper = styled.div`
   position: relative;

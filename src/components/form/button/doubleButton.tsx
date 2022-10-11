@@ -1,5 +1,16 @@
 import styled from "@emotion/styled";
 
+export function DoubleButton({ prevLabel, nextLabel, onPrevStep, onNextStep }) {
+  return (
+    <Container>
+      <Wrap>
+        <PrevButton onClick={onPrevStep}>{prevLabel}</PrevButton>
+        <NextButton onClick={onNextStep}>{nextLabel}</NextButton>
+      </Wrap>
+    </Container>
+  );
+}
+
 const Wrap = styled.div`
   display: flex;
   position: absolute;
@@ -43,14 +54,3 @@ const Container = styled.div`
   width: 100%;
   height: 113px;
 `;
-
-export function DoubleButton({ prevLabel, nextLabel, onPrevStep, onNextStep }) {
-  return (
-    <Container>
-      <Wrap>
-        <PrevButton onClick={onPrevStep}>{prevLabel}</PrevButton>
-        <NextButton onClick={onNextStep}>{nextLabel}</NextButton>
-      </Wrap>
-    </Container>
-  );
-}

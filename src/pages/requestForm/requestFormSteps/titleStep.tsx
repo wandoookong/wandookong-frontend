@@ -8,29 +8,30 @@ import { useRequestFormReducer } from "../hooks/useRequestFormReducer";
 import { DoubleButton } from "../../../components/form/button/doubleButton";
 
 interface Props {
+  title: string;
+  onChangeTitle(value: string): void;
   onPrevious(): void;
   onNext(): void;
 }
 
-export default function TitleStep({ onPrevious, onNext }: Props) {
-  const { state, onChangeTitle } = useRequestFormReducer();
+export default function TitleStep({ title, onChangeTitle, onPrevious, onNext }: Props) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => onChangeTitle(e.currentTarget.value);
 
   const onNextStep = () => {
-    const titleErrorMessage = titleValidation(state.title);
+    const titleErrorMessage = titleValidation(title);
     setErrorMessage(titleErrorMessage);
-    if (!isEmpty(state.title)) {
+    if (!isEmpty(title)) {
       onNext();
     }
   };
 
   useEffect(() => {
-    if (!isEmpty(state.title)) {
+    if (!isEmpty(title)) {
       setErrorMessage("");
     }
-  }, [state.title]);
+  }, [title]);
 
   return (
     <>
@@ -38,7 +39,7 @@ export default function TitleStep({ onPrevious, onNext }: Props) {
       {!isEmpty(errorMessage) && <ErrorMessage text={errorMessage} />}
       <TextInput
         placeholder="함께 재미난 프로젝트 하실 분들 찾습니다! :)"
-        value={state.title}
+        value={title}
         maxLength="20"
         onChange={onChange}
       />
