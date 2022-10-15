@@ -45,7 +45,7 @@ export default function Login() {
           // new user
           console.log("new user");
           // 회원가입 페이지로 이동합니다.
-          window.location.href = "/signUp";
+          window.location.href = "/signUp?userSocialId=" + userSocialId;
         } else {
           throw new Error("no userSocialId, no accessToken.");
         }
