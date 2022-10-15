@@ -1,7 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro";
-import { useContext } from "react";
-import { ApplyMemberContainerContext } from "../../ApplyMemberContainer";
 
 const style = css`
   margin: 0 14px;
@@ -12,11 +10,7 @@ const style = css`
   }
 `;
 
-export default function TagList() {
-  const {
-    applyMember: { tagList },
-  } = useContext(ApplyMemberContainerContext);
-
+export default function TagList({ tagList }) {
   return (
     <div css={style}>
       {tagList.map((tagName) => (

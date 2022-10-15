@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro";
-import { useContext, useState } from "react";
-import { ApplyMemberContainerContext } from "../../ApplyMemberContainer";
+import { useState } from "react";
 
 const styleMemo = css`
   margin: 0 14px;
@@ -37,11 +36,7 @@ const styleArrow = css`
   }
 `;
 
-export default function MemoBox() {
-  const {
-    applyMember: { memo },
-  } = useContext(ApplyMemberContainerContext);
-
+export default function MemoBox({ memo }) {
   const [showFullText, setShowFullText] = useState(false);
 
   return (

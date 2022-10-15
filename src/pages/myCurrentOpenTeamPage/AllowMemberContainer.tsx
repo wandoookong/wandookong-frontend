@@ -1,6 +1,6 @@
 import React from "react";
 import { AllowMemberReturnType } from "../../api/types/teamMemberType";
-import AllowMember from "./components/AllowMember";
+import AllowMember from "./components/AllowMember/AllowMember";
 
 type AllowMemberContainerContextType = {
   allowMember: AllowMemberReturnType;

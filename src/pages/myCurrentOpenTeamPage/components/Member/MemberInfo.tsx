@@ -1,7 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro";
-import { useContext } from "react";
-import { ApplyMemberContainerContext } from "../../ApplyMemberContainer";
 import { ROLE_DETAIL, CAREER_RANGE } from "../../../../api/types/fieldType";
 
 const styleBox = css`
@@ -26,11 +24,7 @@ const styleInfo = css`
   color: #434445;
 `;
 
-export default function ApplyMemberInfo() {
-  const {
-    applyMember: { roleDetail, nickname, careerRange },
-  } = useContext(ApplyMemberContainerContext);
-
+export default function MemberInfo({ roleDetail, nickname, careerRange }) {
   return (
     <div css={styleBox}>
       <div css={styleNickname}>{nickname}</div>

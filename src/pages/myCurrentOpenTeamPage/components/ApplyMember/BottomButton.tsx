@@ -1,7 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro";
-import { useContext } from "react";
-import { ApplyMemberContainerContext } from "../../ApplyMemberContainer";
 
 const style = css`
   display: flex;
