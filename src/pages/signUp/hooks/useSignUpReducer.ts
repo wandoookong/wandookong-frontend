@@ -39,7 +39,7 @@ function reducer(state: State, action: Actions) {
 
 export function useSignUpReducer() {
   const [state, dispatch] = useReducer(reducer, {
-    userSocialId: 0,
+    userSocialId: 3,
     nickname: "",
     roleMain: "",
     careerRange: "",

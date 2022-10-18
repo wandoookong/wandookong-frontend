@@ -4,10 +4,8 @@ import { Carousel } from "./components/carousel";
 import Filter from "./components/filter";
 import RequestItem from "./components/requestItem";
 import styled from "@emotion/styled";
-import { roleData } from "../requestForm/requestFormSteps/roleData";
-import TeamFilter from "../../api/teamFilter";
-import { useLocation, useNavigate } from "react-router-dom";
-import { TeamListReturnType, TeamReturnType } from "../../api/types/teamType";
+import { useLocation } from "react-router-dom";
+import { TeamListReturnType } from "../../api/types/teamType";
 import TeamApi from "../../api/teamApi";
 
 export default function Home() {
@@ -31,7 +29,7 @@ export default function Home() {
   //TODO 헤더 로그인 여부에 따라 변경
 
   return (
-    <div>
+    <>
       <HomeHeader />
       <Container>
         <Carousel />
@@ -42,7 +40,7 @@ export default function Home() {
             <RequestItem key={teamDataList.teamId} teamId={teamDataList.teamId} content={teamDataList} />
           ))}
       </Container>
-    </div>
+    </>
   );
 }
 

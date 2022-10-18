@@ -1,7 +1,5 @@
 import styled from "@emotion/styled";
-import { roleData } from "../../requestForm/requestFormSteps/roleData";
 import { css } from "@emotion/react";
-import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 
 type roleMemberCount = {
@@ -19,9 +17,9 @@ export default function RequestItem({ teamId, content }) {
         {content.teamCategory === "portfolio" ? <p>포트폴리오</p> : <p>사이드 프로젝트</p>}
         <h2>{content.title}</h2>
       </TitleWrapper>
-      <DayCounter>
+      <TagWrapper>
         <p>D-6</p>
-      </DayCounter>
+      </TagWrapper>
       <RoleWrapper>
         {content.teamCapacityList.map((role) => (
           <RoleContent key={content.teamCapacityId}>
@@ -45,40 +43,40 @@ const Wrapper = styled.div`
 const TitleWrapper = styled.div`
   p {
     margin: 0 0 8px 0;
-    font-family: Pretendard;
     font-size: 12px;
     font-weight: 400;
     color: #3f3f3f;
   }
+
   h2 {
-    font-family: Pretendard;
     font-size: 16px;
     margin: 0;
   }
 `;
 
-const DayCounter = styled.div`
+const TagWrapper = styled.div`
   position: absolute;
   padding: 3px 8px;
   top: 16px;
   right: 12px;
   background: #ddba40;
-  border-radius: 23px;
+  border-radius: 40px;
+
   p {
     margin: 0;
     padding: 0;
     color: #ffffff;
-    font-family: Pretendard;
     font-size: 12px;
     font-weight: 700;
+    line-height: 17px;
   }
 `;
 
 const RoleWrapper = styled.div`
   display: flex;
   margin: 12px 0 0 0;
+
   p {
-    font-family: Pretendard;
     font-size: 14px;
     font-weight: 500;
     text-align: center;

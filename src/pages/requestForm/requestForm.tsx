@@ -9,6 +9,7 @@ import Contact from "./requestFormSteps/contact";
 import Layout from "../../components/layout/layout";
 import { useRequestFormReducer } from "./hooks/useRequestFormReducer";
 import { useNavigate } from "react-router-dom";
+import TeamApi from "../../api/teamApi";
 
 export default function RequestForm() {
   const [step, setStep] = useState(1);
@@ -25,10 +26,10 @@ export default function RequestForm() {
   const navigate = useNavigate();
   const onPreviousHandler = () => setStep((step) => step - 1);
   const onNextHandler = () => setStep((step) => step + 1);
-  const onSubmit = () => {
-    //TODO api 쏘는게 성공했다면 알러트
-    alert("완두콩이 생성되었습니다.");
-    navigate("/");
+  const onSubmit = async () => {
+    const response = await TeamApi.setTeam(state);
+    console.log(response);
+    // navigate("/");
   };
   //TODO error message 노출위치 서브 타이틀로 변경하기
 

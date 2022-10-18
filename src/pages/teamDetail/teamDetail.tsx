@@ -47,9 +47,9 @@ export function TeamDetail() {
             <Label>포트폴리오</Label>
             <TeamTitle>{teamData.title}</TeamTitle>
           </div>
-          <DdayCounter>
+          <TagWrapper>
             <p>D-6</p>
-          </DdayCounter>
+          </TagWrapper>
         </TitleWrap>
         <div>
           <Title>완두콩 소개</Title>
@@ -106,23 +106,23 @@ const EmptySpace = styled.div`
   opacity: 0;
 `;
 
-const DdayCounter = styled.div`
+const TagWrapper = styled.div`
   height: 100%;
   padding: 3px 8px;
-  border-radius: 23px;
+  border-radius: 40px;
   background: #ddba40;
+
   p {
     margin: 0;
     padding: 0;
     color: #ffffff;
-    font-family: Pretendard;
     font-size: 12px;
     font-weight: 700;
+    line-height: 17px;
   }
 `;
 
 const ContentLabel = styled.p`
-  font-family: Pretendard;
   font-size: 14px;
   font-weight: 700;
   line-height: 17px;
@@ -133,7 +133,6 @@ const ContentLabel = styled.p`
 const TeamTitle = styled.h3`
   margin: 0;
   padding: 5px 0 0 0;
-  font-family: Pretendard;
   font-size: 24px;
   font-weight: 700;
   line-height: 29px;
@@ -144,7 +143,6 @@ const TeamTitle = styled.h3`
 const Label = styled.p`
   margin: 0;
   padding: 0;
-  font-family: Pretendard;
   font-size: 12px;
   font-weight: 400;
   line-height: 17px;
@@ -171,7 +169,6 @@ const DescriptionWrap = styled.div`
 
 const Description = styled.span`
   font-size: 14px;
-  font-family: Pretendard;
   line-height: 135%;
   color: #242c35;
 `;
@@ -186,7 +183,6 @@ const Title = styled.div`
   margin-bottom: 12px;
   font-size: 18px;
   font-weight: 700;
-  font-family: Pretendard;
 `;
 
 const TeamWrap = styled.div`

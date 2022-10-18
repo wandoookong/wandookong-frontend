@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
 import { roleData } from "../../requestForm/requestFormSteps/roleData";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import TeamFilter from "../../../api/teamFilter";
 import qs from "qs";
 
 interface Props {
@@ -96,18 +95,14 @@ export default function Filter({ filters, setFilters }: Props) {
   );
 }
 
-const EmptySpace = styled.div`
-  opacity: 0;
-`;
-
-const FilterWrapper = styled.div`
+const FilterWrapper = styled.section`
   position: relative;
   margin: 32px 0 0 20px;
   padding-bottom: 8px;
   border-bottom: 1px solid #f0ebd8;
+
   h3 {
     margin: 0;
-    font-family: Pretendard;
     font-size: 20px;
     font-weight: 700;
   }
@@ -127,7 +122,6 @@ const FilterContent = styled.div`
   }
   p {
     display: inline-block;
-    font-family: Pretendard;
     font-size: 12px;
     color: #242c35;
     margin: 0;
@@ -148,11 +142,14 @@ const Label = styled.label<{ checked: boolean }>`
   border: 1px solid #ffdd86;
   padding: 6px 8px;
   border-radius: 32px;
-  font-family: Pretendard;
   color: #242c35;
   font-size: 12px;
   box-shadow: 0px 1px 3px rgba(181, 191, 197, 0.3);
   input {
     display: none;
   }
+`;
+
+const EmptySpace = styled.div`
+  opacity: 0;
 `;

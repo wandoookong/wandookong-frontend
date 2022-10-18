@@ -1,32 +1,36 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/layout";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navigation from "./components/navigation";
 import NickNamePage from "./signUpForm/nickNamePage";
 import PositionPage from "./signUpForm/positionPage";
 import TagPage from "./signUpForm/tagPage";
 import { useSignUpReducer } from "./hooks/useSignUpReducer";
+import qs from "qs";
+import signUpApi from "../../api/signUpApi";
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [step, setStep] = useState(1);
   const { state, onChangeUserSocialId, onChangeNickname, onChangeRoleMain, onChangeCareerRange, onChangeTagNameList } =
     useSignUpReducer();
-
+  const query = qs.parse(location.search, { ignoreQueryPrefix: true });
   const onPreviousHandler = () => setStep((step) => step - 1);
   const onNextHandler = () => setStep((step) => step + 1);
   const onClick = () => {
     navigate("/");
   };
-
-  const getUserGoogleId = (): number | null => {
-    const value = document.cookie.match("(^|;) ?" + "userGoogleId=([^;]*)(;|$)");
-    return value ? parseInt(value[2]) : null;
+  const onSubmit = async () => {
+    const response = await signUpApi.setUser(state);
+    console.log(response);
+    // navigate(-1);
   };
 
-  // useEffect(() => {
-  //   onChangeUserSocialId(getUserGoogleId());
-  // }, []);
+  useEffect(() => {
+    console.log(state);
+    // onChangeUserSocialId(Number(query.userSocialId));
+  }, [state]);
 
   return (
     <Layout>
@@ -48,7 +52,7 @@ export default function SignUp() {
             tags={state.tagNameList}
             nickname={state.nickname}
             onChange={onChangeTagNameList}
-            onNext={onNextHandler}
+            onNext={onSubmit}
             onPrev={onPreviousHandler}
           />
         )}

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 
-export const HomeHeader = ({ ...rest }) => {
+export const HomeHeader = () => {
   const navigate = useNavigate();
   const [scroll, setScroll] = useState(false);
   const handleScroll = () => {
@@ -18,30 +18,8 @@ export const HomeHeader = ({ ...rest }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const Container = styled.div`
-    position: fixed;
-    top: 0;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 57px 20px 15px 20px;
-    z-index: 900;
-
-    ${() => {
-      if (!scroll) {
-        return css`
-          background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
-        `;
-      }
-      return css`
-        background: linear-gradient(180deg, #faf7eb 0.01%, rgba(250, 247, 235, 0.04) 95.83%);
-        box-shadow: 0px -3px 10px rgba(199, 196, 186, 0.25);
-        backdrop-filter: blur(150px);
-      `;
-    }}
-  `;
-
   return (
-    <Container>
+    <Container scroll={scroll}>
       <ContentWrapper>
         <h1 onClick={() => navigate("/")}>완두콩</h1>
         <RightWrapper>
@@ -59,10 +37,33 @@ export const HomeHeader = ({ ...rest }) => {
   );
 };
 
+const Container = styled.section<{ scroll: boolean }>`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 57px 20px 15px 20px;
+  z-index: 900;
+
+  ${(props) => {
+    if (!props.scroll) {
+      return css`
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+      `;
+    }
+    return css`
+      background: linear-gradient(180deg, #faf7eb 0.01%, rgba(250, 247, 235, 0.04) 95.83%);
+      box-shadow: 0px -3px 10px rgba(199, 196, 186, 0.25);
+      backdrop-filter: blur(150px);
+    `;
+  }}
+`;
+
 const ContentWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   h1 {
     font-size: 24px;
     font-weight: 700;
@@ -74,6 +75,7 @@ const RightWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+
   button {
     width: 92px;
     height: 29px;
@@ -84,6 +86,7 @@ const RightWrapper = styled.div`
     font-weight: 700;
     color: #fff;
   }
+
   span {
     margin-left: 22px;
     font-size: 14px;
