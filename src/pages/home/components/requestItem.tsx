@@ -24,7 +24,7 @@ export default function RequestItem({ teamId, content }) {
         {content.teamCapacityList.map((role) => (
           <RoleContent key={content.teamCapacityId}>
             <RoleImage roleMemberCount={role.roleMemberCount} />
-            <p>{role.roleDetail}</p>
+            <p>{role.roleDetailName}</p>
           </RoleContent>
         ))}
       </RoleWrapper>

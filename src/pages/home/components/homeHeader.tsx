@@ -20,29 +20,30 @@ export const HomeHeader = () => {
 
   return (
     <Container scroll={scroll}>
-      <ContentWrapper>
-        <h1 onClick={() => navigate("/")}>완두콩</h1>
-        <RightWrapper>
-          {scroll && <button onClick={() => navigate("/request")}>완두콩 만들기</button>}
-          <span onClick={() => navigate("/login")}>로그인</span>
-          {/*{rest && (*/}
-          {/*  <div>*/}
-          {/*    <NotificationIcon onClick={() => navigate("/")} sx={{ fontSize: 24, ml: 2 }} />*/}
-          {/*    <AccountIcon onClick={() => navigate("/login")} sx={{ fontSize: 24, ml: 2 }} />*/}
-          {/*  </div>*/}
-          {/*)}*/}
-        </RightWrapper>
-      </ContentWrapper>
+      <h1 onClick={() => navigate("/")}>완두콩</h1>
+      <RightWrapper>
+        {scroll && <button onClick={() => navigate("/request")}>완두콩 만들기</button>}
+        <span onClick={() => navigate("/login")}>로그인</span>
+        {/*{rest && (*/}
+        {/*  <div>*/}
+        {/*    <NotificationIcon onClick={() => navigate("/")} sx={{ fontSize: 24, ml: 2 }} />*/}
+        {/*    <AccountIcon onClick={() => navigate("/login")} sx={{ fontSize: 24, ml: 2 }} />*/}
+        {/*  </div>*/}
+        {/*)}*/}
+      </RightWrapper>
     </Container>
   );
 };
 
-const Container = styled.section<{ scroll: boolean }>`
+const Container = styled.div<{ scroll: boolean }>`
   position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   top: 0;
   width: 100%;
   box-sizing: border-box;
-  padding: 57px 20px 15px 20px;
+  padding: 57px 20px 20px 20px;
   z-index: 900;
 
   ${(props) => {
@@ -57,12 +58,6 @@ const Container = styled.section<{ scroll: boolean }>`
       backdrop-filter: blur(150px);
     `;
   }}
-`;
-
-const ContentWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 
   h1 {
     font-size: 24px;

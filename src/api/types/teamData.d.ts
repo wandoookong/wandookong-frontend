@@ -8,6 +8,7 @@ type TeamData = {
     {
       teamCapacityId: 0;
       roleDetail: string;
+      roleDetailName: string;
       roleMaxCount: 0;
       teamLead: true;
       careerRange: string;

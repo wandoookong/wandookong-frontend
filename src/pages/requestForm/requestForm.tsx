@@ -8,7 +8,6 @@ import DescriptionStep from "./requestFormSteps/descriptionStep";
 import Contact from "./requestFormSteps/contact";
 import Layout from "../../components/layout/layout";
 import { useRequestFormReducer } from "./hooks/useRequestFormReducer";
-import { useNavigate } from "react-router-dom";
 import TeamApi from "../../api/teamApi";
 
 export default function RequestForm() {
@@ -23,13 +22,11 @@ export default function RequestForm() {
     onChangeContact,
   } = useRequestFormReducer();
 
-  const navigate = useNavigate();
   const onPreviousHandler = () => setStep((step) => step - 1);
   const onNextHandler = () => setStep((step) => step + 1);
   const onSubmit = async () => {
     const response = await TeamApi.setTeam(state);
     console.log(response);
-    // navigate("/");
   };
   //TODO error message 노출위치 서브 타이틀로 변경하기
 

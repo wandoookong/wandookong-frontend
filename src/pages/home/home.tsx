@@ -18,7 +18,7 @@ export default function Home() {
 
   useEffect(() => {
     (async function () {
-      const response = await TeamApi.getTeamList();
+      const response = await TeamApi.getTeamList(location.search);
       setTeamData(response);
       // if (response.status !== 200) {
       //   return alert("다시 시도해주세요.");
@@ -34,7 +34,7 @@ export default function Home() {
       <Container>
         <Carousel />
         <Filter filters={filters} setFilters={setFilters} />
-        {teamData.list.length === 0 && <p>불러오는 중입니다.</p>}
+        {teamData.list.length === 0 && <EmptyPage>아직 만들어진 완두콩이 없습니다.</EmptyPage>}
         {teamData.list.length > 0 &&
           teamData.list.map((teamDataList) => (
             <RequestItem key={teamDataList.teamId} teamId={teamDataList.teamId} content={teamDataList} />
@@ -50,4 +50,12 @@ const Container = styled.div`
   margin: 0;
   padding: 0;
   width: 100%;
+  overflow-y: hidden;
+`;
+
+const EmptyPage = styled.p`
+  margin-top: 80px;
+  font-size: 14px;
+  color: #999999;
+  text-align: center;
 `;

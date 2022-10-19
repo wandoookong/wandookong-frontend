@@ -20,6 +20,7 @@ export function TeamDetail() {
       {
         teamCapacityId: 0,
         roleDetail: "",
+        roleDetailName: "",
         roleMaxCount: 0,
         teamLead: true,
         careerRange: "",
@@ -62,16 +63,36 @@ export function TeamDetail() {
         </div>
         <div>
           <Title>멤버 콩</Title>
+          <TeamWrap backgroundColor="#afd89e">
+            <RoleImage />
+            <div>
+              <ContentLabel>프론트 콩 모집 중이에요.</ContentLabel>
+            </div>
+          </TeamWrap>
+          <TeamWrap backgroundColor="#afd89e">
+            <RoleImage />
+            <div>
+              <ContentLabel>앱 콩 모집 중이에요.</ContentLabel>
+            </div>
+          </TeamWrap>
           {teamData.teamCapacityList.map((role) => (
-            <TeamWrap>
+            <TeamWrap backgroundColor="#ffffff">
               <RoleImage />
-              <div>
-                <ContentLabel>백앤드 콩 모집 중이에요.</ContentLabel>
-              </div>
+              <TeamContent>
+                <TeamTitleLayout>
+                  <div>
+                    <RoleLabel>{role.roleDetailName}</RoleLabel>
+                    {role.teamLead && <LeadTag>리더</LeadTag>}
+                  </div>
+                  <span>{role.careerRange}</span>
+                </TeamTitleLayout>
+
+                {/*{role.tagList.length > 0 && role.tagList.map((tag) => <span>{tag}</span>)}*/}
+              </TeamContent>
             </TeamWrap>
           ))}
           <EmptySpace>
-            <TeamWrap>
+            <TeamWrap backgroundColor="#ffffff">
               <RoleImage />
               <div>
                 <ContentLabel>백앤드 콩 모집 중이에요.</ContentLabel>
@@ -79,26 +100,26 @@ export function TeamDetail() {
             </TeamWrap>
           </EmptySpace>
         </div>
-        <SingleButton label="참여하기" onClick={() => navigate("/")} />
+        <SingleButton label="참여하기" onClick={() => navigate(`/${param.teamId}/apply`)} />
       </Wrapper>
     </div>
   );
 }
 
 const Wrapper = styled.div`
-  margin: 0;
+  margin: 92px 0 0 0;
   padding: 0 20px;
 `;
 
-//absolute(relative), fixed(화면 기준) 레이어 위에 얹는거 같이 됨
 const HeaderWrap = styled.div`
-  top: 0;
-  width: 100%;
-  margin: 44px 0 12px 0;
-  padding: 0 20px;
   display: flex;
   flex-direction: row-reverse;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 44px 12px 20px;
   box-sizing: border-box;
+  background: rgba(250, 247, 235, 1);
 `;
 
 const EmptySpace = styled.div`
@@ -123,11 +144,51 @@ const TagWrapper = styled.div`
 `;
 
 const ContentLabel = styled.p`
+  display: block;
+  width: 100%;
   font-size: 14px;
   font-weight: 700;
   line-height: 17px;
-  letter-spacing: 0em;
+  letter-spacing: 0;
   color: #242c35;
+`;
+
+const RoleLabel = styled.dt`
+  display: inline;
+  margin-bottom: 7px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: 0;
+  color: #242c35;
+`;
+
+const LeadTag = styled.span`
+  margin-left: 8px;
+  padding: 0 8px;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 143%;
+  border-radius: 12px;
+  color: #242c35;
+  background: #f8e65a;
+`;
+
+const TeamTitleLayout = styled.div`
+  display: flex;
+  justify-content: space-between;
+  span {
+    font-size: 12px;
+    line-height: 14px;
+    text-align: right;
+    color: #434445;
+  }
+`;
+
+const TeamContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
 const TeamTitle = styled.h3`
@@ -185,19 +246,20 @@ const Title = styled.div`
   font-weight: 700;
 `;
 
-const TeamWrap = styled.div`
+const TeamWrap = styled.div<{ backgroundColor: string }>`
   display: flex;
+  align-items: center;
   width: 100%;
   margin: 0 0 9px 0;
   padding: 11px 14px 10px 14px;
   height: 71px;
-  background: #afd89e;
+  background: ${(props) => props.backgroundColor};
   border-radius: 8px;
   box-sizing: border-box;
 `;
 
 const RoleImage = styled.div`
-  width: 50px;
+  min-width: 50px;
   height: 50px;
   margin: 0 6px 0 0;
   border-radius: 28px;

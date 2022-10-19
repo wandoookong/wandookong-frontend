@@ -24,7 +24,6 @@ export default function SignUp() {
   const onSubmit = async () => {
     const response = await signUpApi.setUser(state);
     console.log(response);
-    // navigate(-1);
   };
 
   useEffect(() => {

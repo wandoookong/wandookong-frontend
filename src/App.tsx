@@ -11,11 +11,13 @@ import MyCurrentOpenTeamPage from "./pages/myCurrentOpenTeamPage/MyCurrentOpenTe
 import MyTeamHistoryPage from "./pages/myTeamHistoryPage/MyTeamHistoryPage";
 import MyTeamPartyPage from "./pages/myTeamPartyPage/MyTeamPartyPage";
 import { TeamDetail } from "./pages/teamDetail/teamDetail";
+import ApplyTeam from "./pages/teamDetail/applyTeam";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/:teamId/apply" element={<ApplyTeam />} />
         <Route path="/:teamId" element={<TeamDetail />} />
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

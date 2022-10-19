@@ -114,9 +114,9 @@ const ContentWrapper = styled.div`
 
 const FilterContent = styled.div`
   height: 100%;
-  overflow: auto;
   white-space: nowrap;
   margin: 0 0 8px 0;
+  overflow-y: hidden;
   ::-webkit-scrollbar {
     display: none;
   }

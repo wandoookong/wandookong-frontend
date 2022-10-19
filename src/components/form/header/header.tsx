@@ -15,8 +15,8 @@ const Wrap = styled.div`
   padding: 0 0 80px 0;
   h1 {
     margin: 0;
-    font-family: Pretendard;
     font-size: 30px;
+    font-weight: 700;
     line-height: 1.5;
     white-space: pre-line;
     color: #242c35;

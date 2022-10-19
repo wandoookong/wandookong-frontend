@@ -15,8 +15,8 @@ interface Props {
 }
 
 export default class TeamApi {
-  static getTeamList(): Promise<TeamListReturnType> {
-    return requester.get(`${process.env.REACT_APP_HOST_NAME}/api/teams`);
+  static getTeamList(query?: string): Promise<TeamListReturnType> {
+    return requester.get(`${process.env.REACT_APP_HOST_NAME}/api/teams/${query}`);
   }
 
   static getTeamData(teamId: number): Promise<TeamData> {
