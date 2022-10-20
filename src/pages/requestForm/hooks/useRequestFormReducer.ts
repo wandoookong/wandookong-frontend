@@ -4,7 +4,7 @@ interface State {
   teamCategory: TeamCategory;
   title: string;
   myRole: Role;
-  members: AcceptableMembers;
+  member: AcceptableMembers;
   description: string;
   contact: string;
 }
@@ -27,17 +27,17 @@ function reducer(state: State, action: Actions) {
     case "ON_CHANGE_STATE_ACTION":
       return {
         ...state,
-        members: {
-          ...state.members,
+        member: {
+          ...state.member,
         },
         [action.key]: action.value,
       };
     case "ON_CHANGE_MEMBER_ACTION":
       return {
         ...state,
-        members: {
-          ...state.members,
-          [action.value]: state.members[action.value] > 0 ? 0 : 1,
+        member: {
+          ...state.member,
+          [action.value]: state.member[action.value] > 0 ? 0 : 1,
         },
       };
     default:
@@ -50,7 +50,7 @@ export function useRequestFormReducer() {
     teamCategory: "",
     title: "",
     myRole: "",
-    members: {
+    member: {
       product: 0,
       ux_ui: 0,
       app: 0,

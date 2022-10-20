@@ -20,13 +20,8 @@ export default function Home() {
     (async function () {
       const response = await TeamApi.getTeamList(location.search);
       setTeamData(response);
-      // if (response.status !== 200) {
-      //   return alert("다시 시도해주세요.");
-      // }
     })();
   }, [location]);
-
-  //TODO 헤더 로그인 여부에 따라 변경
 
   return (
     <>

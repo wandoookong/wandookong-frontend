@@ -45,6 +45,7 @@ const LengthInfo = styled.p`
 
 export function TextInput({ value, ...rest }) {
   const maxLength = rest.maxLength;
+
   return (
     <>
       <Input type="text" maxLength={maxLength} value={value} {...rest} />

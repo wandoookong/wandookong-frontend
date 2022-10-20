@@ -21,15 +21,19 @@ export default function SignUp() {
   const onClick = () => {
     navigate("/");
   };
+
   const onSubmit = async () => {
-    const response = await signUpApi.setUser(state);
-    console.log(response);
+    try {
+      const response = await signUpApi.createUser(state);
+      navigate('/')
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
-    console.log(state);
-    // onChangeUserSocialId(Number(query.userSocialId));
-  }, [state]);
+    onChangeUserSocialId(Number(query.userSocialId));
+  }, [location]);
 
   return (
     <Layout>

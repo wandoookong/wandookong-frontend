@@ -4,6 +4,7 @@ import { Header } from "../../../components/form/header/header";
 import { TextInput } from "../../../components/form/textInput/textInput";
 import { isEmpty, required } from "../../../@types/utility/typeGuard";
 import ErrorMessage from "../../../components/form/errorMessage";
+import signUpApi from "../../../api/signUpApi";
 
 interface Props {
   nickname: string;
@@ -13,7 +14,6 @@ interface Props {
 
 export default function NickNamePage({ nickname, onChange, onNext }: Props) {
   const [error, setError] = useState("");
-
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => onChange(e.currentTarget.value);
 
   //TODO validation 모으기
@@ -32,11 +32,15 @@ export default function NickNamePage({ nickname, onChange, onNext }: Props) {
     return result;
   };
 
-  const onClick = () => {
+  const onClick = async () => {
     const errorMessage = nicknameValidation(nickname);
     setError(errorMessage);
     if (!isEmpty(nickname)) {
-      onNext();
+      const response = await signUpApi.checkNickname({ nickname });
+      if (!response.isAvailable) {
+        return setError("이미 사용중인 아이디입니다");
+      }
+      return onNext();
     }
   };
 

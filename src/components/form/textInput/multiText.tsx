@@ -43,7 +43,7 @@ const maxLength = 1000;
 export function TextArea({ onChange, value, ...rest }) {
   return (
     <div>
-      <MultiText onChange={onChange} {...rest} />
+      <MultiText onChange={onChange} value={value} {...rest} />
       <LengthInfo>
         {value.length}/{maxLength}
       </LengthInfo>

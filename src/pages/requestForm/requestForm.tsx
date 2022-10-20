@@ -9,6 +9,8 @@ import Contact from "./requestFormSteps/contact";
 import Layout from "../../components/layout/layout";
 import { useRequestFormReducer } from "./hooks/useRequestFormReducer";
 import TeamApi from "../../api/teamApi";
+import { isEmpty } from "../../@types/utility/typeGuard";
+import { useNavigate } from "react-router-dom";
 
 export default function RequestForm() {
   const [step, setStep] = useState(1);
@@ -22,13 +24,17 @@ export default function RequestForm() {
     onChangeContact,
   } = useRequestFormReducer();
 
+  const navigate = useNavigate();
   const onPreviousHandler = () => setStep((step) => step - 1);
   const onNextHandler = () => setStep((step) => step + 1);
   const onSubmit = async () => {
     const response = await TeamApi.setTeam(state);
-    console.log(response);
+    if (isEmpty(response.teamId)) {
+      return alert("완두콩이 생성되지 않았습니다. 다시 시도해주세요.");
+    }
+    navigate("/");
+    return alert("완두콩이 생성되었습니다.");
   };
-  //TODO error message 노출위치 서브 타이틀로 변경하기
 
   return (
     <Layout>
@@ -61,7 +67,7 @@ export default function RequestForm() {
         {step === 4 && (
           <RolesStep
             myRole={state.myRole}
-            members={state.members}
+            member={state.member}
             onChangeMembers={onChangeMembers}
             onPrevious={onPreviousHandler}
             onNext={onNextHandler}

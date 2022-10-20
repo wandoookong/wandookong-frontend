@@ -4,10 +4,10 @@ import { TeamListReturnType } from "./types/teamType";
 interface State {
   teamCategory: TeamCategory;
   title: string;
-  myRole: Role;
-  members: AcceptableMembers;
   description: string;
   contact: string;
+  myRole: Role;
+  member: AcceptableMembers;
 }
 
 interface Props {
@@ -24,6 +24,6 @@ export default class TeamApi {
   }
 
   static setTeam(value: State): Promise<Props> {
-    return requester.post(`${process.env.REACT_APP_HOST_NAME}/api/teams`);
+    return requester.post(`${process.env.REACT_APP_HOST_NAME}/api/teams`, value);
   }
 }
