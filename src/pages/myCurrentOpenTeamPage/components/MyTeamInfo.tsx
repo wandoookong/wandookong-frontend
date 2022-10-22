@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro";
-import { differenceInDays } from "date-fns";
+import { DdayPill } from "../../../components/pill/DdayPill";
 
 const styleSub = css`
   margin: 0 20px;
@@ -32,24 +32,4 @@ export default function MyTeamInfo({ teamCategory, closeDueYmd, title }) {
       <div css={styleTitle}>{title}</div>
     </section>
   );
-}
-
-const stylePill = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 6px 9px;
-  background: #ddba40;
-  border-radius: 18px;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 17.16px;
-  letter-spacing: -0.005em;
-  color: #ffffff;
-`;
-
-function DdayPill({ closeDueYmd }) {
-  const diff = differenceInDays(new Date(closeDueYmd), new Date());
-  return <div css={stylePill}>D-{diff}</div>;
 }

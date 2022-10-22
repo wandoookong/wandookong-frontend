@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../../components/layout/layout";
 import MyInfo from "./components/MyInfo";
-import MyTeam from "./components/MyTeam";
+import CurrentOpenTeam from "./components/CurrentOpenTeam";
 import MyPageEtc from "./components/MyPageEtc";
 import UserApi from "../../api/userApi";
 import { UserMeReturnType } from "../../api/types/userType";
 import MyTeamApi from "../../api/myTeamApi";
 import { CurrentOpenTeamReturnType } from "../../api/types/teamType";
+import Header from "./components/Header";
+import Line from "./components/Line";
+import MyLink from "./components/MyLink";
 
 type MyPageContextType = {
   isLoading: boolean;
@@ -36,12 +38,14 @@ export default function MyPage() {
   }, []);
 
   return (
-    <Layout>
-      <MyPageContext.Provider value={{ isLoading, meInfo, currentOpenTeam }}>
-        <MyInfo />
-        <MyTeam />
-        <MyPageEtc />
-      </MyPageContext.Provider>
-    </Layout>
+    <MyPageContext.Provider value={{ isLoading, meInfo, currentOpenTeam }}>
+      <Header />
+      <MyInfo />
+      <CurrentOpenTeam />
+      <MyLink link={"/my-team-history"} title={"내가 만든 완두콩 모두 보기"} />
+      <MyLink link={"/my-team-party"} title={"참여한 완두콩 보기"} />
+      <Line />
+      <MyPageEtc />
+    </MyPageContext.Provider>
   );
 }
