@@ -9,21 +9,31 @@ import AllowMemberContainer from "./AllowMemberContainer";
 import Header from "./components/Header";
 import MyTeamInfo from "./components/MyTeamInfo";
 import TabBar from "./components/TabBar";
+import { useLocation } from "react-router-dom";
 
 export type PageModeType = "apply" | "allow";
 
 export default function MyCurrentOpenTeamPage() {
+  const location = useLocation();
+
+  console.log("hash", location.hash);
+  console.log("pathname", location.pathname);
+  console.log("search", location.search);
   const [isLoading, setIsLoading] = useState(true);
-  const [pageMode, setPageMode] = useState<PageModeType>("apply");
+  const [pageMode, setPageMode] = useState<PageModeType>(location.hash === "#allow" ? "allow" : "apply");
   const [currentOpenTeam, setCurrentOpenTeam] = useState({} as CurrentOpenTeamReturnType);
   const [applyMemberList, setApplyMemberList] = useState({} as ApplyMemberListReturnType);
   const [allowMemberList, setAllowMemberList] = useState({} as AllowMemberListReturnType);
 
   useEffect(() => {
-    Promise.all([MyTeamApi.getCurrentOpenTeam(), TeamMemberApi.getApplyMemberList()])
-      .then(([currentOpenTeamRes, applyMemberListRes]) => {
+    Promise.all([
+      MyTeamApi.getCurrentOpenTeam(),
+      pageMode === "apply" ? TeamMemberApi.getApplyMemberList() : TeamMemberApi.getAllowMemberList(),
+    ])
+      .then(([currentOpenTeamRes, memberListRes]) => {
         setCurrentOpenTeam(currentOpenTeamRes);
-        setApplyMemberList(applyMemberListRes);
+        if (pageMode === "apply") setApplyMemberList(memberListRes as ApplyMemberListReturnType);
+        else setAllowMemberList(memberListRes as AllowMemberListReturnType);
       })
       .finally(() => setIsLoading(false));
   }, []);
@@ -58,13 +68,26 @@ export default function MyCurrentOpenTeamPage() {
       .finally(() => setIsLoading(false));
   };
 
+  const onClickDelete = (e) => {
+    e.preventDefault();
+
+    // 삭제 컨펌 모달
+    // yes 를 골르면,
+
+    MyTeamApi.deleteMyTeam(currentOpenTeam.teamId).then((res) => {
+      if (!res.result && res.failCode === "remain_allow_member") {
+        // 삭제 불가 모달
+      }
+    });
+  };
+
   return (
     <Layout>
       {isLoading ? (
         <div>loading...</div>
       ) : (
         <>
-          <Header />
+          <Header onClickDelete={onClickDelete} />
           <MyTeamInfo {...currentOpenTeam} />
           <TabBar pageMode={pageMode} onClickTab={onClickTab} />
           <>

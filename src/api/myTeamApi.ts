@@ -1,6 +1,6 @@
 import requester from "./config/config";
 import { CurrentOpenTeamReturnType } from "./types/teamType";
-import { MyTeamHistoryReturnType, MyTeamPartyReturnType } from "./types/myTeamType";
+import { MyTeamHistoryReturnType, MyTeamPartyReturnType, MyTeamDeleteReturnType } from "./types/myTeamType";
 
 export default class MyTeamApi {
   static getCurrentOpenTeam(): Promise<CurrentOpenTeamReturnType> {
@@ -13,5 +13,9 @@ export default class MyTeamApi {
 
   static getMyTeamParty(): Promise<MyTeamPartyReturnType> {
     return requester.get(`${process.env.REACT_APP_HOST_NAME}/api/my-teams/party`);
+  }
+
+  static deleteMyTeam(teamId: number): Promise<MyTeamDeleteReturnType> {
+    return requester.delete(`${process.env.REACT_APP_HOST_NAME}/api/my-teams/${teamId}`);
   }
 }

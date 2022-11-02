@@ -46,6 +46,7 @@ const styleTitle = css`
   align-items: center;
   color: #000000;
   margin-top: 4px;
+  cursor: pointer;
 `;
 const styleMember = css`
   display: flex;
@@ -71,6 +72,7 @@ const styleMember = css`
       line-height: 17px;
       margin-bottom: 10px;
     }
+    cursor: pointer;
   }
   div + div {
     border-left: 1px solid #cfc9c9;
@@ -88,13 +90,15 @@ export default function CurrentOpenTeam() {
           <div>{teamCategoryText(currentOpenTeam.teamCategory)}</div>
           <DdayPill closeDueYmd={currentOpenTeam.closeDueYmd} />
         </div>
-        <div css={styleTitle}>{currentOpenTeam.title}</div>
+        <div css={styleTitle} onClick={() => (window.location.href = "/my-current-open")}>
+          {currentOpenTeam.title}
+        </div>
         <div css={styleMember}>
-          <div>
+          <div onClick={() => (window.location.href = "/my-current-open#apply")}>
             <b>{currentOpenTeam.applyCount}</b>
             <span>신청자</span>
           </div>
-          <div>
+          <div onClick={() => (window.location.href = "/my-current-open#allow")}>
             <b>
               {currentOpenTeam.allowCount}/{currentOpenTeam.capacityCount}
             </b>

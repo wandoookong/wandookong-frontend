@@ -1,4 +1,4 @@
-import { TEAM_CATEGORY, TEAM_PARTY_MEMBER_STATUS, ROLE_DETAIL } from "./fieldType";
+import { TEAM_CATEGORY, TEAM_PARTY_MEMBER_STATUS, ROLE_DETAIL, TEAM_DELETE_FAIL_CODE } from "./fieldType";
 import { TeamReturnType } from "./teamType";
 
 export type MyTeamHistoryReturnType = { list: TeamReturnType[] };
@@ -14,3 +14,8 @@ export type TeamPartyReturnType = {
 };
 
 export type MyTeamPartyReturnType = { list: TeamPartyReturnType[] };
+
+export type MyTeamDeleteReturnType = {
+  result: boolean;
+  failCode?: TEAM_DELETE_FAIL_CODE;
+};

@@ -13,11 +13,11 @@ const style = css`
   }
 `;
 
-export default function Header() {
+export default function Header({ onClickDelete }) {
   return (
     <section css={style}>
-      <button>&lt;</button>
-      <button>ㅂ</button>
+      <button onClick={() => window.history.back()}>&lt;</button>
+      <button onClick={onClickDelete}>ㅂ</button>
     </section>
   );
 }

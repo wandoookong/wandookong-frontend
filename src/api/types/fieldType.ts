@@ -4,3 +4,4 @@ export type ROLE_DETAIL = "product" | "ux_ui" | "app" | "web_front" | "back_end"
 export type TEAM_CATEGORY = "portfolio" | "side_project";
 export type MEMBER_STATUS = "apply" | "allow" | "deny";
 export type TEAM_PARTY_MEMBER_STATUS = MEMBER_STATUS | "expired";
+export type TEAM_DELETE_FAIL_CODE = "remain_allow_member";
