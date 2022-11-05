@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import RequestItem from "../../home/components/requestItem";
 import { MyTeamHistoryPageContext } from "../MyTeamHistoryPage";
 import TeamBox from "./TeamBox";
 
@@ -7,7 +8,11 @@ export default function MyTeamHistoryList() {
 
   return (
     <>
-      {isLoading ? <div>loading...</div> : teamHistoryList.list.map((item) => <TeamBox key={item.teamId} {...item} />)}
+      {isLoading ? (
+        <div>loading...</div>
+      ) : (
+        teamHistoryList.list.map((item) => <RequestItem key={item.teamId} teamId={item.teamId} content={item} />)
+      )}
     </>
   );
 }

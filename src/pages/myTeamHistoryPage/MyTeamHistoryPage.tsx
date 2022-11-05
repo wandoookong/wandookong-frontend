@@ -3,6 +3,7 @@ import Layout from "../../components/layout/layout";
 import MyTeamApi from "../../api/myTeamApi";
 import { MyTeamHistoryReturnType } from "../../api/types/myTeamType";
 import MyTeamHistoryList from "./components/MyTeamHistoryList";
+import Header from "./components/Header";
 
 type MyTeamHistoryPageContextType = {
   isLoading: boolean;
@@ -29,6 +30,7 @@ export default function MyTeamHistoryPage() {
 
   return (
     <Layout>
+      <Header />
       <MyTeamHistoryPageContext.Provider value={{ isLoading, teamHistoryList }}>
         <MyTeamHistoryList />
       </MyTeamHistoryPageContext.Provider>
