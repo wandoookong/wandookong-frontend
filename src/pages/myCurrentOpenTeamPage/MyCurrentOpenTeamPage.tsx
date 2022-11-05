@@ -10,6 +10,7 @@ import Header from "./components/Header";
 import MyTeamInfo from "./components/MyTeamInfo";
 import TabBar from "./components/TabBar";
 import { useLocation } from "react-router-dom";
+import ConfirmModal from "../../components/modal/ConfirmModal";
 
 export type PageModeType = "apply" | "allow";
 
@@ -24,6 +25,7 @@ export default function MyCurrentOpenTeamPage() {
   const [currentOpenTeam, setCurrentOpenTeam] = useState({} as CurrentOpenTeamReturnType);
   const [applyMemberList, setApplyMemberList] = useState({} as ApplyMemberListReturnType);
   const [allowMemberList, setAllowMemberList] = useState({} as AllowMemberListReturnType);
+  const [isDeleteModal, setIsDeleteModal] = useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -71,9 +73,16 @@ export default function MyCurrentOpenTeamPage() {
   const onClickDelete = (e) => {
     e.preventDefault();
 
-    // 삭제 컨펌 모달
-    // yes 를 골르면,
+    setIsDeleteModal(true);
+  };
 
+  const onClickNo = (e) => {
+    e.preventDefault();
+
+    setIsDeleteModal(false);
+  };
+
+  const onDeleteMyTeam = () => {
     MyTeamApi.deleteMyTeam(currentOpenTeam.teamId).then((res) => {
       if (!res.result && res.failCode === "remain_allow_member") {
         // 삭제 불가 모달
@@ -103,6 +112,9 @@ export default function MyCurrentOpenTeamPage() {
               <div>404</div>
             )}
           </>
+          {isDeleteModal && (
+            <ConfirmModal title={"완두콩을 삭제하시겠습니까?"} onClickYes={onDeleteMyTeam} onClickNo={onClickNo} />
+          )}
         </>
       )}
     </Layout>
