@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
-import Modal from "../../pages/requestForm/requestFormSteps/modal/modal";
 import CloseIcon from "@mui/icons-material/Close";
+import CircleModal from "../modal/CircleModal";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   step: number;
@@ -9,19 +10,38 @@ interface Props {
 
 export function Navigation({ step }: Props) {
   const [modal, setModal] = useState(false);
+  const navigate = useNavigate();
 
   const onClick = () => {
     setModal(!modal);
   };
+
+  const onNext = () => {
+    navigate("/");
+  };
+
   const value = Math.round((100 / 6) * step);
 
   return (
     <>
       {modal && (
-        <Modal
+        <CircleModal
           title="완두콩이 거의 다 완료됐어요!"
-          content="지금 돌아가면 작성 사항이 모두 삭제됩니다. 작성한 내용을 삭제하시겠습니까?"
-          setModal={setModal}
+          content={
+            <span>
+              지금 돌아가면 작성 사항이
+              <br />
+              모두 삭제됩니다. 작성한 내용을
+              <br />
+              삭제하시겠습니까?
+            </span>
+          }
+          onClose={() => setModal(false)}
+          showClose={false}
+          prevLabel={"나가기"}
+          onPrev={onNext}
+          nextLabel={"이어서 작성하기"}
+          onNext={() => setModal(false)}
         />
       )}
       <Wrap>

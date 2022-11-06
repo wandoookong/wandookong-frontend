@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
 const Wrapper = styled.div`
+  position: absolute;
   display: flex;
   margin-top: 18px;
   left: 20px;
   right: 20px;
+  bottom: 21px;
 `;
 
 const PrevButton = styled.button`
