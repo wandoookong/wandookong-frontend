@@ -27,7 +27,6 @@ const PrevButton = styled.button`
   border-radius: 12px;
   border: 1px solid #47b561;
   background: #faf7eb;
-  font-family: Pretendard;
   font-size: 16px;
   font-weight: bold;
   color: #47b561;
@@ -40,7 +39,6 @@ const NextButton = styled.button`
   border-radius: 12px;
   border: 0;
   background: #47b561;
-  font-family: Pretendard;
   font-size: 16px;
   font-weight: bold;
   color: #ffffff;

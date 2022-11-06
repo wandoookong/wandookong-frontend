@@ -9,7 +9,6 @@ const Input = styled.input`
   padding: 16px 12px;
   border: 2px solid #dbd6c5;
   border-radius: 8px;
-  font-family: Pretendard;
   font-size: 14px;
   transition: 0.2s;
   background: none;

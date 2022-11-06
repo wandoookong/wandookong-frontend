@@ -18,7 +18,6 @@ const Wrap = styled.div`
 
 const Header = styled.h1`
   margin: 0 0 39px 0;
-  font-family: Pretendard;
   font-size: 30px;
   line-height: 1.5;
   white-space: pre-line;

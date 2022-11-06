@@ -13,7 +13,6 @@ const styleSection = css`
 const styleButton = css`
   width: 100%;
   padding: 6px 0;
-  font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
