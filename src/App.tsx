@@ -17,8 +17,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/:teamId/apply" element={<ApplyTeam />} />
-        <Route path="/:teamId" element={<TeamDetail />} />
+        <Route path="/team/:teamId/apply" element={<ApplyTeam />} />
+        <Route path="/team/:teamId" element={<TeamDetail />} />
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />

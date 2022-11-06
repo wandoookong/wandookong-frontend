@@ -12,6 +12,7 @@ type TeamData = {
       roleMaxCount: 0;
       teamLead: true;
       careerRange: string;
+      careerRangeName: string;
       tagList: [string];
     },
   ];

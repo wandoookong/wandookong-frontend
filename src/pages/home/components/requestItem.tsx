@@ -12,7 +12,7 @@ export default function RequestItem({ teamId, content }) {
   const navigate = useNavigate();
 
   return (
-    <Wrapper onClick={(e) => navigate(`/${teamId}`)}>
+    <Wrapper onClick={(e) => navigate(`/team/${teamId}`)}>
       <TitleWrapper>
         {content.teamCategory === "portfolio" ? <p>포트폴리오</p> : <p>사이드 프로젝트</p>}
         <h2>{content.title}</h2>

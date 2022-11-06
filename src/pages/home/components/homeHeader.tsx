@@ -2,6 +2,9 @@ import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
+import { ACCESS_TOKEN_NAME } from "../../../api/config/config";
+import AccountIcon from "@mui/icons-material/AccountCircle";
+import { isEmpty } from "../../../@types/utility/typeGuard";
 
 export const HomeHeader = () => {
   const navigate = useNavigate();
@@ -13,6 +16,8 @@ export const HomeHeader = () => {
     return setScroll(false);
   };
 
+  const token = localStorage.getItem(ACCESS_TOKEN_NAME);
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, true);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -23,13 +28,8 @@ export const HomeHeader = () => {
       <h1 onClick={() => navigate("/")}>완두콩</h1>
       <RightWrapper>
         {scroll && <button onClick={() => navigate("/request")}>완두콩 만들기</button>}
-        <span onClick={() => navigate("/login")}>로그인</span>
-        {/*{rest && (*/}
-        {/*  <div>*/}
-        {/*    <NotificationIcon onClick={() => navigate("/")} sx={{ fontSize: 24, ml: 2 }} />*/}
-        {/*    <AccountIcon onClick={() => navigate("/login")} sx={{ fontSize: 24, ml: 2 }} />*/}
-        {/*  </div>*/}
-        {/*)}*/}
+        {isEmpty(token) && <span onClick={() => navigate("/login")}>로그인</span>}
+        {!isEmpty(token) && <AccountIcon onClick={() => navigate("/my")} sx={{ fontSize: 24, ml: 2 }} />}
       </RightWrapper>
     </Container>
   );

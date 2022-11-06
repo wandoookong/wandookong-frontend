@@ -24,6 +24,7 @@ export function TeamDetail() {
         roleMaxCount: 0,
         teamLead: true,
         careerRange: "",
+        careerRangeName: "",
         tagList: [""],
       },
     ],
@@ -84,9 +85,8 @@ export function TeamDetail() {
                     <RoleLabel>{role.roleDetailName}</RoleLabel>
                     {role.teamLead && <LeadTag>리더</LeadTag>}
                   </div>
-                  <span>{role.careerRange}</span>
+                  <span>{role.careerRangeName}</span>
                 </TeamTitleLayout>
-
                 {/*{role.tagList.length > 0 && role.tagList.map((tag) => <span>{tag}</span>)}*/}
               </TeamContent>
             </TeamWrap>
@@ -100,7 +100,7 @@ export function TeamDetail() {
             </TeamWrap>
           </EmptySpace>
         </div>
-        <SingleButton label="참여하기" onClick={() => navigate(`/${param.teamId}/apply`)} />
+        <SingleButton label="참여하기" onClick={() => navigate(`/team/${param.teamId}/apply`)} />
       </Wrapper>
     </div>
   );
