@@ -93,7 +93,7 @@ const RoleImage = styled.div<roleMemberCount>`
   border-radius: 28px;
   + p {
     margin-top: 10px;
-    font-wieght: 300;
+    font-weight: 300;
     white-space: nowrap;
   }
   ${(props) => {
