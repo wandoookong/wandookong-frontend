@@ -29,28 +29,28 @@ export default function Home() {
       <Container>
         <Carousel />
         <Filter filters={filters} setFilters={setFilters} />
-        {teamData.list.length === 0 && <EmptyPage>아직 만들어진 완두콩이 없습니다.</EmptyPage>}
+        {teamData.list.length === 0 && <p>아직 만들어진 완두콩이 없습니다.</p>}
         {teamData.list.length > 0 &&
-          teamData.list.map((teamDataList) => (
-            <RequestItem key={teamDataList.teamId} teamId={teamDataList.teamId} content={teamDataList} />
+          teamData.list.map((teamDataList, index) => (
+            <RequestItem key={index} teamId={teamDataList.teamId} content={teamDataList} />
           ))}
       </Container>
     </>
   );
 }
 
-const Container = styled.div`
+const Container = styled.main`
   position: absolute;
   top: 0;
   margin: 0;
   padding: 0;
   width: 100%;
   overflow-y: hidden;
-`;
 
-const EmptyPage = styled.p`
-  margin-top: 80px;
-  font-size: 14px;
-  color: #999999;
-  text-align: center;
+  p {
+    margin-top: 80px;
+    font-size: 14px;
+    color: #999999;
+    text-align: center;
+  }
 `;
