@@ -61,9 +61,6 @@ export default function Filter({ filters, setFilters }: Props) {
                 <input type="radio" />
               </Label>
             ))}
-            <EmptySpace>
-              <Label checked={true} title="이거다" />
-            </EmptySpace>
           </LabelWrapper>
         </FilterContent>
         <FilterContent>
@@ -117,9 +114,11 @@ const FilterContent = styled.div`
   white-space: nowrap;
   margin: 0 0 8px 0;
   overflow-y: hidden;
+
   ::-webkit-scrollbar {
     display: none;
   }
+
   p {
     display: inline-block;
     font-size: 12px;
@@ -131,6 +130,7 @@ const FilterContent = styled.div`
 const LabelWrapper = styled.div`
   display: flex;
   align-items: center;
+
   > p {
     flex: 0 0 59px;
   }
@@ -144,12 +144,9 @@ const Label = styled.label<{ checked: boolean }>`
   border-radius: 32px;
   color: #242c35;
   font-size: 12px;
-  box-shadow: 0px 1px 3px rgba(181, 191, 197, 0.3);
+  box-shadow: 0 1px 3px rgba(181, 191, 197, 0.3);
+
   input {
     display: none;
   }
-`;
-
-const EmptySpace = styled.div`
-  opacity: 0;
 `;

@@ -6,26 +6,22 @@ type roleMemberCount = {
   roleMemberCount: number;
 };
 
-//TODO active/inactive 표시, 디데이, 필터 api
-
 export default function RequestItem({ teamId, content }) {
   const navigate = useNavigate();
 
   return (
     <Wrapper onClick={(e) => navigate(`/team/${teamId}`)}>
       <TitleWrapper>
-        {content.teamCategory === "portfolio" ? <p>포트폴리오</p> : <p>사이드 프로젝트</p>}
+        {content.teamCategory === "portfolio" ? <span>포트폴리오</span> : <span>사이드 프로젝트</span>}
         <h2>{content.title}</h2>
       </TitleWrapper>
-      <TagWrapper>
-        <p>D-6</p>
-      </TagWrapper>
+      <TagWrapper>D-6</TagWrapper>
       <RoleWrapper>
-        {content.teamCapacityList.map((role) => (
-          <RoleContent key={content.teamCapacityId}>
+        {content.teamCapacityList.map((role, index) => (
+          <div key={index}>
             <RoleImage roleMemberCount={role.roleMemberCount} />
-            <p>{role.roleDetailName}</p>
-          </RoleContent>
+            <span>{role.roleDetailName}</span>
+          </div>
         ))}
       </RoleWrapper>
     </Wrapper>
@@ -41,8 +37,7 @@ const Wrapper = styled.div`
 `;
 
 const TitleWrapper = styled.div`
-  p {
-    margin: 0 0 8px 0;
+  span {
     font-size: 12px;
     font-weight: 400;
     color: #3f3f3f;
@@ -50,40 +45,43 @@ const TitleWrapper = styled.div`
 
   h2 {
     font-size: 16px;
-    margin: 0;
+    margin-top: 8px;
   }
 `;
 
-const TagWrapper = styled.div`
+const TagWrapper = styled.span`
   position: absolute;
+  margin: 0;
   padding: 3px 8px;
   top: 16px;
   right: 12px;
   background: #ddba40;
   border-radius: 40px;
-
-  p {
-    margin: 0;
-    padding: 0;
-    color: #ffffff;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 17px;
-  }
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 17px;
 `;
 
 const RoleWrapper = styled.div`
   display: flex;
+  gap: 14px;
   margin: 12px 0 0 0;
 
-  p {
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  span {
+    margin-top: 10px;
     font-size: 14px;
     font-weight: 500;
     text-align: center;
+    color: #242c35;
+    white-space: nowrap;
   }
-`;
-const RoleContent = styled.div`
-  margin-right: 14px;
 `;
 
 const RoleImage = styled.div<roleMemberCount>`
@@ -91,17 +89,14 @@ const RoleImage = styled.div<roleMemberCount>`
   height: 48px;
   margin: 0;
   border-radius: 28px;
-  + p {
-    margin-top: 10px;
-    font-weight: 300;
-    white-space: nowrap;
-  }
+
   ${(props) => {
     if (!props.roleMemberCount) {
       return css`
         background: linear-gradient(137.26deg, #ffca02 0%, #648d00 104.28%);
       `;
     }
+
     return css`
       background: #47b561;
       opacity: 80%;
