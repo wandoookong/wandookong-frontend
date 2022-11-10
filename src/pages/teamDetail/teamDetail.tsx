@@ -42,10 +42,10 @@ export function TeamDetail() {
 
   return (
     <Container>
-      <HeaderWrapper>
+      <header>
         <CloseIcon sx={{ fontSize: 28 }} onClick={() => navigate(-1)} />
-      </HeaderWrapper>
-      <Wrapper>
+      </header>
+      <main>
         <TitleWrapper>
           <div>
             <p>포트폴리오</p>
@@ -73,7 +73,7 @@ export function TeamDetail() {
                     <h3>
                       {Object.keys(role).includes("careerRangeName")
                         ? role.roleDetailName
-                        : role.roleDetailName + " 콩 모집 중이에요."}
+                        : role.roleDetailName + " 콩 모집 중이에요"}
                     </h3>
                     {role.teamLead && <span className="leader-tag">리더</span>}
                   </div>
@@ -84,8 +84,12 @@ export function TeamDetail() {
             </PositionWrapper>
           ))}
         </div>
-        <SingleButton label="참여하기" onClick={() => navigate(`/team/${param.teamId}/apply`)} />
-      </Wrapper>
+        <SingleButton
+          label={teamData.teamStatus === "open" ? "참여하기" : "모집 마감"}
+          onClick={() => navigate(`/team/${param.teamId}/apply`)}
+          isActive={teamData.teamStatus === "open"}
+        />
+      </main>
     </Container>
   );
 }
@@ -106,26 +110,26 @@ const Container = styled.div`
     font-size: 18px;
     font-weight: 700;
   }
-`;
 
-const Wrapper = styled.div`
-  margin: 92px 0 0 0;
-  padding: 0 20px;
-
-  div.position-wrapper {
-    margin-bottom: 150px;
+  header {
+    display: flex;
+    flex-direction: row-reverse;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 44px 12px 20px;
+    box-sizing: border-box;
+    background: rgba(250, 247, 235, 1);
   }
-`;
 
-const HeaderWrapper = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 44px 12px 20px;
-  box-sizing: border-box;
-  background: rgba(250, 247, 235, 1);
+  main {
+    margin: 92px 0 0 0;
+    padding: 0 20px;
+
+    div.position-wrapper {
+      margin-bottom: 150px;
+    }
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -212,7 +216,7 @@ const TeamDescriptionWrapper = styled.div<{ isOpen: boolean }>`
     color: #242c35;
 
     ${(props) => {
-      if (props.isOpen) {
+      if (!props.isOpen) {
         return css`
           overflow: hidden;
           word-break: break-all;

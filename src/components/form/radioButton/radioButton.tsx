@@ -4,20 +4,20 @@ import CheckIcon from "@mui/icons-material/Check";
 
 export function RadioButton({ label, description, checked, ...rest }) {
   return (
-    <Wrap checked={checked}>
-      <Label>
+    <Container checked={checked}>
+      <label>
         <input type="radio" name="category" checked={checked} {...rest} />
         {label}
         <div>
-          <SubText>{description}</SubText>
+          <p>{description}</p>
           {checked && <CheckIcon sx={{ fontSize: 24, m: 0 }} />}
         </div>
-      </Label>
-    </Wrap>
+      </label>
+    </Container>
   );
 }
 
-const Wrap = styled.div<{ checked: boolean }>`
+const Container = styled.div<{ checked: boolean }>`
   width: auto;
   height: auto;
   margin-bottom: 8px;
@@ -38,29 +38,29 @@ const Wrap = styled.div<{ checked: boolean }>`
       box-shadow: none;
     `;
   }}
-`;
 
-const Label = styled.label`
-  display: block;
-  font-weight: 700;
-  color: #242c35;
+  label {
+    display: block;
+    font-weight: 700;
+    color: #242c35;
 
-  input {
-    display: none;
+    input {
+      display: none;
+    }
+
+    div {
+      display: flex;
+      margin-top: 8px;
+    }
+
+    p {
+      display: inline-block;
+      max-width: 229px;
+      margin: 0 39px 0 0;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 18px;
+      color: #242c35;
+    }
   }
-
-  div {
-    display: flex;
-    margin-top: 8px;
-  }
-`;
-
-const SubText = styled.p`
-  display: inline-block;
-  max-width: 229px;
-  margin: 0 39px 0 0;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 18px;
-  color: #242c35;
 `;

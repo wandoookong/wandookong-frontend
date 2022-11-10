@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DoubleButton } from "../../../components/form/button/doubleButton";
 import { Header } from "../../../components/form/header/header";
 import { CircleRadioButton } from "../../../components/form/radioButton/circleRadioButton";
-import { career, position } from "../../requestForm/requestFormSteps/roleData";
+import { career, position } from "../../teamRequest/components/roleData";
 import ErrorMessage from "../../../components/form/errorMessage";
 import { isEmpty } from "../../../@types/utility/typeGuard";
 

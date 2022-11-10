@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { Navigation } from "../../components/form/navigation";
-import CategoryStep from "./requestFormSteps/categoryStep";
-import TitleStep from "./requestFormSteps/titleStep";
-import MyRoleStep from "./requestFormSteps/myRoleStep";
-import RolesStep from "./requestFormSteps/rolesStep";
-import DescriptionStep from "./requestFormSteps/descriptionStep";
-import Contact from "./requestFormSteps/contact";
+import CategoryStep from "./components/categoryStep";
+import TitleStep from "./components/titleStep";
+import MyRoleStep from "./components/myRoleStep";
+import RolesStep from "./components/rolesStep";
+import DescriptionStep from "./components/descriptionStep";
+import Contact from "./components/contact";
 import Layout from "../../components/layout/layout";
 import { useRequestFormReducer } from "./hooks/useRequestFormReducer";
 import TeamApi from "../../api/teamApi";
 import { isEmpty } from "../../@types/utility/typeGuard";
 import { useNavigate } from "react-router-dom";
 
-export default function RequestForm() {
+export default function TeamRequest() {
   const [step, setStep] = useState(1);
   const {
     state,

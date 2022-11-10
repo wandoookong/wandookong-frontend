@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/home";
-import RequestForm from "./pages/requestForm/requestForm";
+import TeamRequest from "./pages/teamRequest/teamRequest";
 import NotFound from "./pages/not-found/NotFound";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signUp/signUp";
@@ -22,7 +22,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
-        <Route path="/request" element={<RequestForm />} />
+        <Route path="/request" element={<TeamRequest />} />
         <Route path="/my" element={<MyPage />} />
         <Route path="/my-profile" element={<MyProfilePage />} />
         <Route path="/my-current-open" element={<MyCurrentOpenTeamPage />} />

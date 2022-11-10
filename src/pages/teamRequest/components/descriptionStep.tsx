@@ -42,6 +42,7 @@ export default function DescriptionStep({ description, onChangeDescription, onNe
         placeholder="완두콩의 목표, 팀 문화, 자격요건 등 자유롭게 작성해주세요! "
         onChange={onChange}
         value={description}
+        maxLength={1000}
       />
       <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </div>

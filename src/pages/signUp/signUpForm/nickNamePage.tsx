@@ -55,7 +55,7 @@ export default function NickNamePage({ nickname, onChange, onNext }: Props) {
       <Header title="닉네임을 입력해주세요" />
       {!isEmpty(error) && <ErrorMessage text={error} />}
       <TextInput value={nickname} placeholder="닉네임을 입력하세요" maxLength="10" onChange={onChangeHandler} />
-      <SingleButton onClick={onClick} label="다음" />
+      <SingleButton onClick={onClick} label="다음" isActive={true} />
     </>
   );
 }

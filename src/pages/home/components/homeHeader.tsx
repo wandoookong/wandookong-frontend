@@ -79,7 +79,7 @@ const RightWrapper = styled.div`
     background: #47b561;
     font-size: 14px;
     font-weight: 700;
-    color: #fff;
+    color: #ffffff;
   }
 
   span {

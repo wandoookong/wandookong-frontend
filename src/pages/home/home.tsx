@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { HomeHeader } from "./components/homeHeader";
-import { Carousel } from "./components/carousel";
-import Filter from "./components/filter";
-import RequestItem from "./components/requestItem";
+import FindTeamFilter from "./components/findTeamFilter";
+import TeamItem from "./components/teamItem";
 import styled from "@emotion/styled";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TeamListReturnType } from "../../api/types/teamType";
 import TeamApi from "../../api/teamApi";
+import { isEmpty } from "../../@types/utility/typeGuard";
 
 export default function Home() {
+  const navigate = useNavigate();
   const location = useLocation();
   const [teamData, setTeamData] = useState<TeamListReturnType>({ list: [] });
-  const [filters, setFilters] = useState<TeamFilters>({
+  const [findTeamFilters, setFindTeamFilters] = useState<TeamFilters>({
     roleDetail: "",
     teamCategory: "",
   });
@@ -27,13 +28,17 @@ export default function Home() {
     <>
       <HomeHeader />
       <Container>
-        <Carousel />
-        <Filter filters={filters} setFilters={setFilters} />
-        {teamData.list.length === 0 && <p>아직 만들어진 완두콩이 없습니다.</p>}
-        {teamData.list.length > 0 &&
+        <Carousel>
+          <button onClick={() => navigate("/request")}>완두콩 만들기</button>
+        </Carousel>
+        <FindTeamFilter filters={findTeamFilters} setFilters={setFindTeamFilters} />
+        {!isEmpty(teamData.list) ? (
           teamData.list.map((teamDataList, index) => (
-            <RequestItem key={index} teamId={teamDataList.teamId} content={teamDataList} />
-          ))}
+            <TeamItem key={index} teamId={teamDataList.teamId} content={teamDataList} />
+          ))
+        ) : (
+          <p>아직 만들어진 완두콩이 없습니다.</p>
+        )}
       </Container>
     </>
   );
@@ -52,5 +57,27 @@ const Container = styled.main`
     font-size: 14px;
     color: #999999;
     text-align: center;
+  }
+`;
+
+const Carousel = styled.div`
+  top: 0;
+  width: 100%;
+  height: 360px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 8px 8px;
+  padding: 280px 20px 20px 20px;
+  box-sizing: border-box;
+
+  button {
+    margin: 0;
+    width: 100%;
+    height: 52px;
+    border-radius: 12px;
+    border: 0;
+    background: #47b561;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
   }
 `;

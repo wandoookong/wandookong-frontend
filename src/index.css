@@ -121,7 +121,6 @@ blockquote:after,
 q:before,
 q:after {
   content: "";
-  content: none;
 }
 table {
   border-collapse: collapse;
@@ -133,6 +132,6 @@ table {
  */
 body {
   background: #faf8eb;
-  font-family: "Pretendard";
+  font-family: "Pretendard", "Noto Sans CJK KR", sans-serif;
   letter-spacing: -0.7px;
 }

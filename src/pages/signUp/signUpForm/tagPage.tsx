@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DoubleButton } from "../../../components/form/button/doubleButton";
 import { CircleCheckbox } from "../../../components/form/CircleCheckboxButton";
 import { Header } from "../../../components/form/header/header";
-import { tagKeywords } from "../../requestForm/requestFormSteps/roleData";
+import { tagKeywords } from "../../teamRequest/components/roleData";
 import ErrorMessage from "../../../components/form/errorMessage";
 import { isEmpty } from "../../../@types/utility/typeGuard";
 

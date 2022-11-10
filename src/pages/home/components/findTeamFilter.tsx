@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { roleData } from "../../requestForm/requestFormSteps/roleData";
+import { roleData } from "../../teamRequest/components/roleData";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import qs from "qs";
@@ -9,7 +9,7 @@ interface Props {
   setFilters(value: TeamFilters): void;
 }
 
-export default function Filter({ filters, setFilters }: Props) {
+export default function FindTeamFilter({ filters, setFilters }: Props) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -131,8 +131,10 @@ const LabelWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  > p {
-    flex: 0 0 59px;
+  p {
+    flex: 0 0 45px;
+    padding-right: 12px;
+    text-align: right;
   }
 `;
 
@@ -148,5 +150,9 @@ const Label = styled.label<{ checked: boolean }>`
 
   input {
     display: none;
+  }
+
+  &:last-child {
+    margin-right: 100px;
   }
 `;

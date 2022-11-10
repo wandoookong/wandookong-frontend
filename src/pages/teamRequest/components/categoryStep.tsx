@@ -33,8 +33,6 @@ export default function CategoryStep({ onNext, onChange, category }: Props) {
     }
   }, [category]);
 
-  //TODO 컨텐츠 글자 수 왔다갔다 고정
-
   return (
     <>
       <Header title={`어떤 완두콩을 \n 만들고 싶으신가요?`} />
@@ -55,7 +53,7 @@ export default function CategoryStep({ onNext, onChange, category }: Props) {
           description="운영까지 이뤄지는 서비스를 만드는 프로젝트입니다. 다양한 포지션 콩들과 협업할 수 있습니다."
         />
       </Wrapper>
-      <SingleButton label="다음" onClick={onNextStep} />
+      <SingleButton label="다음" onClick={onNextStep} isActive={true} />
     </>
   );
 }

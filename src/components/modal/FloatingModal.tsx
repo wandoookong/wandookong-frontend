@@ -31,7 +31,7 @@ interface Props {
   onClickButton?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export default function CircleModal({
+export default function FloatingModal({
   title,
   content,
   onClose,
@@ -138,7 +138,6 @@ const Icon = styled.div`
     font-weight: 400;
     font-size: 32px;
     line-height: 38px;
-    display: flex;
     color: #05a660;
   }
 `;

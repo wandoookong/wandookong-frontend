@@ -1,7 +1,6 @@
 import { useContext } from "react";
-import RequestItem from "../../home/components/requestItem";
+import TeamItem from "../../home/components/teamItem";
 import { MyTeamHistoryPageContext } from "../MyTeamHistoryPage";
-import TeamBox from "./TeamBox";
 
 export default function MyTeamHistoryList() {
   const { isLoading, teamHistoryList } = useContext(MyTeamHistoryPageContext);
@@ -11,7 +10,7 @@ export default function MyTeamHistoryList() {
       {isLoading ? (
         <div>loading...</div>
       ) : (
-        teamHistoryList.list.map((item) => <RequestItem key={item.teamId} teamId={item.teamId} content={item} />)
+        teamHistoryList.list.map((item) => <TeamItem key={item.teamId} teamId={item.teamId} content={item} />)
       )}
     </>
   );
