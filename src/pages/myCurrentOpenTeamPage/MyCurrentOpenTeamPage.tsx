@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import Layout from "../../components/layout/layout";
+import { useEffect, useState } from "react";
+import ContentLayout from "../../components/layout/contentLayout";
 import { CurrentOpenTeamReturnType } from "../../api/types/teamType";
 import MyTeamApi from "../../api/myTeamApi";
 import TeamMemberApi from "../../api/teamMemberApi";
@@ -91,7 +91,7 @@ export default function MyCurrentOpenTeamPage() {
   };
 
   return (
-    <Layout>
+    <ContentLayout>
       {isLoading ? (
         <div>loading...</div>
       ) : (
@@ -117,6 +117,6 @@ export default function MyCurrentOpenTeamPage() {
           )}
         </>
       )}
-    </Layout>
+    </ContentLayout>
   );
 }

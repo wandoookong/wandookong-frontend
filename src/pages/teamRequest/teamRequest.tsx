@@ -6,7 +6,7 @@ import MyRoleStep from "./components/myRoleStep";
 import RolesStep from "./components/rolesStep";
 import DescriptionStep from "./components/descriptionStep";
 import Contact from "./components/contact";
-import Layout from "../../components/layout/layout";
+import ContentLayout from "../../components/layout/contentLayout";
 import { useRequestFormReducer } from "./hooks/useRequestFormReducer";
 import TeamApi from "../../api/teamApi";
 import { isEmpty } from "../../@types/utility/typeGuard";
@@ -37,7 +37,7 @@ export default function TeamRequest() {
   };
 
   return (
-    <Layout>
+    <ContentLayout>
       <Navigation step={step} />
       <form onSubmit={(e) => e.preventDefault()}>
         {step === 1 && (
@@ -90,6 +90,6 @@ export default function TeamRequest() {
           />
         )}
       </form>
-    </Layout>
+    </ContentLayout>
   );
 }

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../../components/layout/layout";
+import React, { useEffect, useState } from "react";
+import ContentLayout from "../../components/layout/contentLayout";
 import MyProfileEdit from "./components/MyProfileEdit";
 import UserApi from "../../api/userApi";
 import { UserMeReturnType } from "../../api/types/userType";
@@ -28,10 +28,10 @@ export default function MyProfilePage() {
   }, []);
 
   return (
-    <Layout>
+    <ContentLayout>
       <MyProfilePageContext.Provider value={{ isLoading, meInfo }}>
         <MyProfileEdit />
       </MyProfilePageContext.Provider>
-    </Layout>
+    </ContentLayout>
   );
 }

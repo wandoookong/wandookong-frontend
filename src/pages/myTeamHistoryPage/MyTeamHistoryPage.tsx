@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../../components/layout/layout";
+import React, { useEffect, useState } from "react";
+import ContentLayout from "../../components/layout/contentLayout";
 import MyTeamApi from "../../api/myTeamApi";
 import { MyTeamHistoryReturnType } from "../../api/types/myTeamType";
 import MyTeamHistoryList from "./components/MyTeamHistoryList";
@@ -29,11 +29,11 @@ export default function MyTeamHistoryPage() {
   }, []);
 
   return (
-    <Layout>
+    <ContentLayout>
       <Header />
       <MyTeamHistoryPageContext.Provider value={{ isLoading, teamHistoryList }}>
         <MyTeamHistoryList />
       </MyTeamHistoryPageContext.Provider>
-    </Layout>
+    </ContentLayout>
   );
 }

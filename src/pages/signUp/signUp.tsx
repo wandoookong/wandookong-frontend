@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../../components/layout/layout";
+import ContentLayout from "../../components/layout/contentLayout";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navigation from "./components/navigation";
 import NickNamePage from "./signUpForm/nickNamePage";
@@ -25,7 +25,7 @@ export default function SignUp() {
   const onSubmit = async () => {
     try {
       const response = await signUpApi.createUser(state);
-      navigate('/')
+      navigate("/");
     } catch (e) {
       console.log(e);
     }
@@ -36,7 +36,7 @@ export default function SignUp() {
   }, [location]);
 
   return (
-    <Layout>
+    <ContentLayout>
       <Navigation onClick={onClick} />
       <form onSubmit={(e) => e.preventDefault()}>
         {step === 1 && <NickNamePage nickname={state.nickname} onChange={onChangeNickname} onNext={onNextHandler} />}
@@ -60,6 +60,6 @@ export default function SignUp() {
           />
         )}
       </form>
-    </Layout>
+    </ContentLayout>
   );
 }

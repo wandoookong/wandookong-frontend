@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../../components/layout/layout";
+import React, { useEffect, useState } from "react";
+import ContentLayout from "../../components/layout/contentLayout";
 import MyTeamApi from "../../api/myTeamApi";
 import MyTeamPartyList from "./components/MyTeamPartyList";
 import { MyTeamPartyReturnType } from "../../api/types/myTeamType";
@@ -29,11 +29,11 @@ export default function MyTeamPartyPage() {
   }, []);
 
   return (
-    <Layout>
+    <ContentLayout>
       <Header />
       <MyTeamPartyPageContext.Provider value={{ isLoading, teamPartyList }}>
         <MyTeamPartyList />
       </MyTeamPartyPageContext.Provider>
-    </Layout>
+    </ContentLayout>
   );
 }

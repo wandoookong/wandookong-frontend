@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export default function Layout({ children }) {
+export default function ContentLayout({ children }) {
   return <Container>{children}</Container>;
 }
 
