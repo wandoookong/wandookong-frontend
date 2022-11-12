@@ -1,20 +1,9 @@
-import React, { useEffect, useState } from "react";
-import ContentLayout from "../../components/layout/contentLayout";
+import { useState, useEffect } from "react";
 import MyProfileEdit from "./components/MyProfileEdit";
 import UserApi from "../../api/userApi";
 import { UserMeReturnType } from "../../api/types/userType";
-
-type MyProfilePageContextType = {
-  isLoading: boolean;
-  meInfo: UserMeReturnType;
-};
-
-const initialState: MyProfilePageContextType = {
-  isLoading: false,
-  meInfo: {} as UserMeReturnType,
-};
-
-export const MyProfilePageContext = React.createContext(initialState);
+import Header from "./components/Header";
+import ContentLayout from "../../components/layout/contentLayout";
 
 export default function MyProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,9 +18,8 @@ export default function MyProfilePage() {
 
   return (
     <ContentLayout>
-      <MyProfilePageContext.Provider value={{ isLoading, meInfo }}>
-        <MyProfileEdit />
-      </MyProfilePageContext.Provider>
+      <Header />
+      {isLoading ? null : <MyProfileEdit meInfo={meInfo} setMeInfo={setMeInfo} />}
     </ContentLayout>
   );
 }

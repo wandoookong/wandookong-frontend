@@ -43,6 +43,7 @@ const modifyButton = css`
   align-items: center;
   color: #000000;
   border: 0;
+  cursor: pointer;
 `;
 
 const styleTagPill = css`
@@ -98,7 +99,9 @@ export default function MyInfo() {
           <div>{meInfo.nickname}</div>
           <div css={styleEmail}>{meInfo.email}</div>
         </div>
-        <button css={modifyButton}>수정</button>
+        <button css={modifyButton} onClick={() => (window.location.href = "/my-profile")}>
+          수정
+        </button>
       </div>
       <div css={styleTagPill}>
         <b>소개태그</b>
