@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro";
 import { useState } from "react";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { ROLE_DETAIL } from "../../../../api/types/fieldType";
 
 const styleMemo = css`
@@ -41,9 +43,9 @@ const styleArrow = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  button {
-    width: 16px;
-    height: 16px;
+
+  svg {
+    margin: 0;
   }
 `;
 
@@ -65,12 +67,12 @@ export default function MemoBox({ roleDetail, memo }) {
             </div>
           </div>
           <div css={styleArrow}>
-            <button onClick={() => setShowFullText(false)}>^</button>
+            <ExpandLessIcon sx={{ fontSize: 24, ml: 1 }} onClick={() => setShowFullText(false)} />
           </div>
         </>
       ) : (
         <div css={styleArrow}>
-          <button onClick={() => setShowFullText(true)}>v</button>
+          <ExpandMoreIcon sx={{ fontSize: 24, ml: 1 }} onClick={() => setShowFullText(true)} />
         </div>
       )}
     </>

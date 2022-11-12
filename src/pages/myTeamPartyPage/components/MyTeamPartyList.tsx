@@ -8,7 +8,7 @@ import { TeamPartyReturnType } from "../../../api/types/myTeamType";
 
 const style = css`
   border-bottom: 1px solid #f0ebd8;
-  margin: 0 20px;
+  margin: 0 4px;
   margin-top: 16px;
 `;
 

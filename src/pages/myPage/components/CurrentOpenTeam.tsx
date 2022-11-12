@@ -78,6 +78,9 @@ const styleMember = css`
     border-left: 1px solid #cfc9c9;
   }
 `;
+const styleSpace = css`
+  margin-bottom: 31px;
+`;
 
 export default function CurrentOpenTeam() {
   const { currentOpenTeam } = useContext(MyPageContext);
@@ -107,7 +110,9 @@ export default function CurrentOpenTeam() {
         </div>
       </div>
     </>
-  ) : null;
+  ) : (
+    <div css={styleSpace} />
+  );
 }
 
 function teamCategoryText(teamCategory: TEAM_CATEGORY) {
