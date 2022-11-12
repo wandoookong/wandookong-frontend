@@ -12,9 +12,9 @@ interface Props {
 }
 
 export function SingleButton({ label, onClick, isActive }: Props) {
-  const onClickHandler = () => {
+  const onClickHandler = (e) => {
     if (isActive) {
-      return onClick();
+      return onClick(e);
     }
     throw new Error();
   };
@@ -45,9 +45,11 @@ const Container = styled.div<{ isActive: boolean }>`
     border-radius: 12px;
     border: 0;
     background: ${(props) => (props.isActive ? colors.brand900 : colors.grey100)};
-    color: ${colors.white};
+    color: ${(props) => (props.isActive ? colors.white : colors.grey300)};
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+    font-weight: 700;
+    cursor: ${(props) => (props.isActive ? "pointer" : "default")};
   }
 `;
