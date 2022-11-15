@@ -8,11 +8,20 @@ import { TextArea } from "../../components/form/textInput/multiText";
 import { ROLE_DETAIL } from "../../api/types/fieldType";
 import { css } from "@emotion/react";
 import CheckIcon from "@mui/icons-material/Check";
+import FloatingModal from "../../components/modal/FloatingModal";
+import TeamApplyModal from "./components/teamApplyModal";
 
 interface ApplyTeam {
   roleDetail: ROLE_DETAIL;
   memo: string;
 }
+
+interface ErrorModal {
+  state: boolean;
+  status: ErrorStatus;
+}
+
+type ErrorStatus = "pending" | "";
 
 export default function ApplyTeam() {
   const navigate = useNavigate();
@@ -50,10 +59,25 @@ export default function ApplyTeam() {
     },
   ]);
   const [formContent, setFormContent] = useState<ApplyTeam>({ roleDetail: "product", memo: "" });
+  const [isSuccessModalOn, setSuccessModalOn] = useState(false);
+
+  const [isErrorModalOn, setErrorModalOn] = useState<ErrorModal>({ state: false, status: "pending" });
   const computedPositions = useMemo(
     () => setHiringPosition(teamData.teamCapacityList.filter((team) => !team.careerRangeName)),
     [teamData],
   );
+
+  const errorModalContent = (status: ErrorStatus) => {
+    switch (status) {
+      case "pending":
+        return {
+          title: "이미 참여 신청한 완두콩이에요!",
+          content: "리더가 아직 참여 수락을 하지 않았어요. \n 조금만 더 기다려주세요.",
+        };
+      default:
+        return { title: "다시 시도해주세요", content: "" };
+    }
+  };
 
   const onChangePosition = (e) => {
     setFormContent({ roleDetail: e.currentTarget.value, memo: formContent.memo });
@@ -62,9 +86,21 @@ export default function ApplyTeam() {
   const onChangeMemo = (e) => {
     setFormContent({ ...formContent, memo: e.currentTarget.value });
   };
+
   const onSubmit = async () => {
-    const response = await TeamApi.applyTeam(Number(param.teamId), formContent);
-    navigate("/");
+    try {
+      const response = await TeamApi.applyTeam(Number(param.teamId), formContent);
+      if (response.result) {
+        setSuccessModalOn(!isSuccessModalOn);
+        return;
+      }
+      if (response.teamDetailStatus === "pending") {
+        setErrorModalOn({ state: !isErrorModalOn.state, status: "pending" });
+        return;
+      }
+    } catch (e) {
+      throw new Error();
+    }
   };
 
   useEffect(() => {
@@ -76,6 +112,23 @@ export default function ApplyTeam() {
 
   return (
     <Container>
+      {isErrorModalOn.state && (
+        <TeamApplyModal
+          title={errorModalContent(isErrorModalOn.status).title}
+          content={errorModalContent(isErrorModalOn.status).content}
+          onClick={() => setErrorModalOn({ ...isErrorModalOn, state: !isErrorModalOn.state })}
+        />
+      )}
+      {isSuccessModalOn && (
+        <FloatingModal
+          title="참여 신청했습니다!"
+          content={`리더가 참여를 수락하면 \n 해당 완두콩의 연락 정보가 공개됩니다. \n 조금만 기다려주세요. `}
+          buttonLabel="확인"
+          onClickButton={() => navigate("/")}
+          onClose={() => setSuccessModalOn(!isSuccessModalOn)}
+          showClose={false}
+        />
+      )}
       <header>
         <CloseIcon sx={{ fontSize: 28 }} onClick={() => navigate(-1)} />
       </header>
@@ -120,6 +173,7 @@ export default function ApplyTeam() {
 }
 
 const Container = styled.div`
+  position: relative;
   padding-bottom: 50px;
 
   header {

@@ -21,7 +21,8 @@ interface ApplyTeam {
 }
 
 interface Response {
-  result?: boolean;
+  result: boolean;
+  teamDetailStatus?: string;
   statusCode?: number;
   message?: string;
 }
