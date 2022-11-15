@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { DoubleButton } from "../../../components/form/button/doubleButton";
-import { CircleCheckbox } from "../../../components/form/CircleCheckboxButton";
-import { Header } from "../../../components/form/header/header";
-import { tagKeywords } from "../../teamRequest/components/roleData";
-import ErrorMessage from "../../../components/form/errorMessage";
+import { DoubleButton } from "../../../components/buttons/doubleButton";
+import { PositionCheckBoxButton } from "../../teamRequestForm/components/buttons/positionCheckBoxButton";
+import { FormHeader } from "../../../components/form/header/formHeader";
+import { tagKeywords } from "../../teamRequestForm/utilities/roleData";
+import InputValidationErrorMessage from "../../../components/form/inputValidationErrorMessage";
 import { isEmpty } from "../../../@types/utility/typeGuard";
 
 interface Props {
@@ -15,10 +15,9 @@ interface Props {
 }
 
 export default function TagPage({ nickname, tags, onChange, onNext, onPrev }: Props) {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
-    console.log(tags);
     if (tags.length < 4) {
       return setErrorMessage("");
     }
@@ -26,14 +25,13 @@ export default function TagPage({ nickname, tags, onChange, onNext, onPrev }: Pr
 
   return (
     <>
-      <Header title={`${nickname}님에 대해 조금만 더 알려주시겠어요?`} />
-      {!isEmpty(errorMessage) && <ErrorMessage text={errorMessage} />}
+      <FormHeader title={`${nickname}님에 대해 조금만 더 알려주시겠어요?`} />
+      {!isEmpty(errorMessage) && <InputValidationErrorMessage text={errorMessage} />}
       <p>자기소개 태그는 최대 4개까지 선택할 수 있어요</p>
       {tagKeywords.map((tag, index) => (
-        <CircleCheckbox
+        <PositionCheckBoxButton
           key={index}
           label={tag.label}
-          checked={tags.includes(tag.value)}
           value={tag.value}
           onChange={() => {
             if (tags.length < 4) {
@@ -44,7 +42,8 @@ export default function TagPage({ nickname, tags, onChange, onNext, onPrev }: Pr
               return onChange(tag.value);
             }
           }}
-          disabled={false}
+          isChecked={tags.includes(tag.value)}
+          isDisabled={false}
         />
       ))}
       <DoubleButton prevLabel="이전" nextLabel="회원가입 완료!" onNextStep={onNext} onPrevStep={onPrev} />

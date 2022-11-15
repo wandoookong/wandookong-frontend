@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 import { ACCESS_TOKEN_NAME } from "../../../api/config/config";
 import AccountIcon from "@mui/icons-material/AccountCircle";
 import { isEmpty } from "../../../@types/utility/typeGuard";
+import { colors } from "../../../components/styles/colors";
 
 export const HomeHeader = () => {
   const navigate = useNavigate();
-  const [scroll, setScroll] = useState(false);
+  const [scroll, setScroll] = useState<boolean>(false);
+
   const handleScroll = () => {
     if (window.scrollY >= 220) {
       return setScroll(true);
@@ -60,9 +62,10 @@ const Container = styled.div<{ scroll: boolean }>`
   }}
 
   h1 {
+    margin: 0;
     font-size: 24px;
     font-weight: 700;
-    margin: 0;
+    color: ${colors.grey900};
   }
 `;
 
@@ -76,16 +79,16 @@ const RightWrapper = styled.div`
     height: 29px;
     border: none;
     border-radius: 8px;
-    background: #47b561;
+    background: ${colors.brand900};
     font-size: 14px;
     font-weight: 700;
-    color: #ffffff;
+    color: ${colors.white};
   }
 
   span {
     margin-left: 22px;
     font-size: 14px;
     font-weight: 700;
-    color: #242c35;
+    color: ${colors.grey900};
   }
 `;

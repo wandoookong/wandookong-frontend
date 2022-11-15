@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { ModalButton } from "../../../../components/form/button/modalButton";
-import exclamationIcon from "../modal/assets/exclamationIcon.png";
+import { ModalButton } from "../../../../components/buttons/modalButton";
+import exclamationIcon from ".//assets/exclamationIcon.png";
 import { useNavigate } from "react-router-dom";
 
 interface Props {

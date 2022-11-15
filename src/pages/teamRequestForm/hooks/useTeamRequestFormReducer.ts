@@ -45,7 +45,7 @@ function reducer(state: State, action: Actions) {
   }
 }
 
-export function useRequestFormReducer() {
+export function useTeamRequestFormReducer() {
   const [state, dispatch] = useReducer(reducer, {
     teamCategory: "",
     title: "",

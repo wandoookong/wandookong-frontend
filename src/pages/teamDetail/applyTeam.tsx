@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { SingleButton } from "../../components/form/button/singleButton";
+import { SingleButton } from "../../components/buttons/singleButton";
 import CloseIcon from "@mui/icons-material/Close";
 import styled from "@emotion/styled";
 import { useEffect, useMemo, useState } from "react";

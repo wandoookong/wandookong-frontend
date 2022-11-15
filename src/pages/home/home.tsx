@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { TeamListReturnType } from "../../api/types/teamType";
 import TeamApi from "../../api/teamApi";
 import { isEmpty } from "../../@types/utility/typeGuard";
+import { colors } from "../../components/styles/colors";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ const Container = styled.main`
   p {
     margin-top: 80px;
     font-size: 14px;
-    color: #999999;
+    color: ${colors.grey600};
     text-align: center;
   }
 `;
@@ -75,9 +76,9 @@ const Carousel = styled.div`
     height: 52px;
     border-radius: 12px;
     border: 0;
-    background: #47b561;
+    background: ${colors.brand900};
     font-size: 16px;
     font-weight: bold;
-    color: #ffffff;
+    color: ${colors.white};
   }
 `;

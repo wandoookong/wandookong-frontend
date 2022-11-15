@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import CloseIcon from "@mui/icons-material/Close";
-import { ModalButton } from "../form/button/modalButton";
+import { ModalButton } from "../buttons/modalButton";
 
 interface Props {
   title: string;

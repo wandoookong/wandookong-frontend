@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ContentLayout from "../../components/layout/contentLayout";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navigation from "./components/navigation";
-import NickNamePage from "./signUpForm/nickNamePage";
+import NickNameStep from "./signUpForm/nickNameStep";
 import PositionPage from "./signUpForm/positionPage";
 import TagPage from "./signUpForm/tagPage";
 import { useSignUpReducer } from "./hooks/useSignUpReducer";
@@ -39,7 +39,7 @@ export default function SignUp() {
     <ContentLayout>
       <Navigation onClick={onClick} />
       <form onSubmit={(e) => e.preventDefault()}>
-        {step === 1 && <NickNamePage nickname={state.nickname} onChange={onChangeNickname} onNext={onNextHandler} />}
+        {step === 1 && <NickNameStep nickname={state.nickname} onChange={onChangeNickname} onNext={onNextHandler} />}
         {step === 2 && (
           <PositionPage
             roleMain={state.roleMain}

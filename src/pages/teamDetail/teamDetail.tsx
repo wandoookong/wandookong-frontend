@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import styled from "@emotion/styled";
-import { SingleButton } from "../../components/form/button/singleButton";
+import { SingleButton } from "../../components/buttons/singleButton";
 import { useEffect, useState } from "react";
 import TeamApi from "../../api/teamApi";
 import { isEmpty } from "../../@types/utility/typeGuard";

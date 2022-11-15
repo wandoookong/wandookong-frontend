@@ -1,15 +1,31 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import CheckIcon from "@mui/icons-material/Check";
+import { colors } from "../../../../components/styles/colors";
 
-export function CircleCheckbox({ label, value, checked, disabled, ...rest }) {
+interface Props {
+  label: string;
+  value: string;
+  isChecked: boolean;
+  isDisabled: boolean;
+  onChange(value?: any): void;
+}
+
+export function PositionCheckBoxButton({ label, value, isChecked, isDisabled, onChange }: Props) {
   return (
-    <Label checked={checked} disabled={disabled}>
-      <Image checked={checked} disabled={disabled}>
-        {checked && <CheckIcon color="secondary" />}
-        {disabled && "나"}
+    <Label checked={isChecked} disabled={isDisabled}>
+      <Image checked={isChecked} disabled={isDisabled}>
+        {isChecked && <CheckIcon color="secondary" />}
+        {isDisabled && "나"}
       </Image>
-      <input type="checkbox" name="roles" value={value} checked={checked} disabled={disabled} {...rest} />
+      <input
+        type="checkbox"
+        name="position"
+        value={value}
+        checked={isChecked}
+        disabled={isDisabled}
+        onChange={onChange}
+      />
       {label}
     </Label>
   );
@@ -27,7 +43,7 @@ const Label = styled.label<{ checked: boolean; disabled: boolean }>`
   ${(props) => {
     if (!props.checked) {
       return css`
-        color: #242c35;
+        color: ${colors.grey900};
       `;
     }
     return css`
@@ -37,7 +53,7 @@ const Label = styled.label<{ checked: boolean; disabled: boolean }>`
   ${(props) => {
     if (props.disabled) {
       return css`
-        color: #a7a7a7;
+        color: ${colors.grey200};
       `;
     }
   }}
@@ -58,12 +74,12 @@ const Image = styled.div<{ checked: boolean; disabled: boolean }>`
   border-radius: 50px;
   font-size: 16px;
   font-weight: 700;
-  color: #fff;
+  color: ${colors.white};
 
   ${(props) => {
     if (props.disabled) {
       return css`
-        background: #242c35;
+        background: ${colors.grey900};
         opacity: 40%;
       `;
     }
@@ -75,7 +91,7 @@ const Image = styled.div<{ checked: boolean; disabled: boolean }>`
       `;
     }
     return css`
-      background: #47b561;
+      background: ${colors.brand900};
       opacity: 80%;
     `;
   }}

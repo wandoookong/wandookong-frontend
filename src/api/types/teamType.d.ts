@@ -19,6 +19,7 @@ export type TeamReturnType = {
   teamCapacityList: {
     teamCapacityId: number;
     roleDetail: ROLE_DETAIL;
+    roleDetailName: string;
     roleMaxCount: number;
     roleMemberCount: number;
   }[];

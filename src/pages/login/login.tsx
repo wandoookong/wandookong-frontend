@@ -20,7 +20,6 @@ export default function Login() {
   // global로 넣어줘야 해서, module에 있는 함수를 사용할 수가 없네요. ㅠㅠ
   // script tag도 동적으로 만들어줘야 하고, 이게 더 간단할줄 알았더니 더 번거로워졌어요.
   function onSignIn(googleUser) {
-    // import 오류가 나서 여기서 다시 정의합니다. ㅠㅠ
     const ACCESS_TOKEN_NAME = "w_d_k_t";
 
     fetch(`${process.env.REACT_APP_HOST_NAME}/api/auth/google`, {
@@ -31,7 +30,6 @@ export default function Login() {
       .then((response) => response.json())
       .then(({ userSocialId, accessToken }) => {
         //userSocialId는 쿠키에 저장해서 회원가입 시 사용합니다.
-        // document.cookie = "userGoogleId=" + userSocialId;
         // TODO: console.log 찍은건 개발 완료 후 삭제 예정
         if (accessToken) {
           // login success

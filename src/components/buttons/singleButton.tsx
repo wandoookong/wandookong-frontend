@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
+import { colors } from "../styles/colors";
 
 interface Props {
   label: string;
-  onClick(value?: any): void;
   isActive: boolean;
+  onClick(value?: any): void;
 }
 
 export function SingleButton({ label, onClick, isActive }: Props) {
@@ -11,6 +12,7 @@ export function SingleButton({ label, onClick, isActive }: Props) {
     if (isActive) {
       return onClick();
     }
+    throw new Error();
   };
 
   return (
@@ -27,7 +29,7 @@ const Container = styled.div<{ isActive: boolean }>`
   bottom: 0;
   width: 100%;
   height: 113px;
-  background: #faf7eb;
+  background: ${colors.background};
 
   button {
     position: fixed;
@@ -38,8 +40,8 @@ const Container = styled.div<{ isActive: boolean }>`
     height: 52px;
     border-radius: 12px;
     border: 0;
-    background: ${(props) => (props.isActive ? "#47b561" : "#dddddd")};
-    color: #ffffff;
+    background: ${(props) => (props.isActive ? colors.brand900 : colors.grey100)};
+    color: ${colors.white};
     font-size: 16px;
     font-weight: bold;
   }

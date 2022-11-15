@@ -3,27 +3,28 @@ import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import FloatingModal from "../modal/FloatingModal";
 import { useNavigate } from "react-router-dom";
+import { colors } from "../styles/colors";
 
 interface Props {
   step: number;
 }
 
 export function Navigation({ step }: Props) {
-  const [modal, setModal] = useState(false);
   const navigate = useNavigate();
+  const [isModalOn, setIsModalOn] = useState<boolean>(false);
 
   const onClick = () => {
-    setModal(!modal);
+    setIsModalOn(!isModalOn);
   };
   const onNext = () => {
     navigate("/");
   };
 
-  const value = Math.round((100 / 6) * step);
+  const calculateProgressBarValue = Math.round((100 / 6) * step);
 
   return (
     <>
-      {modal && (
+      {isModalOn && (
         <FloatingModal
           title="완두콩이 거의 다 완료됐어요!"
           content={
@@ -35,16 +36,16 @@ export function Navigation({ step }: Props) {
               삭제하시겠습니까?
             </span>
           }
-          onClose={() => setModal(false)}
+          onClose={() => setIsModalOn(false)}
           showClose={false}
-          prevLabel={"나가기"}
+          prevLabel="나가기"
           onPrev={onNext}
-          nextLabel={"이어서 작성하기"}
-          onNext={() => setModal(false)}
+          nextLabel="이어서 작성하기"
+          onNext={() => setIsModalOn(false)}
         />
       )}
       <Container>
-        <progress value={value} max="100" />
+        <progress value={calculateProgressBarValue} max="100" />
         <CloseIcon sx={{ fontSize: 28, ml: 1 }} onClick={onClick} />
       </Container>
     </>
@@ -66,21 +67,13 @@ const Container = styled.div`
     -webkit-appearance: none;
 
     ::-webkit-progress-bar {
-      background-color: #d9d9d9;
+      background-color: ${colors.grey100};
       border-radius: 20px;
     }
     ::-webkit-progress-value {
-      background-color: #47b561;
+      background-color: ${colors.brand900};
       border-radius: 20px;
-    }
-
-    @keyframes progress {
-      from {
-        width: 0;
-      }
-      to {
-        width: 100%;
-      }
+      transition: all 0.2s ease-in-out;
     }
   }
 `;

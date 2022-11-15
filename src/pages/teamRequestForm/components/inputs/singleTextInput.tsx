@@ -1,33 +1,38 @@
 import styled from "@emotion/styled";
-import { colors } from "../../styles/colors";
+import { isEmpty } from "../../../../@types/utility/typeGuard";
+import { colors } from "../../../../components/styles/colors";
 
 interface Props {
   value: string;
-  maxLength: number;
   placeholder: string;
+  maxLength?: number;
   onChange(value?: any): void;
 }
 
-export function TextArea({ onChange, value, maxLength, placeholder }: Props) {
+export function SingleTextInput({ value, maxLength, placeholder, onChange }: Props) {
   return (
     <Container>
-      <textarea onChange={onChange} value={value} placeholder={placeholder} />
-      <p>
-        {value.length}/{maxLength}
-      </p>
+      <input type="text" maxLength={maxLength} value={value} onChange={onChange} placeholder={placeholder} />
+      {!isEmpty(maxLength) && (
+        <p>
+          {value.length}/{maxLength}
+        </p>
+      )}
     </Container>
   );
 }
 
 const Container = styled.div`
-  textarea {
-    box-sizing: border-box;
+  input {
+    display: block;
     width: 100%;
-    height: 200px;
-    border: 2px solid ${colors.subBrand100};
-    font-size: 14px;
-    border-radius: 8px;
+    box-sizing: border-box;
+    margin-bottom: 2px;
     padding: 16px 12px;
+    border: 2px solid ${colors.subBrand100};
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.2s;
     background: none;
 
     &:focus {
@@ -45,6 +50,10 @@ const Container = styled.div`
       color: ${colors.subBrand400};
     }
     :-moz-placeholder {
+      color: ${colors.subBrand400};
+    }
+
+    ::placeholder {
       color: ${colors.subBrand400};
     }
   }

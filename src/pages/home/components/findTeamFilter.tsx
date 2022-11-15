@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import { roleData } from "../../teamRequest/components/roleData";
+import { roleData } from "../../teamRequestForm/utilities/roleData";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import qs from "qs";
+import { colors } from "../../../components/styles/colors";
 
 interface Props {
   filters: TeamFilters;
@@ -40,11 +41,11 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
   }, [filters.teamCategory]);
 
   return (
-    <FilterWrapper>
+    <Container>
       <h3>완두콩 찾기</h3>
-      <ContentWrapper>
+      <div className="filters-wrapper">
         <FilterContent>
-          <LabelWrapper>
+          <div className="label-wrapper">
             <p>직군콩 |</p>
             <Label checked={filters.roleDetail.length === 0} onClick={() => setFilters({ ...filters, roleDetail: "" })}>
               전체
@@ -61,10 +62,10 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
                 <input type="radio" />
               </Label>
             ))}
-          </LabelWrapper>
+          </div>
         </FilterContent>
         <FilterContent>
-          <LabelWrapper>
+          <div className="label-wrapper">
             <p>카테고리 |</p>
             <Label
               checked={filters.teamCategory.length === 0}
@@ -85,28 +86,29 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
             >
               사이드 프로젝트 <input type="radio" />
             </Label>
-          </LabelWrapper>
+          </div>
         </FilterContent>
-      </ContentWrapper>
-    </FilterWrapper>
+      </div>
+    </Container>
   );
 }
 
-const FilterWrapper = styled.section`
+const Container = styled.section`
   position: relative;
   margin: 32px 0 0 20px;
   padding-bottom: 8px;
-  border-bottom: 1px solid #f0ebd8;
+  border-bottom: 1px solid ${colors.subBrand50};
 
   h3 {
     margin: 0;
     font-size: 20px;
     font-weight: 700;
+    color: ${colors.grey900};
   }
-`;
 
-const ContentWrapper = styled.div`
-  margin-top: 13px;
+  div.filters-wrapper {
+    margin-top: 13px;
+  }
 `;
 
 const FilterContent = styled.div`
@@ -122,36 +124,38 @@ const FilterContent = styled.div`
   p {
     display: inline-block;
     font-size: 12px;
-    color: #242c35;
+    color: ${colors.grey900};
     margin: 0;
   }
-`;
 
-const LabelWrapper = styled.div`
-  display: flex;
-  align-items: center;
+  div.label-wrapper {
+    display: flex;
+    align-items: center;
 
-  p {
-    flex: 0 0 45px;
-    padding-right: 12px;
-    text-align: right;
+    p {
+      margin: 0;
+      flex: 0 0 45px;
+      padding-right: 12px;
+      color: ${colors.grey900};
+      text-align: right;
+    }
   }
 `;
 
 const Label = styled.label<{ checked: boolean }>`
   margin-right: 8px;
-  background: ${(props) => (props.checked ? "#ffeac5" : "#fff")};
-  border: 1px solid #ffdd86;
+  background: ${(props) => (props.checked ? colors.subBrand300 : colors.white)};
+  border: 1px solid ${colors.subBrand600};
   padding: 6px 8px;
   border-radius: 32px;
-  color: #242c35;
   font-size: 12px;
+  color: ${colors.grey900};
   box-shadow: 0 1px 3px rgba(181, 191, 197, 0.3);
 
   input {
     display: none;
   }
-
+  //FIXME 마지막 요소 마진값
   &:last-child {
     margin-right: 100px;
   }

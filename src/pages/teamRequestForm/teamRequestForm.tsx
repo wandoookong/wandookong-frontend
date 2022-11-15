@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { Navigation } from "../../components/form/navigation";
-import CategoryStep from "./components/categoryStep";
-import TitleStep from "./components/titleStep";
-import MyRoleStep from "./components/myRoleStep";
-import RolesStep from "./components/rolesStep";
-import DescriptionStep from "./components/descriptionStep";
-import Contact from "./components/contact";
+import SetCategoryStep from "./components/steps/setCategoryStep";
+import SetTitleStep from "./components/steps/setTitleStep";
+import SetMyPositionStep from "./components/steps/setMyPositionStep";
+import SetPositionStep from "./components/steps/setPositionStep";
+import SetDescriptionStep from "./components/steps/setDescriptionStep";
+import SetContactStep from "./components/steps/setContactStep";
 import ContentLayout from "../../components/layout/contentLayout";
-import { useRequestFormReducer } from "./hooks/useRequestFormReducer";
+import { useTeamRequestFormReducer } from "./hooks/useTeamRequestFormReducer";
 import TeamApi from "../../api/teamApi";
 import { isEmpty } from "../../@types/utility/typeGuard";
 import { useNavigate } from "react-router-dom";
 
-export default function TeamRequest() {
-  const [step, setStep] = useState(1);
+export default function TeamRequestForm() {
+  const navigate = useNavigate();
+  const [step, setStep] = useState<number>(1);
   const {
     state,
     onChangeTeamCategory,
@@ -22,9 +23,8 @@ export default function TeamRequest() {
     onChangeMembers,
     onChangeDescription,
     onChangeContact,
-  } = useRequestFormReducer();
+  } = useTeamRequestFormReducer();
 
-  const navigate = useNavigate();
   const onPreviousHandler = () => setStep((step) => step - 1);
   const onNextHandler = () => setStep((step) => step + 1);
   const onSubmit = async () => {
@@ -41,7 +41,7 @@ export default function TeamRequest() {
       <Navigation step={step} />
       <form onSubmit={(e) => e.preventDefault()}>
         {step === 1 && (
-          <CategoryStep
+          <SetCategoryStep
             category={state.teamCategory}
             onChange={onChangeTeamCategory}
             onPrevious={onPreviousHandler}
@@ -49,7 +49,7 @@ export default function TeamRequest() {
           />
         )}
         {step === 2 && (
-          <TitleStep
+          <SetTitleStep
             title={state.title}
             onChangeTitle={onChangeTitle}
             onPrevious={onPreviousHandler}
@@ -57,16 +57,16 @@ export default function TeamRequest() {
           />
         )}
         {step === 3 && (
-          <MyRoleStep
-            myRole={state.myRole}
+          <SetMyPositionStep
+            myPosition={state.myRole}
             onChangeRole={onChangeRole}
             onPrevious={onPreviousHandler}
             onNext={onNextHandler}
           />
         )}
         {step === 4 && (
-          <RolesStep
-            myRole={state.myRole}
+          <SetPositionStep
+            myPosition={state.myRole}
             member={state.member}
             onChangeMembers={onChangeMembers}
             onPrevious={onPreviousHandler}
@@ -74,7 +74,7 @@ export default function TeamRequest() {
           />
         )}
         {step === 5 && (
-          <DescriptionStep
+          <SetDescriptionStep
             description={state.description}
             onChangeDescription={onChangeDescription}
             onPrevious={onPreviousHandler}
@@ -82,7 +82,7 @@ export default function TeamRequest() {
           />
         )}
         {step === 6 && (
-          <Contact
+          <SetContactStep
             contact={state.contact}
             onChangeContact={onChangeContact}
             onPrevious={onPreviousHandler}

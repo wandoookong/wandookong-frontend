@@ -1,23 +1,32 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import CheckIcon from "@mui/icons-material/Check";
+import { colors } from "../../../../components/styles/colors";
 
-export function RadioButton({ label, description, checked, ...rest }) {
+interface Props {
+  value: string;
+  label: string;
+  description: string;
+  isChecked: boolean;
+  onChange(value?: any): void;
+}
+
+export function RadioButton({ value, label, description, isChecked, onChange }: Props) {
   return (
-    <Container checked={checked}>
+    <Container isChecked={isChecked}>
       <label>
-        <input type="radio" name="category" checked={checked} {...rest} />
+        <input type="radio" name="category" checked={isChecked} value={value} onChange={onChange} />
         {label}
         <div>
           <p>{description}</p>
-          {checked && <CheckIcon sx={{ fontSize: 24, m: 0 }} />}
+          {isChecked && <CheckIcon sx={{ fontSize: 24, m: 0 }} />}
         </div>
       </label>
     </Container>
   );
 }
 
-const Container = styled.div<{ checked: boolean }>`
+const Container = styled.div<{ isChecked: boolean }>`
   width: auto;
   height: auto;
   margin-bottom: 8px;
@@ -27,14 +36,14 @@ const Container = styled.div<{ checked: boolean }>`
   font-weight: 500;
 
   ${(props) => {
-    if (!props.checked) {
+    if (!props.isChecked) {
       return css`
-        box-shadow: 0 0 0 2px #95be8d inset;
+        box-shadow: 0 0 0 2px ${colors.brand400} inset;
         box-sizing: border-box;
       `;
     }
     return css`
-      background: #afd89e;
+      background: ${colors.brand300};
       box-shadow: none;
     `;
   }}
@@ -42,7 +51,7 @@ const Container = styled.div<{ checked: boolean }>`
   label {
     display: block;
     font-weight: 700;
-    color: #242c35;
+    color: ${colors.grey900};
 
     input {
       display: none;
@@ -60,7 +69,7 @@ const Container = styled.div<{ checked: boolean }>`
       font-size: 12px;
       font-weight: 400;
       line-height: 18px;
-      color: #242c35;
+      color: ${colors.grey900};
     }
   }
 `;
