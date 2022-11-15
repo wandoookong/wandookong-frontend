@@ -2,7 +2,7 @@
 import { css } from "@emotion/react/macro";
 
 const styleSection = css`
-  margin: 0 20px;
+  margin: 0;
   margin-top: 9px;
   display: flex;
   justify-content: space-around;

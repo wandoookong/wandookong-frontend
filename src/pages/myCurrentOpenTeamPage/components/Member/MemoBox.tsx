@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro";
 import { useState } from "react";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const styleMemo = css`
   margin: 0 14px;
@@ -44,7 +45,7 @@ export default function MemoBox({ memo }) {
       <div css={showFullText ? styleMemo : styleMemoEllipsis}>{memo}</div>
       {!showFullText && (
         <div css={styleArrow}>
-          <button onClick={() => setShowFullText(true)}>v</button>
+          <ExpandMoreIcon sx={{ fontSize: 24, ml: 1 }} onClick={() => setShowFullText(true)} />
         </div>
       )}
     </>

@@ -7,7 +7,7 @@ import Position from "./Position";
 import Space from "./Space";
 import CareerRange from "./CareerRange";
 import Tag from "./Tag";
-import { SingleButton } from "../../../components/form/button/singleButton";
+import { SingleButton } from "../../../components/buttons/singleButton";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

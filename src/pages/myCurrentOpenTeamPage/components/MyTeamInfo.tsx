@@ -3,7 +3,7 @@ import { css } from "@emotion/react/macro";
 import { DdayPill } from "../../../components/pill/DdayPill";
 
 const styleSub = css`
-  margin: 0 20px;
+  margin: 0;
   margin-top: 24px;
   display: flex;
   justify-content: space-between;
@@ -15,7 +15,7 @@ const styleSub = css`
   color: #434445;
 `;
 const styleTitle = css`
-  margin: 0 18px;
+  margin: 0;
   font-size: 24px;
   line-height: 28.8px;
   font-weight: 700;

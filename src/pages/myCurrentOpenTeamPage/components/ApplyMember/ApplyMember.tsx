@@ -7,7 +7,7 @@ import Member from "../Member/Member";
 
 const style = css`
   border-bottom: 1px solid #f0ebd8;
-  margin: 0 20px;
+  margin: 0;
   margin-top: 16px;
 `;
 
