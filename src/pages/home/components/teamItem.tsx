@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
-import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import { TeamReturnType } from "../../../api/types/teamType";
 import { DdayPill } from "../../../components/pill/DdayPill";
-import { colors } from "../../../components/styles/colors";
+import { colors } from "../../../styles/colors";
 
 type roleMemberCount = {
   roleMemberCount: number;
@@ -19,7 +18,7 @@ export default function TeamItem({ teamId, content }: Props) {
 
   //FIXME DDAY 태그 컴포넌트
   return (
-    <Container onClick={(e) => navigate(`/team/${teamId}`)}>
+    <Container onClick={() => navigate(`/team/${teamId}`)}>
       <div className="title-wrapper">
         {content.teamCategory === "portfolio" ? <span>포트폴리오</span> : <span>사이드 프로젝트</span>}
         <h2>{content.title}</h2>
@@ -27,10 +26,10 @@ export default function TeamItem({ teamId, content }: Props) {
       <DdayPill closeDueYmd={content.closeDueYmd} />
       <div className="position-wrapper">
         {content.teamCapacityList.map((position, index) => (
-          <div key={index}>
-            <PositionImage roleMemberCount={position.roleMemberCount} />
+          <PositionItem key={index} roleMemberCount={position.roleMemberCount}>
+            <div className="position-image" />
             <span>{position.roleDetailName}</span>
-          </div>
+          </PositionItem>
         ))}
       </div>
     </Container>
@@ -43,6 +42,7 @@ const Container = styled.div`
   padding: 16px 12px 22px 12px;
   background: ${colors.white};
   border-radius: 8px;
+  cursor: pointer;
 
   div.title-wrapper {
     span {
@@ -62,39 +62,31 @@ const Container = styled.div`
     display: flex;
     gap: 14px;
     margin: 12px 0 0 0;
+    max-width: 48px;
+    word-break: keep-all;
 
     div {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-
-    span {
-      margin-top: 10px;
-      font-size: 14px;
-      font-weight: 500;
-      text-align: center;
-      color: ${colors.grey900};
-      white-space: nowrap;
-    }
   }
 `;
 
-const PositionImage = styled.div<roleMemberCount>`
-  width: 48px;
-  height: 48px;
-  margin: 0;
-  border-radius: 28px;
-  ${(props) => {
-    if (!props.roleMemberCount) {
-      return css`
-        background: linear-gradient(137.26deg, #ffca02 0%, #648d00 104.28%);
-      `;
-    }
-
-    return css`
-      background: ${colors.brand900};
-      opacity: 80%;
-    `;
-  }}
+const PositionItem = styled.div<roleMemberCount>`
+  div.position-image {
+    width: 48px;
+    height: 48px;
+    margin: 0;
+    border-radius: 28px;
+    background: ${(props) => (!props.roleMemberCount ? colors.grey900 : colors.grey100)};
+  }
+  span {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    color: ${(props) => (!props.roleMemberCount ? colors.grey900 : colors.grey200)};
+    line-height: 17px;
+  }
 `;

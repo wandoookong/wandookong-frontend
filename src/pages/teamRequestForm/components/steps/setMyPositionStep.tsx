@@ -1,12 +1,12 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
-import { myRoleValidation } from "../../validation/teamRequestFormValidations";
+import { myRoleValidation } from "../../validations/teamRequestFormValidations";
 import { FormHeader } from "../../../../components/form/header/formHeader";
-import InputValidationErrorMessage from "../../../../components/form/inputValidationErrorMessage";
 import { roleData } from "../../utilities/roleData";
 import { DoubleButton } from "../../../../components/buttons/doubleButton";
-import { PositionRadioButton } from "../buttons/positionRadioButton";
+import { PositionRadioButton } from "../inputs/positionRadioButton";
 import styled from "@emotion/styled";
+import { ContentWrapper } from "../layout/contentWrapper";
 
 interface Props {
   myPosition: Role;
@@ -35,19 +35,20 @@ export default function SetMyPositionStep({ myPosition, onChangeRole, onNext, on
 
   return (
     <>
-      <FormHeader title={`님의 포지션은 \n 무엇인가요?`} />
-      {!isEmpty(errorMessage) && <InputValidationErrorMessage text={errorMessage} />}
-      <InputWrapper>
-        {roleData.map((role) => (
-          <PositionRadioButton
-            key={role.id}
-            label={role.label}
-            value={role.value}
-            checked={myPosition === role.value}
-            onChange={onChange}
-          />
-        ))}
-      </InputWrapper>
+      <FormHeader title={`님의 포지션은 \n 무엇인가요?`} errorMessage={errorMessage} />
+      <ContentWrapper>
+        <InputWrapper>
+          {roleData.map((role) => (
+            <PositionRadioButton
+              key={role.id}
+              label={role.label}
+              value={role.value}
+              isChecked={myPosition === role.value}
+              onChange={onChange}
+            />
+          ))}
+        </InputWrapper>
+      </ContentWrapper>
       <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </>
   );
@@ -55,6 +56,6 @@ export default function SetMyPositionStep({ myPosition, onChangeRole, onNext, on
 
 const InputWrapper = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 17px;
   width: 100%;
 `;

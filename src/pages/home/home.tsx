@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { TeamListReturnType } from "../../api/types/teamType";
 import TeamApi from "../../api/teamApi";
 import { isEmpty } from "../../@types/utility/typeGuard";
-import { colors } from "../../components/styles/colors";
+import { colors } from "../../styles/colors";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -20,10 +20,12 @@ export default function Home() {
 
   useEffect(() => {
     (async function () {
-      const response = await TeamApi.getTeamList(location.search);
-      setTeamData(response);
+      const fetchTeamData = await TeamApi.getTeamList(location.search);
+      setTeamData(fetchTeamData);
     })();
   }, [location]);
+
+  //FIXME 완두콩 만들기 인증&&상태 체크
 
   return (
     <>
@@ -38,7 +40,7 @@ export default function Home() {
             <TeamItem key={index} teamId={teamDataList.teamId} content={teamDataList} />
           ))
         ) : (
-          <p>아직 만들어진 완두콩이 없습니다.</p>
+          <p>완두콩 불러오는 중...</p>
         )}
       </Container>
     </>
@@ -80,5 +82,6 @@ const Carousel = styled.div`
     font-size: 16px;
     font-weight: bold;
     color: ${colors.white};
+    cursor: pointer;
   }
 `;

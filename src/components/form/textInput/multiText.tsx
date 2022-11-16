@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "../../styles/colors";
+import { colors } from "../../../styles/colors";
 
 interface Props {
   value: string;
@@ -8,7 +8,7 @@ interface Props {
   onChange(value?: any): void;
 }
 
-export function TextArea({ onChange, value, maxLength, placeholder }: Props) {
+export function MultiTextInput({ onChange, value, maxLength, placeholder }: Props) {
   return (
     <Container>
       <textarea onChange={onChange} value={value} placeholder={placeholder} />
@@ -23,12 +23,14 @@ const Container = styled.div`
   textarea {
     box-sizing: border-box;
     width: 100%;
-    height: 200px;
+    height: 219px;
     border: 2px solid ${colors.subBrand100};
+    font-family: "Pretendard", "Noto Sans CJK KR", sans-serif;
     font-size: 14px;
     border-radius: 8px;
     padding: 16px 12px;
     background: none;
+    resize: none;
 
     &:focus {
       outline: none;

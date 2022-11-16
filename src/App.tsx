@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/home";
 import TeamRequestForm from "./pages/teamRequestForm/teamRequestForm";
-import NotFound from "./pages/not-found/NotFound";
+import NotFound from "./pages/notFound/NotFound";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signUp/signUp";
 import MyPage from "./pages/myPage/MyPage";
@@ -11,7 +11,7 @@ import MyCurrentOpenTeamPage from "./pages/myCurrentOpenTeamPage/MyCurrentOpenTe
 import MyTeamHistoryPage from "./pages/myTeamHistoryPage/MyTeamHistoryPage";
 import MyTeamPartyPage from "./pages/myTeamPartyPage/MyTeamPartyPage";
 import { TeamDetail } from "./pages/teamDetail/teamDetail";
-import ApplyTeam from "./pages/teamDetail/applyTeam";
+import ApplyTeam from "./pages/teamApply/applyTeam";
 
 function App() {
   return (

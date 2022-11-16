@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "../styles/colors";
+import { colors } from "../../styles/colors";
 
 interface Props {
   label: string;
@@ -44,5 +44,6 @@ const Container = styled.div<{ isActive: boolean }>`
     color: ${colors.white};
     font-size: 16px;
     font-weight: bold;
+    cursor: pointer;
   }
 `;

@@ -1,12 +1,12 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
-import { roles, rolesValidation } from "../../validation/teamRequestFormValidations";
+import { roles, rolesValidation } from "../../validations/teamRequestFormValidations";
 import { FormHeader } from "../../../../components/form/header/formHeader";
-import InputValidationErrorMessage from "../../../../components/form/inputValidationErrorMessage";
 import { roleData } from "../../utilities/roleData";
 import { DoubleButton } from "../../../../components/buttons/doubleButton";
-import { PositionCheckBoxButton } from "../buttons/positionCheckBoxButton";
+import { PositionCheckBoxButton } from "../inputs/positionCheckBoxButton";
 import styled from "@emotion/styled";
+import { ContentWrapper } from "../layout/contentWrapper";
 
 interface Props {
   myPosition: Role;
@@ -38,20 +38,21 @@ export default function SetPositionStep({ member, myPosition, onChangeMembers, o
 
   return (
     <>
-      <FormHeader title={`함께 하고 싶은 멤버 콩을 \n 선택해주세요`} />
-      {!isEmpty(errorMessage) && <InputValidationErrorMessage text={errorMessage} />}
-      <InputWrapper>
-        {roleData.map((role, index) => (
-          <PositionCheckBoxButton
-            key={index}
-            label={role.label}
-            value={role.value}
-            onChange={onChange}
-            isChecked={member[role.value] === 1}
-            isDisabled={myPosition === role.value}
-          />
-        ))}
-      </InputWrapper>
+      <FormHeader title={`함께 하고 싶은 멤버 콩을 \n 선택해주세요`} errorMessage={errorMessage} />
+      <ContentWrapper>
+        <InputWrapper>
+          {roleData.map((role, index) => (
+            <PositionCheckBoxButton
+              key={index}
+              label={role.label}
+              value={role.value}
+              onChange={onChange}
+              isChecked={member[role.value] === 1}
+              isDisabled={myPosition === role.value}
+            />
+          ))}
+        </InputWrapper>
+      </ContentWrapper>
       <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </>
   );
@@ -60,4 +61,5 @@ export default function SetPositionStep({ member, myPosition, onChangeMembers, o
 const InputWrapper = styled.div`
   display: flex;
   width: 100%;
+  gap: 17px;
 `;

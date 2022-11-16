@@ -1,17 +1,18 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { SingleButton } from "../../components/buttons/singleButton";
-import CloseIcon from "@mui/icons-material/Close";
 import styled from "@emotion/styled";
 import { useEffect, useMemo, useState } from "react";
 import TeamApi from "../../api/teamApi";
-import { TextArea } from "../../components/form/textInput/multiText";
+import { MultiTextInput } from "../../components/form/textInput/multiText";
 import { ROLE_DETAIL } from "../../api/types/fieldType";
 import { css } from "@emotion/react";
 import CheckIcon from "@mui/icons-material/Check";
 import FloatingModal from "../../components/modal/FloatingModal";
-import TeamApplyModal from "./components/teamApplyModal";
+import TeamApplyResultModal from "./components/teamApplyResultModal";
+import CommonModalHeader from "../../components/header/commonModalHeader";
+import { colors } from "../../styles/colors";
 
-interface ApplyTeam {
+interface ApplyTeamForm {
   roleDetail: ROLE_DETAIL;
   memo: string;
 }
@@ -21,7 +22,21 @@ interface ErrorModal {
   status: ErrorStatus;
 }
 
+interface HiringPosition {
+  teamCapacityId: number;
+  roleDetail: string;
+  roleDetailName: string;
+  roleMaxCount: number;
+  teamLead: boolean;
+  careerRange: string;
+  careerRangeName: string;
+  tagList: string[];
+}
+
 type ErrorStatus = "pending" | "";
+
+
+//TODO setter 바로 팀 포지션만 가져오고 메모이제이션, 폼에 제대로 작성했는지 validation 돌리기
 
 export default function ApplyTeam() {
   const navigate = useNavigate();
@@ -46,7 +61,7 @@ export default function ApplyTeam() {
     ],
     teamDetailStatus: "",
   });
-  const [hiringPosition, setHiringPosition] = useState([
+  const [hiringPosition, setHiringPosition] = useState<HiringPosition[]>([
     {
       teamCapacityId: 0,
       roleDetail: "",
@@ -58,9 +73,8 @@ export default function ApplyTeam() {
       tagList: [""],
     },
   ]);
-  const [formContent, setFormContent] = useState<ApplyTeam>({ roleDetail: "product", memo: "" });
+  const [formContent, setFormContent] = useState<ApplyTeamForm>({ roleDetail: "product", memo: "" });
   const [isSuccessModalOn, setSuccessModalOn] = useState(false);
-
   const [isErrorModalOn, setErrorModalOn] = useState<ErrorModal>({ state: false, status: "pending" });
   const computedPositions = useMemo(
     () => setHiringPosition(teamData.teamCapacityList.filter((team) => !team.careerRangeName)),
@@ -113,7 +127,7 @@ export default function ApplyTeam() {
   return (
     <Container>
       {isErrorModalOn.state && (
-        <TeamApplyModal
+        <TeamApplyResultModal
           title={errorModalContent(isErrorModalOn.status).title}
           content={errorModalContent(isErrorModalOn.status).content}
           onClick={() => setErrorModalOn({ ...isErrorModalOn, state: !isErrorModalOn.state })}
@@ -129,9 +143,7 @@ export default function ApplyTeam() {
           showClose={false}
         />
       )}
-      <header>
-        <CloseIcon sx={{ fontSize: 28 }} onClick={() => navigate(-1)} />
-      </header>
+      <CommonModalHeader onClick={() => navigate(-1)} />
       <main>
         <TitleWrapper>
           <div>
@@ -151,15 +163,17 @@ export default function ApplyTeam() {
                 onChange={onChangePosition}
                 checked={formContent.roleDetail === position.roleDetail}
               />
-              <div className="position-image" />
-              {position.roleDetailName + " 콩 모집 중이에요"}
+              <div className="title-wrapper">
+                <div className="position-image" />
+                {position.roleDetailName + " 콩 모집 중이에요"}
+              </div>
               {formContent.roleDetail === position.roleDetail && <CheckIcon sx={{ fontSize: 24, m: 0 }} />}
             </PositionWrapper>
           ))}
         </section>
         <section>
           <h2>메시지</h2>
-          <TextArea
+          <MultiTextInput
             value={formContent.memo}
             onChange={onChangeMemo}
             maxLength={100}
@@ -176,32 +190,11 @@ const Container = styled.div`
   position: relative;
   padding-bottom: 50px;
 
-  header {
-    display: flex;
-    flex-direction: row-reverse;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 44px 12px 20px;
-    box-sizing: border-box;
-    background: rgba(250, 247, 235, 1);
-  }
-
   main {
-    padding: 92px 20px;
+    padding: 108px 20px 80px;
 
     section {
       margin-bottom: 28px;
-    }
-
-    h1 {
-      margin: 0;
-      padding: 5px 0 0 0;
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 29px;
-      letter-spacing: 0;
-      text-align: left;
     }
 
     h2 {
@@ -219,12 +212,22 @@ const TitleWrapper = styled.div`
   justify-content: space-between;
 
   p {
-    margin: 0;
+    margin: 0 0 5px 0;
     padding: 0;
     font-size: 12px;
     font-weight: 400;
     line-height: 17px;
     letter-spacing: -0.005em;
+    text-align: left;
+  }
+
+  h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29px;
+    letter-spacing: 0;
     text-align: left;
   }
 
@@ -243,6 +246,7 @@ const TitleWrapper = styled.div`
 
 const PositionWrapper = styled.label<{ checked: boolean }>`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   margin: 0 0 9px 0;
@@ -255,6 +259,7 @@ const PositionWrapper = styled.label<{ checked: boolean }>`
   line-height: 17px;
   letter-spacing: 0;
   color: #242c35;
+  cursor: pointer;
 
   ${(props) => {
     if (!props.checked) {
@@ -268,12 +273,18 @@ const PositionWrapper = styled.label<{ checked: boolean }>`
     `;
   }}
 
-  div.position-image {
-    min-width: 50px;
-    height: 50px;
-    margin: 0 6px 0 0;
-    border-radius: 28px;
-    background: linear-gradient(137.26deg, #c2d83b 0%, #65bc46 104.28%);
+  div.title-wrapper {
+    display: flex;
+    align-items: center;
+
+    div.position-image {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      margin: 0 6px 0 0;
+      border-radius: 28px;
+      background: ${colors.grey900};
+    }
   }
 
   input {

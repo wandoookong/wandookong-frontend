@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import CheckIcon from "@mui/icons-material/Check";
-import { colors } from "../../../../components/styles/colors";
+import { colors } from "../../../../styles/colors";
 
 interface Props {
   value: string;
@@ -11,7 +11,7 @@ interface Props {
   onChange(value?: any): void;
 }
 
-export function RadioButton({ value, label, description, isChecked, onChange }: Props) {
+export function CategoryRadioButton({ value, label, description, isChecked, onChange }: Props) {
   return (
     <Container isChecked={isChecked}>
       <label>
@@ -29,9 +29,9 @@ export function RadioButton({ value, label, description, isChecked, onChange }: 
 const Container = styled.div<{ isChecked: boolean }>`
   width: auto;
   height: auto;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
   padding: 12px 12px;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 16px;
   font-weight: 500;
 
@@ -52,6 +52,7 @@ const Container = styled.div<{ isChecked: boolean }>`
     display: block;
     font-weight: 700;
     color: ${colors.grey900};
+    cursor: pointer;
 
     input {
       display: none;
@@ -59,13 +60,14 @@ const Container = styled.div<{ isChecked: boolean }>`
 
     div {
       display: flex;
+      justify-content: space-between;
       margin-top: 8px;
     }
 
     p {
       display: inline-block;
-      max-width: 229px;
-      margin: 0 39px 0 0;
+      max-width: 80%;
+      margin: 0;
       font-size: 12px;
       font-weight: 400;
       line-height: 18px;

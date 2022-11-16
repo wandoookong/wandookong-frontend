@@ -1,9 +1,8 @@
-import React from "react";
 import { required } from "../../../@types/utility/typeGuard";
 
 const categoryValidates = {
   validation: required,
-  errorMessage: "카테고리를 선택하세요.",
+  errorMessage: "완두콩 종류를 선택해주세요.",
 };
 
 export const categoryValidation = (value) => {
@@ -18,7 +17,7 @@ export const categoryValidation = (value) => {
 
 const titleValidates = {
   validation: required,
-  errorMessage: "제목을 입력하세요.",
+  errorMessage: "완두콩 제목을 작성해주세요.",
 };
 
 export const titleValidation = (value) => {
@@ -33,7 +32,7 @@ export const titleValidation = (value) => {
 
 const myRoleValidates = {
   validation: required,
-  errorMessage: "포지션을 선택하세요.",
+  errorMessage: "포지션을 선택해주세요.",
 };
 
 export const myRoleValidation = (value) => {
@@ -52,7 +51,7 @@ const rolesValidate = (value) => {
 
 export const roles = {
   validation: rolesValidate,
-  errorMessage: "1개 이상의 포지션을 선택하세요.",
+  errorMessage: "포지션 콩은 최소 1개 선택해주세요.",
 };
 
 export const rolesValidation = (value) => {
@@ -67,7 +66,7 @@ export const rolesValidation = (value) => {
 
 const description = {
   validation: required,
-  errorMessage: "완두콩 설명을 작성하세요.",
+  errorMessage: "완두콩 소개 글을 작성해주세요.",
 };
 
 export const descriptionValidation = (value) => {
@@ -82,7 +81,7 @@ export const descriptionValidation = (value) => {
 
 const contact = {
   validation: required,
-  errorMessage: "연락 정보를 입력하세요.",
+  errorMessage: "참여 링크를 입력해주세요.",
 };
 
 export const contactValidation = (value) => {

@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import FloatingModal from "../modal/FloatingModal";
+import FloatingModal from "../../../../components/modal/FloatingModal";
 import { useNavigate } from "react-router-dom";
-import { colors } from "../styles/colors";
+import { colors } from "../../../../styles/colors";
 
 interface Props {
   step: number;
@@ -20,7 +20,7 @@ export function Navigation({ step }: Props) {
     navigate("/");
   };
 
-  const calculateProgressBarValue = Math.round((100 / 6) * step);
+  const calculateProgressBarValue: number = Math.round((100 / 6) * step);
 
   return (
     <>
@@ -46,30 +46,35 @@ export function Navigation({ step }: Props) {
       )}
       <Container>
         <progress value={calculateProgressBarValue} max="100" />
-        <CloseIcon sx={{ fontSize: 28, ml: 1 }} onClick={onClick} />
+        <CloseIcon sx={{ fontSize: 28 }} onClick={onClick} />
       </Container>
     </>
   );
 }
 
 const Container = styled.div`
+  position: fixed;
+  top: 0;
   display: flex;
-  width: auto;
-  height: 28px;
-  margin: 44px 0 26px 0;
-  padding: 0;
   align-items: center;
+  width: 100%;
+  height: auto;
+  padding: 52px 20px 34px;
+  box-sizing: border-box;
+  background: ${colors.background};
+  z-index: 5;
 
   progress {
+    margin-right: 7px;
     width: 100%;
     height: 12px;
-
     -webkit-appearance: none;
 
     ::-webkit-progress-bar {
       background-color: ${colors.grey100};
       border-radius: 20px;
     }
+
     ::-webkit-progress-value {
       background-color: ${colors.brand900};
       border-radius: 20px;

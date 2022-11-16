@@ -1,24 +1,27 @@
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { ACCESS_TOKEN_NAME } from "../../../api/config/config";
 import AccountIcon from "@mui/icons-material/AccountCircle";
-import { isEmpty } from "../../../@types/utility/typeGuard";
-import { colors } from "../../../components/styles/colors";
+import { colors } from "../../../styles/colors";
+import { Nullable } from "../../../@types/utility/nullable";
 
 export const HomeHeader = () => {
   const navigate = useNavigate();
-  const [scroll, setScroll] = useState<boolean>(false);
+  const [isScrollOn, setIsScrollOn] = useState<boolean>(false);
+  const [isToken, setIsToken] = useState<Nullable<string>>("");
 
   const handleScroll = () => {
     if (window.scrollY >= 220) {
-      return setScroll(true);
+      return setIsScrollOn(true);
     }
-    return setScroll(false);
+    return setIsScrollOn(false);
   };
 
-  const token = localStorage.getItem(ACCESS_TOKEN_NAME);
+  useEffect(() => {
+    const token = localStorage.getItem(ACCESS_TOKEN_NAME);
+    setIsToken(token);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, true);
@@ -26,46 +29,40 @@ export const HomeHeader = () => {
   }, []);
 
   return (
-    <Container scroll={scroll}>
+    <Container isScrollOn={isScrollOn}>
       <h1 onClick={() => navigate("/")}>완두콩</h1>
       <RightWrapper>
-        {scroll && <button onClick={() => navigate("/request")}>완두콩 만들기</button>}
-        {isEmpty(token) && <span onClick={() => navigate("/login")}>로그인</span>}
-        {!isEmpty(token) && <AccountIcon onClick={() => navigate("/my")} sx={{ fontSize: 24, ml: 2 }} />}
+        {isScrollOn && <button onClick={() => navigate("/request")}>완두콩 만들기</button>}
+        {isToken === null && <span onClick={() => navigate("/login")}>로그인</span>}
+        {isToken !== null && <AccountIcon onClick={() => navigate("/my")} sx={{ fontSize: 24, ml: 2 }} />}
       </RightWrapper>
     </Container>
   );
 };
 
-const Container = styled.div<{ scroll: boolean }>`
+const Container = styled.div<{ isScrollOn: boolean }>`
   position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;
   top: 0;
   width: 100%;
-  box-sizing: border-box;
   padding: 57px 20px 20px 20px;
+  box-sizing: border-box;
+  background: ${(props) =>
+    props.isScrollOn
+      ? "rgba(255, 255, 255, 0.1)"
+      : "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)"};
+  box-shadow: ${(props) => (props.isScrollOn ? "0 0 20px -4px rgba(0, 0, 0, 0.2)" : "none")};
+  backdrop-filter: ${(props) => (props.isScrollOn ? "blur(150px)" : "none")};
   z-index: 900;
-
-  ${(props) => {
-    if (!props.scroll) {
-      return css`
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
-      `;
-    }
-    return css`
-      background: linear-gradient(180deg, #faf7eb 0.01%, rgba(250, 247, 235, 0.04) 95.83%);
-      box-shadow: 0px -3px 10px rgba(199, 196, 186, 0.25);
-      backdrop-filter: blur(150px);
-    `;
-  }}
 
   h1 {
     margin: 0;
     font-size: 24px;
     font-weight: 700;
     color: ${colors.grey900};
+    cursor: pointer;
   }
 `;
 
@@ -83,6 +80,7 @@ const RightWrapper = styled.div`
     font-size: 14px;
     font-weight: 700;
     color: ${colors.white};
+    cursor: pointer;
   }
 
   span {
@@ -90,5 +88,6 @@ const RightWrapper = styled.div`
     font-size: 14px;
     font-weight: 700;
     color: ${colors.grey900};
+    cursor: pointer;
   }
 `;

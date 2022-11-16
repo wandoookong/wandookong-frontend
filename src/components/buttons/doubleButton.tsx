@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "../styles/colors";
+import { colors } from "../../styles/colors";
 
 interface Props {
   prevLabel: string;
@@ -24,7 +24,7 @@ export function DoubleButton({ prevLabel, nextLabel, onPrevStep, onNextStep }: P
 }
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
@@ -51,6 +51,7 @@ const ButtonWrapper = styled.div`
     font-size: 16px;
     font-weight: bold;
     color: ${colors.brand900};
+    cursor: pointer;
   }
 
   button.next-button {
@@ -63,5 +64,6 @@ const ButtonWrapper = styled.div`
     font-size: 16px;
     font-weight: bold;
     color: ${colors.white};
+    cursor: pointer;
   }
 `;

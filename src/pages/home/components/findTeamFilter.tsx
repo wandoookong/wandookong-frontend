@@ -3,7 +3,7 @@ import { roleData } from "../../teamRequestForm/utilities/roleData";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import qs from "qs";
-import { colors } from "../../../components/styles/colors";
+import { colors } from "../../../styles/colors";
 
 interface Props {
   filters: TeamFilters;
@@ -45,15 +45,18 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
       <h3>완두콩 찾기</h3>
       <div className="filters-wrapper">
         <FilterContent>
-          <div className="label-wrapper">
-            <p>직군콩 |</p>
-            <Label checked={filters.roleDetail.length === 0} onClick={() => setFilters({ ...filters, roleDetail: "" })}>
+          <span>직군콩 |</span>
+          <div className="filter-category-wrapper">
+            <Label
+              isChecked={filters.roleDetail.length === 0}
+              onClick={() => setFilters({ ...filters, roleDetail: "" })}
+            >
               전체
             </Label>
             {roleData.map((role) => (
               <Label
                 key={role.id}
-                checked={filters.roleDetail === role.value}
+                isChecked={filters.roleDetail === role.value}
                 onClick={() => {
                   setFilters({ ...filters, roleDetail: role.value });
                 }}
@@ -65,23 +68,23 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
           </div>
         </FilterContent>
         <FilterContent>
-          <div className="label-wrapper">
-            <p>카테고리 |</p>
+          <span>카테고리 |</span>
+          <div className="filter-category-wrapper">
             <Label
-              checked={filters.teamCategory.length === 0}
+              isChecked={filters.teamCategory.length === 0}
               onClick={() => setFilters({ ...filters, teamCategory: "" })}
             >
               전체
             </Label>
             <Label
-              checked={filters.teamCategory === "portfolio"}
+              isChecked={filters.teamCategory === "portfolio"}
               onClick={() => setFilters({ ...filters, teamCategory: "portfolio" })}
             >
               포트폴리오
               <input type="radio" />
             </Label>
             <Label
-              checked={filters.teamCategory === "side_project"}
+              isChecked={filters.teamCategory === "side_project"}
               onClick={() => setFilters({ ...filters, teamCategory: "side_project" })}
             >
               사이드 프로젝트 <input type="radio" />
@@ -95,7 +98,7 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
 
 const Container = styled.section`
   position: relative;
-  margin: 32px 0 0 20px;
+  margin: 32px 0 8px 20px;
   padding-bottom: 8px;
   border-bottom: 1px solid ${colors.subBrand50};
 
@@ -112,51 +115,46 @@ const Container = styled.section`
 `;
 
 const FilterContent = styled.div`
+  display: flex;
+  align-items: center;
   height: 100%;
   white-space: nowrap;
   margin: 0 0 8px 0;
-  overflow-y: hidden;
+  font-size: 12px;
+  color: ${colors.grey900};
 
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
-  p {
-    display: inline-block;
-    font-size: 12px;
-    color: ${colors.grey900};
+  span {
+    flex: 0 0 14%;
     margin: 0;
   }
 
-  div.label-wrapper {
+  div.filter-category-wrapper {
     display: flex;
     align-items: center;
+    gap: 8px;
+    margin-left: 12px;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
 
-    p {
-      margin: 0;
-      flex: 0 0 45px;
-      padding-right: 12px;
-      color: ${colors.grey900};
-      text-align: right;
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 `;
 
-const Label = styled.label<{ checked: boolean }>`
-  margin-right: 8px;
-  background: ${(props) => (props.checked ? colors.subBrand300 : colors.white)};
+const Label = styled.label<{ isChecked: boolean }>`
+  background: ${(props) => (props.isChecked ? colors.subBrand300 : colors.white)};
   border: 1px solid ${colors.subBrand600};
   padding: 6px 8px;
   border-radius: 32px;
-  font-size: 12px;
-  color: ${colors.grey900};
   box-shadow: 0 1px 3px rgba(181, 191, 197, 0.3);
+  cursor: pointer;
 
   input {
     display: none;
   }
-  //FIXME 마지막 요소 마진값
+
   &:last-child {
-    margin-right: 100px;
+    margin-right: 28px;
   }
 `;

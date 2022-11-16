@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
-import { categoryValidation } from "../../validation/teamRequestFormValidations";
+import { categoryValidation } from "../../validations/teamRequestFormValidations";
 import { FormHeader } from "../../../../components/form/header/formHeader";
-import { RadioButton } from "../buttons/radioButton";
-import InputValidationErrorMessage from "../../../../components/form/inputValidationErrorMessage";
+import { CategoryRadioButton } from "../inputs/categoryRadioButton";
 import { SingleButton } from "../../../../components/buttons/singleButton";
-import styled from "@emotion/styled";
+import { ContentWrapper } from "../layout/contentWrapper";
 
 interface Props {
   category: TeamCategory;
@@ -35,17 +34,16 @@ export default function SetCategoryStep({ onNext, onChange, category }: Props) {
 
   return (
     <>
-      <FormHeader title={`어떤 완두콩을 \n 만들고 싶으신가요?`} />
-      {!isEmpty(errorMessage) && <InputValidationErrorMessage text={errorMessage} />}
+      <FormHeader title={`어떤 완두콩을 \n 만들고 싶으신가요?`} errorMessage={errorMessage} />
       <ContentWrapper>
-        <RadioButton
+        <CategoryRadioButton
           value="portfolio"
           onChange={onChangeHandler}
           isChecked={category === "portfolio"}
           label="포트폴리오"
           description="짦은 기간동안 진행되는 프로젝트입니다. 비슷한 포지션이나 목표를 갖고 있는 콩들과 색다른 경험을 쌓을 수 있어요. "
         />
-        <RadioButton
+        <CategoryRadioButton
           value="side_project"
           onChange={onChangeHandler}
           isChecked={category === "side_project"}
@@ -57,12 +55,3 @@ export default function SetCategoryStep({ onNext, onChange, category }: Props) {
     </>
   );
 }
-
-const ContentWrapper = styled.div`
-  position: absolute;
-  top: 260px;
-  left: 20px;
-  right: 20px;
-  margin: 0;
-  padding: 0;
-`;

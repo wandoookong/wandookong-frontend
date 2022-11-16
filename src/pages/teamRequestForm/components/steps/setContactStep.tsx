@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { contactValidation } from "../../validation/teamRequestFormValidations";
+import { contactValidation } from "../../validations/teamRequestFormValidations";
 import { SingleTextInput } from "../inputs/singleTextInput";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
-import InputValidationErrorMessage from "../../../../components/form/inputValidationErrorMessage";
 import { DoubleButton } from "../../../../components/buttons/doubleButton";
-import { HeaderSubText } from "../../../../components/form/header/headerSubText";
+import { FormHeader } from "../../../../components/form/header/formHeader";
+import { ContentWrapper } from "../layout/contentWrapper";
 
 interface Props {
   contact: string;
@@ -18,7 +18,7 @@ export default function SetContactStep({ contact, onChangeContact, onNext, onPre
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => onChangeContact(e.currentTarget.value);
 
-  const onNextHandler = () => {
+  const onSubmit = () => {
     const contactErrorMessage = contactValidation(contact);
     setErrorMessage(contactErrorMessage);
     if (!isEmpty(contact)) {
@@ -34,17 +34,19 @@ export default function SetContactStep({ contact, onChangeContact, onNext, onPre
 
   return (
     <>
-      <HeaderSubText
+      <FormHeader
         title={`모집 후 콩들과 사용하실 \n 연락 수단을 알려주세요!`}
-        subText="해당 정보는 수락한 멤버 콩들 한테만 공개됩니다."
+        description="해당 정보는 수락한 멤버 콩들 한테만 공개됩니다."
+        errorMessage={errorMessage}
       />
-      <InputValidationErrorMessage text={errorMessage} />
-      <SingleTextInput
-        value={contact}
-        onChange={onChange}
-        placeholder="카톡 ID, 이메일, 오픈 채팅 링크 등을 첨부해주세요."
-      />
-      <DoubleButton prevLabel="이전" nextLabel="완료" onPrevStep={onPrevious} onNextStep={onNextHandler} />
+      <ContentWrapper>
+        <SingleTextInput
+          value={contact}
+          placeholder="카톡 ID, 이메일, 오픈 채팅 링크 등을 첨부해주세요."
+          onChange={onChange}
+        />
+      </ContentWrapper>
+      <DoubleButton prevLabel="이전" nextLabel="완료" onPrevStep={onPrevious} onNextStep={onSubmit} />
     </>
   );
 }

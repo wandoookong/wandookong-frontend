@@ -1,20 +1,22 @@
 import React, { useState } from "react";
-import { Navigation } from "../../components/form/navigation";
+import { Navigation } from "./components/navigation/navigation";
 import SetCategoryStep from "./components/steps/setCategoryStep";
 import SetTitleStep from "./components/steps/setTitleStep";
 import SetMyPositionStep from "./components/steps/setMyPositionStep";
 import SetPositionStep from "./components/steps/setPositionStep";
 import SetDescriptionStep from "./components/steps/setDescriptionStep";
 import SetContactStep from "./components/steps/setContactStep";
-import ContentLayout from "../../components/layout/contentLayout";
 import { useTeamRequestFormReducer } from "./hooks/useTeamRequestFormReducer";
 import TeamApi from "../../api/teamApi";
 import { isEmpty } from "../../@types/utility/typeGuard";
 import { useNavigate } from "react-router-dom";
+import styled from "@emotion/styled";
+import FloatingModal from "../../components/modal/FloatingModal";
 
 export default function TeamRequestForm() {
   const navigate = useNavigate();
   const [step, setStep] = useState<number>(1);
+  const [isSuccessModalOn, setIsSuccessModalOn] = useState<boolean>(false);
   const {
     state,
     onChangeTeamCategory,
@@ -32,12 +34,22 @@ export default function TeamRequestForm() {
     if (isEmpty(response.teamId)) {
       return alert("완두콩이 생성되지 않았습니다. 다시 시도해주세요.");
     }
-    navigate("/");
-    return alert("완두콩이 생성되었습니다.");
+    setIsSuccessModalOn(!isSuccessModalOn);
+    return;
   };
 
   return (
-    <ContentLayout>
+    <Container>
+      {isSuccessModalOn && (
+        <FloatingModal
+          title="완두콩이 생성되었습니다"
+          content=""
+          buttonLabel="확인"
+          onClickButton={() => navigate("/")}
+          onClose={() => navigate("/")}
+          showClose={false}
+        />
+      )}
       <Navigation step={step} />
       <form onSubmit={(e) => e.preventDefault()}>
         {step === 1 && (
@@ -90,6 +102,13 @@ export default function TeamRequestForm() {
           />
         )}
       </form>
-    </ContentLayout>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  form {
+    position: relative;
+    margin-top: 114px;
+  }
+`;

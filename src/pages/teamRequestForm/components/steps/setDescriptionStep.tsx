@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { descriptionValidation } from "../../validation/teamRequestFormValidations";
+import { descriptionValidation } from "../../validations/teamRequestFormValidations";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
 import { FormHeader } from "../../../../components/form/header/formHeader";
-import InputValidationErrorMessage from "../../../../components/form/inputValidationErrorMessage";
 import { DoubleButton } from "../../../../components/buttons/doubleButton";
-import { TextArea } from "../../../../components/form/textInput/multiText";
+import { MultiTextInput } from "../../../../components/form/textInput/multiText";
+import { ContentWrapper } from "../layout/contentWrapper";
 
 interface Props {
   description: string;
@@ -34,14 +34,15 @@ export default function SetDescriptionStep({ description, onChangeDescription, o
 
   return (
     <>
-      <FormHeader title={`완두콩에 대해 조금만 더 \n 알려주시겠어요?`} />
-      <InputValidationErrorMessage text={errorMessage} />
-      <TextArea
-        placeholder="완두콩의 목표, 팀 문화, 자격요건 등 자유롭게 작성해주세요! "
-        onChange={onChange}
-        value={description}
-        maxLength={1000}
-      />
+      <FormHeader title={`완두콩에 대해 조금만 더 \n 알려주시겠어요?`} errorMessage={errorMessage} />
+      <ContentWrapper>
+        <MultiTextInput
+          placeholder="완두콩의 목표, 팀 문화, 자격요건 등 자유롭게 작성해주세요! "
+          onChange={onChange}
+          value={description}
+          maxLength={1000}
+        />
+      </ContentWrapper>
       <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </>
   );

@@ -7,7 +7,7 @@ interface Props {
   content: string;
 }
 
-export default function TeamApplyModal({ title, content, onClick }: Props) {
+export default function TeamApplyResultModal({ title, content, onClick }: Props) {
   return (
     <Container>
       <header>

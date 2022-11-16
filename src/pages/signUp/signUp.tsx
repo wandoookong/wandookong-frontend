@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
-import ContentLayout from "../../components/layout/contentLayout";
 import { useLocation, useNavigate } from "react-router-dom";
-import Navigation from "./components/navigation";
-import NickNameStep from "./signUpForm/nickNameStep";
-import PositionPage from "./signUpForm/positionPage";
-import TagPage from "./signUpForm/tagPage";
+import CommonModalHeader from "../../components/header/commonModalHeader";
+import SetPositionStep from "./components/steps/setPositionStep";
+import SetTagsStep from "./components/steps/setTagsStep";
 import { useSignUpReducer } from "./hooks/useSignUpReducer";
 import qs from "qs";
 import signUpApi from "../../api/signUpApi";
+import SetNickNameStep from "./components/steps/setNickNameStep";
+import styled from "@emotion/styled";
 
 export default function SignUp() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState<number>(1);
   const { state, onChangeUserSocialId, onChangeNickname, onChangeRoleMain, onChangeCareerRange, onChangeTagNameList } =
     useSignUpReducer();
   const query = qs.parse(location.search, { ignoreQueryPrefix: true });
   const onPreviousHandler = () => setStep((step) => step - 1);
   const onNextHandler = () => setStep((step) => step + 1);
-  const onClick = () => {
+  const onClickChurn = () => {
     navigate("/");
   };
 
@@ -27,7 +27,7 @@ export default function SignUp() {
       const response = await signUpApi.createUser(state);
       navigate("/");
     } catch (e) {
-      console.log(e);
+      throw new Error();
     }
   };
 
@@ -36,12 +36,12 @@ export default function SignUp() {
   }, [location]);
 
   return (
-    <ContentLayout>
-      <Navigation onClick={onClick} />
+    <Container>
+      <CommonModalHeader onClick={onClickChurn} />
       <form onSubmit={(e) => e.preventDefault()}>
-        {step === 1 && <NickNameStep nickname={state.nickname} onChange={onChangeNickname} onNext={onNextHandler} />}
+        {step === 1 && <SetNickNameStep nickname={state.nickname} onChange={onChangeNickname} onNext={onNextHandler} />}
         {step === 2 && (
-          <PositionPage
+          <SetPositionStep
             roleMain={state.roleMain}
             onChangeRoleMain={onChangeRoleMain}
             onChangeCareerRange={onChangeCareerRange}
@@ -51,7 +51,7 @@ export default function SignUp() {
           />
         )}
         {step === 3 && (
-          <TagPage
+          <SetTagsStep
             tags={state.tagNameList}
             nickname={state.nickname}
             onChange={onChangeTagNameList}
@@ -60,6 +60,12 @@ export default function SignUp() {
           />
         )}
       </form>
-    </ContentLayout>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  form {
+    margin-top: 108px;
+  }
+`;

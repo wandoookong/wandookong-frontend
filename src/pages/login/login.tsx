@@ -29,7 +29,6 @@ export default function Login() {
     })
       .then((response) => response.json())
       .then(({ userSocialId, accessToken }) => {
-        //userSocialId는 쿠키에 저장해서 회원가입 시 사용합니다.
         // TODO: console.log 찍은건 개발 완료 후 삭제 예정
         if (accessToken) {
           // login success
@@ -63,6 +62,7 @@ export default function Login() {
         data-auto_prompt="false"
       />
       <div
+        id="test"
         className="g_id_signin"
         data-type="standard"
         data-size="large"
