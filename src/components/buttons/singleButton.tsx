@@ -3,7 +3,7 @@ import { colors } from "../../styles/colors";
 
 interface Props {
   label: string;
-  onClick(): void;
+  onClick(e): void;
 
   /**
    * 버튼의 활성화 여부
