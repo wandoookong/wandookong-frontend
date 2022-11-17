@@ -11,6 +11,6 @@ export function isEmpty(target) {
   }
 }
 
-export const required = (value: string): boolean => {
-  return value.length > 0;
+export const required = (target: string): boolean => {
+  return target.length > 0;
 };

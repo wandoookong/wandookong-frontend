@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { contactValidation } from "../../validations/teamRequestFormValidations";
+import { contactValidation } from "../../utilities/teamRequestFormValidations";
 import { SingleTextInput } from "../inputs/singleTextInput";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
 import { DoubleButton } from "../../../../components/buttons/doubleButton";
@@ -46,7 +46,7 @@ export default function SetContactStep({ contact, onChangeContact, onNext, onPre
           onChange={onChange}
         />
       </ContentWrapper>
-      <DoubleButton prevLabel="이전" nextLabel="완료" onPrevStep={onPrevious} onNextStep={onSubmit} />
+      <DoubleButton prevButtonLabel="이전" nextButtonLabel="완료" onPrevStep={onPrevious} onNextStep={onSubmit} />
     </>
   );
 }

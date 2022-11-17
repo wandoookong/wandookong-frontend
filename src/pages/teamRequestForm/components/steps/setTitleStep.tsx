@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
 import { FormHeader } from "../../../../components/form/header/formHeader";
 import { SingleTextInput } from "../inputs/singleTextInput";
-import { titleValidation } from "../../validations/teamRequestFormValidations";
+import { titleValidation } from "../../utilities/teamRequestFormValidations";
 import { DoubleButton } from "../../../../components/buttons/doubleButton";
 import { ContentWrapper } from "../layout/contentWrapper";
 
@@ -21,7 +21,7 @@ export default function SetTitleStep({ title, onChangeTitle, onPrevious, onNext 
   const onNextStep = () => {
     const titleErrorMessage = titleValidation(title);
     setErrorMessage(titleErrorMessage);
-    if (!isEmpty(title)) {
+    if (isEmpty(titleErrorMessage)) {
       onNext();
     }
   };
@@ -43,7 +43,7 @@ export default function SetTitleStep({ title, onChangeTitle, onPrevious, onNext 
           onChange={onChange}
         />
       </ContentWrapper>
-      <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
+      <DoubleButton prevButtonLabel="이전" nextButtonLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const ContentWrapper = styled.div`
+export const ContentWrapper = styled.section`
   position: absolute;
   top: 162px;
   left: 0;

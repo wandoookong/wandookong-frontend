@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { descriptionValidation } from "../../validations/teamRequestFormValidations";
+import { descriptionValidation } from "../../utilities/teamRequestFormValidations";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
 import { FormHeader } from "../../../../components/form/header/formHeader";
 import { DoubleButton } from "../../../../components/buttons/doubleButton";
@@ -43,7 +43,7 @@ export default function SetDescriptionStep({ description, onChangeDescription, o
           maxLength={1000}
         />
       </ContentWrapper>
-      <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
+      <DoubleButton prevButtonLabel="이전" nextButtonLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </>
   );
 }

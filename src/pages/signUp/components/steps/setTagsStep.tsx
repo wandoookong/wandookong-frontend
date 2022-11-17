@@ -53,7 +53,7 @@ export default function SetTagsStep({ nickname, tags, onChange, onNext, onPrev }
         </div>
         {!isEmpty(errorMessage) && <InputValidationErrorMessage text={errorMessage} />}
       </Container>
-      <DoubleButton prevLabel="이전" nextLabel="회원가입 완료!" onNextStep={onNext} onPrevStep={onPrev} />
+      <DoubleButton prevButtonLabel="이전" nextButtonLabel="회원가입 완료" onNextStep={onNext} onPrevStep={onPrev} />
     </>
   );
 }
@@ -90,6 +90,7 @@ const Label = styled.label<{ isChecked: boolean }>`
   font-size: 16px;
   letter-spacing: -0.5px;
   color: ${colors.grey900};
+  cursor: pointer;
 
   input {
     display: none;

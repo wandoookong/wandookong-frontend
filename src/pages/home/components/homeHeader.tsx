@@ -2,9 +2,9 @@ import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ACCESS_TOKEN_NAME } from "../../../api/config/config";
-import AccountIcon from "@mui/icons-material/AccountCircle";
 import { colors } from "../../../styles/colors";
 import { Nullable } from "../../../@types/utility/nullable";
+import AccountIcon from "../../../assets/icons/account.svg";
 
 export const HomeHeader = () => {
   const navigate = useNavigate();
@@ -30,17 +30,21 @@ export const HomeHeader = () => {
 
   return (
     <Container isScrollOn={isScrollOn}>
-      <h1 onClick={() => navigate("/")}>완두콩</h1>
+      <h1 onClick={() => window.location.reload()}>완두콩</h1>
       <RightWrapper>
-        {isScrollOn && <button onClick={() => navigate("/request")}>완두콩 만들기</button>}
+        {isScrollOn && (
+          <button className="set-team-button" onClick={() => navigate("/request")}>
+            완두콩 만들기
+          </button>
+        )}
         {isToken === null && <span onClick={() => navigate("/login")}>로그인</span>}
-        {isToken !== null && <AccountIcon onClick={() => navigate("/my")} sx={{ fontSize: 24, ml: 2 }} />}
+        {isToken !== null && <button className="my-home-button" onClick={() => navigate("/my")} />}
       </RightWrapper>
     </Container>
   );
 };
 
-const Container = styled.div<{ isScrollOn: boolean }>`
+const Container = styled.nav<{ isScrollOn: boolean }>`
   position: fixed;
   display: flex;
   justify-content: space-between;
@@ -52,7 +56,7 @@ const Container = styled.div<{ isScrollOn: boolean }>`
   background: ${(props) =>
     props.isScrollOn
       ? "rgba(255, 255, 255, 0.1)"
-      : "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)"};
+      : "linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 90%)"};
   box-shadow: ${(props) => (props.isScrollOn ? "0 0 20px -4px rgba(0, 0, 0, 0.2)" : "none")};
   backdrop-filter: ${(props) => (props.isScrollOn ? "blur(150px)" : "none")};
   z-index: 900;
@@ -71,7 +75,7 @@ const RightWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
 
-  button {
+  button.set-team-button {
     width: 92px;
     height: 29px;
     border: none;
@@ -88,6 +92,15 @@ const RightWrapper = styled.div`
     font-size: 14px;
     font-weight: 700;
     color: ${colors.grey900};
+    cursor: pointer;
+  }
+
+  button.my-home-button {
+    margin-left: 22px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent url(${AccountIcon}) center / 100% no-repeat;
     cursor: pointer;
   }
 `;

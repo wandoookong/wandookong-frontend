@@ -1,16 +1,20 @@
 import styled from "@emotion/styled";
-import CloseIcon from "@mui/icons-material/Close";
+import CloseIcon from "../../assets/icons/close.svg";
 import { colors } from "../../styles/colors";
 
-export default function CommonModalHeader({ onClick }) {
+interface Props {
+  onClick(): void;
+}
+
+export default function CommonModalHeader({ onClick }: Props) {
   return (
     <Container>
-      <CloseIcon sx={{ fontSize: 28 }} onClick={onClick} />
+      <button onClick={onClick} />
     </Container>
   );
 }
 
-const Container = styled.div`
+const Container = styled.nav`
   position: fixed;
   top: 0;
   display: flex;
@@ -20,4 +24,12 @@ const Container = styled.div`
   box-sizing: border-box;
   background: ${colors.background};
   z-index: 50;
+
+  button {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent url(${CloseIcon}) center / 100% no-repeat;
+    cursor: pointer;
+  }
 `;

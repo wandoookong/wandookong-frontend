@@ -11,7 +11,7 @@ import MyCurrentOpenTeamPage from "./pages/myCurrentOpenTeamPage/MyCurrentOpenTe
 import MyTeamHistoryPage from "./pages/myTeamHistoryPage/MyTeamHistoryPage";
 import MyTeamPartyPage from "./pages/myTeamPartyPage/MyTeamPartyPage";
 import { TeamDetail } from "./pages/teamDetail/teamDetail";
-import ApplyTeam from "./pages/teamApply/applyTeam";
+import ApplyTeam from "./pages/teamDetail/applyTeam/applyTeam";
 
 function App() {
   return (

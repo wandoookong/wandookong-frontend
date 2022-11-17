@@ -3,8 +3,12 @@ import { colors } from "../../styles/colors";
 
 interface Props {
   label: string;
+  onClick(): void;
+
+  /**
+   * 버튼의 활성화 여부
+   */
   isActive: boolean;
-  onClick(value?: any): void;
 }
 
 export function SingleButton({ label, onClick, isActive }: Props) {

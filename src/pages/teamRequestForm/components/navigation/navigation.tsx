@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import FloatingModal from "../../../../components/modal/FloatingModal";
 import { useNavigate } from "react-router-dom";
 import { colors } from "../../../../styles/colors";
+import CloseIcon from "../../../../assets/icons/close.svg";
 
 interface Props {
   step: number;
@@ -46,13 +46,13 @@ export function Navigation({ step }: Props) {
       )}
       <Container>
         <progress value={calculateProgressBarValue} max="100" />
-        <CloseIcon sx={{ fontSize: 28 }} onClick={onClick} />
+        <button onClick={onClick} />
       </Container>
     </>
   );
 }
 
-const Container = styled.div`
+const Container = styled.nav`
   position: fixed;
   top: 0;
   display: flex;
@@ -80,5 +80,13 @@ const Container = styled.div`
       border-radius: 20px;
       transition: all 0.2s ease-in-out;
     }
+  }
+
+  button {
+    width: 28px;
+    height: 28px;
+    background: transparent url(${CloseIcon}) center / 100% no-repeat;
+    border: none;
+    cursor: pointer;
   }
 `;

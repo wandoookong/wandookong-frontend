@@ -8,6 +8,11 @@ import { TeamListReturnType } from "../../api/types/teamType";
 import TeamApi from "../../api/teamApi";
 import { isEmpty } from "../../@types/utility/typeGuard";
 import { colors } from "../../styles/colors";
+import CarouselImg from "./assets/image.jpg";
+
+//FIXME 완두콩 만들기 인증&&상태 체크
+//TODO 프로필 이미지 나오면 배경처리
+//TODO scroll 값 트래킹해서 넘겨주기
 
 export default function Home() {
   const navigate = useNavigate();
@@ -24,8 +29,6 @@ export default function Home() {
       setTeamData(fetchTeamData);
     })();
   }, [location]);
-
-  //FIXME 완두콩 만들기 인증&&상태 체크
 
   return (
     <>
@@ -67,7 +70,8 @@ const Carousel = styled.div`
   top: 0;
   width: 100%;
   height: 360px;
-  background: rgba(0, 0, 0, 0.2);
+  background: transparent url(${CarouselImg}) center / 100% no-repeat;
+  background-size: cover;
   border-radius: 0 0 8px 8px;
   padding: 280px 20px 20px 20px;
   box-sizing: border-box;

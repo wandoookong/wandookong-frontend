@@ -48,41 +48,45 @@ export default function SetPositionStep({
       <Container>
         <section>
           <p>현재 포지션을 선택해주세요</p>
-          <div className="input-wrapper">
+          <ul>
             {position.map((position, index) => (
-              <Label key={index} isChecked={position.value === roleMain}>
-                <input
-                  type="radio"
-                  name="position"
-                  value={position.value}
-                  onChange={onChangeRoleHandler}
-                  checked={position.value === roleMain}
-                />
-                {position.label}
-              </Label>
+              <Button key={index} isChecked={position.value === roleMain}>
+                <label>
+                  <input
+                    type="radio"
+                    name="position"
+                    value={position.value}
+                    checked={position.value === roleMain}
+                    onChange={onChangeRoleHandler}
+                  />
+                  {position.label}
+                </label>
+              </Button>
             ))}
-          </div>
+          </ul>
         </section>
         <section>
           <p>연차를 선택해주세요</p>
-          <div className="input-wrapper">
+          <ul>
             {career.map((career, index) => (
-              <Label key={index} isChecked={career.value === careerRange}>
-                <input
-                  type="radio"
-                  name="careerRange"
-                  value={career.value}
-                  onChange={onChangeCareerHandler}
-                  checked={career.value === careerRange}
-                />
-                {career.label}
-              </Label>
+              <Button key={index} isChecked={career.value === careerRange}>
+                <label>
+                  <input
+                    type="radio"
+                    name="careerRange"
+                    value={career.value}
+                    checked={career.value === careerRange}
+                    onChange={onChangeCareerHandler}
+                  />
+                  {career.label}
+                </label>
+              </Button>
             ))}
-          </div>
+          </ul>
         </section>
         {!isEmpty(errorMessage) && <InputValidationErrorMessage text={errorMessage} />}
       </Container>
-      <DoubleButton onNextStep={onNextHandler} onPrevStep={onPrev} nextLabel="다음" prevLabel="이전" />
+      <DoubleButton onNextStep={onNextHandler} onPrevStep={onPrev} nextButtonLabel="다음" prevButtonLabel="이전" />
     </>
   );
 }
@@ -102,25 +106,29 @@ const Container = styled.div`
       color: ${colors.grey300};
     }
 
-    div.input-wrapper {
+    ul {
       display: flex;
       justify-content: space-between;
-      width: 100%;
     }
   }
 `;
 
-const Label = styled.label<{ isChecked: boolean }>`
-  padding: 16px 24px;
-  border: 1.5px solid ${(props) => (props.isChecked ? colors.brand600 : colors.brand300)};
-  border-radius: 100px;
-  background: ${(props) => (props.isChecked ? colors.brand300 : "transparent")};
-  font-weight: ${(props) => (props.isChecked ? "700" : "500")};
-  font-size: 16px;
-  line-height: 19px;
-  color: ${colors.grey900};
+const Button = styled.li<{ isChecked: boolean }>`
+  label {
+    width: auto;
+    height: auto;
+    padding: 16px 24px;
+    border: 1.5px solid ${(props) => (props.isChecked ? colors.brand600 : colors.brand300)};
+    border-radius: 100px;
+    background: ${(props) => (props.isChecked ? colors.brand300 : "transparent")};
+    font-weight: ${(props) => (props.isChecked ? "700" : "500")};
+    font-size: 16px;
+    line-height: 19px;
+    color: ${colors.grey900};
+    cursor: pointer;
 
-  input {
-    display: none;
+    input {
+      display: none;
+    }
   }
 `;

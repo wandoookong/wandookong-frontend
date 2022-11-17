@@ -6,7 +6,7 @@ import { isEmpty } from "../../../../@types/utility/typeGuard";
 import signUpApi from "../../../../api/signUpApi";
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
-import { ErrorMessageState, validateNickName } from "../../validations/signUpValidations";
+import { ErrorMessageState, validateNickName } from "../../utilities/signUpValidations";
 
 interface Props {
   nickname: string;
@@ -50,7 +50,7 @@ export default function SetNickNameStep({ nickname, onChange, onNext }: Props) {
         <SingleTextInput
           value={nickname}
           placeholder={ErrorMessageState.empty}
-          maxLength={8}
+          maxLength={10}
           onChange={onChangeHandler}
         />
         {!isEmpty(errorMessage) && <p className="error-message">{errorMessage}</p>}

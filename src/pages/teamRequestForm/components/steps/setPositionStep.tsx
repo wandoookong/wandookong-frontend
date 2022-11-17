@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
-import { roles, rolesValidation } from "../../validations/teamRequestFormValidations";
+import { roles, rolesValidation } from "../../utilities/teamRequestFormValidations";
 import { FormHeader } from "../../../../components/form/header/formHeader";
 import { roleData } from "../../utilities/roleData";
 import { DoubleButton } from "../../../../components/buttons/doubleButton";
@@ -53,12 +53,12 @@ export default function SetPositionStep({ member, myPosition, onChangeMembers, o
           ))}
         </InputWrapper>
       </ContentWrapper>
-      <DoubleButton prevLabel="이전" nextLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
+      <DoubleButton prevButtonLabel="이전" nextButtonLabel="다음" onPrevStep={onPrevious} onNextStep={onNextStep} />
     </>
   );
 }
 
-const InputWrapper = styled.div`
+const InputWrapper = styled.ul`
   display: flex;
   width: 100%;
   gap: 17px;

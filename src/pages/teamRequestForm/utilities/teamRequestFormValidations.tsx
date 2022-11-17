@@ -1,11 +1,15 @@
 import { required } from "../../../@types/utility/typeGuard";
 
+const signUpTitleLengthCheck = (target: string): boolean => {
+  return target.length < 21;
+};
+
 const categoryValidates = {
   validation: required,
   errorMessage: "완두콩 종류를 선택해주세요.",
 };
 
-export const categoryValidation = (value) => {
+export const categoryValidation = (value: string): string => {
   let result: string = "";
   const isValid: boolean = categoryValidates.validation(value);
   if (!isValid) {
@@ -15,18 +19,26 @@ export const categoryValidation = (value) => {
   return result;
 };
 
-const titleValidates = {
-  validation: required,
-  errorMessage: "완두콩 제목을 작성해주세요.",
-};
+const validateTitle = [
+  {
+    validation: required,
+    errorMessage: "완두콩 제목을 작성해주세요.",
+  },
+  {
+    validation: signUpTitleLengthCheck,
+    errorMessage: "최대 20자까지 입력할 수 있습니다.",
+  },
+];
 
-export const titleValidation = (value) => {
+export const titleValidation = (value: string): string => {
   let result: string = "";
-  const isValid: boolean = titleValidates.validation(value);
-  if (!isValid) {
-    result = titleValidates.errorMessage;
-    return result;
-  }
+  validateTitle.every((validate) => {
+    const isValid: boolean = validate.validation(value);
+    if (!isValid) {
+      result = validate.errorMessage;
+    }
+    return isValid;
+  });
   return result;
 };
 

@@ -19,24 +19,27 @@ export default function TeamItem({ teamId, content }: Props) {
   //FIXME DDAY 태그 컴포넌트
   return (
     <Container onClick={() => navigate(`/team/${teamId}`)}>
-      <div className="title-wrapper">
-        {content.teamCategory === "portfolio" ? <span>포트폴리오</span> : <span>사이드 프로젝트</span>}
-        <h2>{content.title}</h2>
+      <div className="top-wrapper">
+        <div className="title-wrapper">
+          {content.teamCategory === "portfolio" ? <span>포트폴리오</span> : <span>사이드 프로젝트</span>}
+          <h2>{content.title}</h2>
+        </div>
+        <DdayPill closeDueYmd={content.closeDueYmd} />
       </div>
-      <DdayPill closeDueYmd={content.closeDueYmd} />
-      <div className="position-wrapper">
+
+      <ul>
         {content.teamCapacityList.map((position, index) => (
           <PositionItem key={index} roleMemberCount={position.roleMemberCount}>
             <div className="position-image" />
             <span>{position.roleDetailName}</span>
           </PositionItem>
         ))}
-      </div>
+      </ul>
     </Container>
   );
 }
 
-const Container = styled.div`
+const Container = styled.section`
   position: relative;
   margin: 20px;
   padding: 16px 12px 22px 12px;
@@ -44,36 +47,39 @@ const Container = styled.div`
   border-radius: 8px;
   cursor: pointer;
 
-  div.title-wrapper {
-    span {
-      font-size: 12px;
-      font-weight: 400;
-      color: ${colors.grey600};
-    }
+  div.top-wrapper {
+    display: flex;
+    justify-content: space-between;
 
-    h2 {
-      margin-top: 8px;
-      font-size: 16px;
-      color: ${colors.grey900};
+    div.title-wrapper {
+      span {
+        font-size: 12px;
+        font-weight: 400;
+        color: ${colors.grey600};
+      }
+
+      h2 {
+        margin-top: 8px;
+        font-size: 16px;
+        color: ${colors.grey900};
+      }
     }
   }
 
-  div.position-wrapper {
+  ul {
     display: flex;
     gap: 14px;
     margin: 12px 0 0 0;
     max-width: 48px;
     word-break: keep-all;
-
-    div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
   }
 `;
 
-const PositionItem = styled.div<roleMemberCount>`
+const PositionItem = styled.li<roleMemberCount>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   div.position-image {
     width: 48px;
     height: 48px;

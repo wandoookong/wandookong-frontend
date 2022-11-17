@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
-import { categoryValidation } from "../../validations/teamRequestFormValidations";
+import { categoryValidation } from "../../utilities/teamRequestFormValidations";
 import { FormHeader } from "../../../../components/form/header/formHeader";
 import { CategoryRadioButton } from "../inputs/categoryRadioButton";
 import { SingleButton } from "../../../../components/buttons/singleButton";
@@ -41,7 +41,7 @@ export default function SetCategoryStep({ onNext, onChange, category }: Props) {
           onChange={onChangeHandler}
           isChecked={category === "portfolio"}
           label="포트폴리오"
-          description="짦은 기간동안 진행되는 프로젝트입니다. 비슷한 포지션이나 목표를 갖고 있는 콩들과 색다른 경험을 쌓을 수 있어요. "
+          description="짦은 기간동안 진행되는 프로젝트입니다. 비슷한 포지션이나 목표를 갖고 있는 콩들과 색다른 경험을 쌓을 수 있어요."
         />
         <CategoryRadioButton
           value="side_project"

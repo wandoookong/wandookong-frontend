@@ -46,50 +46,60 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
       <div className="filters-wrapper">
         <FilterContent>
           <span>직군콩 |</span>
-          <div className="filter-category-wrapper">
-            <Label
-              isChecked={filters.roleDetail.length === 0}
-              onClick={() => setFilters({ ...filters, roleDetail: "" })}
-            >
-              전체
-            </Label>
-            {roleData.map((role) => (
+          <ul>
+            <li>
               <Label
-                key={role.id}
-                isChecked={filters.roleDetail === role.value}
-                onClick={() => {
-                  setFilters({ ...filters, roleDetail: role.value });
-                }}
+                isChecked={filters.roleDetail.length === 0}
+                onClick={() => setFilters({ ...filters, roleDetail: "" })}
               >
-                {role.label}
-                <input type="radio" />
+                전체
               </Label>
+            </li>
+            {roleData.map((role) => (
+              <li>
+                <Label
+                  key={role.id}
+                  isChecked={filters.roleDetail === role.value}
+                  onClick={() => {
+                    setFilters({ ...filters, roleDetail: role.value });
+                  }}
+                >
+                  {role.label}
+                  <input type="radio" />
+                </Label>
+              </li>
             ))}
-          </div>
+          </ul>
         </FilterContent>
         <FilterContent>
           <span>카테고리 |</span>
-          <div className="filter-category-wrapper">
-            <Label
-              isChecked={filters.teamCategory.length === 0}
-              onClick={() => setFilters({ ...filters, teamCategory: "" })}
-            >
-              전체
-            </Label>
-            <Label
-              isChecked={filters.teamCategory === "portfolio"}
-              onClick={() => setFilters({ ...filters, teamCategory: "portfolio" })}
-            >
-              포트폴리오
-              <input type="radio" />
-            </Label>
-            <Label
-              isChecked={filters.teamCategory === "side_project"}
-              onClick={() => setFilters({ ...filters, teamCategory: "side_project" })}
-            >
-              사이드 프로젝트 <input type="radio" />
-            </Label>
-          </div>
+          <ul>
+            <li>
+              <Label
+                isChecked={filters.teamCategory.length === 0}
+                onClick={() => setFilters({ ...filters, teamCategory: "" })}
+              >
+                전체
+              </Label>
+            </li>
+            <li>
+              <Label
+                isChecked={filters.teamCategory === "portfolio"}
+                onClick={() => setFilters({ ...filters, teamCategory: "portfolio" })}
+              >
+                포트폴리오
+                <input type="radio" />
+              </Label>
+            </li>
+            <li>
+              <Label
+                isChecked={filters.teamCategory === "side_project"}
+                onClick={() => setFilters({ ...filters, teamCategory: "side_project" })}
+              >
+                사이드 프로젝트 <input type="radio" />
+              </Label>
+            </li>
+          </ul>
         </FilterContent>
       </div>
     </Container>
@@ -124,25 +134,29 @@ const FilterContent = styled.div`
   color: ${colors.grey900};
 
   span {
-    flex: 0 0 14%;
+    flex: 0 0 52px;
     margin: 0;
   }
 
-  div.filter-category-wrapper {
+  ul {
     display: flex;
     align-items: center;
     gap: 8px;
+    height: 29px;
     margin-left: 12px;
     overflow-y: hidden;
     scroll-behavior: smooth;
 
-    &::-webkit-scrollbar {
-      display: none;
+    li {
+      &:last-child {
+        margin-right: 28px;
+      }
     }
   }
 `;
 
 const Label = styled.label<{ isChecked: boolean }>`
+  min-width: 37px;
   background: ${(props) => (props.isChecked ? colors.subBrand300 : colors.white)};
   border: 1px solid ${colors.subBrand600};
   padding: 6px 8px;
@@ -152,9 +166,5 @@ const Label = styled.label<{ isChecked: boolean }>`
 
   input {
     display: none;
-  }
-
-  &:last-child {
-    margin-right: 28px;
   }
 `;

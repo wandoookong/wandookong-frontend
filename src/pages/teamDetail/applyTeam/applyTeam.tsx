@@ -1,16 +1,16 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { SingleButton } from "../../components/buttons/singleButton";
+import { SingleButton } from "../../../components/buttons/singleButton";
 import styled from "@emotion/styled";
 import { useEffect, useMemo, useState } from "react";
-import TeamApi from "../../api/teamApi";
-import { MultiTextInput } from "../../components/form/textInput/multiText";
-import { ROLE_DETAIL } from "../../api/types/fieldType";
+import TeamApi from "../../../api/teamApi";
+import { MultiTextInput } from "../../../components/form/textInput/multiText";
+import { ROLE_DETAIL } from "../../../api/types/fieldType";
 import { css } from "@emotion/react";
-import CheckIcon from "@mui/icons-material/Check";
-import FloatingModal from "../../components/modal/FloatingModal";
+import FloatingModal from "../../../components/modal/FloatingModal";
 import TeamApplyResultModal from "./components/teamApplyResultModal";
-import CommonModalHeader from "../../components/header/commonModalHeader";
-import { colors } from "../../styles/colors";
+import CommonModalHeader from "../../../components/header/commonModalHeader";
+import { colors } from "../../../styles/colors";
+import CheckIcon from "../../../assets/icons/select-grey900.svg";
 
 interface ApplyTeamForm {
   roleDetail: ROLE_DETAIL;
@@ -22,19 +22,7 @@ interface ErrorModal {
   status: ErrorStatus;
 }
 
-interface HiringPosition {
-  teamCapacityId: number;
-  roleDetail: string;
-  roleDetailName: string;
-  roleMaxCount: number;
-  teamLead: boolean;
-  careerRange: string;
-  careerRangeName: string;
-  tagList: string[];
-}
-
 type ErrorStatus = "pending" | "";
-
 
 //TODO setter 바로 팀 포지션만 가져오고 메모이제이션, 폼에 제대로 작성했는지 validation 돌리기
 
@@ -53,7 +41,7 @@ export default function ApplyTeam() {
         roleDetail: "",
         roleDetailName: "",
         roleMaxCount: 0,
-        teamLead: true,
+        teamLead: false,
         careerRange: "",
         careerRangeName: "",
         tagList: [""],
@@ -74,12 +62,14 @@ export default function ApplyTeam() {
     },
   ]);
   const [formContent, setFormContent] = useState<ApplyTeamForm>({ roleDetail: "product", memo: "" });
-  const [isSuccessModalOn, setSuccessModalOn] = useState(false);
+  const [isSuccessModalOn, setSuccessModalOn] = useState<boolean>(false);
   const [isErrorModalOn, setErrorModalOn] = useState<ErrorModal>({ state: false, status: "pending" });
   const computedPositions = useMemo(
     () => setHiringPosition(teamData.teamCapacityList.filter((team) => !team.careerRangeName)),
     [teamData],
   );
+
+  console.log(teamData.teamCapacityList.filter((team) => !team.careerRangeName));
 
   const errorModalContent = (status: ErrorStatus) => {
     switch (status) {
@@ -155,7 +145,7 @@ export default function ApplyTeam() {
         <section>
           <h2>참여하고 싶은 포지션의 콩을 선택해주세요</h2>
           {hiringPosition.map((position, index) => (
-            <PositionWrapper key={index} checked={formContent.roleDetail === position.roleDetail}>
+            <PositionWrapper key={index} isChecked={formContent.roleDetail === position.roleDetail}>
               <input
                 type="radio"
                 name="roleDetail"
@@ -167,7 +157,6 @@ export default function ApplyTeam() {
                 <div className="position-image" />
                 {position.roleDetailName + " 콩 모집 중이에요"}
               </div>
-              {formContent.roleDetail === position.roleDetail && <CheckIcon sx={{ fontSize: 24, m: 0 }} />}
             </PositionWrapper>
           ))}
         </section>
@@ -236,15 +225,15 @@ const TitleWrapper = styled.div`
     margin: 0;
     padding: 3px 8px;
     border-radius: 40px;
-    background: #ddba40;
-    color: #ffffff;
+    background: ${colors.subBrand900};
+    color: ${colors.white};
     font-size: 12px;
     font-weight: 700;
     line-height: 17px;
   }
 `;
 
-const PositionWrapper = styled.label<{ checked: boolean }>`
+const PositionWrapper = styled.label<{ isChecked: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -258,17 +247,17 @@ const PositionWrapper = styled.label<{ checked: boolean }>`
   font-weight: 700;
   line-height: 17px;
   letter-spacing: 0;
-  color: #242c35;
+  color: ${colors.grey900};
   cursor: pointer;
 
   ${(props) => {
-    if (!props.checked) {
+    if (!props.isChecked) {
       return css`
-        box-shadow: 0 0 0 2px #95be8d inset;
+        box-shadow: 0 0 0 2px ${colors.brand400} inset;
       `;
     }
     return css`
-      background: #afd89e;
+      background: ${colors.brand300} url(${CheckIcon}) top 23px right 15px / 24px no-repeat;
       box-shadow: none;
     `;
   }}

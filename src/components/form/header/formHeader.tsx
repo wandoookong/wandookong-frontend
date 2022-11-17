@@ -18,7 +18,7 @@ export function FormHeader({ title, errorMessage, description }: Props) {
   );
 }
 
-const Container = styled.div`
+const Container = styled.header`
   display: block;
   width: 100%;
   height: auto;

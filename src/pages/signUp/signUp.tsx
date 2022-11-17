@@ -46,8 +46,8 @@ export default function SignUp() {
             onChangeRoleMain={onChangeRoleMain}
             onChangeCareerRange={onChangeCareerRange}
             careerRange={state.careerRange}
-            onNext={onNextHandler}
             onPrev={onPreviousHandler}
+            onNext={onNextHandler}
           />
         )}
         {step === 3 && (
@@ -55,8 +55,8 @@ export default function SignUp() {
             tags={state.tagNameList}
             nickname={state.nickname}
             onChange={onChangeTagNameList}
-            onNext={onSubmit}
             onPrev={onPreviousHandler}
+            onNext={onSubmit}
           />
         )}
       </form>

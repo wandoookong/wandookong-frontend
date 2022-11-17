@@ -2,21 +2,21 @@ import styled from "@emotion/styled";
 import { colors } from "../../styles/colors";
 
 interface Props {
-  prevLabel: string;
-  nextLabel: string;
+  prevButtonLabel: string;
+  nextButtonLabel: string;
   onPrevStep(): void;
   onNextStep(): void;
 }
 
-export function DoubleButton({ prevLabel, nextLabel, onPrevStep, onNextStep }: Props) {
+export function DoubleButton({ prevButtonLabel, nextButtonLabel, onPrevStep, onNextStep }: Props) {
   return (
     <Container>
       <ButtonWrapper>
         <button className="prev-button" onClick={onPrevStep}>
-          {prevLabel}
+          {prevButtonLabel}
         </button>
         <button className="next-button" onClick={onNextStep}>
-          {nextLabel}
+          {nextButtonLabel}
         </button>
       </ButtonWrapper>
     </Container>

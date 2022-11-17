@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
-import CheckIcon from "@mui/icons-material/Check";
+import CheckIcon from "../../../../assets/icons/select-white.svg";
 
 interface Props {
   label: string;
@@ -13,7 +13,7 @@ export function PositionRadioButton({ label, value, isChecked, onChange }: Props
   return (
     <Container isChecked={isChecked}>
       <label>
-        <div className="position-image">{isChecked && <CheckIcon sx={{ fontSize: 24, m: 0 }} color="success" />}</div>
+        <div className="position-image">{isChecked && <div className="check-icon" />}</div>
         <input type="radio" name="myRole" value={value} onChange={onChange} />
         <span>{label}</span>
       </label>
@@ -21,7 +21,7 @@ export function PositionRadioButton({ label, value, isChecked, onChange }: Props
   );
 }
 
-const Container = styled.div<{ isChecked: boolean }>`
+const Container = styled.li<{ isChecked: boolean }>`
   label {
     display: flex;
     flex-direction: column;
@@ -51,6 +51,13 @@ const Container = styled.div<{ isChecked: boolean }>`
     border-radius: 50px;
     background: ${(props) => (props.isChecked ? colors.brand900 : colors.grey900)};
     opacity: ${(props) => (props.isChecked ? "80%" : "100%")};
+
+    div.check-icon {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: transparent url(${CheckIcon}) center / 100% no-repeat;
+    }
   }
 
   input {

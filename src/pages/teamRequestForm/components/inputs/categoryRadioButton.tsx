@@ -1,7 +1,6 @@
-import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import CheckIcon from "@mui/icons-material/Check";
 import { colors } from "../../../../styles/colors";
+import CheckIcon from "../../../../assets/icons/select-grey900.svg";
 
 interface Props {
   value: string;
@@ -14,55 +13,38 @@ interface Props {
 export function CategoryRadioButton({ value, label, description, isChecked, onChange }: Props) {
   return (
     <Container isChecked={isChecked}>
-      <label>
-        <input type="radio" name="category" checked={isChecked} value={value} onChange={onChange} />
-        {label}
-        <div>
-          <p>{description}</p>
-          {isChecked && <CheckIcon sx={{ fontSize: 24, m: 0 }} />}
-        </div>
-      </label>
+      <input type="radio" name="category" checked={isChecked} value={value} onChange={onChange} />
+      {label}
+      <div className="description-wrapper">
+        <p>{description}</p>
+        {isChecked && <div className="check-icon" />}
+      </div>
     </Container>
   );
 }
 
-const Container = styled.div<{ isChecked: boolean }>`
-  width: auto;
-  height: auto;
+const Container = styled.label<{ isChecked: boolean }>`
+  display: block;
+  width: 100%;
   margin-bottom: 16px;
   padding: 12px 12px;
   border-radius: 8px;
+  background: ${(props) => (props.isChecked ? colors.brand300 : "transparent")};
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 700;
+  color: ${colors.grey900};
+  box-sizing: border-box;
+  box-shadow: ${(props) => (props.isChecked ? "none" : `0 0 0 2px ${colors.brand400} inset`)};
+  cursor: pointer;
 
-  ${(props) => {
-    if (!props.isChecked) {
-      return css`
-        box-shadow: 0 0 0 2px ${colors.brand400} inset;
-        box-sizing: border-box;
-      `;
-    }
-    return css`
-      background: ${colors.brand300};
-      box-shadow: none;
-    `;
-  }}
+  input {
+    display: none;
+  }
 
-  label {
-    display: block;
-    font-weight: 700;
-    color: ${colors.grey900};
-    cursor: pointer;
-
-    input {
-      display: none;
-    }
-
-    div {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 8px;
-    }
+  div.description-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
 
     p {
       display: inline-block;
@@ -72,6 +54,13 @@ const Container = styled.div<{ isChecked: boolean }>`
       font-weight: 400;
       line-height: 18px;
       color: ${colors.grey900};
+    }
+
+    div.check-icon {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: transparent url(${CheckIcon}) center / 100% no-repeat;
     }
   }
 `;
