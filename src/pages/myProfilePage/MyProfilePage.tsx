@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import MyProfileEdit from "./components/MyProfileEdit";
 import UserApi from "../../api/userApi";
-import { UserMeReturnType } from "../../api/types/userType";
+import { UserMyInfo } from "../../api/types/userType";
 import Header from "./components/Header";
 import ContentLayout from "../../components/layout/contentLayout";
 
 export default function MyProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [meInfo, setMeInfo] = useState({} as UserMeReturnType);
+  const [meInfo, setMeInfo] = useState({} as UserMyInfo);
 
   useEffect(() => {
     UserApi.getUserMe().then((res) => {

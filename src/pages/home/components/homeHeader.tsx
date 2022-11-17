@@ -38,7 +38,7 @@ export const HomeHeader = () => {
           </button>
         )}
         {isToken === null && <span onClick={() => navigate("/login")}>로그인</span>}
-        {isToken !== null && <button className="my-home-button" onClick={() => navigate("/my")} />}
+        {isToken !== null && <button className="my-home-button" onClick={() => navigate("/myAccount")} />}
       </RightWrapper>
     </Container>
   );

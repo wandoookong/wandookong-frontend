@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { UserMeReturnType } from "../../../api/types/userType";
+import { useState } from "react";
+import { UserMyInfo } from "../../../api/types/userType";
 import UserApi from "../../../api/userApi";
 import Nickname from "./Nickname";
 import Line from "./Line";
@@ -9,10 +9,10 @@ import CareerRange from "./CareerRange";
 import Tag from "./Tag";
 import { SingleButton } from "../../../components/buttons/singleButton";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function MyProfileEdit({ meInfo, setMeInfo }: { meInfo: UserMeReturnType; setMeInfo: any }) {
+export default function MyProfileEdit({ meInfo, setMeInfo }: { meInfo: UserMyInfo; setMeInfo: any }) {
   const [isEdit, setIsEdit] = useState(false);
   const [nickname, setNickname] = useState(meInfo.nickname);
   const [roleMain, setRoleMain] = useState(meInfo.roleMain);
@@ -21,18 +21,18 @@ export default function MyProfileEdit({ meInfo, setMeInfo }: { meInfo: UserMeRet
 
   meInfo.tagList.sort((a, b) => (a < b ? -1 : 1));
 
-  useEffect(() => {
-    if (isEdit) return;
-
-    if (
-      meInfo.nickname !== nickname ||
-      meInfo.roleMain !== roleMain ||
-      meInfo.careerRange !== careerRange ||
-      JSON.stringify(meInfo.tagList) !== JSON.stringify(tagNameList.sort((a, b) => (a < b ? -1 : 1)))
-    ) {
-      setIsEdit(true);
-    }
-  }, [nickname, roleMain, careerRange, tagNameList]);
+  // useEffect(() => {
+  //   if (isEdit) return;
+  //
+  //   if (
+  //     meInfo.nickname !== nickname ||
+  //     meInfo.roleMain !== roleMain ||
+  //     meInfo.careerRange !== careerRange ||
+  //     JSON.stringify(meInfo.tagList) !== JSON.stringify(tagNameList.sort((a, b) => (a < b ? -1 : 1)))
+  //   ) {
+  //     setIsEdit(true);
+  //   }
+  // }, [nickname, roleMain, careerRange, tagNameList]);
 
   const onClickModify = (e) => {
     e.preventDefault();

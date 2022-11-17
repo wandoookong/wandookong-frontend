@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import CloseIcon from "../../assets/icons/close.svg";
+import CloseIcon from "../../assets/icons/close-grey900.svg";
 import { colors } from "../../styles/colors";
 
 interface Props {
@@ -28,6 +28,7 @@ const Container = styled.nav`
   button {
     width: 24px;
     height: 24px;
+    padding: 0;
     border: none;
     background: transparent url(${CloseIcon}) center / 100% no-repeat;
     cursor: pointer;

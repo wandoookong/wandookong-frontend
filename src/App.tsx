@@ -23,7 +23,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/request" element={<TeamRequestForm />} />
-        <Route path="/my" element={<MyPage />} />
+        <Route path="/myAccount" element={<MyPage />} />
         <Route path="/my-profile" element={<MyProfilePage />} />
         <Route path="/my-current-open" element={<MyCurrentOpenTeamPage />} />
         <Route path="/my-team-history" element={<MyTeamHistoryPage />} />

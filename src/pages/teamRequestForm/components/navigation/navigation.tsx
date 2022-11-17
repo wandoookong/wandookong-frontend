@@ -3,7 +3,7 @@ import { useState } from "react";
 import FloatingModal from "../../../../components/modal/FloatingModal";
 import { useNavigate } from "react-router-dom";
 import { colors } from "../../../../styles/colors";
-import CloseIcon from "../../../../assets/icons/close.svg";
+import CloseIcon from "../../../../assets/icons/close-grey900.svg";
 
 interface Props {
   step: number;

@@ -1,8 +1,8 @@
 import requester from "./config/config";
-import { UserMeReturnType, UpdateUserType } from "./types/userType";
+import { UpdateUserType, UserMyInfo } from "./types/userType";
 
 export default class UserApi {
-  static getUserMe(): Promise<UserMeReturnType> {
+  static getUserMe(): Promise<UserMyInfo> {
     return requester.get(`${process.env.REACT_APP_HOST_NAME}/api/users/me`);
   }
 
