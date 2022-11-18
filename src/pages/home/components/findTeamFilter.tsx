@@ -55,10 +55,9 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
                 전체
               </Label>
             </li>
-            {roleData.map((role) => (
-              <li>
+            {roleData.map((role, index) => (
+              <li key={index}>
                 <Label
-                  key={role.id}
                   isChecked={filters.roleDetail === role.value}
                   onClick={() => {
                     setFilters({ ...filters, roleDetail: role.value });

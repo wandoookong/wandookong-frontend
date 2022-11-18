@@ -1,19 +1,22 @@
+import { TEAM_CATEGORY } from "./fieldType";
+
 type TeamData = {
   teamId: number;
   title: string;
+  teamCategory: TEAM_CATEGORY;
   description: string;
   closeDueYmd: string;
   teamStatus: string;
   teamCapacityList: [
     {
-      teamCapacityId: 0;
+      teamCapacityId: number;
       roleDetail: string;
       roleDetailName: string;
-      roleMaxCount: 0;
-      teamLead: false;
+      roleMaxCount: number;
+      teamLead: boolean;
       careerRange: string;
       careerRangeName: string;
-      tagList: [string];
+      tagList: string[];
     },
   ];
   teamDetailStatus: string;

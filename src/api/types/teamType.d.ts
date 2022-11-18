@@ -1,6 +1,6 @@
 import { ROLE_DETAIL, TEAM_CATEGORY } from "./fieldType";
 
-export type CurrentOpenTeamReturnType = {
+type CurrentOpenTeamReturnType = {
   teamId: number;
   teamCategory: TEAM_CATEGORY;
   title: string;
@@ -10,7 +10,7 @@ export type CurrentOpenTeamReturnType = {
   capacityCount: number;
 };
 
-export type TeamReturnType = {
+type TeamReturnType = {
   teamId: number;
   teamCategory: TEAM_CATEGORY;
   title: string;
@@ -25,4 +25,4 @@ export type TeamReturnType = {
   }[];
 };
 
-export type TeamListReturnType = { list: TeamReturnType[] };
+type TeamListReturnType = { list: TeamReturnType[] };

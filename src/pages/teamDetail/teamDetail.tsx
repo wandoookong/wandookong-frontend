@@ -8,6 +8,8 @@ import { css } from "@emotion/react";
 import { colors } from "../../styles/colors";
 import CommonModalHeader from "../../components/header/commonModalHeader";
 import PositionItem from "./components/positionItem";
+import { TeamData } from "../../api/types/teamData";
+import { teamCategoryText } from "../myPages/utilities/convertValueToName";
 
 export function TeamDetail() {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ export function TeamDetail() {
   const [teamData, setTeamData] = useState<TeamData>({
     teamId: 1,
     title: "",
+    teamCategory: "portfolio",
     description: "",
     closeDueYmd: "",
     teamStatus: "",
@@ -47,7 +50,7 @@ export function TeamDetail() {
       <main>
         <header>
           <div>
-            <p>포트폴리오</p>
+            <p>{teamCategoryText(teamData.teamCategory)}</p>
             <h1>{teamData.title}</h1>
           </div>
           <span>D-6</span>

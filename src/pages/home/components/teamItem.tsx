@@ -16,15 +16,16 @@ interface Props {
 export default function TeamItem({ teamId, content }: Props) {
   const navigate = useNavigate();
 
-  //FIXME DDAY 태그 컴포넌트
   return (
     <Container onClick={() => navigate(`/team/${teamId}`)}>
       <div className="top-wrapper">
         <div className="title-wrapper">
-          {content.teamCategory === "portfolio" ? <span>포트폴리오</span> : <span>사이드 프로젝트</span>}
-          <h2>{content.title}</h2>
+          <span className="team-category">
+            {content.teamCategory === "portfolio" ? "포트폴리오" : "사이드 프로젝트"}
+          </span>
+          <DdayPill closeDueYmd={content.closeDueYmd} />
         </div>
-        <DdayPill closeDueYmd={content.closeDueYmd} />
+        <h2>{content.title}</h2>
       </div>
 
       <ul>
@@ -49,20 +50,30 @@ const Container = styled.section`
 
   div.top-wrapper {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
 
     div.title-wrapper {
-      span {
+      display: flex;
+      justify-content: space-between;
+      flex: 1 1 auto;
+      overflow: hidden;
+
+      span.team-category {
         font-size: 12px;
         font-weight: 400;
+        line-height: 17px;
         color: ${colors.grey600};
       }
-
-      h2 {
-        margin-top: 8px;
-        font-size: 16px;
-        color: ${colors.grey900};
-      }
+    }
+    h2 {
+      margin-top: 2px;
+      font-size: 16px;
+      line-height: 19px;
+      color: ${colors.grey900};
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-break: break-all;
     }
   }
 

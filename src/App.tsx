@@ -5,13 +5,15 @@ import TeamRequestForm from "./pages/teamRequestForm/teamRequestForm";
 import NotFound from "./pages/notFound/NotFound";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signUp/signUp";
-import MyPage from "./pages/myPage/MyPage";
-import MyProfilePage from "./pages/myProfilePage/MyProfilePage";
-import MyCurrentOpenTeamPage from "./pages/myCurrentOpenTeamPage/MyCurrentOpenTeamPage";
-import MyTeamHistoryPage from "./pages/myTeamHistoryPage/MyTeamHistoryPage";
-import MyTeamPartyPage from "./pages/myTeamPartyPage/MyTeamPartyPage";
+import MyPage from "./pages/myPages/myPage/myPage";
+import MyProfilePage from "./pages/myPages/myProfilePage/MyProfilePage";
+import MyCurrentOpenTeamPage from "./pages/myPages/myCurrentOpenTeamPage/myCurrentOpenTeamPage";
+import MyTeamHistoryPage from "./pages/myPages/myTeamHistoryPage/MyTeamHistoryPage";
+import MyTeamPartyPage from "./pages/myPages/myTeamPartyPage/MyTeamPartyPage";
 import { TeamDetail } from "./pages/teamDetail/teamDetail";
 import ApplyTeam from "./pages/teamDetail/applyTeam/applyTeam";
+import Terms from "./pages/policy/terms";
+import PrivacyInfo from "./pages/policy/privacyInfo";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/team/:teamId/apply" element={<ApplyTeam />} />
         <Route path="/team/:teamId" element={<TeamDetail />} />
         <Route path="/" element={<Home />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy-info" element={<PrivacyInfo />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/request" element={<TeamRequestForm />} />
