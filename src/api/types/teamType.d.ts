@@ -5,6 +5,7 @@ export type CurrentOpenTeamReturnType = {
   teamCategory: TEAM_CATEGORY;
   title: string;
   closeDueYmd: string;
+  currentTimestamp: number;
   applyCount: number;
   allowCount: number;
   capacityCount: number;

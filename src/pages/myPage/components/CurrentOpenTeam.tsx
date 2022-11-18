@@ -91,7 +91,7 @@ export default function CurrentOpenTeam() {
       <div css={styleBox}>
         <div css={styleRow}>
           <div>{teamCategoryText(currentOpenTeam.teamCategory)}</div>
-          <DdayPill closeDueYmd={currentOpenTeam.closeDueYmd} />
+          <DdayPill closeDueYmd={currentOpenTeam.closeDueYmd} currentTimestamp={Date.now()} />
         </div>
         <div css={styleTitle} onClick={() => (window.location.href = "/my-current-open")}>
           {currentOpenTeam.title}

@@ -22,12 +22,12 @@ const styleTitle = css`
   color: #242c35;
 `;
 
-export default function MyTeamInfo({ teamCategory, closeDueYmd, title }) {
+export default function MyTeamInfo({ teamCategory, closeDueYmd, currentTimestamp, title }) {
   return (
     <section>
       <div css={styleSub}>
         <div>{teamCategory === "portfolio" ? "포트폴리오" : "사이드 프로젝트"}</div>
-        <DdayPill closeDueYmd={closeDueYmd} />
+        <DdayPill closeDueYmd={closeDueYmd} currentTimestamp={currentTimestamp} />
       </div>
       <div css={styleTitle}>{title}</div>
     </section>

@@ -24,7 +24,7 @@ export default function TeamItem({ teamId, content }: Props) {
           {content.teamCategory === "portfolio" ? <span>포트폴리오</span> : <span>사이드 프로젝트</span>}
           <h2>{content.title}</h2>
         </div>
-        <DdayPill closeDueYmd={content.closeDueYmd} />
+        <DdayPill closeDueYmd={content.closeDueYmd} currentTimestamp={Date.now()} />
       </div>
 
       <ul>
