@@ -45,23 +45,28 @@ export default function MyPage() {
 
   return (
     <>
-      <CommonModalHeader onClick={() => navigate(-1)} />
+      <CommonModalHeader onClick={() => navigate("/")} />
       <ContentWrapper>
-        <MyInfo
-          nickname={myInfo.nickname}
-          email={myInfo.email}
-          roleMain={myInfo.roleMain}
-          careerRange={myInfo.careerRange}
-          tagList={myInfo.tagList}
-        />
-        <MyOpenTeam
-          teamCategory={myOpenTeam.teamCategory}
-          title={myOpenTeam.title}
-          closeDueYmd={myOpenTeam.closeDueYmd}
-          applyCount={myOpenTeam.applyCount}
-          allowCount={myOpenTeam.allowCount}
-          capacityCount={myOpenTeam.capacityCount}
-        />
+        {!myInfo && <h1 className="loading-wrapper">로그인 정보를 불러오는 중입니다...</h1>}
+        {myInfo && (
+          <MyInfo
+            nickname={myInfo.nickname}
+            email={myInfo.email}
+            roleMain={myInfo.roleMain}
+            careerRange={myInfo.careerRange}
+            tagList={myInfo.tagList}
+          />
+        )}
+        {myOpenTeam && (
+          <MyOpenTeam
+            teamCategory={myOpenTeam.teamCategory}
+            title={myOpenTeam.title}
+            closeDueYmd={myOpenTeam.closeDueYmd}
+            applyCount={myOpenTeam.applyCount}
+            allowCount={myOpenTeam.allowCount}
+            capacityCount={myOpenTeam.capacityCount}
+          />
+        )}
         <ul className="menu-wrapper">
           <li>
             <button onClick={() => navigate("/my-team-history")}>내가 만든 완두콩 모두 보기</button>
@@ -94,6 +99,13 @@ export default function MyPage() {
 
 const ContentWrapper = styled.div`
   margin: 108px 0 60px 0;
+
+  h1.loading-wrapper {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    color: ${colors.grey900};
+  }
 
   h1.menu-title {
     margin: 0 20px 22px;

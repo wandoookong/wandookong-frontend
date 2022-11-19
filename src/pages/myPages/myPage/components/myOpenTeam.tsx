@@ -1,5 +1,5 @@
 import { DdayPill } from "../../../../components/pill/DdayPill";
-import { teamCategoryText } from "../../utilities/convertValueToName";
+import { teamCategoryText } from "../../../../services/convertValueToName";
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
 import { useNavigate } from "react-router-dom";

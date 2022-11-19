@@ -10,10 +10,6 @@ import { isEmpty } from "../../@types/utility/typeGuard";
 import { colors } from "../../styles/colors";
 import CarouselImg from "./assets/image.jpg";
 
-//FIXME 완두콩 만들기 인증&&상태 체크
-//TODO 프로필 이미지 나오면 배경처리
-//TODO scroll 값 트래킹해서 넘겨주기
-
 export default function Home() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,8 +21,8 @@ export default function Home() {
 
   useEffect(() => {
     (async function () {
-      const fetchTeamData = await TeamApi.getTeamList(location.search);
-      setTeamData(fetchTeamData);
+      const response = await TeamApi.getTeamList(location.search);
+      setTeamData(response);
     })();
   }, [location]);
 
@@ -38,13 +34,12 @@ export default function Home() {
           <button onClick={() => navigate("/request")}>완두콩 만들기</button>
         </Carousel>
         <FindTeamFilter filters={findTeamFilters} setFilters={setFindTeamFilters} />
-        {!isEmpty(teamData.list) ? (
+        {!teamData && <p>완두콩 불러오는 중...</p>}
+        {isEmpty(teamData.list) && <p>아직 만들어진 완두콩이 없습니다.</p>}
+        {!isEmpty(teamData.list) &&
           teamData.list.map((teamDataList, index) => (
             <TeamItem key={index} teamId={teamDataList.teamId} content={teamDataList} />
-          ))
-        ) : (
-          <p>완두콩 불러오는 중...</p>
-        )}
+          ))}
       </Container>
     </>
   );

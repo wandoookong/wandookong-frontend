@@ -142,8 +142,7 @@ const Icon = styled.div`
   }
 `;
 
-//FIXME p > div
-const ContentWrapper = styled.p`
+const ContentWrapper = styled.div`
   margin: 0;
   padding: 0;
 
@@ -185,4 +184,5 @@ const OneButton = styled.button`
   font-size: 14px;
   font-weight: 700;
   color: #ffffff;
+  cursor: pointer;
 `;

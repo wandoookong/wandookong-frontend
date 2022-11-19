@@ -8,33 +8,35 @@ import { css } from "@emotion/react";
 import { colors } from "../../styles/colors";
 import CommonModalHeader from "../../components/header/commonModalHeader";
 import PositionItem from "./components/positionItem";
-import { TeamData } from "../../api/types/teamData";
-import { teamCategoryText } from "../myPages/utilities/convertValueToName";
+import { teamCategoryText } from "../../services/convertValueToName";
+import { TeamReturnType } from "../../api/types/teamType";
+import { DdayPill } from "../../components/pill/DdayPill";
 
 export function TeamDetail() {
   const navigate = useNavigate();
   const param = useParams();
   const [isDescriptionOpen, setIsDescriptionOpen] = useState<boolean>(false);
-  const [teamData, setTeamData] = useState<TeamData>({
+  const [teamData, setTeamData] = useState<TeamReturnType>({
     teamId: 1,
     title: "",
     teamCategory: "portfolio",
     description: "",
     closeDueYmd: "",
+    teamDetailStatus: "",
     teamStatus: "",
     teamCapacityList: [
       {
         teamCapacityId: 0,
-        roleDetail: "",
+        roleDetail: "product",
         roleDetailName: "",
+        roleMemberCount: 1,
         roleMaxCount: 0,
         teamLead: false,
-        careerRange: "",
+        careerRange: "0_4",
         careerRangeName: "",
         tagList: [""],
       },
     ],
-    teamDetailStatus: "",
   });
 
   useEffect(() => {
@@ -49,11 +51,11 @@ export function TeamDetail() {
       <CommonModalHeader onClick={() => navigate(-1)} />
       <main>
         <header>
-          <div>
+          <div className="header-wrapper">
             <p>{teamCategoryText(teamData.teamCategory)}</p>
-            <h1>{teamData.title}</h1>
+            <DdayPill closeDueYmd={teamData.closeDueYmd} />
           </div>
-          <span>D-6</span>
+          <h1>{teamData.title}</h1>
         </header>
         <div>
           <section>
@@ -68,16 +70,18 @@ export function TeamDetail() {
           </section>
           <section className="position-wrapper">
             <h2>멤버 콩</h2>
-            {teamData.teamCapacityList.map((role, index) => (
-              <PositionItem
-                key={index}
-                positionName={role.roleDetailName}
-                isPositionValid={Object.keys(role).includes("careerRangeName")}
-                isLeader={role.teamLead}
-                careerRangeName={role.careerRangeName}
-                tags={role.tagList}
-              />
-            ))}
+            <ul>
+              {teamData.teamCapacityList.map((role, index) => (
+                <PositionItem
+                  key={index}
+                  positionName={role.roleDetailName}
+                  isPositionValid={Object.keys(role).includes("careerRangeName")}
+                  isLeader={role.teamLead}
+                  careerRangeName={role.careerRangeName}
+                  tags={role.tagList}
+                />
+              ))}
+            </ul>
           </section>
         </div>
         <SingleButton
@@ -103,23 +107,28 @@ const Container = styled.div`
 
     header {
       display: flex;
+      flex-direction: column;
       margin: 0 0 23px 0;
       padding: 0;
-      justify-content: space-between;
 
-      p {
-        margin: 0 0 5px 0;
-        padding: 0;
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 17px;
-        letter-spacing: -0.005em;
-        text-align: left;
-        color: ${colors.grey600};
+      div.header-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        p {
+          flex: 1 0 80%;
+          padding: 0;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 17px;
+          letter-spacing: -0.005em;
+          text-align: left;
+          color: ${colors.grey600};
+        }
       }
 
       h1 {
-        margin: 0;
+        margin-top: 5px;
         padding: 0;
         font-size: 24px;
         font-weight: 700;
@@ -127,18 +136,6 @@ const Container = styled.div`
         letter-spacing: 0;
         text-align: left;
         color: ${colors.grey900};
-      }
-
-      span {
-        height: 100%;
-        margin: 0;
-        padding: 3px 8px;
-        border-radius: 40px;
-        background: ${colors.subBrand900};
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 17px;
-        color: ${colors.white};
       }
     }
 

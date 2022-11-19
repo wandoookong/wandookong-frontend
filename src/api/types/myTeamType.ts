@@ -7,8 +7,8 @@ export type TeamPartyReturnType = {
   teamId: number;
   teamCategory: TEAM_CATEGORY;
   title: string;
-  createdAt?: Date;
   roleDetail: ROLE_DETAIL;
+  createdAt: string;
   memberStatus: TEAM_PARTY_MEMBER_STATUS;
   memo: string;
 };

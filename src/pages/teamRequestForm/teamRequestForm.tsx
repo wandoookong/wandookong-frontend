@@ -8,7 +8,6 @@ import SetDescriptionStep from "./components/steps/setDescriptionStep";
 import SetContactStep from "./components/steps/setContactStep";
 import { useTeamRequestFormReducer } from "./hooks/useTeamRequestFormReducer";
 import TeamApi from "../../api/teamApi";
-import { isEmpty } from "../../@types/utility/typeGuard";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import FloatingModal from "../../components/modal/FloatingModal";
@@ -31,7 +30,7 @@ export default function TeamRequestForm() {
   const onNextHandler = () => setStep((step) => step + 1);
   const onSubmit = async () => {
     const response = await TeamApi.setTeam(state);
-    if (isEmpty(response.teamId)) {
+    if (response.result) {
       return alert("완두콩이 생성되지 않았습니다. 다시 시도해주세요.");
     }
     setIsSuccessModalOn(!isSuccessModalOn);

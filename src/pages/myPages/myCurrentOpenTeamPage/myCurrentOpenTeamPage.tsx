@@ -3,27 +3,26 @@ import { CurrentOpenTeamReturnType } from "../../../api/types/teamType";
 import MyTeamApi from "../../../api/myTeamApi";
 import TeamMemberApi from "../../../api/teamMemberApi";
 import { AllowMemberListReturnType, ApplyMemberListReturnType } from "../../../api/types/teamMemberType";
-import CurrentOpenTeamNavigation from "./components/CurrentOpenTeamNavigation";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "./components/ConfirmModal";
-import styled from "@emotion/styled";
+import FloatingModal from "../../../components/modal/FloatingModal";
+import CurrentOpenTeamNavigation from "./components/CurrentOpenTeamNavigation";
+import { teamCategoryText } from "../../../services/convertValueToName";
 import { DdayPill } from "../../../components/pill/DdayPill";
+import { isEmpty } from "../../../@types/utility/typeGuard";
+import ApplicantItem from "./components/applicantItem";
+import AcceptedItem from "./components/acceptedApplicant";
+import styled from "@emotion/styled";
 import { colors } from "../../../styles/colors";
-import { teamCategoryText } from "../utilities/convertValueToName";
 
 type CurrentTab = "apply" | "allow";
-
 type PromiseResponse = [CurrentOpenTeamReturnType, ApplyMemberListReturnType, AllowMemberListReturnType];
 
 export default function MyCurrentOpenTeamPage() {
   const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState<CurrentTab>("apply");
   const [isDeleteModalOn, setIsDeleteModalOn] = useState<boolean>(false);
-
-  useEffect(() => {
-    navigate(`/my-current-open?tab=${currentTab}`);
-  }, [currentTab]);
-
+  const [isNotDeleteModalOn, setIsNotDeleteModalOn] = useState<boolean>(false);
   const [currentOpenTeam, setCurrentOpenTeam] = useState<CurrentOpenTeamReturnType>({
     teamId: 1,
     teamCategory: "portfolio",
@@ -33,8 +32,61 @@ export default function MyCurrentOpenTeamPage() {
     allowCount: 0,
     capacityCount: 0,
   });
-  const [applyMemberList, setApplyMemberList] = useState({} as ApplyMemberListReturnType);
-  const [allowMemberList, setAllowMemberList] = useState({} as AllowMemberListReturnType);
+  const [applyMemberList, setApplyMemberList] = useState<ApplyMemberListReturnType>({
+    list: [
+      {
+        teamMemberId: 1,
+        nickname: "",
+        careerRange: "0_4",
+        tagList: [""],
+        roleDetail: "product",
+        memo: "",
+        memberStatus: "apply",
+      },
+    ],
+  });
+  const [allowMemberList, setAllowMemberList] = useState<AllowMemberListReturnType>({
+    list: [
+      {
+        teamMemberId: 1,
+        nickname: "",
+        careerRange: "0_4",
+        tagList: [""],
+        roleDetail: "product",
+        memo: "",
+      },
+    ],
+  });
+
+  const onClickDelete = async () => {
+    const response = await MyTeamApi.deleteMyTeam(currentOpenTeam.teamId);
+    if (!response.result && response.failCode === "remain_allow_member") {
+      setIsNotDeleteModalOn(!isNotDeleteModalOn);
+      return;
+    }
+    setIsDeleteModalOn(!isDeleteModalOn);
+  };
+
+  const onClickNo = () => {
+    setIsDeleteModalOn(false);
+  };
+
+  const onDeleteMyTeam = async () => {
+    const response = await MyTeamApi.deleteMyTeam(currentOpenTeam.teamId);
+    if (response.result) {
+      navigate("/myAccount");
+      return;
+    }
+    return alert("다시 시도해주세요.");
+  };
+
+  const onClickMove = () => {
+    navigate("/my-current-open?tab=allow");
+  };
+
+  useEffect(() => {
+    navigate(`/my-current-open?tab=${currentTab}`);
+  }, [currentTab]);
 
   useEffect(() => {
     (async function () {
@@ -49,26 +101,19 @@ export default function MyCurrentOpenTeamPage() {
     })();
   }, []);
 
-  const onClickDelete = () => {
-    setIsDeleteModalOn(!isDeleteModalOn);
-  };
-
-  const onClickNo = () => {
-    setIsDeleteModalOn(false);
-  };
-
-  const onDeleteMyTeam = () => {
-    MyTeamApi.deleteMyTeam(currentOpenTeam.teamId).then((res) => {
-      if (!res.result && res.failCode === "remain_allow_member") {
-        // 삭제 불가 모달
-      }
-    });
-  };
-
   return (
     <>
       {isDeleteModalOn && (
         <ConfirmModal title="완두콩을 삭제하시겠습니까?" onClickYes={onDeleteMyTeam} onClickNo={onClickNo} />
+      )}
+      {isNotDeleteModalOn && (
+        <FloatingModal
+          title={`현재 수락된 참여자가 있어 \n 완두콩 삭제가 어려워요!`}
+          content="수락한 참여자 삭제시 완두콩 삭제가 가능합니다. 참여자 화면으로 이동하시겠습니까?"
+          onClose={onClickMove}
+          buttonLabel="이동하기"
+          showClose={false}
+        />
       )}
       <CurrentOpenTeamNavigation onClickDelete={onClickDelete} />
       <ContentWrapper currentTab={currentTab}>
@@ -87,79 +132,43 @@ export default function MyCurrentOpenTeamPage() {
             참여자
           </button>
         </div>
-        {!currentOpenTeam && <p>아직 아무도 없어요</p>}
-        {currentTab === "apply" && (
-          <ListWrapper>
-            <div className="applicant-wrapper">
-              <div className="applicant-content-wrapper">
-                <div>
-                  <div>
-                    <div>
-                      <b>닉네임</b>
-                      <span>서비스기획자</span>
-                    </div>
-                    <ul>
-                      <li>태그1</li>
-                      <li>태그2</li>
-                    </ul>
-                  </div>
-                  <p>내용</p>
-                </div>
-                <button>열기</button>
-              </div>
-              <div className="button-wrapper">
-                <button className="decline-button">거절</button>
-                <button className="accept-button">수락</button>
-              </div>
-            </div>
-          </ListWrapper>
+        {currentTab === "apply" && (isEmpty(applyMemberList.list) || !applyMemberList) && (
+          <p className="empty-wrapper">아직 아무도 없어요</p>
         )}
+        {currentTab === "allow" && (isEmpty(allowMemberList.list) || !allowMemberList) && (
+          <p className="empty-wrapper">아직 아무도 없어요</p>
+        )}
+        <section className="applicants-wrapper">
+          {applyMemberList &&
+            applyMemberList.list.map((applicant, index) => (
+              <ApplicantItem
+                key={index}
+                nickname={applicant.nickname}
+                teamMemberId={applicant.teamMemberId}
+                tagList={applicant.tagList}
+                careerRange={applicant.careerRange}
+                roleDetail={applicant.roleDetail}
+                memberStatus={applicant.memberStatus}
+                memo={applicant.memo}
+              />
+            ))}
+          {allowMemberList &&
+            allowMemberList.list.map((applicant, index) => (
+              <AcceptedItem
+                key={index}
+                teamMemberId={applicant.teamMemberId}
+                nickname={applicant.nickname}
+                careerRange={applicant.careerRange}
+                tagList={applicant.tagList}
+                roleDetail={applicant.roleDetail}
+                memo={applicant.memo}
+              />
+            ))}
+        </section>
       </ContentWrapper>
     </>
   );
 }
-const ListWrapper = styled.section`
-  margin: 11px 20px 0;
-  border-bottom: 1px solid ${colors.subBrand50};
-
-  div.applicant-wrapper {
-    display: flex;
-    flex-direction: column;
-
-    div.applicant-content-wrapper {
-      padding: 16px 14px;
-      border-radius: 8px;
-      background: ${colors.white};
-    }
-
-    div.button-wrapper {
-      display: flex;
-      gap: 10px;
-      margin: 10px 0 20px 0;
-
-      button {
-        flex: 1 1 50%;
-        padding: 11px;
-        border-radius: 8px;
-        font-size: 14px;
-        font-weight: 700;
-        line-height: 17px;
-        cursor: pointer;
-
-        &.decline-button {
-          background: transparent;
-          color: ${colors.grey600};
-          border: 1px solid ${colors.brand400};
-        }
-        &.accept-button {
-          border: none;
-          background: ${colors.brand900};
-          color: ${colors.white};
-        }
-      }
-    }
-  }
-`;
 
 const ContentWrapper = styled.div<{ currentTab: CurrentTab }>`
   margin-top: 92px;
@@ -201,6 +210,13 @@ const ContentWrapper = styled.div<{ currentTab: CurrentTab }>`
     }
   }
 
+  p.empty-wrapper {
+    margin-top: 100px;
+    font-size: 14px;
+    color: ${colors.grey300};
+    text-align: center;
+  }
+
   div.tab-wrapper {
     display: flex;
     justify-content: space-between;
@@ -231,5 +247,9 @@ const ContentWrapper = styled.div<{ currentTab: CurrentTab }>`
       box-shadow: ${(props) =>
         props.currentTab === "allow" ? `0 3px 0 0 ${colors.brand900}` : `0 1.5px 0 0 ${colors.subBrand50}`};
     }
+  }
+
+  section.applicants-wrapper {
+    margin: 11px 20px 0;
   }
 `;

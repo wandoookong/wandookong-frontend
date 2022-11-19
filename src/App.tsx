@@ -9,11 +9,11 @@ import MyPage from "./pages/myPages/myPage/myPage";
 import MyProfilePage from "./pages/myPages/myProfilePage/MyProfilePage";
 import MyCurrentOpenTeamPage from "./pages/myPages/myCurrentOpenTeamPage/myCurrentOpenTeamPage";
 import MyTeamHistoryPage from "./pages/myPages/myTeamHistoryPage/MyTeamHistoryPage";
-import MyTeamPartyPage from "./pages/myPages/myTeamPartyPage/MyTeamPartyPage";
 import { TeamDetail } from "./pages/teamDetail/teamDetail";
 import ApplyTeam from "./pages/teamDetail/applyTeam/applyTeam";
 import Terms from "./pages/policy/terms";
 import PrivacyInfo from "./pages/policy/privacyInfo";
+import MyJoinedTeams from "./pages/myPages/myJoinedTeams/MyJoinedTeams";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
         <Route path="/my-profile" element={<MyProfilePage />} />
         <Route path="/my-current-open" element={<MyCurrentOpenTeamPage />} />
         <Route path="/my-team-history" element={<MyTeamHistoryPage />} />
-        <Route path="/my-team-party" element={<MyTeamPartyPage />} />
+        <Route path="/my-team-party" element={<MyJoinedTeams />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

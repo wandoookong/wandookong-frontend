@@ -47,57 +47,46 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
         <FilterContent>
           <span>직군콩 |</span>
           <ul>
-            <li>
-              <Label
-                isChecked={filters.roleDetail.length === 0}
-                onClick={() => setFilters({ ...filters, roleDetail: "" })}
-              >
-                전체
-              </Label>
-            </li>
+            <Filter
+              isChecked={filters.roleDetail.length === 0}
+              onClick={() => setFilters({ ...filters, roleDetail: "" })}
+            >
+              전체
+            </Filter>
             {roleData.map((role, index) => (
-              <li key={index}>
-                <Label
-                  isChecked={filters.roleDetail === role.value}
-                  onClick={() => {
-                    setFilters({ ...filters, roleDetail: role.value });
-                  }}
-                >
-                  {role.label}
-                  <input type="radio" />
-                </Label>
-              </li>
+              <Filter
+                key={index}
+                isChecked={filters.roleDetail === role.value}
+                onClick={() => {
+                  setFilters({ ...filters, roleDetail: role.value });
+                }}
+              >
+                {role.label}
+              </Filter>
             ))}
           </ul>
         </FilterContent>
         <FilterContent>
           <span>카테고리 |</span>
           <ul>
-            <li>
-              <Label
-                isChecked={filters.teamCategory.length === 0}
-                onClick={() => setFilters({ ...filters, teamCategory: "" })}
-              >
-                전체
-              </Label>
-            </li>
-            <li>
-              <Label
-                isChecked={filters.teamCategory === "portfolio"}
-                onClick={() => setFilters({ ...filters, teamCategory: "portfolio" })}
-              >
-                포트폴리오
-                <input type="radio" />
-              </Label>
-            </li>
-            <li>
-              <Label
-                isChecked={filters.teamCategory === "side_project"}
-                onClick={() => setFilters({ ...filters, teamCategory: "side_project" })}
-              >
-                사이드 프로젝트 <input type="radio" />
-              </Label>
-            </li>
+            <Filter
+              isChecked={filters.teamCategory.length === 0}
+              onClick={() => setFilters({ ...filters, teamCategory: "" })}
+            >
+              전체
+            </Filter>
+            <Filter
+              isChecked={filters.teamCategory === "portfolio"}
+              onClick={() => setFilters({ ...filters, teamCategory: "portfolio" })}
+            >
+              포트폴리오
+            </Filter>
+            <Filter
+              isChecked={filters.teamCategory === "side_project"}
+              onClick={() => setFilters({ ...filters, teamCategory: "side_project" })}
+            >
+              사이드 프로젝트
+            </Filter>
           </ul>
         </FilterContent>
       </div>
@@ -146,24 +135,18 @@ const FilterContent = styled.div`
     overflow-y: hidden;
     scroll-behavior: smooth;
 
-    li {
-      &:last-child {
-        margin-right: 28px;
-      }
+    li:last-child {
+      margin-right: 28px;
     }
   }
 `;
 
-const Label = styled.label<{ isChecked: boolean }>`
-  min-width: 37px;
-  background: ${(props) => (props.isChecked ? colors.subBrand300 : colors.white)};
+const Filter = styled.li<{ isChecked: boolean }>`
   border: 1px solid ${colors.subBrand600};
   padding: 6px 8px;
   border-radius: 32px;
+  background: ${(props) => (props.isChecked ? colors.subBrand300 : colors.white)};
   box-shadow: 0 1px 3px rgba(181, 191, 197, 0.3);
+  text-align: center;
   cursor: pointer;
-
-  input {
-    display: none;
-  }
 `;

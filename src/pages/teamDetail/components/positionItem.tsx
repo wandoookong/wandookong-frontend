@@ -4,8 +4,8 @@ import { colors } from "../../../styles/colors";
 interface Props {
   positionName: string;
   isPositionValid: boolean;
-  isLeader: boolean;
-  careerRangeName: string;
+  isLeader?: boolean;
+  careerRangeName?: string;
   tags?: string[];
 }
 
@@ -27,7 +27,7 @@ export default function PositionItem({ positionName, isPositionValid, isLeader, 
   );
 }
 
-const Container = styled.section<{ isPositionEmpty: boolean }>`
+const Container = styled.li<{ isPositionEmpty: boolean }>`
   display: flex;
   align-items: center;
   width: 100%;

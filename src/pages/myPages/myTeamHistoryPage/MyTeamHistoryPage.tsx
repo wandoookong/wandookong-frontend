@@ -16,15 +16,21 @@ export default function MyTeamHistoryPage() {
         teamId: 1,
         teamCategory: "portfolio",
         title: "",
+        description: "",
         closeDueYmd: "",
-        createdAt: new Date(),
+        teamStatus: "",
+        teamDetailStatus: "",
         teamCapacityList: [
           {
             teamCapacityId: 0,
             roleDetail: "product",
             roleDetailName: "",
-            roleMaxCount: 1,
             roleMemberCount: 1,
+            roleMaxCount: 1,
+            teamLead: false,
+            careerRange: "0_4",
+            careerRangeName: "",
+            tagList: [""],
           },
         ],
       },
@@ -44,7 +50,7 @@ export default function MyTeamHistoryPage() {
         <button onClick={() => navigate(-1)} />
         <h1>내가 만든 완두콩 모두보기</h1>
       </nav>
-      {isEmpty(teamHistoryList.list) && <p>이전 기록이 없습니다.</p>}
+      {isEmpty(teamHistoryList.list) && <p>생성된 완두콩이 없습니다.</p>}
       {teamHistoryList.list !== undefined &&
         teamHistoryList.list.map((item, index) => <TeamItem key={index} teamId={item.teamId} content={item} />)}
     </Container>
@@ -73,5 +79,12 @@ const Container = styled.div`
       line-height: 19px;
       color: ${colors.grey900};
     }
+  }
+
+  p {
+    margin-top: 200px;
+    font-size: 14px;
+    color: ${colors.grey300};
+    text-align: center;
   }
 `;

@@ -9,4 +9,15 @@ export default class TeamMemberApi {
   static getApplyMemberList(): Promise<ApplyMemberListReturnType> {
     return requester.get(`${process.env.REACT_APP_HOST_NAME}/api/team-members/apply`);
   }
+
+  static setApplicantAccept(teamMemberId: number) {
+    return requester.put(`${process.env.REACT_APP_HOST_NAME}/api/team-members/${teamMemberId}/allow`);
+  }
+
+  static setApplicantDeny(teamMemberId: number) {
+    return requester.put(`${process.env.REACT_APP_HOST_NAME}/api/team-members/${teamMemberId}/deny`);
+  }
+  static setApplyCancel(teamMemberId: number) {
+    return requester.put(`${process.env.REACT_APP_HOST_NAME}/api/team-members/${teamMemberId}/apply/cancel`);
+  }
 }

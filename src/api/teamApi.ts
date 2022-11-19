@@ -1,5 +1,5 @@
 import requester from "./config/config";
-import { TeamListReturnType } from "./types/teamType";
+import { TeamListReturnType, TeamReturnType } from "./types/teamType";
 import { ROLE_DETAIL } from "./types/fieldType";
 
 interface State {
@@ -13,6 +13,8 @@ interface State {
 
 interface Props {
   teamId: number;
+  result: boolean;
+  failCode: string;
 }
 
 interface ApplyTeam {
@@ -32,7 +34,7 @@ export default class TeamApi {
     return requester.get(`${process.env.REACT_APP_HOST_NAME}/api/teams/${query}`);
   }
 
-  static getTeamData(teamId: number): Promise<TeamData> {
+  static getTeamData(teamId: number): Promise<TeamReturnType> {
     return requester.get(`${process.env.REACT_APP_HOST_NAME}/api/teams/${teamId}`);
   }
 

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+
 const Wrapper = styled.div`
   position: absolute;
   display: flex;
@@ -19,6 +20,7 @@ const PrevButton = styled.button`
   font-size: 14px;
   font-weight: 700;
   color: #434445;
+  cursor: pointer;
 `;
 
 const NextButton = styled.button`
@@ -31,6 +33,7 @@ const NextButton = styled.button`
   font-size: 14px;
   font-weight: 700;
   color: #ffffff;
+  cursor: pointer;
 `;
 
 export function ModalButton({ prevLabel, nextLabel, onPrev, onNext }) {

@@ -1,4 +1,4 @@
-import { ROLE_DETAIL, TEAM_CATEGORY } from "./fieldType";
+import { CAREER_RANGE, ROLE_DETAIL, TEAM_CATEGORY } from "./fieldType";
 
 type CurrentOpenTeamReturnType = {
   teamId: number;
@@ -14,14 +14,20 @@ type TeamReturnType = {
   teamId: number;
   teamCategory: TEAM_CATEGORY;
   title: string;
+  description: string;
   closeDueYmd: string;
-  createdAt: Date;
+  teamStatus: string;
+  teamDetailStatus: string;
   teamCapacityList: {
     teamCapacityId: number;
     roleDetail: ROLE_DETAIL;
     roleDetailName: string;
-    roleMaxCount: number;
     roleMemberCount: number;
+    roleMaxCount: number;
+    teamLead?: boolean;
+    careerRange?: CAREER_RANGE;
+    careerRangeName?: string;
+    tagList?: string[];
   }[];
 };
 
