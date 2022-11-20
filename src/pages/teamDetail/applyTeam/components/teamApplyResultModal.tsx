@@ -32,7 +32,7 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  background: rgba(1, 1, 1, 0.6);
+  background: rgba(1, 1, 1, 0.8);
   color: ${colors.white};
   z-index: 100;
 

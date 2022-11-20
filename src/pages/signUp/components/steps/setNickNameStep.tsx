@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { SingleButton } from "../../../../components/buttons/singleButton";
 import { FormHeader } from "../../../../components/form/header/formHeader";
 import { SingleTextInput } from "../../../teamRequestForm/components/inputs/singleTextInput";
@@ -6,7 +6,7 @@ import { isEmpty } from "../../../../@types/utility/typeGuard";
 import signUpApi from "../../../../api/signUpApi";
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
-import { ErrorMessageState, validateNickName } from "../../utilities/signUpValidations";
+import { validateNickName } from "../../utilities/signUpValidations";
 
 interface Props {
   nickname: string;
@@ -15,13 +15,32 @@ interface Props {
 }
 
 export default function SetNickNameStep({ nickname, onChange, onNext }: Props) {
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => onChange(e.currentTarget.value);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const isValidNickName = useMemo(() => {
+    return !isEmpty(nickname) && isEmpty(errorMessage);
+  }, [errorMessage, nickname]);
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const validateErrorMessage = validateNickName(e.currentTarget.value);
+    setErrorMessage(validateErrorMessage);
+    onChange(e.currentTarget.value);
+  };
+
   const onNextHandler = () => {
-    const errorMessage = validateNickName(nickname);
-    setErrorMessage(errorMessage);
-    if (isEmpty(errorMessage)) {
-      return onNext();
+    if (isValidNickName) {
+      onNext();
+    } else {
+      (async function () {
+        if (!isEmpty(nickname)) {
+          const response = await signUpApi.checkNickname({ nickname });
+          if (!response.isAvailable) {
+            return setErrorMessage("이미 사용중인 닉네임입니다.");
+          }
+          const validateErrorMessage = validateNickName(nickname);
+          setErrorMessage(validateErrorMessage);
+        }
+      })();
     }
   };
 
@@ -30,44 +49,45 @@ export default function SetNickNameStep({ nickname, onChange, onNext }: Props) {
       if (!isEmpty(nickname)) {
         const response = await signUpApi.checkNickname({ nickname });
         if (!response.isAvailable) {
-          return setErrorMessage(ErrorMessageState.occupied);
+          return setErrorMessage("이미 사용중인 닉네임입니다.");
         }
-        setErrorMessage(ErrorMessageState.valid);
       }
     })();
-  }, [nickname]);
-
-  useEffect(() => {
-    if (!isEmpty(nickname)) {
-      setErrorMessage("");
-    }
   }, [nickname]);
 
   return (
     <>
       <FormHeader title="닉네임을 입력해주세요" />
-      <Container isErrorMessageOn={errorMessage === (ErrorMessageState.empty || ErrorMessageState.occupied)}>
+      <Container>
         <SingleTextInput
           value={nickname}
-          placeholder={ErrorMessageState.empty}
+          placeholder="닉네임을 입력해주세요."
           maxLength={10}
           onChange={onChangeHandler}
         />
         {!isEmpty(errorMessage) && <p className="error-message">{errorMessage}</p>}
+        {isValidNickName && <p className="valid-message">사용 가능한 닉네임입니다.</p>}
       </Container>
       <SingleButton onClick={onNextHandler} label="다음" isActive={true} />
     </>
   );
 }
 
-const Container = styled.div<{ isErrorMessageOn: boolean }>`
+const Container = styled.div`
   margin-top: 73px;
   padding: 0 20px;
 
-  p.error-message {
-    margin-top: 2px;
+  p {
+    margin-top: 6px;
     font-size: 12px;
     font-weight: 500;
-    color: ${(props) => (props.isErrorMessageOn ? colors.red : colors.green)};
+  }
+
+  p.error-message {
+    color: ${colors.red};
+  }
+
+  p.valid-message {
+    color: ${colors.green};
   }
 `;

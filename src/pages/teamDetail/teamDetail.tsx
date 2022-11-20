@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ExpandMoreIcon from "../../assets/icons/more.svg";
 import styled from "@emotion/styled";
 import { SingleButton } from "../../components/buttons/singleButton";
@@ -11,11 +11,13 @@ import PositionItem from "./components/positionItem";
 import { teamCategoryText } from "../../services/convertValueToName";
 import { TeamReturnType } from "../../api/types/teamType";
 import { DdayPill } from "../../components/pill/DdayPill";
+import { ACCESS_TOKEN_NAME } from "../../api/config/config";
 
 export function TeamDetail() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const param = useParams();
-  const [isDescriptionOpen, setIsDescriptionOpen] = useState<boolean>(false);
+  const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   const [teamData, setTeamData] = useState<TeamReturnType>({
     teamId: 1,
     title: "",
@@ -39,6 +41,15 @@ export function TeamDetail() {
     ],
   });
 
+  const token = localStorage.getItem(ACCESS_TOKEN_NAME);
+
+  const onClickApply = () => {
+    if (token) {
+      navigate(`/team/${param.teamId}/apply`);
+    }
+    navigate("/login", { state: pathname });
+  };
+
   useEffect(() => {
     (async function () {
       const response = await TeamApi.getTeamData(Number(param.teamId));
@@ -53,7 +64,7 @@ export function TeamDetail() {
         <header>
           <div className="header-wrapper">
             <p>{teamCategoryText(teamData.teamCategory)}</p>
-            <DdayPill closeDueYmd={teamData.closeDueYmd} />
+            <DdayPill closeDueYmd={teamData.closeDueYmd} currentTimestamp={Date.now()} />
           </div>
           <h1>{teamData.title}</h1>
         </header>
@@ -86,7 +97,7 @@ export function TeamDetail() {
         </div>
         <SingleButton
           label={teamData.teamStatus === "open" ? "참여하기" : "모집 마감"}
-          onClick={() => navigate(`/team/${param.teamId}/apply`)}
+          onClick={onClickApply}
           isActive={teamData.teamStatus === "open"}
         />
       </main>
@@ -102,7 +113,7 @@ const Container = styled.div`
   }
 
   main {
-    margin: 108px 0 0 0;
+    margin: 80px 0 0 0;
     padding: 0 20px;
 
     header {

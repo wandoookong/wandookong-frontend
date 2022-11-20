@@ -18,7 +18,7 @@ export default function TeamItem({ teamId, content }: Props) {
       <div className="top-wrapper">
         <div className="title-wrapper">
           <span className="team-category">{teamCategoryText(content.teamCategory)}</span>
-          <DdayPill closeDueYmd={content.closeDueYmd} />
+          <DdayPill closeDueYmd={content.closeDueYmd} currentTimestamp={Date.now()} />
         </div>
         <h2>{content.title}</h2>
       </div>
@@ -94,7 +94,7 @@ const PositionItem = styled.li<{ roleMemberCount: number }>`
   }
   span {
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     text-align: center;
     color: ${(props) => (!props.roleMemberCount ? colors.grey900 : colors.grey200)};

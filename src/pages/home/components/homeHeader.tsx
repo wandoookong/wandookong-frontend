@@ -1,15 +1,17 @@
 import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ACCESS_TOKEN_NAME } from "../../../api/config/config";
 import { colors } from "../../../styles/colors";
-import { Nullable } from "../../../@types/utility/nullable";
 import AccountIcon from "../../../assets/icons/account.svg";
+import { isEmpty } from "../../../@types/utility/typeGuard";
+import { Nullable } from "../../../@types/utility/nullable";
 
 export const HomeHeader = () => {
   const navigate = useNavigate();
-  const [isScrollOn, setIsScrollOn] = useState<boolean>(false);
-  const [isToken, setIsToken] = useState<Nullable<string>>("");
+  const { pathname } = useLocation();
+  const [token, setToken] = useState<Nullable<string>>("");
+  const [isScrollOn, setIsScrollOn] = useState(false);
 
   const handleScroll = () => {
     if (window.scrollY >= 220) {
@@ -18,9 +20,17 @@ export const HomeHeader = () => {
     return setIsScrollOn(false);
   };
 
+  const onClickLogin = () => {
+    if (!token) {
+      navigate("/login", { state: pathname });
+      return;
+    }
+    navigate("/myAccount");
+    return;
+  };
+
   useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN_NAME);
-    setIsToken(token);
+    setToken(localStorage.getItem(ACCESS_TOKEN_NAME));
   }, []);
 
   useEffect(() => {
@@ -37,8 +47,10 @@ export const HomeHeader = () => {
             완두콩 만들기
           </button>
         )}
-        {isToken === null && <span onClick={() => navigate("/login")}>로그인</span>}
-        {isToken !== null && <button className="my-home-button" onClick={() => navigate("/myAccount")} />}
+        {token === null && <span onClick={onClickLogin}>로그인</span>}
+        {!isEmpty(token) && token !== null && (
+          <button className="my-home-button" onClick={() => navigate("/myAccount")} />
+        )}
       </RightWrapper>
     </Container>
   );

@@ -67,5 +67,6 @@ export default function SignUp() {
 const Container = styled.div`
   form {
     margin-top: 108px;
+    padding-bottom: 140px;
   }
 `;

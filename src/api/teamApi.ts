@@ -14,7 +14,7 @@ interface State {
 interface Props {
   teamId: number;
   result: boolean;
-  failCode: string;
+  failCode?: string;
 }
 
 interface ApplyTeam {

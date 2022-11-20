@@ -15,7 +15,9 @@ import FloatingModal from "../../components/modal/FloatingModal";
 export default function TeamRequestForm() {
   const navigate = useNavigate();
   const [step, setStep] = useState<number>(1);
+  const [isFailModalOn, setIsFailModalOn] = useState<boolean>(false);
   const [isSuccessModalOn, setIsSuccessModalOn] = useState<boolean>(false);
+  const [currentOpenTeamId, setCurrentOpenTeamId] = useState<number>(0);
   const {
     state,
     onChangeTeamCategory,
@@ -30,8 +32,10 @@ export default function TeamRequestForm() {
   const onNextHandler = () => setStep((step) => step + 1);
   const onSubmit = async () => {
     const response = await TeamApi.setTeam(state);
-    if (response.result) {
-      return alert("완두콩이 생성되지 않았습니다. 다시 시도해주세요.");
+    if (!response.result) {
+      setIsFailModalOn(!isFailModalOn);
+      setCurrentOpenTeamId(response.teamId);
+      return;
     }
     setIsSuccessModalOn(!isSuccessModalOn);
     return;
@@ -46,6 +50,18 @@ export default function TeamRequestForm() {
           buttonLabel="확인"
           onClickButton={() => navigate("/")}
           onClose={() => navigate("/")}
+          showClose={false}
+        />
+      )}
+      {isFailModalOn && (
+        <FloatingModal
+          title="아직 모집중인 완두콩이 있습니다!"
+          content={`현재 모집중인 완두콩이 마감되어야 \n 새로운 완두콩을 만들 수 있습니다. \n 모집중인 완두콩으로 이동하시겠습니까?`}
+          prevLabel="아니요"
+          nextLabel="네"
+          onPrev={() => setIsFailModalOn(!isFailModalOn)}
+          onNext={() => navigate(`/team/${currentOpenTeamId}`)}
+          onClose={() => setIsFailModalOn(!isFailModalOn)}
           showClose={false}
         />
       )}

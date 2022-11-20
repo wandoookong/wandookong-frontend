@@ -20,7 +20,7 @@ const Container = styled.nav`
   display: flex;
   flex-direction: row-reverse;
   width: 100%;
-  padding: 44px 20px 36px;
+  padding: 44px 20px 12px;
   box-sizing: border-box;
   background: ${colors.background};
   z-index: 50;

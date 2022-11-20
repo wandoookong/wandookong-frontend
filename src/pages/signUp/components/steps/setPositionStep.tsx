@@ -99,7 +99,7 @@ const Container = styled.div`
     margin-bottom: 36px;
 
     p {
-      margin-bottom: 12px;
+      margin-bottom: 30px;
       font-weight: 500;
       font-size: 16px;
       line-height: 19px;
@@ -115,14 +115,12 @@ const Container = styled.div`
 
 const Button = styled.li<{ isChecked: boolean }>`
   label {
-    width: auto;
-    height: auto;
     padding: 16px 24px;
     border: 1.5px solid ${(props) => (props.isChecked ? colors.brand600 : colors.brand300)};
     border-radius: 100px;
     background: ${(props) => (props.isChecked ? colors.brand300 : "transparent")};
-    font-weight: ${(props) => (props.isChecked ? "700" : "500")};
     font-size: 16px;
+    font-weight: ${(props) => (props.isChecked ? "700" : "500")};
     line-height: 19px;
     color: ${colors.grey900};
     cursor: pointer;

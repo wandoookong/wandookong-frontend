@@ -6,8 +6,6 @@ const validateNickNameLength = (target: string): boolean => {
 
 export const ErrorMessageState = {
   empty: "닉네임을 입력해주세요.",
-  valid: "사용 가능한 닉네임입니다.",
-  occupied: "이미 사용중인 닉네임입니다.",
   over: "최대 10자까지 입력할 수 있습니다.",
 };
 

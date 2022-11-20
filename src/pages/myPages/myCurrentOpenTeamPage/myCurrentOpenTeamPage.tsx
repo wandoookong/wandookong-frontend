@@ -28,6 +28,7 @@ export default function MyCurrentOpenTeamPage() {
     teamCategory: "portfolio",
     title: "",
     closeDueYmd: "",
+    currentTimestamp: 0,
     applyCount: 0,
     allowCount: 0,
     capacityCount: 0,
@@ -120,7 +121,7 @@ export default function MyCurrentOpenTeamPage() {
         <header>
           <div className="title-wrapper">
             <p>{teamCategoryText(currentOpenTeam.teamCategory)}</p>
-            <DdayPill closeDueYmd={currentOpenTeam.closeDueYmd} />
+            <DdayPill closeDueYmd={currentOpenTeam.closeDueYmd} currentTimestamp={currentOpenTeam.currentTimestamp} />
           </div>
           <h1>{currentOpenTeam.title}</h1>
         </header>

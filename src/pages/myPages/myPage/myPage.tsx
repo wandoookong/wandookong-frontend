@@ -9,6 +9,7 @@ import CommonModalHeader from "../../../components/header/commonModalHeader";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/colors";
+import { ACCESS_TOKEN_NAME } from "../../../api/config/config";
 
 export default function MyPage() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export default function MyPage() {
     teamCategory: "portfolio",
     title: "",
     closeDueYmd: "",
+    currentTimestamp: 0,
     applyCount: 0,
     allowCount: 0,
     capacityCount: 0,
@@ -28,6 +30,12 @@ export default function MyPage() {
     careerRange: "0_4",
     tagList: [""],
   });
+
+  const onClickLogout = () => {
+    localStorage.removeItem(ACCESS_TOKEN_NAME);
+    navigate("/");
+    window.location.reload();
+  };
 
   useEffect(() => {
     (async function () {
@@ -62,6 +70,7 @@ export default function MyPage() {
             teamCategory={myOpenTeam.teamCategory}
             title={myOpenTeam.title}
             closeDueYmd={myOpenTeam.closeDueYmd}
+            currentTimestamp={myOpenTeam.currentTimestamp}
             applyCount={myOpenTeam.applyCount}
             allowCount={myOpenTeam.allowCount}
             capacityCount={myOpenTeam.capacityCount}
@@ -88,7 +97,7 @@ export default function MyPage() {
               <a href="mailto:wandookongproject@gmail.com">문의하기</a>
             </li>
             <li>
-              <button onClick={() => navigate("/logout")}>로그아웃</button>
+              <button onClick={onClickLogout}>로그아웃</button>
             </li>
           </ul>
         </section>

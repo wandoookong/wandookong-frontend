@@ -1,6 +1,10 @@
 import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const { state } = useLocation();
+
   useEffect(() => {
     if (!document.getElementById("id__google_onSignIn")) {
       const script = document.createElement("script");
@@ -37,7 +41,11 @@ export default function Login() {
           localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
           console.log(localStorage.getItem(ACCESS_TOKEN_NAME));
           // 로그인이 완료됐으니, 원래 page로 돌아갑니다!
-          window.history.back();
+          if (state) {
+            navigate(`${state}`);
+          } else {
+            navigate("/");
+          }
         } else if (userSocialId) {
           // new user
           console.log("new user");

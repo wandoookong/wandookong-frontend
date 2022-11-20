@@ -9,6 +9,7 @@ import TeamApi from "../../api/teamApi";
 import { isEmpty } from "../../@types/utility/typeGuard";
 import { colors } from "../../styles/colors";
 import CarouselImg from "./assets/image.jpg";
+import { ACCESS_TOKEN_NAME } from "../../api/config/config";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -18,6 +19,16 @@ export default function Home() {
     roleDetail: "",
     teamCategory: "",
   });
+
+  const onClick = () => {
+    const token = localStorage.getItem(ACCESS_TOKEN_NAME);
+    if (token !== null) {
+      navigate("/request");
+      return;
+    }
+    navigate("/login", { state: "/request" });
+    return;
+  };
 
   useEffect(() => {
     (async function () {
@@ -31,12 +42,13 @@ export default function Home() {
       <HomeHeader />
       <Container>
         <Carousel>
-          <button onClick={() => navigate("/request")}>완두콩 만들기</button>
+          <button onClick={onClick}>완두콩 만들기</button>
         </Carousel>
         <FindTeamFilter filters={findTeamFilters} setFilters={setFindTeamFilters} />
         {!teamData && <p>완두콩 불러오는 중...</p>}
         {isEmpty(teamData.list) && <p>아직 만들어진 완두콩이 없습니다.</p>}
         {!isEmpty(teamData.list) &&
+          teamData.list !== undefined &&
           teamData.list.map((teamDataList, index) => (
             <TeamItem key={index} teamId={teamDataList.teamId} content={teamDataList} />
           ))}

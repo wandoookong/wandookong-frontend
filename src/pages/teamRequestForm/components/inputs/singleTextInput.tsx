@@ -36,7 +36,7 @@ const Container = styled.div`
 
     &:focus {
       outline: none;
-      border: 2px solid ${colors.black};
+      border: 2px solid ${colors.grey900};
     }
 
     ::-webkit-input-placeholder {

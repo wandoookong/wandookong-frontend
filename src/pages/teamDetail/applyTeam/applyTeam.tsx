@@ -151,7 +151,7 @@ export default function ApplyTeam() {
         <TitleWrapper>
           <div className="title-wrapper">
             <p>{teamCategoryText(teamData.teamCategory)}</p>
-            <DdayPill closeDueYmd={teamData.closeDueYmd} />
+            <DdayPill closeDueYmd={teamData.closeDueYmd} currentTimestamp={Date.now()} />
           </div>
           <h1>{teamData.title}</h1>
         </TitleWrapper>

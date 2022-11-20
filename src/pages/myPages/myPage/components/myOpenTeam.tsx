@@ -9,12 +9,21 @@ interface Props {
   teamCategory: TEAM_CATEGORY;
   title: string;
   closeDueYmd: string;
+  currentTimestamp: number;
   applyCount: number;
   allowCount: number;
   capacityCount: number;
 }
 
-export default function MyOpenTeam({ teamCategory, closeDueYmd, title, applyCount, allowCount, capacityCount }: Props) {
+export default function MyOpenTeam({
+  teamCategory,
+  closeDueYmd,
+  currentTimestamp,
+  title,
+  applyCount,
+  allowCount,
+  capacityCount,
+}: Props) {
   const navigate = useNavigate();
   return (
     <Container>
@@ -22,7 +31,7 @@ export default function MyOpenTeam({ teamCategory, closeDueYmd, title, applyCoun
       <div className="my-team-wrapper">
         <div className="sub-content">
           <span className="team-category">{teamCategoryText(teamCategory)}</span>
-          <DdayPill closeDueYmd={closeDueYmd} />
+          <DdayPill closeDueYmd={closeDueYmd} currentTimestamp={currentTimestamp} />
         </div>
         <h2 onClick={() => navigate("/my-current-open")}>{title}</h2>
         <div className="team-applicants-wrapper">
