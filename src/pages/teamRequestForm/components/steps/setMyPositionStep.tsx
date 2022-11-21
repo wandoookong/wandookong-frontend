@@ -7,18 +7,19 @@ import { DoubleButton } from "../../../../components/buttons/doubleButton";
 import { PositionRadioButton } from "../inputs/positionRadioButton";
 import styled from "@emotion/styled";
 import { ContentWrapper } from "../layout/contentWrapper";
+import { ROLE_DETAIL, ROLE_MAIN } from "../../../../@types/model/fieldType";
 
 interface Props {
-  myPosition: Role;
+  myPosition: ROLE_DETAIL | "";
   onChangeRole(value: string): void;
   onPrevious(): void;
   onNext(): void;
 }
 
 export default function SetMyPositionStep({ myPosition, onChangeRole, onNext, onPrevious }: Props) {
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => onChangeRole(e.currentTarget.value as Role);
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => onChangeRole(e.currentTarget.value as ROLE_MAIN);
   const onNextStep = () => {
     const myRoleErrorMessage = myRoleValidation(myPosition);
     setErrorMessage(myRoleErrorMessage);

@@ -4,36 +4,26 @@ import FindTeamFilter from "./components/findTeamFilter";
 import TeamItem from "./components/teamItem";
 import styled from "@emotion/styled";
 import { useLocation, useNavigate } from "react-router-dom";
-import { TeamListReturnType } from "../../api/types/teamType";
-import TeamApi from "../../api/teamApi";
 import { isEmpty } from "../../@types/utility/typeGuard";
 import { colors } from "../../styles/colors";
 import CarouselImg from "./assets/image.jpg";
-import { ACCESS_TOKEN_NAME } from "../../api/config/config";
+import { getHomeTeamsApi } from "../../api/home/getHomeTeamsApi";
+import { TeamFilters } from "../../@types/model/homeCategoryFilters";
+import { Team } from "../../@types/dto/getHomeTeams";
 
 export default function Home() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [teamData, setTeamData] = useState<TeamListReturnType>({ list: [] });
+  const [teamsData, setTeamsData] = useState<Team[]>([]);
   const [findTeamFilters, setFindTeamFilters] = useState<TeamFilters>({
     roleDetail: "",
     teamCategory: "",
   });
 
-  const onClick = () => {
-    const token = localStorage.getItem(ACCESS_TOKEN_NAME);
-    if (token !== null) {
-      navigate("/request");
-      return;
-    }
-    navigate("/login", { state: "/request" });
-    return;
-  };
-
   useEffect(() => {
     (async function () {
-      const response = await TeamApi.getTeamList(location.search);
-      setTeamData(response);
+      const response = await getHomeTeamsApi(location.search);
+      setTeamsData(response);
     })();
   }, [location]);
 
@@ -42,16 +32,13 @@ export default function Home() {
       <HomeHeader />
       <Container>
         <Carousel>
-          <button onClick={onClick}>완두콩 만들기</button>
+          <button onClick={() => navigate("/request")}>완두콩 만들기</button>
         </Carousel>
         <FindTeamFilter filters={findTeamFilters} setFilters={setFindTeamFilters} />
-        {!teamData && <p>완두콩 불러오는 중...</p>}
-        {isEmpty(teamData.list) && <p>아직 만들어진 완두콩이 없습니다.</p>}
-        {!isEmpty(teamData.list) &&
-          teamData.list !== undefined &&
-          teamData.list.map((teamDataList, index) => (
-            <TeamItem key={index} teamId={teamDataList.teamId} content={teamDataList} />
-          ))}
+        {!teamsData && <p>완두콩 불러오는 중...</p>}
+        {isEmpty(teamsData) && <p>아직 만들어진 완두콩이 없습니다.</p>}
+        {!isEmpty(teamsData) &&
+          teamsData.map((data, index) => <TeamItem key={index} teamId={data.teamId} teamData={data} isDday={true} />)}
       </Container>
     </>
   );

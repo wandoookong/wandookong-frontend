@@ -1,4 +1,4 @@
-import { ROLE_DETAIL, MEMBER_STATUS, CAREER_RANGE } from "./fieldType";
+import { ROLE_DETAIL, MEMBER_STATUS, CAREER_RANGE } from "../../@types/model/fieldType";
 
 export type AllowMemberReturnType = {
   teamMemberId: number;

@@ -1,59 +1,47 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ExpandMoreIcon from "../../assets/icons/more.svg";
 import styled from "@emotion/styled";
 import { SingleButton } from "../../components/buttons/singleButton";
 import { useEffect, useState } from "react";
-import TeamApi from "../../api/teamApi";
 import { css } from "@emotion/react";
 import { colors } from "../../styles/colors";
 import CommonModalHeader from "../../components/header/commonModalHeader";
 import PositionItem from "./components/positionItem";
 import { teamCategoryText } from "../../services/convertValueToName";
-import { TeamReturnType } from "../../api/types/teamType";
 import { DdayPill } from "../../components/pill/DdayPill";
-import { ACCESS_TOKEN_NAME } from "../../api/config/config";
+import { getTeamDetailApi } from "../../api/teamDetail/getTeamDetailApi";
+import { TeamDetailType } from "../../@types/dto/getTeamDetail";
 
 export function TeamDetail() {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
   const param = useParams();
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
-  const [teamData, setTeamData] = useState<TeamReturnType>({
-    teamId: 1,
-    title: "",
-    teamCategory: "portfolio",
-    description: "",
+  const [teamDetailData, setTeamDetailData] = useState<TeamDetailType>({
     closeDueYmd: "",
-    teamDetailStatus: "",
-    teamStatus: "",
+    description: "",
     teamCapacityList: [
       {
-        teamCapacityId: 0,
         roleDetail: "product",
         roleDetailName: "",
-        roleMemberCount: 1,
-        roleMaxCount: 0,
+        roleMaxCount: 1,
+        teamCapacityId: 1,
         teamLead: false,
-        careerRange: "0_4",
         careerRangeName: "",
+        careerRange: "0_4",
         tagList: [""],
       },
     ],
+    teamCategory: "portfolio",
+    teamDetailStatus: "ready",
+    teamId: 1,
+    teamStatus: "open",
+    title: "",
   });
-
-  const token = localStorage.getItem(ACCESS_TOKEN_NAME);
-
-  const onClickApply = () => {
-    if (token) {
-      navigate(`/team/${param.teamId}/apply`);
-    }
-    navigate("/login", { state: pathname });
-  };
 
   useEffect(() => {
     (async function () {
-      const response = await TeamApi.getTeamData(Number(param.teamId));
-      setTeamData(response);
+      const response = await getTeamDetailApi(Number(param.teamId));
+      setTeamDetailData(response);
     })();
   }, [param.teamId]);
 
@@ -63,16 +51,16 @@ export function TeamDetail() {
       <main>
         <header>
           <div className="header-wrapper">
-            <p>{teamCategoryText(teamData.teamCategory)}</p>
-            <DdayPill closeDueYmd={teamData.closeDueYmd} currentTimestamp={Date.now()} />
+            <p>{teamCategoryText(teamDetailData.teamCategory)}</p>
+            <DdayPill closeDueYmd={teamDetailData.closeDueYmd} currentTimestamp={Date.now()} />
           </div>
-          <h1>{teamData.title}</h1>
+          <h1>{teamDetailData.title}</h1>
         </header>
         <div>
           <section>
             <h2>완두콩 소개</h2>
             <TeamDescriptionWrapper isDescriptionOpen={isDescriptionOpen}>
-              <p>{teamData.description}</p>
+              <p>{teamDetailData.description}</p>
               <ShowMoreButton
                 isDescriptionOpen={isDescriptionOpen}
                 onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}
@@ -82,7 +70,7 @@ export function TeamDetail() {
           <section className="position-wrapper">
             <h2>멤버 콩</h2>
             <ul>
-              {teamData.teamCapacityList.map((role, index) => (
+              {teamDetailData.teamCapacityList.map((role, index) => (
                 <PositionItem
                   key={index}
                   positionName={role.roleDetailName}
@@ -96,9 +84,9 @@ export function TeamDetail() {
           </section>
         </div>
         <SingleButton
-          label={teamData.teamStatus === "open" ? "참여하기" : "모집 마감"}
-          onClick={onClickApply}
-          isActive={teamData.teamStatus === "open"}
+          label={teamDetailData.teamStatus === "open" ? "참여하기" : "모집 마감"}
+          onClick={() => navigate(`/team/${param.teamId}/apply`)}
+          isActive={teamDetailData.teamStatus === "open"}
         />
       </main>
     </Container>

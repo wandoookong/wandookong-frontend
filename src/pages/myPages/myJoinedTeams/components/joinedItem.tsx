@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
-import { TEAM_PARTY_MEMBER_STATUS } from "../../../../api/types/fieldType";
-import { TeamPartyReturnType } from "../../../../api/types/myTeamType";
+import { TEAM_PARTY_MEMBER_STATUS } from "../../../../@types/model/fieldType";
 import { roleDetailText, teamCategoryText, teamStateTagText } from "../../../../services/convertValueToName";
 import MoreIcon from "../../../../assets/icons/more.png";
+import { MyJoinedTeamType } from "../../../../@types/dto/myJoinedTeamType";
 
 export default function JoinedItem({
   teamId,
@@ -14,10 +14,10 @@ export default function JoinedItem({
   createdAt,
   roleDetail,
   memberStatus,
-}: TeamPartyReturnType) {
-  const [isDescriptionOpen, setIsDescriptionOpen] = useState<boolean>(false);
+}: MyJoinedTeamType) {
+  const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   const [myTeamState, setMyTeamState] = useState<TEAM_PARTY_MEMBER_STATUS>("apply");
-  const onClick = async () => {
+  const onClickCancelWaiting = async () => {
     // const response = await TeamMemberApi.setApplyCancel(teamId);
     // console.log(response.statusCode !== 200);
     // setMyTeamState("deny");
@@ -53,7 +53,7 @@ export default function JoinedItem({
         </button>
       </div>
       {myTeamState === "apply" && (
-        <button className="waiting-deny-button" onClick={onClick}>
+        <button className="waiting-deny-button" onClick={onClickCancelWaiting}>
           대기 취소
         </button>
       )}

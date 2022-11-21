@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import MyInfo from "./components/myInfo";
 import MyOpenTeam from "./components/myOpenTeam";
-import UserApi from "../../../api/userApi";
-import { UserMyInfo } from "../../../api/types/userType";
-import MyTeamApi from "../../../api/myTeamApi";
-import { CurrentOpenTeamReturnType } from "../../../api/types/teamType";
 import CommonModalHeader from "../../../components/header/commonModalHeader";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/colors";
 import { ACCESS_TOKEN_NAME } from "../../../api/config/config";
+import { getUserMyInfoApi } from "../../../api/myPages/myPage/getUserMyInfoApi";
+import { UserMyInfo } from "../../../@types/dto/userMyInfo";
+import { getMyCreatedTeamApi } from "../../../api/myPages/myPage/getMyCreatedTeamApi";
+import { MyCreatedTeam } from "../../../@types/dto/myCreatedTeam";
 
 export default function MyPage() {
   const navigate = useNavigate();
-  const [myOpenTeam, setMyOpenTeam] = useState<CurrentOpenTeamReturnType>({
+  const [myOpenTeam, setMyOpenTeam] = useState<MyCreatedTeam>({
     teamId: 1,
     teamCategory: "portfolio",
     title: "",
@@ -39,14 +39,14 @@ export default function MyPage() {
 
   useEffect(() => {
     (async function () {
-      const response = await UserApi.getUserMe();
+      const response = await getUserMyInfoApi();
       setMyInfo(response);
     })();
   }, []);
 
   useEffect(() => {
     (async function () {
-      const response = await MyTeamApi.getCurrentOpenTeam();
+      const response = await getMyCreatedTeamApi();
       setMyOpenTeam(response);
     })();
   }, []);

@@ -1,6 +1,6 @@
-import requester from "./config/config";
-import { CAREER_RANGE } from "./types/fieldType";
-import { isEmpty } from "../@types/utility/typeGuard";
+import requester from "../config/config";
+import { CAREER_RANGE } from "../../@types/model/fieldType";
+import { isEmpty } from "../../@types/utility/typeGuard";
 
 interface Request {
   userSocialId: number;

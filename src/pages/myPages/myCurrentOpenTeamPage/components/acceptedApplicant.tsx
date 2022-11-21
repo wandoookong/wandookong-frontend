@@ -3,19 +3,17 @@ import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
 import MoreIcon from "../../../../assets/icons/more.png";
 import { css } from "@emotion/react";
-import { CAREER_RANGE, ROLE_DETAIL } from "../../../../api/types/fieldType";
 import { careerRangeText, roleDetailText } from "../../../../services/convertValueToName";
+import { MyCreatedTeamAcceptedMember } from "../../../../@types/dto/myCreatedTeamAcceptedMember";
 
-interface Props {
-  teamMemberId: number;
-  nickname: string;
-  careerRange: CAREER_RANGE;
-  tagList: string[];
-  roleDetail: ROLE_DETAIL;
-  memo: string;
-}
-
-export default function AcceptedItem({ teamMemberId, nickname, careerRange, tagList, roleDetail, memo }: Props) {
+export default function AcceptedItem({
+  teamMemberId,
+  nickname,
+  careerRange,
+  tagList,
+  roleDetail,
+  memo,
+}: MyCreatedTeamAcceptedMember) {
   const [isDescriptionOpen, setIsDescriptionOpen] = useState<boolean>(false);
   const id = teamMemberId;
 

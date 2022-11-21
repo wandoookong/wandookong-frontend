@@ -1,12 +1,4 @@
-import { CAREER_RANGE, ROLE_MAIN } from "./fieldType";
-
-export interface UserMyInfo {
-  email: string;
-  nickname: string;
-  roleMain: ROLE_MAIN;
-  careerRange: CAREER_RANGE;
-  tagList: string[];
-}
+import { CAREER_RANGE, ROLE_MAIN } from "../../@types/model/fieldType";
 
 export type UpdateUserType = {
   nickname: string;

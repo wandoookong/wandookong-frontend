@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
-import { UserMyInfo } from "../../../../api/types/userType";
 import { careerRangeText, roleMainText } from "../../../../services/convertValueToName";
+import { UserMyInfo } from "../../../../@types/dto/userMyInfo";
 
 export default function MyInfo({ nickname, email, tagList, careerRange, roleMain }: UserMyInfo) {
   const navigate = useNavigate();

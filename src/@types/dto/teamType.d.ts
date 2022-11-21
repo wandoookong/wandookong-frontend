@@ -1,10 +1,14 @@
-import { CAREER_RANGE, ROLE_DETAIL, TEAM_CATEGORY } from "./fieldType";
+import { CAREER_RANGE, ROLE_DETAIL, TEAM_CATEGORY } from "../model/fieldType";
 
+//내가 작성
+
+//분리
 type CurrentOpenTeamReturnType = {
   teamId: number;
   teamCategory: TEAM_CATEGORY;
   title: string;
   closeDueYmd: string;
+  createdAt: string;
   currentTimestamp: number;
   applyCount: number;
   allowCount: number;
@@ -16,6 +20,7 @@ type TeamReturnType = {
   teamCategory: TEAM_CATEGORY;
   title: string;
   description: string;
+  createdAt: string;
   closeDueYmd: string;
   teamStatus: string;
   teamDetailStatus: string;

@@ -4,29 +4,27 @@ import styled from "@emotion/styled";
 import BackIcon from "../../../assets/icons/back.png";
 import { colors } from "../../../styles/colors";
 import { useNavigate } from "react-router-dom";
-import MyTeamApi from "../../../api/myTeamApi";
-import { MyTeamPartyReturnType } from "../../../api/types/myTeamType";
 import JoinedItem from "./components/joinedItem";
+import { getMyJoinedTeamsApi } from "../../../api/myPages/getMyJoinedTeamsApi";
+import { MyJoinedTeamType } from "../../../@types/dto/myJoinedTeamType";
 
 export default function MyJoinedTeams() {
   const navigate = useNavigate();
-  const [acceptedTeamData, setAcceptedTeamData] = useState<MyTeamPartyReturnType>({
-    list: [
-      {
-        teamId: 1,
-        teamCategory: "portfolio",
-        title: "",
-        createdAt: "",
-        roleDetail: "product",
-        memberStatus: "apply",
-        memo: "",
-      },
-    ],
-  });
+  const [acceptedTeamData, setAcceptedTeamData] = useState<MyJoinedTeamType[]>([
+    {
+      teamId: 1,
+      teamCategory: "portfolio",
+      title: "",
+      createdAt: "",
+      roleDetail: "product",
+      memberStatus: "apply",
+      memo: "",
+    },
+  ]);
 
   useEffect(() => {
     (async function () {
-      const response = await MyTeamApi.getMyTeamParty();
+      const response = await getMyJoinedTeamsApi();
       setAcceptedTeamData(response);
     })();
   }, []);
@@ -37,9 +35,9 @@ export default function MyJoinedTeams() {
         <button onClick={() => navigate(-1)} />
         <h1>참여한 완두콩 보기</h1>
       </nav>
-      {isEmpty(acceptedTeamData.list) && <p className="loading-wrapper">생성된 완두콩이 없습니다.</p>}
+      {isEmpty(acceptedTeamData) && <p className="loading-wrapper">생성된 완두콩이 없습니다.</p>}
       {acceptedTeamData &&
-        acceptedTeamData.list.map((team, index) => (
+        acceptedTeamData.map((team, index) => (
           <JoinedItem
             key={index}
             teamId={team.teamId}

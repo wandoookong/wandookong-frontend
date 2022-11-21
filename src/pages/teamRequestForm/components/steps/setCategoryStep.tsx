@@ -5,16 +5,17 @@ import { FormHeader } from "../../../../components/form/header/formHeader";
 import { CategoryRadioButton } from "../inputs/categoryRadioButton";
 import { SingleButton } from "../../../../components/buttons/singleButton";
 import { ContentWrapper } from "../layout/contentWrapper";
+import { TEAM_CATEGORY } from "../../../../@types/model/fieldType";
 
 interface Props {
-  category: TeamCategory;
+  category: TEAM_CATEGORY | "";
   onPrevious(): void;
   onNext(): void;
-  onChange(category: TeamCategory): void;
+  onChange(category: TEAM_CATEGORY): void;
 }
 
 export default function SetCategoryStep({ onNext, onChange, category }: Props) {
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onChangeHandler = (e) => onChange(e.currentTarget.value);
 

@@ -2,79 +2,55 @@ import { useNavigate, useParams } from "react-router-dom";
 import { SingleButton } from "../../../components/buttons/singleButton";
 import styled from "@emotion/styled";
 import { useEffect, useMemo, useState } from "react";
-import TeamApi from "../../../api/teamApi";
 import { MultiTextInput } from "../../../components/form/textInput/multiText";
-import { ROLE_DETAIL } from "../../../api/types/fieldType";
 import { css } from "@emotion/react";
 import FloatingModal from "../../../components/modal/FloatingModal";
 import TeamApplyResultModal from "./components/teamApplyResultModal";
 import CommonModalHeader from "../../../components/header/commonModalHeader";
 import { colors } from "../../../styles/colors";
 import CheckIcon from "../../../assets/icons/select-grey900.svg";
-import { TeamReturnType } from "../../../api/types/teamType";
 import { teamCategoryText } from "../../../services/convertValueToName";
 import { DdayPill } from "../../../components/pill/DdayPill";
-
-interface ApplyTeamForm {
-  roleDetail: ROLE_DETAIL;
-  memo: string;
-}
-
-interface ErrorModal {
-  state: boolean;
-  status: ErrorStatus;
-}
-
-type ErrorStatus = "pending" | "team_lead";
+import { TeamDetailType } from "../../../@types/dto/getTeamDetail";
+import { getTeamDetailApi } from "../../../api/teamDetail/getTeamDetailApi";
+import { APPLY_TEAM_ERROR_STATUS, ApplyTeamErrorModal, ApplyTeamForm } from "../../../@types/dto/setApplyTeam";
+import { setApplyTeamApi } from "../../../api/teamDetail/setApplyTeamApi";
 
 //TODO 폼에 제대로 작성했는지 validation 돌리기
 
 export default function ApplyTeam() {
   const navigate = useNavigate();
   const param = useParams();
-  const [teamData, setTeamData] = useState<TeamReturnType>({
-    teamId: 1,
-    title: "",
-    teamCategory: "portfolio",
-    description: "",
+  const [teamDetailData, setTeamDetailData] = useState<TeamDetailType>({
     closeDueYmd: "",
-    teamDetailStatus: "",
-    teamStatus: "",
+    description: "",
     teamCapacityList: [
       {
-        teamCapacityId: 0,
         roleDetail: "product",
         roleDetailName: "",
-        roleMaxCount: 0,
-        roleMemberCount: 1,
+        roleMaxCount: 1,
+        teamCapacityId: 1,
         teamLead: false,
-        careerRange: "0_4",
         careerRangeName: "",
+        careerRange: "0_4",
         tagList: [""],
       },
     ],
+    teamCategory: "portfolio",
+    teamDetailStatus: "ready",
+    teamId: 1,
+    teamStatus: "open",
+    title: "",
   });
-  const [hiringPosition, setHiringPosition] = useState<HiringPosition[]>([
-    {
-      teamCapacityId: 0,
-      roleDetail: "",
-      roleDetailName: "",
-      roleMaxCount: 0,
-      teamLead: true,
-      careerRange: "",
-      careerRangeName: "",
-      tagList: [""],
-    },
-  ]);
-  const [formContent, setFormContent] = useState<ApplyTeamForm>({ roleDetail: "product", memo: "" });
-  const [isSuccessModalOn, setSuccessModalOn] = useState<boolean>(false);
-  const [isErrorModalOn, setErrorModalOn] = useState<ErrorModal>({ state: false, status: "pending" });
-  const computedPositions = useMemo(
-    () => setHiringPosition(teamData.teamCapacityList.filter((team) => !team.careerRangeName)),
-    [teamData],
-  );
+  const [applyTeamFormData, setApplyTeamFormData] = useState<ApplyTeamForm>({ roleDetail: "product", memo: "" });
+  const [isSuccessModalOn, setSuccessModalOn] = useState(false);
+  const [isErrorModalOn, setErrorModalOn] = useState<ApplyTeamErrorModal>({ state: false, status: "pending" });
 
-  const errorModalContent = (status: ErrorStatus) => {
+  const computedPositions = useMemo(() => {
+    return teamDetailData.teamCapacityList.filter((team) => !team.careerRangeName);
+  }, [teamDetailData]);
+
+  const errorModalContent = (status: APPLY_TEAM_ERROR_STATUS) => {
     switch (status) {
       case "pending":
         return {
@@ -92,17 +68,16 @@ export default function ApplyTeam() {
   };
 
   const onChangePosition = (e) => {
-    setFormContent({ roleDetail: e.currentTarget.value, memo: formContent.memo });
+    setApplyTeamFormData({ roleDetail: e.currentTarget.value, memo: applyTeamFormData.memo });
   };
 
   const onChangeMemo = (e) => {
-    setFormContent({ ...formContent, memo: e.currentTarget.value });
+    setApplyTeamFormData({ ...applyTeamFormData, memo: e.currentTarget.value });
   };
 
   const onSubmit = async () => {
     try {
-      const response = await TeamApi.applyTeam(Number(param.teamId), formContent);
-      console.log(response);
+      const response = await setApplyTeamApi(Number(param.teamId), applyTeamFormData);
       if (response.result) {
         setSuccessModalOn(!isSuccessModalOn);
         return;
@@ -122,8 +97,8 @@ export default function ApplyTeam() {
 
   useEffect(() => {
     (async function () {
-      const response = await TeamApi.getTeamData(Number(param.teamId));
-      setTeamData(response);
+      const response = await getTeamDetailApi(Number(param.teamId));
+      setTeamDetailData(response);
     })();
   }, [param.teamId]);
 
@@ -150,23 +125,23 @@ export default function ApplyTeam() {
       <main>
         <TitleWrapper>
           <div className="title-wrapper">
-            <p>{teamCategoryText(teamData.teamCategory)}</p>
-            <DdayPill closeDueYmd={teamData.closeDueYmd} currentTimestamp={Date.now()} />
+            <p>{teamCategoryText(teamDetailData.teamCategory)}</p>
+            <DdayPill closeDueYmd={teamDetailData.closeDueYmd} currentTimestamp={Date.now()} />
           </div>
-          <h1>{teamData.title}</h1>
+          <h1>{teamDetailData.title}</h1>
         </TitleWrapper>
         <section>
           <h2>참여하고 싶은 포지션의 콩을 선택해주세요</h2>
           <ul>
-            {hiringPosition.map((position, index) => (
-              <PositionWrapper key={index} isChecked={formContent.roleDetail === position.roleDetail}>
+            {computedPositions.map((position, index) => (
+              <PositionWrapper key={index} isChecked={applyTeamFormData.roleDetail === position.roleDetail}>
                 <label>
                   <input
                     type="radio"
                     name="roleDetail"
                     value={position.roleDetail}
                     onChange={onChangePosition}
-                    checked={formContent.roleDetail === position.roleDetail}
+                    checked={applyTeamFormData.roleDetail === position.roleDetail}
                   />
                   <div className="title-wrapper">
                     <div className="position-image" />
@@ -180,7 +155,7 @@ export default function ApplyTeam() {
         <section>
           <h2>메시지</h2>
           <MultiTextInput
-            value={formContent.memo}
+            value={applyTeamFormData.memo}
             onChange={onChangeMemo}
             maxLength={100}
             placeholder="보유스킬, 지원동기, 참여 목표를 자유롭게 작성해주세요!"

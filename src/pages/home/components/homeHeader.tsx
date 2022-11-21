@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ACCESS_TOKEN_NAME } from "../../../api/config/config";
 import { colors } from "../../../styles/colors";
@@ -9,7 +9,6 @@ import { Nullable } from "../../../@types/utility/nullable";
 
 export const HomeHeader = () => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
   const [token, setToken] = useState<Nullable<string>>("");
   const [isScrollOn, setIsScrollOn] = useState(false);
 
@@ -22,7 +21,7 @@ export const HomeHeader = () => {
 
   const onClickLogin = () => {
     if (!token) {
-      navigate("/login", { state: pathname });
+      navigate("/login");
       return;
     }
     navigate("/myAccount");

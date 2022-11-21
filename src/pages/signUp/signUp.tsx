@@ -5,7 +5,7 @@ import SetPositionStep from "./components/steps/setPositionStep";
 import SetTagsStep from "./components/steps/setTagsStep";
 import { useSignUpReducer } from "./hooks/useSignUpReducer";
 import qs from "qs";
-import signUpApi from "../../api/signUpApi";
+import signUpApi from "../../api/signUp/signUpApi";
 import SetNickNameStep from "./components/steps/setNickNameStep";
 import styled from "@emotion/styled";
 

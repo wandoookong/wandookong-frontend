@@ -1,4 +1,4 @@
-import { TEAM_CATEGORY } from "./fieldType";
+import { TEAM_CATEGORY } from "../../@types/model/fieldType";
 
 type TeamData = {
   teamId: number;

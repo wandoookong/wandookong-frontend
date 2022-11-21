@@ -3,7 +3,7 @@ import { teamCategoryText } from "../../../../services/convertValueToName";
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
 import { useNavigate } from "react-router-dom";
-import { TEAM_CATEGORY } from "../../../../api/types/fieldType";
+import { TEAM_CATEGORY } from "../../../../@types/model/fieldType";
 
 interface Props {
   teamCategory: TEAM_CATEGORY;

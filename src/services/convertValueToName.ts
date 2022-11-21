@@ -1,4 +1,10 @@
-import { CAREER_RANGE, ROLE_DETAIL, ROLE_MAIN, TEAM_CATEGORY, TEAM_PARTY_MEMBER_STATUS } from "../api/types/fieldType";
+import {
+  CAREER_RANGE,
+  ROLE_DETAIL,
+  ROLE_MAIN,
+  TEAM_CATEGORY,
+  TEAM_PARTY_MEMBER_STATUS,
+} from "../@types/model/fieldType";
 
 export function roleMainText(target: ROLE_MAIN) {
   switch (target) {

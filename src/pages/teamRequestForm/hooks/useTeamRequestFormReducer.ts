@@ -1,18 +1,11 @@
 import { useReducer } from "react";
-
-interface State {
-  teamCategory: TeamCategory;
-  title: string;
-  myRole: Role;
-  member: AcceptableMembers;
-  description: string;
-  contact: string;
-}
+import { AcceptableMembers, SetTeamValue } from "../../../@types/dto/setTeam";
+import { ROLE_DETAIL, TEAM_CATEGORY } from "../../../@types/model/fieldType";
 
 interface OnChangeStateAction {
   type: "ON_CHANGE_STATE_ACTION";
-  key: keyof State;
-  value: State[keyof State];
+  key: keyof SetTeamValue;
+  value: SetTeamValue[keyof SetTeamValue];
 }
 
 interface OnChangeMemberAction {
@@ -22,7 +15,7 @@ interface OnChangeMemberAction {
 
 type Actions = OnChangeStateAction | OnChangeMemberAction;
 
-function reducer(state: State, action: Actions) {
+function reducer(state: SetTeamValue, action: Actions) {
   switch (action.type) {
     case "ON_CHANGE_STATE_ACTION":
       return {
@@ -61,10 +54,10 @@ export function useTeamRequestFormReducer() {
     contact: "",
   });
 
-  const onChangeTeamCategory = (value: TeamCategory) =>
+  const onChangeTeamCategory = (value: TEAM_CATEGORY) =>
     dispatch({ type: "ON_CHANGE_STATE_ACTION", key: "teamCategory", value });
   const onChangeTitle = (value: string) => dispatch({ type: "ON_CHANGE_STATE_ACTION", key: "title", value });
-  const onChangeRole = (value: Role) => dispatch({ type: "ON_CHANGE_STATE_ACTION", key: "myRole", value });
+  const onChangeRole = (value: ROLE_DETAIL) => dispatch({ type: "ON_CHANGE_STATE_ACTION", key: "myRole", value });
   const onChangeMembers = (value: keyof AcceptableMembers) => dispatch({ type: "ON_CHANGE_MEMBER_ACTION", value });
   const onChangeDescription = (value: string) =>
     dispatch({ type: "ON_CHANGE_STATE_ACTION", key: "description", value });

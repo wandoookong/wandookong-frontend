@@ -3,7 +3,7 @@ import { SingleButton } from "../../../../components/buttons/singleButton";
 import { FormHeader } from "../../../../components/form/header/formHeader";
 import { SingleTextInput } from "../../../teamRequestForm/components/inputs/singleTextInput";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
-import signUpApi from "../../../../api/signUpApi";
+import signUpApi from "../../../../api/signUp/signUpApi";
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
 import { validateNickName } from "../../utilities/signUpValidations";
@@ -21,7 +21,7 @@ export default function SetNickNameStep({ nickname, onChange, onNext }: Props) {
     return !isEmpty(nickname) && isEmpty(errorMessage);
   }, [errorMessage, nickname]);
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     const validateErrorMessage = validateNickName(e.currentTarget.value);
     setErrorMessage(validateErrorMessage);
     onChange(e.currentTarget.value);
@@ -43,6 +43,8 @@ export default function SetNickNameStep({ nickname, onChange, onNext }: Props) {
       })();
     }
   };
+
+  //label inline
 
   useEffect(() => {
     (async function () {

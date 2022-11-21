@@ -1,29 +1,30 @@
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-import { TeamReturnType } from "../../../api/types/teamType";
 import { DdayPill } from "../../../components/pill/DdayPill";
 import { colors } from "../../../styles/colors";
 import { teamCategoryText } from "../../../services/convertValueToName";
+import { Team } from "../../../@types/dto/getHomeTeams";
 
 interface Props {
   teamId: number;
-  content: TeamReturnType;
+  teamData: Team;
+  isDday: boolean;
 }
 
-export default function TeamItem({ teamId, content }: Props) {
+export default function TeamItem({ teamId, teamData, isDday }: Props) {
   const navigate = useNavigate();
 
   return (
     <Container onClick={() => navigate(`/team/${teamId}`)}>
       <div className="top-wrapper">
         <div className="title-wrapper">
-          <span className="team-category">{teamCategoryText(content.teamCategory)}</span>
-          <DdayPill closeDueYmd={content.closeDueYmd} currentTimestamp={Date.now()} />
+          <span className="team-category">{teamCategoryText(teamData.teamCategory)}</span>
+          {isDday && <DdayPill closeDueYmd={teamData.closeDueYmd} currentTimestamp={Date.now()} />}
         </div>
-        <h2>{content.title}</h2>
+        <h2>{teamData.title}</h2>
       </div>
       <ul>
-        {content.teamCapacityList.map((position, index) => (
+        {teamData.teamCapacityList.map((position, index) => (
           <PositionItem key={index} roleMemberCount={position.roleMemberCount}>
             <div className="position-image" />
             <span>{position.roleDetailName}</span>

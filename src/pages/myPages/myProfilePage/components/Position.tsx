@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro";
 import { useState } from "react";
-import { ROLE_MAIN } from "../../../../api/types/fieldType";
+import { ROLE_MAIN } from "../../../../@types/model/fieldType";
 
 const styleTitle = css`
   font-style: normal;

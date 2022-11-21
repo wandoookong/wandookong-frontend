@@ -3,19 +3,9 @@ import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
 import MoreIcon from "../../../../assets/icons/more.png";
 import { css } from "@emotion/react";
-import { CAREER_RANGE, MEMBER_STATUS, ROLE_DETAIL } from "../../../../api/types/fieldType";
 import TeamMemberApi from "../../../../api/teamMemberApi";
 import { careerRangeText, roleDetailText } from "../../../../services/convertValueToName";
-
-interface Props {
-  teamMemberId: number;
-  nickname: string;
-  careerRange: CAREER_RANGE;
-  tagList: string[];
-  roleDetail: ROLE_DETAIL;
-  memo: string;
-  memberStatus: MEMBER_STATUS;
-}
+import { MyCreatedTeamPendingMember } from "../../../../@types/dto/myCreatedTeamPendingMember";
 
 export default function ApplicantItem({
   teamMemberId,
@@ -25,7 +15,7 @@ export default function ApplicantItem({
   roleDetail,
   memo,
   memberStatus,
-}: Props) {
+}: MyCreatedTeamPendingMember) {
   const [isDescriptionOpen, setIsDescriptionOpen] = useState<boolean>(false);
   const id = teamMemberId;
   const status = memberStatus;

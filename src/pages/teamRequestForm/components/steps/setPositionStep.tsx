@@ -7,9 +7,11 @@ import { DoubleButton } from "../../../../components/buttons/doubleButton";
 import { PositionCheckBoxButton } from "../inputs/positionCheckBoxButton";
 import styled from "@emotion/styled";
 import { ContentWrapper } from "../layout/contentWrapper";
+import { AcceptableMembers } from "../../../../@types/dto/setTeam";
+import { ROLE_DETAIL } from "../../../../@types/model/fieldType";
 
 interface Props {
-  myPosition: Role;
+  myPosition: ROLE_DETAIL | "";
   member: AcceptableMembers;
   onChangeMembers(value: keyof AcceptableMembers): void;
   onPrevious(): void;

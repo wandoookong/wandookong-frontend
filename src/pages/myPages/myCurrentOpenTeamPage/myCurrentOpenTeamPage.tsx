@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import { CurrentOpenTeamReturnType } from "../../../api/types/teamType";
 import MyTeamApi from "../../../api/myTeamApi";
-import TeamMemberApi from "../../../api/teamMemberApi";
-import { AllowMemberListReturnType, ApplyMemberListReturnType } from "../../../api/types/teamMemberType";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "./components/ConfirmModal";
 import FloatingModal from "../../../components/modal/FloatingModal";
@@ -14,16 +11,21 @@ import ApplicantItem from "./components/applicantItem";
 import AcceptedItem from "./components/acceptedApplicant";
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/colors";
+import { MyCreatedTeam } from "../../../@types/dto/myCreatedTeam";
+import { MyCreatedTeamAcceptedMember } from "../../../@types/dto/myCreatedTeamAcceptedMember";
+import { getPendingMembersApi } from "../../../api/myPages/myCreatedTeam/getPendingMembersApi";
+import { getMyCreatedTeamApi } from "../../../api/myPages/myPage/getMyCreatedTeamApi";
+import { getAcceptedMembersApi } from "../../../api/myPages/myCreatedTeam/getAcceptedMembersApi";
+import { MyCreatedTeamPendingMember } from "../../../@types/dto/myCreatedTeamPendingMember";
 
-type CurrentTab = "apply" | "allow";
-type PromiseResponse = [CurrentOpenTeamReturnType, ApplyMemberListReturnType, AllowMemberListReturnType];
+type CurrentTab = "pending" | "accepted";
 
 export default function MyCurrentOpenTeamPage() {
   const navigate = useNavigate();
-  const [currentTab, setCurrentTab] = useState<CurrentTab>("apply");
-  const [isDeleteModalOn, setIsDeleteModalOn] = useState<boolean>(false);
-  const [isNotDeleteModalOn, setIsNotDeleteModalOn] = useState<boolean>(false);
-  const [currentOpenTeam, setCurrentOpenTeam] = useState<CurrentOpenTeamReturnType>({
+  const [currentTab, setCurrentTab] = useState<CurrentTab>("pending");
+  const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
+  const [isNotDeleteModalOn, setIsNotDeleteModalOn] = useState(false);
+  const [myCreatedTeam, setMyCreatedTeam] = useState<MyCreatedTeam>({
     teamId: 1,
     teamCategory: "portfolio",
     title: "",
@@ -33,34 +35,30 @@ export default function MyCurrentOpenTeamPage() {
     allowCount: 0,
     capacityCount: 0,
   });
-  const [applyMemberList, setApplyMemberList] = useState<ApplyMemberListReturnType>({
-    list: [
-      {
-        teamMemberId: 1,
-        nickname: "",
-        careerRange: "0_4",
-        tagList: [""],
-        roleDetail: "product",
-        memo: "",
-        memberStatus: "apply",
-      },
-    ],
-  });
-  const [allowMemberList, setAllowMemberList] = useState<AllowMemberListReturnType>({
-    list: [
-      {
-        teamMemberId: 1,
-        nickname: "",
-        careerRange: "0_4",
-        tagList: [""],
-        roleDetail: "product",
-        memo: "",
-      },
-    ],
-  });
+  const [pendingMembers, setPendingMembers] = useState<MyCreatedTeamPendingMember[]>([
+    {
+      teamMemberId: 1,
+      nickname: "",
+      careerRange: "0_4",
+      tagList: [""],
+      roleDetail: "product",
+      memo: "",
+      memberStatus: "apply",
+    },
+  ]);
+  const [acceptedMembers, setAcceptedMembers] = useState<MyCreatedTeamAcceptedMember[]>([
+    {
+      teamMemberId: 1,
+      nickname: "",
+      careerRange: "0_4",
+      tagList: [""],
+      roleDetail: "product",
+      memo: "",
+    },
+  ]);
 
   const onClickDelete = async () => {
-    const response = await MyTeamApi.deleteMyTeam(currentOpenTeam.teamId);
+    const response = await MyTeamApi.deleteMyTeam(myCreatedTeam.teamId);
     if (!response.result && response.failCode === "remain_allow_member") {
       setIsNotDeleteModalOn(!isNotDeleteModalOn);
       return;
@@ -73,7 +71,7 @@ export default function MyCurrentOpenTeamPage() {
   };
 
   const onDeleteMyTeam = async () => {
-    const response = await MyTeamApi.deleteMyTeam(currentOpenTeam.teamId);
+    const response = await MyTeamApi.deleteMyTeam(myCreatedTeam.teamId);
     if (response.result) {
       navigate("/myAccount");
       return;
@@ -91,14 +89,10 @@ export default function MyCurrentOpenTeamPage() {
 
   useEffect(() => {
     (async function () {
-      const response: PromiseResponse = await Promise.all([
-        MyTeamApi.getCurrentOpenTeam(),
-        TeamMemberApi.getApplyMemberList(),
-        TeamMemberApi.getAllowMemberList(),
-      ]);
-      setCurrentOpenTeam(response[0]);
-      setApplyMemberList(response[1]);
-      setAllowMemberList(response[2]);
+      const response = await Promise.all([getMyCreatedTeamApi(), getPendingMembersApi(), getAcceptedMembersApi()]);
+      setMyCreatedTeam(response[0]);
+      setPendingMembers(response[1]);
+      setAcceptedMembers(response[2]);
     })();
   }, []);
 
@@ -120,28 +114,28 @@ export default function MyCurrentOpenTeamPage() {
       <ContentWrapper currentTab={currentTab}>
         <header>
           <div className="title-wrapper">
-            <p>{teamCategoryText(currentOpenTeam.teamCategory)}</p>
-            <DdayPill closeDueYmd={currentOpenTeam.closeDueYmd} currentTimestamp={currentOpenTeam.currentTimestamp} />
+            <p>{teamCategoryText(myCreatedTeam.teamCategory)}</p>
+            <DdayPill closeDueYmd={myCreatedTeam.closeDueYmd} currentTimestamp={myCreatedTeam.currentTimestamp} />
           </div>
-          <h1>{currentOpenTeam.title}</h1>
+          <h1>{myCreatedTeam.title}</h1>
         </header>
         <div className="tab-wrapper">
-          <button className="apply-button" onClick={() => setCurrentTab("apply")}>
+          <button className="apply-button" onClick={() => setCurrentTab("pending")}>
             신청자
           </button>
-          <button className="allow-button" onClick={() => setCurrentTab("allow")}>
+          <button className="allow-button" onClick={() => setCurrentTab("accepted")}>
             참여자
           </button>
         </div>
-        {currentTab === "apply" && (isEmpty(applyMemberList.list) || !applyMemberList) && (
+        {currentTab === "pending" && (isEmpty(pendingMembers) || !pendingMembers) && (
           <p className="empty-wrapper">아직 아무도 없어요</p>
         )}
-        {currentTab === "allow" && (isEmpty(allowMemberList.list) || !allowMemberList) && (
+        {currentTab === "accepted" && (isEmpty(acceptedMembers) || !acceptedMembers) && (
           <p className="empty-wrapper">아직 아무도 없어요</p>
         )}
         <section className="applicants-wrapper">
-          {applyMemberList &&
-            applyMemberList.list.map((applicant, index) => (
+          {pendingMembers &&
+            pendingMembers.map((applicant, index) => (
               <ApplicantItem
                 key={index}
                 nickname={applicant.nickname}
@@ -153,8 +147,8 @@ export default function MyCurrentOpenTeamPage() {
                 memo={applicant.memo}
               />
             ))}
-          {allowMemberList &&
-            allowMemberList.list.map((applicant, index) => (
+          {acceptedMembers &&
+            acceptedMembers.map((applicant, index) => (
               <AcceptedItem
                 key={index}
                 teamMemberId={applicant.teamMemberId}
@@ -238,15 +232,15 @@ const ContentWrapper = styled.div<{ currentTab: CurrentTab }>`
     }
 
     button.apply-button {
-      color: ${(props) => (props.currentTab === "apply" ? colors.grey900 : colors.grey300)};
+      color: ${(props) => (props.currentTab === "pending" ? colors.grey900 : colors.grey300)};
       box-shadow: ${(props) =>
-        props.currentTab === "apply" ? ` 0 3px 0 0 ${colors.brand900}` : `0 1.5px 0 0 ${colors.subBrand50}`};
+        props.currentTab === "pending" ? ` 0 3px 0 0 ${colors.brand900}` : `0 1.5px 0 0 ${colors.subBrand50}`};
     }
 
     button.allow-button {
-      color: ${(props) => (props.currentTab === "allow" ? colors.grey900 : colors.grey300)};
+      color: ${(props) => (props.currentTab === "accepted" ? colors.grey900 : colors.grey300)};
       box-shadow: ${(props) =>
-        props.currentTab === "allow" ? `0 3px 0 0 ${colors.brand900}` : `0 1.5px 0 0 ${colors.subBrand50}`};
+        props.currentTab === "accepted" ? `0 3px 0 0 ${colors.brand900}` : `0 1.5px 0 0 ${colors.subBrand50}`};
     }
   }
 
