@@ -33,13 +33,13 @@ export default function MyOpenTeam({
           <span className="team-category">{teamCategoryText(teamCategory)}</span>
           <DdayPill closeDueYmd={closeDueYmd} currentTimestamp={currentTimestamp} />
         </div>
-        <h2 onClick={() => navigate("/my-current-open")}>{title}</h2>
+        <h2 onClick={() => navigate("/myCreatedTeam")}>{title}</h2>
         <div className="team-applicants-wrapper">
-          <div onClick={() => navigate("/my-current-open?tab=apply")}>
+          <div onClick={() => navigate("/myCreatedTeam?category=pending")}>
             <b>{applyCount}</b>
             <span>신청자</span>
           </div>
-          <div onClick={() => navigate("/my-current-open?tab=allow")}>
+          <div onClick={() => navigate("/myCreatedTeam?category=accepted")}>
             <b>
               {allowCount}/{capacityCount}
             </b>

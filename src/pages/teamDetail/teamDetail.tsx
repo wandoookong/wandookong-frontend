@@ -38,6 +38,12 @@ export function TeamDetail() {
     title: "",
   });
 
+  const onClickApply = () => {
+    if (teamDetailData.teamStatus === "open") {
+      navigate(`/team/${param.teamId}/apply`);
+    }
+  };
+
   useEffect(() => {
     (async function () {
       const response = await getTeamDetailApi(Number(param.teamId));
@@ -85,7 +91,7 @@ export function TeamDetail() {
         </div>
         <SingleButton
           label={teamDetailData.teamStatus === "open" ? "참여하기" : "모집 마감"}
-          onClick={() => navigate(`/team/${param.teamId}/apply`)}
+          onClick={onClickApply}
           isActive={teamDetailData.teamStatus === "open"}
         />
       </main>

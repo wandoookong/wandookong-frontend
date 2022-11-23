@@ -7,7 +7,7 @@ import Login from "./pages/login/login";
 import SignUp from "./pages/signUp/signUp";
 import MyPage from "./pages/myPages/myPage/myPage";
 import MyProfilePage from "./pages/myPages/myProfilePage/MyProfilePage";
-import MyCurrentOpenTeamPage from "./pages/myPages/myCurrentOpenTeamPage/myCurrentOpenTeamPage";
+import MyCurrentCreatedTeam from "./pages/myPages/myCurrentOpenTeamPage/myCurrentCreatedTeam";
 import MyTeamHistoryPage from "./pages/myPages/myTeamHistoryPage/MyTeamHistoryPage";
 import { TeamDetail } from "./pages/teamDetail/teamDetail";
 import ApplyTeam from "./pages/teamDetail/applyTeam/applyTeam";
@@ -29,7 +29,7 @@ function App() {
         <Route path="/request" element={<TeamRequestForm />} />
         <Route path="/myAccount" element={<MyPage />} />
         <Route path="/my-profile" element={<MyProfilePage />} />
-        <Route path="/my-current-open" element={<MyCurrentOpenTeamPage />} />
+        <Route path="/myCreatedTeam" element={<MyCurrentCreatedTeam />} />
         <Route path="/my-team-history" element={<MyTeamHistoryPage />} />
         <Route path="/my-team-party" element={<MyJoinedTeams />} />
         <Route path="*" element={<NotFound />} />

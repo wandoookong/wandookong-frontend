@@ -1,26 +1,55 @@
 import { useState } from "react";
-import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
-import MoreIcon from "../../../../assets/icons/more.png";
-import { css } from "@emotion/react";
+import { setAcceptedMemberCancelApi } from "../../../../api/myPages/myCreatedTeam/setAcceptedMemberCancelApi";
+import ConfirmModal from "./ConfirmModal";
 import { careerRangeText, roleDetailText } from "../../../../services/convertValueToName";
-import { MyCreatedTeamAcceptedMember } from "../../../../@types/dto/myCreatedTeamAcceptedMember";
+import styled from "@emotion/styled";
+import { css } from "@emotion/react";
+import MoreIcon from "../../../../assets/icons/more.png";
+import { CAREER_RANGE, ROLE_DETAIL } from "../../../../@types/model/fieldType";
 
-export default function AcceptedItem({
+interface Props {
+  careerRange: CAREER_RANGE;
+  memo: string;
+  nickname: string;
+  roleDetail: ROLE_DETAIL;
+  tagList: string[];
+  teamMemberId: number;
+  toastPopUp: boolean;
+  setToastPopUp(value: boolean): void;
+}
+
+export default function AcceptedMember({
   teamMemberId,
   nickname,
   careerRange,
   tagList,
   roleDetail,
   memo,
-}: MyCreatedTeamAcceptedMember) {
-  const [isDescriptionOpen, setIsDescriptionOpen] = useState<boolean>(false);
-  const id = teamMemberId;
+  toastPopUp,
+  setToastPopUp,
+}: Props) {
+  const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
+  const [isModalOn, setIsModalOn] = useState(false);
 
-  const onClickDelete = () => {};
+  const onClickCancelMember = async () => {
+    try {
+      const response = await setAcceptedMemberCancelApi(teamMemberId);
+      setToastPopUp(!toastPopUp);
+    } catch (error) {
+      throw error;
+    }
+  };
 
   return (
     <Container isDescriptionOpen={isDescriptionOpen}>
+      {isModalOn && (
+        <ConfirmModal
+          title="참여자를 삭제하시겠습니까?"
+          onClickYes={onClickCancelMember}
+          onClickNo={() => setIsModalOn(!isModalOn)}
+        />
+      )}
       <div className="applicant-content-wrapper">
         <div className="box-content-wrapper">
           <div>
@@ -41,7 +70,9 @@ export default function AcceptedItem({
         <button className="open-description" onClick={() => setIsDescriptionOpen(!isDescriptionOpen)} />
       </div>
       <div className="button-wrapper">
-        <button className="delete-button">참여자 삭제</button>
+        <button className="delete-button" onClick={() => setIsModalOn(!isModalOn)}>
+          참여자 삭제
+        </button>
       </div>
     </Container>
   );

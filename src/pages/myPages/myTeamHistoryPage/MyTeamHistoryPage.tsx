@@ -5,7 +5,7 @@ import BackIcon from "../../../assets/icons/back.png";
 import { colors } from "../../../styles/colors";
 import TeamItem from "../../home/components/teamItem";
 import { isEmpty } from "../../../@types/utility/typeGuard";
-import { getMyCreatedTeamsHistory } from "../../../api/myPages/getMyCreatedTeamsHistory";
+import { getMyCreatedTeamsHistoryApi } from "../../../api/myPages/getMyCreatedTeamsHistoryApi";
 import { MyCreatedTeamsHistory } from "../../../@types/dto/myCreatedTeamsHistory";
 
 export default function MyTeamHistoryPage() {
@@ -31,7 +31,7 @@ export default function MyTeamHistoryPage() {
 
   useEffect(() => {
     (async function () {
-      const response = await getMyCreatedTeamsHistory();
+      const response = await getMyCreatedTeamsHistoryApi();
       setTeamHistoryList(response);
     })();
   }, []);

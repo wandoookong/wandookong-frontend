@@ -15,8 +15,8 @@ export default function ConfirmModal({ title, onClickYes, onClickNo }: Props) {
           <h1>{title}</h1>
         </ContentWrapper>
         <BottomWrapper>
-          <div onClick={onClickYes}>유지하기</div>
-          <div onClick={onClickNo}>삭제하기</div>
+          <div onClick={onClickNo}>유지하기</div>
+          <div onClick={onClickYes}>삭제하기</div>
         </BottomWrapper>
       </ModalWrapper>
     </Container>

@@ -3,39 +3,50 @@ import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
 import MoreIcon from "../../../../assets/icons/more.png";
 import { css } from "@emotion/react";
-import TeamMemberApi from "../../../../api/teamMemberApi";
 import { careerRangeText, roleDetailText } from "../../../../services/convertValueToName";
-import { MyCreatedTeamPendingMember } from "../../../../@types/dto/myCreatedTeamPendingMember";
+import { setApplicantAcceptApi } from "../../../../api/myPages/myCreatedTeam/setApplicantAcceptApi";
+import { CAREER_RANGE, ROLE_DETAIL } from "../../../../@types/model/fieldType";
+import { setApplicantRejectApi } from "../../../../api/myPages/myCreatedTeam/setApplicantRejectApi";
 
-export default function ApplicantItem({
+interface Props {
+  careerRange: CAREER_RANGE;
+  memo: string;
+  nickname: string;
+  roleDetail: ROLE_DETAIL;
+  tagList: string[];
+  teamMemberId: number;
+  toastPopUp: boolean;
+  setToastPopUp(value: boolean): void;
+}
+
+export default function PendingMember({
   teamMemberId,
   nickname,
   careerRange,
   tagList,
   roleDetail,
   memo,
-  memberStatus,
-}: MyCreatedTeamPendingMember) {
-  const [isDescriptionOpen, setIsDescriptionOpen] = useState<boolean>(false);
-  const id = teamMemberId;
-  const status = memberStatus;
+  toastPopUp,
+  setToastPopUp,
+}: Props) {
+  const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
 
-  async function acceptApplicant() {
-    const response = await TeamMemberApi.setApplicantAccept(id);
-    return console.log(response);
-  }
-
-  async function denyApplicatn() {
-    const response = await TeamMemberApi.setApplicantDeny(id);
-    return console.log(response);
-  }
-
-  const onClickAccept = () => {
-    acceptApplicant();
+  const onClickAccept = async () => {
+    try {
+      const response = await setApplicantAcceptApi(teamMemberId);
+      setToastPopUp(!toastPopUp);
+    } catch (error) {
+      throw error;
+    }
   };
 
-  const onClickDeny = () => {
-    denyApplicatn();
+  const onClickReject = async () => {
+    try {
+      const response = await setApplicantRejectApi(teamMemberId);
+      setToastPopUp(!toastPopUp);
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (
@@ -60,7 +71,7 @@ export default function ApplicantItem({
         <button className="open-description" onClick={() => setIsDescriptionOpen(!isDescriptionOpen)} />
       </div>
       <div className="button-wrapper">
-        <button className="decline-button" onClick={onClickDeny}>
+        <button className="decline-button" onClick={onClickReject}>
           거절
         </button>
         <button className="accept-button" onClick={onClickAccept}>

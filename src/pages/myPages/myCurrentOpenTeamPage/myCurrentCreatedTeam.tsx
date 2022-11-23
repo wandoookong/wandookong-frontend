@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import MyTeamApi from "../../../api/myTeamApi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ConfirmModal from "./components/ConfirmModal";
 import FloatingModal from "../../../components/modal/FloatingModal";
 import CurrentOpenTeamNavigation from "./components/CurrentOpenTeamNavigation";
 import { teamCategoryText } from "../../../services/convertValueToName";
 import { DdayPill } from "../../../components/pill/DdayPill";
 import { isEmpty } from "../../../@types/utility/typeGuard";
-import ApplicantItem from "./components/applicantItem";
-import AcceptedItem from "./components/acceptedApplicant";
+import PendingMember from "./components/pendingMember";
+import AcceptedMember from "./components/acceptedApplicant";
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/colors";
 import { MyCreatedTeam } from "../../../@types/dto/myCreatedTeam";
@@ -17,12 +16,14 @@ import { getPendingMembersApi } from "../../../api/myPages/myCreatedTeam/getPend
 import { getMyCreatedTeamApi } from "../../../api/myPages/myPage/getMyCreatedTeamApi";
 import { getAcceptedMembersApi } from "../../../api/myPages/myCreatedTeam/getAcceptedMembersApi";
 import { MyCreatedTeamPendingMember } from "../../../@types/dto/myCreatedTeamPendingMember";
+import qs from "qs";
+import { deleteMyCreatedTeamApi } from "../../../api/myPages/deleteMyCreatedTeamApi";
+import { DeleteFailMyCreateTeam } from "../../../@types/dto/deleteFailMyCreateTeam";
 
-type CurrentTab = "pending" | "accepted";
-
-export default function MyCurrentOpenTeamPage() {
+export default function MyCurrentCreatedTeam() {
+  const location = useLocation();
   const navigate = useNavigate();
-  const [currentTab, setCurrentTab] = useState<CurrentTab>("pending");
+  const [toastPopUp, setToastPopUp] = useState(false);
   const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
   const [isNotDeleteModalOn, setIsNotDeleteModalOn] = useState(false);
   const [myCreatedTeam, setMyCreatedTeam] = useState<MyCreatedTeam>({
@@ -57,35 +58,26 @@ export default function MyCurrentOpenTeamPage() {
     },
   ]);
 
-  const onClickDelete = async () => {
-    const response = await MyTeamApi.deleteMyTeam(myCreatedTeam.teamId);
-    if (!response.result && response.failCode === "remain_allow_member") {
-      setIsNotDeleteModalOn(!isNotDeleteModalOn);
-      return;
-    }
-    setIsDeleteModalOn(!isDeleteModalOn);
-  };
+  const { category } = qs.parse(location.search, { ignoreQueryPrefix: true });
 
   const onClickNo = () => {
     setIsDeleteModalOn(false);
   };
 
-  const onDeleteMyTeam = async () => {
-    const response = await MyTeamApi.deleteMyTeam(myCreatedTeam.teamId);
-    if (response.result) {
-      navigate("/myAccount");
+  const onClickDeleteMyCreatedTeam = async () => {
+    const response: DeleteFailMyCreateTeam = await deleteMyCreatedTeamApi(myCreatedTeam.teamId);
+    if (response.failCode) {
+      setIsDeleteModalOn(!isDeleteModalOn);
+      setIsNotDeleteModalOn(!isNotDeleteModalOn);
       return;
     }
-    return alert("다시 시도해주세요.");
+    navigate("/myAccount");
   };
 
-  const onClickMove = () => {
-    navigate("/my-current-open?tab=allow");
+  const onClickMoveToAcceptedMemberTab = () => {
+    setIsNotDeleteModalOn(!isNotDeleteModalOn);
+    navigate("/myCreatedTeam?category=accepted");
   };
-
-  useEffect(() => {
-    navigate(`/my-current-open?tab=${currentTab}`);
-  }, [currentTab]);
 
   useEffect(() => {
     (async function () {
@@ -99,19 +91,24 @@ export default function MyCurrentOpenTeamPage() {
   return (
     <>
       {isDeleteModalOn && (
-        <ConfirmModal title="완두콩을 삭제하시겠습니까?" onClickYes={onDeleteMyTeam} onClickNo={onClickNo} />
+        <ConfirmModal
+          title="완두콩을 삭제하시겠습니까?"
+          onClickYes={onClickDeleteMyCreatedTeam}
+          onClickNo={onClickNo}
+        />
       )}
       {isNotDeleteModalOn && (
         <FloatingModal
           title={`현재 수락된 참여자가 있어 \n 완두콩 삭제가 어려워요!`}
           content="수락한 참여자 삭제시 완두콩 삭제가 가능합니다. 참여자 화면으로 이동하시겠습니까?"
-          onClose={onClickMove}
+          onClose={() => setIsNotDeleteModalOn(!isNotDeleteModalOn)}
           buttonLabel="이동하기"
-          showClose={false}
+          onClickButton={onClickMoveToAcceptedMemberTab}
+          showClose={true}
         />
       )}
-      <CurrentOpenTeamNavigation onClickDelete={onClickDelete} />
-      <ContentWrapper currentTab={currentTab}>
+      <CurrentOpenTeamNavigation onClickDelete={() => setIsDeleteModalOn(!isDeleteModalOn)} />
+      <ContentWrapper currentTab={category}>
         <header>
           <div className="title-wrapper">
             <p>{teamCategoryText(myCreatedTeam.teamCategory)}</p>
@@ -120,36 +117,39 @@ export default function MyCurrentOpenTeamPage() {
           <h1>{myCreatedTeam.title}</h1>
         </header>
         <div className="tab-wrapper">
-          <button className="apply-button" onClick={() => setCurrentTab("pending")}>
+          <button className="apply-button" onClick={() => navigate("/myCreatedTeam?category=pending")}>
             신청자
           </button>
-          <button className="allow-button" onClick={() => setCurrentTab("accepted")}>
+          <button className="allow-button" onClick={() => navigate("/myCreatedTeam?category=accepted")}>
             참여자
           </button>
         </div>
-        {currentTab === "pending" && (isEmpty(pendingMembers) || !pendingMembers) && (
+        {category === "pending" && (isEmpty(pendingMembers) || !pendingMembers) && (
           <p className="empty-wrapper">아직 아무도 없어요</p>
         )}
-        {currentTab === "accepted" && (isEmpty(acceptedMembers) || !acceptedMembers) && (
+        {category === "accepted" && (isEmpty(acceptedMembers) || !acceptedMembers) && (
           <p className="empty-wrapper">아직 아무도 없어요</p>
         )}
         <section className="applicants-wrapper">
           {pendingMembers &&
+            category === "pending" &&
             pendingMembers.map((applicant, index) => (
-              <ApplicantItem
+              <PendingMember
                 key={index}
                 nickname={applicant.nickname}
                 teamMemberId={applicant.teamMemberId}
                 tagList={applicant.tagList}
                 careerRange={applicant.careerRange}
                 roleDetail={applicant.roleDetail}
-                memberStatus={applicant.memberStatus}
                 memo={applicant.memo}
+                toastPopUp={toastPopUp}
+                setToastPopUp={setToastPopUp}
               />
             ))}
           {acceptedMembers &&
+            category === "accepted" &&
             acceptedMembers.map((applicant, index) => (
-              <AcceptedItem
+              <AcceptedMember
                 key={index}
                 teamMemberId={applicant.teamMemberId}
                 nickname={applicant.nickname}
@@ -157,6 +157,8 @@ export default function MyCurrentOpenTeamPage() {
                 tagList={applicant.tagList}
                 roleDetail={applicant.roleDetail}
                 memo={applicant.memo}
+                toastPopUp={toastPopUp}
+                setToastPopUp={setToastPopUp}
               />
             ))}
         </section>
@@ -165,7 +167,7 @@ export default function MyCurrentOpenTeamPage() {
   );
 }
 
-const ContentWrapper = styled.div<{ currentTab: CurrentTab }>`
+const ContentWrapper = styled.div<{ currentTab }>`
   margin-top: 92px;
 
   header {
