@@ -5,6 +5,8 @@ import { TEAM_PARTY_MEMBER_STATUS } from "../../../../@types/model/fieldType";
 import { roleDetailText, teamCategoryText, teamStateTagText } from "../../../../services/convertValueToName";
 import MoreIcon from "../../../../assets/icons/more.png";
 import { MyJoinedTeamType } from "../../../../@types/dto/myJoinedTeamType";
+import ConfirmModal from "../../components/confirmModal";
+import { setAppliedTeamCancelApi } from "../../../../api/myPages/setAppliedTeamCancelApi";
 
 export default function JoinedItem({
   teamId,
@@ -15,12 +17,12 @@ export default function JoinedItem({
   roleDetail,
   memberStatus,
 }: MyJoinedTeamType) {
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   const [myTeamState, setMyTeamState] = useState<TEAM_PARTY_MEMBER_STATUS>("apply");
   const onClickCancelWaiting = async () => {
-    // const response = await TeamMemberApi.setApplyCancel(teamId);
-    // console.log(response.statusCode !== 200);
-    // setMyTeamState("deny");
+    const response = await setAppliedTeamCancelApi(teamId);
+    setMyTeamState("deny");
   };
 
   useEffect(() => {
@@ -28,36 +30,47 @@ export default function JoinedItem({
   }, []);
 
   return (
-    <Container isDescriptionOpen={isDescriptionOpen} myTeamState={myTeamState}>
-      <span className="date-wrapper">{createdAt.slice(0, 10)}</span>
-      <div className="content-wrapper">
-        <div className="inner-content-wrapper">
-          <div className="header-wrapper">
-            <span className="category-wrapper">{teamCategoryText(teamCategory)}</span>
-            <span className="state-tag">{teamStateTagText(myTeamState)}</span>
-          </div>
-          <p className="title-wrapper">{title}</p>
-          <div className="description-wrapper">
-            <div className="contents">
-              <span>내콩:</span>
-              <p>{roleDetailText(roleDetail)}</p>
-            </div>
-            <div className="contents">
-              <span>나의 메시지:</span>
-              <p>{memo}</p>
-            </div>
-          </div>
-        </div>
-        <button className="open-description-button" onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}>
-          <div className="description-button-icon" />
-        </button>
-      </div>
-      {myTeamState === "apply" && (
-        <button className="waiting-deny-button" onClick={onClickCancelWaiting}>
-          대기 취소
-        </button>
+    <>
+      {isCancelModalOpen && (
+        <ConfirmModal
+          title="완두콩 대기를 취소하시겠습니까?"
+          rightButtonLabel="아니요"
+          leftButtonLabel="네"
+          onClickRightButton={() => setIsCancelModalOpen(!isCancelModalOpen)}
+          onClickLeftButton={onClickCancelWaiting}
+        />
       )}
-    </Container>
+      <Container isDescriptionOpen={isDescriptionOpen} myTeamState={myTeamState}>
+        <span className="date-wrapper">{createdAt.slice(0, 10)}</span>
+        <div className="content-wrapper">
+          <div className="inner-content-wrapper">
+            <div className="header-wrapper">
+              <span className="category-wrapper">{teamCategoryText(teamCategory)}</span>
+              <span className="state-tag">{teamStateTagText(myTeamState)}</span>
+            </div>
+            <p className="title-wrapper">{title}</p>
+            <div className="description-wrapper">
+              <div className="contents">
+                <span>내콩:</span>
+                <p>{roleDetailText(roleDetail)}</p>
+              </div>
+              <div className="contents">
+                <span>나의 메시지:</span>
+                <p>{memo}</p>
+              </div>
+            </div>
+          </div>
+          <button className="open-description-button" onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}>
+            <div className="description-button-icon" />
+          </button>
+        </div>
+        {myTeamState === "apply" && (
+          <button className="waiting-deny-button" onClick={onClickCancelWaiting}>
+            대기 취소
+          </button>
+        )}
+      </Container>
+    </>
   );
 }
 

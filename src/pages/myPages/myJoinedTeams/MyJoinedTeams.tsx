@@ -10,17 +10,7 @@ import { MyJoinedTeamType } from "../../../@types/dto/myJoinedTeamType";
 
 export default function MyJoinedTeams() {
   const navigate = useNavigate();
-  const [acceptedTeamData, setAcceptedTeamData] = useState<MyJoinedTeamType[]>([
-    {
-      teamId: 1,
-      teamCategory: "portfolio",
-      title: "",
-      createdAt: "",
-      roleDetail: "product",
-      memberStatus: "apply",
-      memo: "",
-    },
-  ]);
+  const [acceptedTeamData, setAcceptedTeamData] = useState<MyJoinedTeamType[]>([]);
 
   useEffect(() => {
     (async function () {

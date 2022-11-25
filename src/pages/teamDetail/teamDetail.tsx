@@ -11,10 +11,13 @@ import { teamCategoryText } from "../../services/convertValueToName";
 import { DdayPill } from "../../components/pill/DdayPill";
 import { getTeamDetailApi } from "../../api/teamDetail/getTeamDetailApi";
 import { TeamDetailType } from "../../@types/dto/getTeamDetail";
+import TeamApplyResultModal from "./applyTeam/components/teamApplyResultModal";
+import { applyFailModalContent } from "./utilities/applyFailModalContent";
 
 export function TeamDetail() {
   const navigate = useNavigate();
   const param = useParams();
+  const [isApplyFailModalOn, setIsApplyFailModalOn] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   const [teamDetailData, setTeamDetailData] = useState<TeamDetailType>({
     closeDueYmd: "",
@@ -39,8 +42,11 @@ export function TeamDetail() {
   });
 
   const onClickApply = () => {
-    if (teamDetailData.teamStatus === "open") {
-      navigate(`/team/${param.teamId}/apply`);
+    if (teamDetailData.teamStatus === "open" && teamDetailData.teamDetailStatus === "ready") {
+      return navigate(`/team/${param.teamId}/apply`);
+    }
+    if (teamDetailData.teamStatus === "open" && teamDetailData.teamDetailStatus !== "ready") {
+      return setIsApplyFailModalOn(!isApplyFailModalOn);
     }
   };
 
@@ -53,6 +59,13 @@ export function TeamDetail() {
 
   return (
     <Container>
+      {isApplyFailModalOn && (
+        <TeamApplyResultModal
+          onClick={() => setIsApplyFailModalOn(!isApplyFailModalOn)}
+          title={applyFailModalContent(teamDetailData.teamDetailStatus).title}
+          content={applyFailModalContent(teamDetailData.teamDetailStatus).content}
+        />
+      )}
       <CommonModalHeader onClick={() => navigate(-1)} />
       <main>
         <header>

@@ -1,23 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
 import MoreIcon from "../../../../assets/icons/more.png";
 import { css } from "@emotion/react";
 import { careerRangeText, roleDetailText } from "../../../../services/convertValueToName";
 import { setApplicantAcceptApi } from "../../../../api/myPages/myCreatedTeam/setApplicantAcceptApi";
-import { CAREER_RANGE, ROLE_DETAIL } from "../../../../@types/model/fieldType";
 import { setApplicantRejectApi } from "../../../../api/myPages/myCreatedTeam/setApplicantRejectApi";
-
-interface Props {
-  careerRange: CAREER_RANGE;
-  memo: string;
-  nickname: string;
-  roleDetail: ROLE_DETAIL;
-  tagList: string[];
-  teamMemberId: number;
-  toastPopUp: boolean;
-  setToastPopUp(value: boolean): void;
-}
+import { MyCreatedTeamPendingMember } from "../../../../@types/dto/myCreatedTeamPendingMember";
+import ToastPopUp from "./toastPopUp";
 
 export default function PendingMember({
   teamMemberId,
@@ -26,15 +16,17 @@ export default function PendingMember({
   tagList,
   roleDetail,
   memo,
-  toastPopUp,
-  setToastPopUp,
-}: Props) {
+  memberStatus,
+}: MyCreatedTeamPendingMember) {
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
+  const [isToastPopUpOpen, setIsToastPopUpOpen] = useState(false);
+  const [disable, setDisable] = useState(false);
 
   const onClickAccept = async () => {
     try {
       const response = await setApplicantAcceptApi(teamMemberId);
-      setToastPopUp(!toastPopUp);
+      setDisable(!disable);
+      setIsToastPopUpOpen(!isToastPopUpOpen);
     } catch (error) {
       throw error;
     }
@@ -43,49 +35,59 @@ export default function PendingMember({
   const onClickReject = async () => {
     try {
       const response = await setApplicantRejectApi(teamMemberId);
-      setToastPopUp(!toastPopUp);
+      setDisable(!disable);
+      setIsToastPopUpOpen(!isToastPopUpOpen);
     } catch (error) {
       throw error;
     }
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsToastPopUpOpen(!isToastPopUpOpen);
+    }, 3000);
+  }, [isToastPopUpOpen]);
+
   return (
-    <Container isDescriptionOpen={isDescriptionOpen}>
-      <div className="applicant-content-wrapper">
-        <div className="box-content-wrapper">
-          <div>
-            <div className="applicant-header-wrapper">
-              <b>{nickname}</b>
-              <span>
-                {roleDetailText(roleDetail)}, {careerRangeText(careerRange)}
-              </span>
+    <>
+      {isToastPopUpOpen && <ToastPopUp message={`${nickname}님을 수락했습니다.`} buttonLabel="완두콩 상세보기" />}
+      <Container isDescriptionOpen={isDescriptionOpen} disabled={disable}>
+        <div className="applicant-content-wrapper">
+          <div className="box-content-wrapper">
+            <div>
+              <div className="applicant-header-wrapper">
+                <b>{nickname}</b>
+                <span>
+                  {roleDetailText(roleDetail)}, {careerRangeText(careerRange)}
+                </span>
+              </div>
+              <ul>
+                {tagList.map((tag, index) => (
+                  <li key={index}>{tag}</li>
+                ))}
+              </ul>
             </div>
-            <ul>
-              {tagList.map((tag, index) => (
-                <li key={index}>{tag}</li>
-              ))}
-            </ul>
+            <p className="description-wrapper">{memo}</p>
           </div>
-          <p className="description-wrapper">{memo}</p>
+          <button className="open-description" onClick={() => setIsDescriptionOpen(!isDescriptionOpen)} />
         </div>
-        <button className="open-description" onClick={() => setIsDescriptionOpen(!isDescriptionOpen)} />
-      </div>
-      <div className="button-wrapper">
-        <button className="decline-button" onClick={onClickReject}>
-          거절
-        </button>
-        <button className="accept-button" onClick={onClickAccept}>
-          수락
-        </button>
-      </div>
-    </Container>
+        <div className="button-wrapper">
+          <button className="decline-button" onClick={onClickReject}>
+            거절
+          </button>
+          <button className="accept-button" onClick={onClickAccept}>
+            수락
+          </button>
+        </div>
+      </Container>
+    </>
   );
 }
 
-const Container = styled.div<{ isDescriptionOpen: boolean }>`
-    display: flex;
+const Container = styled.div<{ isDescriptionOpen: boolean; disabled: boolean }>`
+    display: ${(props) => (props.disabled ? "none" : "flex")};
     flex-direction: column;
-  border-bottom: 1px solid ${colors.subBrand50};
+    border-bottom: 1px solid ${colors.subBrand50};
 
   div.applicant-content-wrapper {
       display: flex;

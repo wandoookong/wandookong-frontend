@@ -7,7 +7,7 @@ import Login from "./pages/login/login";
 import SignUp from "./pages/signUp/signUp";
 import MyPage from "./pages/myPages/myPage/myPage";
 import MyProfilePage from "./pages/myPages/myProfilePage/MyProfilePage";
-import MyCurrentCreatedTeam from "./pages/myPages/myCurrentOpenTeamPage/myCurrentCreatedTeam";
+import MyCurrentCreatedTeam from "./pages/myPages/myCurrentCreatedTeam/myCurrentCreatedTeam";
 import MyTeamHistoryPage from "./pages/myPages/myTeamHistoryPage/MyTeamHistoryPage";
 import { TeamDetail } from "./pages/teamDetail/teamDetail";
 import ApplyTeam from "./pages/teamDetail/applyTeam/applyTeam";

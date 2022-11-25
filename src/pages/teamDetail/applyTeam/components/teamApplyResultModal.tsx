@@ -41,7 +41,7 @@ const Container = styled.div`
     top: 0;
     width: 100%;
     height: 80px;
-    padding: 44px 15px 0;
+    padding: 42px 18px 0;
     background: transparent;
     box-sizing: border-box;
 

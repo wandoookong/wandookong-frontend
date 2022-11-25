@@ -10,15 +10,34 @@ import CarouselImg from "./assets/image.jpg";
 import { getHomeTeamsApi } from "../../api/home/getHomeTeamsApi";
 import { TeamFilters } from "../../@types/model/homeCategoryFilters";
 import { Team } from "../../@types/dto/getHomeTeams";
+import { getIsValidToCreateTeamApi } from "../../api/home/getIsValidToCreateTeamApi";
+import FloatingModal from "../../components/modal/FloatingModal";
+import { IsValidToCreateTeam } from "../../@types/dto/isValidToCreateTeam";
 
 export default function Home() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isCreateTeamFailModalOn, setIsCreateTeamFailModalOn] = useState(false);
+  const [createdMyTeamId, setCreatedMyTeamId] = useState(0);
   const [teamsData, setTeamsData] = useState<Team[]>([]);
   const [findTeamFilters, setFindTeamFilters] = useState<TeamFilters>({
     roleDetail: "",
     teamCategory: "",
   });
+
+  const onClickHandler = () => {
+    setIsCreateTeamFailModalOn(!isCreateTeamFailModalOn);
+    navigate(`/teamId/${createdMyTeamId}`);
+  };
+
+  const onClickCreateTeam = async () => {
+    const response: IsValidToCreateTeam = await getIsValidToCreateTeamApi();
+    if (!response.result && response.teamId) {
+      setCreatedMyTeamId(response.teamId);
+      setIsCreateTeamFailModalOn(!isCreateTeamFailModalOn);
+    }
+    return navigate("/request");
+  };
 
   useEffect(() => {
     (async function () {
@@ -29,10 +48,20 @@ export default function Home() {
 
   return (
     <>
+      {isCreateTeamFailModalOn && (
+        <FloatingModal
+          title="아직 모집중인 완두콩이 있습니다!"
+          content="현재 모집중인 완두콩이 마감 되어야 새로운 완두콩을 만들 수 있습니다. 모집중인 완두콩으로 이동하시겠습니까?"
+          buttonLabel="내 완두콩으로 이동하기"
+          onClickButton={onClickHandler}
+          onClose={() => setIsCreateTeamFailModalOn(!isCreateTeamFailModalOn)}
+          showClose={true}
+        />
+      )}
       <HomeHeader />
       <Container>
         <Carousel>
-          <button onClick={() => navigate("/request")}>완두콩 만들기</button>
+          <button onClick={onClickCreateTeam}>완두콩 만들기</button>
         </Carousel>
         <FindTeamFilter filters={findTeamFilters} setFilters={setFindTeamFilters} />
         {!teamsData && <p>완두콩 불러오는 중...</p>}

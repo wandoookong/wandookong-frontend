@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import ConfirmModal from "./components/ConfirmModal";
+import ConfirmModal from "../components/confirmModal";
 import FloatingModal from "../../../components/modal/FloatingModal";
-import CurrentOpenTeamNavigation from "./components/CurrentOpenTeamNavigation";
+import MyCreatedTeamNavigation from "./components/myCreatedTeamNavigation";
 import { teamCategoryText } from "../../../services/convertValueToName";
 import { DdayPill } from "../../../components/pill/DdayPill";
 import { isEmpty } from "../../../@types/utility/typeGuard";
@@ -23,7 +23,6 @@ import { DeleteFailMyCreateTeam } from "../../../@types/dto/deleteFailMyCreateTe
 export default function MyCurrentCreatedTeam() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [toastPopUp, setToastPopUp] = useState(false);
   const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
   const [isNotDeleteModalOn, setIsNotDeleteModalOn] = useState(false);
   const [myCreatedTeam, setMyCreatedTeam] = useState<MyCreatedTeam>({
@@ -60,8 +59,8 @@ export default function MyCurrentCreatedTeam() {
 
   const { category } = qs.parse(location.search, { ignoreQueryPrefix: true });
 
-  const onClickNo = () => {
-    setIsDeleteModalOn(false);
+  const onClickNoDeleteAcceptedMember = () => {
+    setIsDeleteModalOn(!isDeleteModalOn);
   };
 
   const onClickDeleteMyCreatedTeam = async () => {
@@ -93,8 +92,10 @@ export default function MyCurrentCreatedTeam() {
       {isDeleteModalOn && (
         <ConfirmModal
           title="완두콩을 삭제하시겠습니까?"
-          onClickYes={onClickDeleteMyCreatedTeam}
-          onClickNo={onClickNo}
+          leftButtonLabel="유지하기"
+          rightButtonLabel="삭제하기"
+          onClickRightButton={onClickDeleteMyCreatedTeam}
+          onClickLeftButton={onClickNoDeleteAcceptedMember}
         />
       )}
       {isNotDeleteModalOn && (
@@ -107,7 +108,7 @@ export default function MyCurrentCreatedTeam() {
           showClose={true}
         />
       )}
-      <CurrentOpenTeamNavigation onClickDelete={() => setIsDeleteModalOn(!isDeleteModalOn)} />
+      <MyCreatedTeamNavigation onClickDelete={() => setIsDeleteModalOn(!isDeleteModalOn)} />
       <ContentWrapper currentTab={category}>
         <header>
           <div className="title-wrapper">
@@ -142,8 +143,7 @@ export default function MyCurrentCreatedTeam() {
                 careerRange={applicant.careerRange}
                 roleDetail={applicant.roleDetail}
                 memo={applicant.memo}
-                toastPopUp={toastPopUp}
-                setToastPopUp={setToastPopUp}
+                memberStatus={applicant.memberStatus}
               />
             ))}
           {acceptedMembers &&
@@ -157,8 +157,6 @@ export default function MyCurrentCreatedTeam() {
                 tagList={applicant.tagList}
                 roleDetail={applicant.roleDetail}
                 memo={applicant.memo}
-                toastPopUp={toastPopUp}
-                setToastPopUp={setToastPopUp}
               />
             ))}
         </section>

@@ -1,22 +1,30 @@
 import styled from "@emotion/styled";
-import { colors } from "../../../../styles/colors";
+import { colors } from "../../../styles/colors";
 
 interface Props {
   title: string;
-  onClickYes(value?: any): void;
-  onClickNo(value?: any): void;
+  rightButtonLabel: string;
+  leftButtonLabel: string;
+  onClickRightButton(value?: any): void;
+  onClickLeftButton(value?: any): void;
 }
 
-export default function ConfirmModal({ title, onClickYes, onClickNo }: Props) {
+export default function ConfirmModal({
+  title,
+  onClickRightButton,
+  onClickLeftButton,
+  leftButtonLabel,
+  rightButtonLabel,
+}: Props) {
   return (
-    <Container onClick={onClickNo}>
+    <Container onClick={onClickLeftButton}>
       <ModalWrapper>
         <ContentWrapper>
           <h1>{title}</h1>
         </ContentWrapper>
         <BottomWrapper>
-          <div onClick={onClickNo}>유지하기</div>
-          <div onClick={onClickYes}>삭제하기</div>
+          <div onClick={onClickLeftButton}>{leftButtonLabel}</div>
+          <div onClick={onClickRightButton}>{rightButtonLabel}</div>
         </BottomWrapper>
       </ModalWrapper>
     </Container>

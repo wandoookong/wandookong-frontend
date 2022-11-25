@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from "react";
 import { MultiTextInput } from "../../../components/form/textInput/multiText";
 import { css } from "@emotion/react";
 import FloatingModal from "../../../components/modal/FloatingModal";
-import TeamApplyResultModal from "./components/teamApplyResultModal";
 import CommonModalHeader from "../../../components/header/commonModalHeader";
 import { colors } from "../../../styles/colors";
 import CheckIcon from "../../../assets/icons/select-grey900.svg";
@@ -13,7 +12,7 @@ import { teamCategoryText } from "../../../services/convertValueToName";
 import { DdayPill } from "../../../components/pill/DdayPill";
 import { TeamDetailType } from "../../../@types/dto/getTeamDetail";
 import { getTeamDetailApi } from "../../../api/teamDetail/getTeamDetailApi";
-import { APPLY_TEAM_ERROR_STATUS, ApplyTeamErrorModal, ApplyTeamForm } from "../../../@types/dto/setApplyTeam";
+import { ApplyTeamForm } from "../../../@types/dto/setApplyTeam";
 import { setApplyTeamApi } from "../../../api/teamDetail/setApplyTeamApi";
 
 //TODO 폼에 제대로 작성했는지 validation 돌리기
@@ -44,28 +43,10 @@ export default function ApplyTeam() {
   });
   const [applyTeamFormData, setApplyTeamFormData] = useState<ApplyTeamForm>({ roleDetail: "product", memo: "" });
   const [isSuccessModalOn, setSuccessModalOn] = useState(false);
-  const [isErrorModalOn, setErrorModalOn] = useState<ApplyTeamErrorModal>({ state: false, status: "pending" });
 
   const computedPositions = useMemo(() => {
     return teamDetailData.teamCapacityList.filter((team) => !team.careerRangeName);
   }, [teamDetailData]);
-
-  const errorModalContent = (status: APPLY_TEAM_ERROR_STATUS) => {
-    switch (status) {
-      case "pending":
-        return {
-          title: "이미 참여 신청한 완두콩이에요!",
-          content: "리더가 아직 참여 수락을 하지 않았어요. \n 조금만 더 기다려주세요.",
-        };
-      case "team_lead":
-        return {
-          title: "참여자 기다리는 중이에요!",
-          content: `해당 완두콩의 상세 화면은 ‘마이페이지’ -> ‘내가 만든 \n 완두콩 보기'에서 확인 가능해요.`,
-        };
-      default:
-        return { title: "다시 시도해주세요", content: "" };
-    }
-  };
 
   const onChangePosition = (e) => {
     setApplyTeamFormData({ roleDetail: e.currentTarget.value, memo: applyTeamFormData.memo });
@@ -82,16 +63,8 @@ export default function ApplyTeam() {
         setSuccessModalOn(!isSuccessModalOn);
         return;
       }
-      if (response.teamDetailStatus === "pending") {
-        setErrorModalOn({ state: !isErrorModalOn.state, status: "pending" });
-        return;
-      }
-      if (response.teamDetailStatus === "team_lead") {
-        setErrorModalOn({ state: !isErrorModalOn.state, status: "team_lead" });
-        return;
-      }
-    } catch (e) {
-      throw new Error();
+    } catch (error) {
+      throw error;
     }
   };
 
@@ -104,13 +77,6 @@ export default function ApplyTeam() {
 
   return (
     <Container>
-      {isErrorModalOn.state && (
-        <TeamApplyResultModal
-          title={errorModalContent(isErrorModalOn.status).title}
-          content={errorModalContent(isErrorModalOn.status).content}
-          onClick={() => setErrorModalOn({ ...isErrorModalOn, state: !isErrorModalOn.state })}
-        />
-      )}
       {isSuccessModalOn && (
         <FloatingModal
           title="참여 신청했습니다!"
@@ -172,7 +138,7 @@ const Container = styled.div`
   padding-bottom: 50px;
 
   main {
-    padding: 108px 20px 80px;
+    padding: 80px 20px;
 
     section {
       margin-bottom: 28px;
@@ -180,8 +146,8 @@ const Container = styled.div`
 
     h2 {
       margin-bottom: 12px;
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 16px;
+      font-weight: 500;
     }
   }
 `;

@@ -1,8 +1,8 @@
-import { MEMBER_STATUS, ROLE_DETAIL, TEAM_CATEGORY } from "../model/fieldType";
+import { ROLE_DETAIL, TEAM_CATEGORY, TEAM_PARTY_MEMBER_STATUS } from "../model/fieldType";
 
 export interface MyJoinedTeamType {
   createdAt: string;
-  memberStatus: MEMBER_STATUS;
+  memberStatus: TEAM_PARTY_MEMBER_STATUS;
   memo: string;
   roleDetail: ROLE_DETAIL;
   teamCategory: TEAM_CATEGORY;

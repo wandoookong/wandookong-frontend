@@ -1,23 +1,12 @@
 import { useState } from "react";
 import { colors } from "../../../../styles/colors";
 import { setAcceptedMemberCancelApi } from "../../../../api/myPages/myCreatedTeam/setAcceptedMemberCancelApi";
-import ConfirmModal from "./ConfirmModal";
+import ConfirmModal from "../../components/confirmModal";
 import { careerRangeText, roleDetailText } from "../../../../services/convertValueToName";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import MoreIcon from "../../../../assets/icons/more.png";
-import { CAREER_RANGE, ROLE_DETAIL } from "../../../../@types/model/fieldType";
-
-interface Props {
-  careerRange: CAREER_RANGE;
-  memo: string;
-  nickname: string;
-  roleDetail: ROLE_DETAIL;
-  tagList: string[];
-  teamMemberId: number;
-  toastPopUp: boolean;
-  setToastPopUp(value: boolean): void;
-}
+import { MyCreatedTeamAcceptedMember } from "../../../../@types/dto/myCreatedTeamAcceptedMember";
 
 export default function AcceptedMember({
   teamMemberId,
@@ -26,28 +15,29 @@ export default function AcceptedMember({
   tagList,
   roleDetail,
   memo,
-  toastPopUp,
-  setToastPopUp,
-}: Props) {
+}: MyCreatedTeamAcceptedMember) {
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
+  const [disable, setDisable] = useState(false);
   const [isModalOn, setIsModalOn] = useState(false);
 
   const onClickCancelMember = async () => {
     try {
       const response = await setAcceptedMemberCancelApi(teamMemberId);
-      setToastPopUp(!toastPopUp);
+      setDisable(!disable);
     } catch (error) {
       throw error;
     }
   };
 
   return (
-    <Container isDescriptionOpen={isDescriptionOpen}>
+    <Container isDescriptionOpen={isDescriptionOpen} disable={disable}>
       {isModalOn && (
         <ConfirmModal
           title="참여자를 삭제하시겠습니까?"
-          onClickYes={onClickCancelMember}
-          onClickNo={() => setIsModalOn(!isModalOn)}
+          leftButtonLabel="유지하기"
+          rightButtonLabel="삭제하기"
+          onClickRightButton={onClickCancelMember}
+          onClickLeftButton={() => setIsModalOn(!isModalOn)}
         />
       )}
       <div className="applicant-content-wrapper">
@@ -78,8 +68,8 @@ export default function AcceptedMember({
   );
 }
 
-const Container = styled.div<{ isDescriptionOpen: boolean }>`
-    display: flex;
+const Container = styled.div<{ isDescriptionOpen: boolean; disable: boolean }>`
+    display: ${(props) => (props.disable ? "none" : "flex")};
     flex-direction: column;
   border-bottom: 1px solid ${colors.subBrand50};
 

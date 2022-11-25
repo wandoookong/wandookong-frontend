@@ -4,7 +4,7 @@ import BackIcon from "../../../../assets/icons/back.png";
 import DeleteIcon from "../../../../assets/icons/delete.png";
 import { colors } from "../../../../styles/colors";
 
-export default function CurrentOpenTeamNavigation({ onClickDelete }) {
+export default function MyCreatedTeamNavigation({ onClickDelete }) {
   const navigate = useNavigate();
   return (
     <Container>
