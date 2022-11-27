@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Nickname from "./Nickname";
 import Line from "./Line";
 import Position from "./Position";
@@ -7,9 +7,11 @@ import CareerRange from "./CareerRange";
 import Tag from "./Tag";
 import { SingleButton } from "../../../../components/buttons/singleButton";
 
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserMyInfo } from "../../../../@types/dto/userMyInfo";
+import UserApi from "../../../../api/userApi";
+import { getUserMyInfoApi } from "../../../../api/myPages/myPage/getUserMyInfoApi";
 
 export default function MyProfileEdit({ meInfo, setMeInfo }: { meInfo: UserMyInfo; setMeInfo: any }) {
   const [isEdit, setIsEdit] = useState(false);
@@ -20,40 +22,40 @@ export default function MyProfileEdit({ meInfo, setMeInfo }: { meInfo: UserMyInf
 
   meInfo.tagList.sort((a, b) => (a < b ? -1 : 1));
 
-  // useEffect(() => {
-  //   if (isEdit) return;
-  //
-  //   if (
-  //     meInfo.nickname !== nickname ||
-  //     meInfo.roleMain !== roleMain ||
-  //     meInfo.careerRange !== careerRange ||
-  //     JSON.stringify(meInfo.tagList) !== JSON.stringify(tagNameList.sort((a, b) => (a < b ? -1 : 1)))
-  //   ) {
-  //     setIsEdit(true);
-  //   }
-  // }, [nickname, roleMain, careerRange, tagNameList]);
+  useEffect(() => {
+    if (isEdit) return;
 
-  // const onClickModify = (e) => {
-  //   e.preventDefault();
-  //
-  //   UserApi.updateUserMe({ nickname, roleMain, careerRange, tagNameList })
-  //     .then(() => getUserInfoApi())
-  //     .then((res) => {
-  //       setMeInfo(res);
-  //       setIsEdit(false);
-  //     });
-  //
-  //   toast.success("저장되었습니다~!", {
-  //     position: "bottom-center",
-  //     autoClose: 2000,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     pauseOnHover: true,
-  //     draggable: true,
-  //     progress: undefined,
-  //     theme: "colored",
-  //   });
-  // };
+    if (
+      meInfo.nickname !== nickname ||
+      meInfo.roleMain !== roleMain ||
+      meInfo.careerRange !== careerRange ||
+      JSON.stringify(meInfo.tagList) !== JSON.stringify(tagNameList.sort((a, b) => (a < b ? -1 : 1)))
+    ) {
+      setIsEdit(true);
+    }
+  }, [nickname, roleMain, careerRange, tagNameList]);
+
+  const onClickModify = (e) => {
+    e.preventDefault();
+
+    UserApi.updateUserMe({ nickname, roleMain, careerRange, tagNameList })
+      .then(() => getUserMyInfoApi())
+      .then((res) => {
+        setMeInfo(res);
+        setIsEdit(false);
+      });
+
+    toast.success("저장되었습니다~!", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
 
   return (
     <>
@@ -65,7 +67,7 @@ export default function MyProfileEdit({ meInfo, setMeInfo }: { meInfo: UserMyInf
         <CareerRange careerRange={meInfo.careerRange} setCareerRange={setCareerRange} />
         <Space />
         <Tag tagList={meInfo.tagList} setTagNameList={setTagNameList} />
-        <SingleButton label={"수정 완료"} onClick={() => console.log(1)} isActive={isEdit} />
+        <SingleButton label={"수정 완료"} onClick={onClickModify} isActive={isEdit} />
       </div>
       <ToastContainer
         position="bottom-center"

@@ -27,14 +27,15 @@ export default function Home() {
 
   const onClickHandler = () => {
     setIsCreateTeamFailModalOn(!isCreateTeamFailModalOn);
-    navigate(`/teamId/${createdMyTeamId}`);
+    navigate(`/team/${createdMyTeamId}`);
   };
 
   const onClickCreateTeam = async () => {
     const response: IsValidToCreateTeam = await getIsValidToCreateTeamApi();
-    if (!response.result && response.teamId) {
+    if (!response.result) {
       setCreatedMyTeamId(response.teamId);
       setIsCreateTeamFailModalOn(!isCreateTeamFailModalOn);
+      return;
     }
     return navigate("/request");
   };

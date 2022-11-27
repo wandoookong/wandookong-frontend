@@ -47,7 +47,7 @@ export default function TeamRequestForm() {
       {isSuccessModalOn && (
         <FloatingModal
           title="완두콩이 생성되었습니다"
-          content=""
+          content="컨텐츠가 들어갑니다"
           buttonLabel="확인"
           onClickButton={() => navigate("/")}
           onClose={() => navigate("/")}

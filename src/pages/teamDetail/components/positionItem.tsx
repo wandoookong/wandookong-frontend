@@ -90,12 +90,16 @@ const Container = styled.li<{ isPositionEmpty: boolean }>`
     ul {
       display: flex;
       gap: 5px;
+      flex-wrap: wrap;
       margin-top: ${(props) => (props.isPositionEmpty ? "7px" : "0")};
+      overflow: hidden;
 
       li {
+        flex: 0 0 auto;
         padding: 6px 8px;
         border-radius: 50px;
         border: 1px solid ${colors.grey100};
+        text-align: center;
         font-weight: 400;
         font-size: 12px;
         line-height: 14px;

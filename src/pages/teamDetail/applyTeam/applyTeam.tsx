@@ -15,11 +15,11 @@ import { getTeamDetailApi } from "../../../api/teamDetail/getTeamDetailApi";
 import { ApplyTeamForm } from "../../../@types/dto/setApplyTeam";
 import { setApplyTeamApi } from "../../../api/teamDetail/setApplyTeamApi";
 
-//TODO 폼에 제대로 작성했는지 validation 돌리기
-
 export default function ApplyTeam() {
   const navigate = useNavigate();
   const param = useParams();
+  const [isPositionValid, setIsPositionValid] = useState(false);
+  const [isMemoValid, setIsMemoValid] = useState(false);
   const [teamDetailData, setTeamDetailData] = useState<TeamDetailType>({
     closeDueYmd: "",
     description: "",
@@ -56,11 +56,27 @@ export default function ApplyTeam() {
     setApplyTeamFormData({ ...applyTeamFormData, memo: e.currentTarget.value });
   };
 
+  const validatePosition = () => {
+    if (applyTeamFormData.roleDetail) {
+      setIsPositionValid(!isPositionValid);
+    }
+  };
+  const validateMemo = () => {
+    if (applyTeamFormData.memo) {
+      setIsMemoValid(!isMemoValid);
+    }
+  };
+
   const onSubmit = async () => {
     try {
-      const response = await setApplyTeamApi(Number(param.teamId), applyTeamFormData);
-      if (response.result) {
-        setSuccessModalOn(!isSuccessModalOn);
+      validatePosition();
+      validateMemo();
+      if (isMemoValid && isPositionValid) {
+        const response = await setApplyTeamApi(Number(param.teamId), applyTeamFormData);
+        if (response.result) {
+          setSuccessModalOn(!isSuccessModalOn);
+          return;
+        }
         return;
       }
     } catch (error) {
@@ -76,7 +92,7 @@ export default function ApplyTeam() {
   }, [param.teamId]);
 
   return (
-    <Container>
+    <Container isPositionErrorMessageOn={isPositionValid}>
       {isSuccessModalOn && (
         <FloatingModal
           title="참여 신청했습니다!"
@@ -98,6 +114,7 @@ export default function ApplyTeam() {
         </TitleWrapper>
         <section>
           <h2>참여하고 싶은 포지션의 콩을 선택해주세요</h2>
+          {isPositionValid && <p className="error-message">포지션 콩을 선택해주세요.</p>}
           <ul>
             {computedPositions.map((position, index) => (
               <PositionWrapper key={index} isChecked={applyTeamFormData.roleDetail === position.roleDetail}>
@@ -126,6 +143,7 @@ export default function ApplyTeam() {
             maxLength={100}
             placeholder="보유스킬, 지원동기, 참여 목표를 자유롭게 작성해주세요!"
           />
+          {isMemoValid && <p className="error-message">메세지를 작성해주세요.</p>}
         </section>
       </main>
       <SingleButton label="참여하기" onClick={onSubmit} isActive={true} />
@@ -133,19 +151,30 @@ export default function ApplyTeam() {
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ isPositionErrorMessageOn: boolean }>`
   position: relative;
   padding-bottom: 50px;
 
   main {
     padding: 80px 20px;
 
+    p.error-message {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 14px;
+      color: ${colors.red};
+    }
+
     section {
       margin-bottom: 28px;
+
+      ul {
+        margin-top: ${(props) => (props.isPositionErrorMessageOn ? "12px" : 0)};
+      }
     }
 
     h2 {
-      margin-bottom: 12px;
+      margin-bottom: ${(props) => (props.isPositionErrorMessageOn ? "7px" : "12px")};
       font-size: 16px;
       font-weight: 500;
     }

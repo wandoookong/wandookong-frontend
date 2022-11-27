@@ -58,6 +58,10 @@ export default function JoinedItem({
                 <span>나의 메시지:</span>
                 <p>{memo}</p>
               </div>
+              <div className="contents">
+                <span>연락 수단:</span>
+                <p>연락 수단이 여기 들어갑니다.</p>
+              </div>
             </div>
           </div>
           <button className="open-description-button" onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}>

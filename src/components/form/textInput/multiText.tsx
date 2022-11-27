@@ -28,6 +28,7 @@ const Container = styled.div`
     font-family: "Pretendard", "Noto Sans CJK KR", sans-serif;
     font-size: 14px;
     border-radius: 8px;
+    margin-bottom: 6px;
     padding: 16px 12px;
     background: none;
     resize: none;

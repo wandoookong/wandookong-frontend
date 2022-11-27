@@ -33,6 +33,7 @@ export default function MyInfo({ nickname, email, tagList, careerRange, roleMain
 }
 
 const Container = styled.section`
+  margin-bottom: 32px;
   padding: 0 20px;
 
   div.user-info-wrapper {

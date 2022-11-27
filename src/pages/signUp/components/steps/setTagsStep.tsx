@@ -28,7 +28,7 @@ export default function SetTagsStep({ nickname, tags, onChange, onNext, onPrev }
     <>
       <FormHeader title={`${nickname}님에 대해  \n 조금만 더 \n 알려주시겠어요?`} />
       <Container>
-        <p className="description">자기소개 태그는 최대 4개까지 선택할 수 있어요</p>
+        <p className="description">(선택) 자기소개 태그는 최대 4개까지 선택할 수 있어요</p>
         <div className="tags-wrapper">
           {tagKeywords.map((tag, index) => (
             <Label key={index} isChecked={tags.includes(tag.value)}>

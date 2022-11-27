@@ -52,7 +52,7 @@ export default function MyOpenTeam({
 }
 
 const Container = styled.section`
-  margin: 32px 0 31px 0;
+  margin: 0 0 31px 0;
   padding: 0 20px;
 
   h1 {

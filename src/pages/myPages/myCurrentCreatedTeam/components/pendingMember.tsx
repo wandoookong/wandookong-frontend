@@ -26,6 +26,7 @@ export default function PendingMember({
     try {
       const response = await setApplicantAcceptApi(teamMemberId);
       setDisable(!disable);
+      window.location.reload();
       setIsToastPopUpOpen(!isToastPopUpOpen);
     } catch (error) {
       throw error;
@@ -36,6 +37,7 @@ export default function PendingMember({
     try {
       const response = await setApplicantRejectApi(teamMemberId);
       setDisable(!disable);
+      window.location.reload();
       setIsToastPopUpOpen(!isToastPopUpOpen);
     } catch (error) {
       throw error;

@@ -63,15 +63,17 @@ const Container = styled.div`
     box-sizing: border-box;
 
     h1 {
+      margin-bottom: 8px;
       font-weight: 700;
       font-size: 20px;
+      line-height: 28px;
     }
 
     p {
       margin-top: 4px;
       font-weight: 400;
       font-size: 12px;
-      line-height: 138.02%;
+      line-height: 17px;
       white-space: pre-wrap;
     }
   }

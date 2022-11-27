@@ -1,22 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react/macro";
-import { useState, useEffect } from "react";
-
-const stylePill = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 3px 8px;
-  background: #ddba40;
-  border-radius: 18px;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 17.16px;
-  height: 17.16px;
-  letter-spacing: -0.005em;
-  color: #ffffff;
-`;
+import { useEffect, useState } from "react";
 
 export function DdayPill({ closeDueYmd, currentTimestamp }) {
   const diffSeconds = Math.floor((new Date(`${closeDueYmd} 24:00:00+09:00`).getTime() - currentTimestamp) / 1000);
@@ -60,3 +44,19 @@ function formatTime(seconds) {
 
   return `${hour}:${min}:${sec}`;
 }
+
+const stylePill = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px 8px;
+  background: #ddba40;
+  border-radius: 18px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 17.16px;
+  height: 17.16px;
+  letter-spacing: -0.005em;
+  color: #ffffff;
+`;
