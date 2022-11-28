@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { colors } from "../../../../styles/colors";
-import CloseIcon from "../../../../assets/icons/close-white.svg";
+import { colors } from "../../../styles/colors";
+import CloseIcon from "../../../assets/icons/close-white.svg";
 
 interface Props {
   onClick(): void;
@@ -8,7 +8,7 @@ interface Props {
   content: string;
 }
 
-export default function TeamApplyResultModal({ title, content, onClick }: Props) {
+export default function TeamApplyFailModal({ title, content, onClick }: Props) {
   return (
     <Container>
       <header>

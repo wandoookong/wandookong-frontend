@@ -1,25 +1,28 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { SingleButton } from "../../../components/buttons/singleButton";
+import { SingleButton } from "../../components/buttons/singleButton";
 import styled from "@emotion/styled";
 import { useEffect, useMemo, useState } from "react";
-import { MultiTextInput } from "../../../components/form/textInput/multiText";
+import { MultiTextInput } from "../../components/form/textInput/multiText";
 import { css } from "@emotion/react";
-import FloatingModal from "../../../components/modal/FloatingModal";
-import CommonModalHeader from "../../../components/header/commonModalHeader";
-import { colors } from "../../../styles/colors";
-import CheckIcon from "../../../assets/icons/select-grey900.svg";
-import { teamCategoryText } from "../../../services/convertValueToName";
-import { DdayPill } from "../../../components/pill/DdayPill";
-import { TeamDetailType } from "../../../@types/dto/getTeamDetail";
-import { getTeamDetailApi } from "../../../api/teamDetail/getTeamDetailApi";
-import { ApplyTeamForm } from "../../../@types/dto/setApplyTeam";
-import { setApplyTeamApi } from "../../../api/teamDetail/setApplyTeamApi";
+import FloatingModal from "../../components/modal/FloatingModal";
+import CommonModalHeader from "../../components/header/commonModalHeader";
+import { colors } from "../../styles/colors";
+import CheckIcon from "../../assets/icons/select-grey900.svg";
+import { teamCategoryText } from "../../services/convertValueToName";
+import { DdayPill } from "../../components/pill/DdayPill";
+import { TeamDetailType } from "../../@types/dto/getTeamDetail";
+import { getTeamDetailApi } from "../../api/teamDetail/getTeamDetailApi";
+import { ApplyTeamForm } from "../../@types/dto/setApplyTeam";
+import { setApplyTeamApi } from "../../api/teamDetail/setApplyTeamApi";
+import teamApplyValidation from "./utilities/teamApplyValidation";
+import { isEmpty } from "../../@types/utility/typeGuard";
+import { convertValueToImageUrl } from "../../services/convertValueToImageUrl";
+import { ROLE_DETAIL } from "../../@types/model/fieldType";
 
 export default function ApplyTeam() {
   const navigate = useNavigate();
   const param = useParams();
-  const [isPositionValid, setIsPositionValid] = useState(false);
-  const [isMemoValid, setIsMemoValid] = useState(false);
+  const [errorMessages, setErrorMessages] = useState({ position: "", memo: "" });
   const [teamDetailData, setTeamDetailData] = useState<TeamDetailType>({
     closeDueYmd: "",
     description: "",
@@ -41,7 +44,7 @@ export default function ApplyTeam() {
     teamStatus: "open",
     title: "",
   });
-  const [applyTeamFormData, setApplyTeamFormData] = useState<ApplyTeamForm>({ roleDetail: "product", memo: "" });
+  const [applyTeamFormData, setApplyTeamFormData] = useState<ApplyTeamForm>({ roleDetail: "", memo: "" });
   const [isSuccessModalOn, setSuccessModalOn] = useState(false);
 
   const computedPositions = useMemo(() => {
@@ -56,22 +59,11 @@ export default function ApplyTeam() {
     setApplyTeamFormData({ ...applyTeamFormData, memo: e.currentTarget.value });
   };
 
-  const validatePosition = () => {
-    if (applyTeamFormData.roleDetail) {
-      setIsPositionValid(!isPositionValid);
-    }
-  };
-  const validateMemo = () => {
-    if (applyTeamFormData.memo) {
-      setIsMemoValid(!isMemoValid);
-    }
-  };
-
   const onSubmit = async () => {
     try {
-      validatePosition();
-      validateMemo();
-      if (isMemoValid && isPositionValid) {
+      const validation = teamApplyValidation(applyTeamFormData);
+      setErrorMessages({ ...validation });
+      if (isEmpty(validation.position) && isEmpty(validation.memo)) {
         const response = await setApplyTeamApi(Number(param.teamId), applyTeamFormData);
         if (response.result) {
           setSuccessModalOn(!isSuccessModalOn);
@@ -85,6 +77,18 @@ export default function ApplyTeam() {
   };
 
   useEffect(() => {
+    if (applyTeamFormData.roleDetail) {
+      setErrorMessages({ ...errorMessages, position: "" });
+    }
+  }, [applyTeamFormData.roleDetail]);
+
+  useEffect(() => {
+    if (applyTeamFormData.memo) {
+      setErrorMessages({ ...errorMessages, memo: "" });
+    }
+  }, [applyTeamFormData.memo]);
+
+  useEffect(() => {
     (async function () {
       const response = await getTeamDetailApi(Number(param.teamId));
       setTeamDetailData(response);
@@ -92,11 +96,12 @@ export default function ApplyTeam() {
   }, [param.teamId]);
 
   return (
-    <Container isPositionErrorMessageOn={isPositionValid}>
+    <Container isPositionErrorMessageOn={errorMessages.position}>
       {isSuccessModalOn && (
         <FloatingModal
           title="참여 신청했습니다!"
           content={`리더가 참여를 수락하면 \n 해당 완두콩의 연락 정보가 공개됩니다. \n 조금만 기다려주세요. `}
+          modalIcon="check"
           buttonLabel="확인"
           onClickButton={() => navigate("/")}
           onClose={() => setSuccessModalOn(!isSuccessModalOn)}
@@ -114,10 +119,14 @@ export default function ApplyTeam() {
         </TitleWrapper>
         <section>
           <h2>참여하고 싶은 포지션의 콩을 선택해주세요</h2>
-          {isPositionValid && <p className="error-message">포지션 콩을 선택해주세요.</p>}
+          {errorMessages.position && <p className="error-message">{errorMessages.position}</p>}
           <ul>
             {computedPositions.map((position, index) => (
-              <PositionWrapper key={index} isChecked={applyTeamFormData.roleDetail === position.roleDetail}>
+              <PositionWrapper
+                key={index}
+                isChecked={applyTeamFormData.roleDetail === position.roleDetail}
+                position={position.roleDetail}
+              >
                 <label>
                   <input
                     type="radio"
@@ -143,7 +152,7 @@ export default function ApplyTeam() {
             maxLength={100}
             placeholder="보유스킬, 지원동기, 참여 목표를 자유롭게 작성해주세요!"
           />
-          {isMemoValid && <p className="error-message">메세지를 작성해주세요.</p>}
+          {errorMessages.memo && <p className="error-message">{errorMessages.memo}</p>}
         </section>
       </main>
       <SingleButton label="참여하기" onClick={onSubmit} isActive={true} />
@@ -151,7 +160,7 @@ export default function ApplyTeam() {
   );
 }
 
-const Container = styled.div<{ isPositionErrorMessageOn: boolean }>`
+const Container = styled.div<{ isPositionErrorMessageOn: string }>`
   position: relative;
   padding-bottom: 50px;
 
@@ -213,7 +222,7 @@ const TitleWrapper = styled.div`
   }
 `;
 
-const PositionWrapper = styled.li<{ isChecked: boolean }>`
+const PositionWrapper = styled.li<{ isChecked: boolean; position: ROLE_DETAIL }>`
   label {
     display: flex;
     justify-content: space-between;
@@ -252,7 +261,7 @@ const PositionWrapper = styled.li<{ isChecked: boolean }>`
         height: 50px;
         margin: 0 6px 0 0;
         border-radius: 28px;
-        background: ${colors.grey900};
+        background: transparent url(${(props) => convertValueToImageUrl(props.position)}) center / 100% no-repeat;
       }
     }
 

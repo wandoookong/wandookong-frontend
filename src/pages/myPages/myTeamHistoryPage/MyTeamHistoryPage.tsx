@@ -52,10 +52,17 @@ export default function MyTeamHistoryPage() {
 }
 
 const Container = styled.div`
+  padding-top: 72px;
+
   nav {
+    position: fixed;
+    top: 0;
     display: flex;
     align-items: center;
+    width: 100%;
     padding: 44px 16px 4px;
+    background: ${colors.background};
+    z-index: 5;
 
     button {
       width: 24px;

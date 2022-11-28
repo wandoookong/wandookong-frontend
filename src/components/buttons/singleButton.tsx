@@ -16,7 +16,6 @@ export function SingleButton({ label, onClick, isActive }: Props) {
     if (isActive) {
       return onClick(e);
     }
-    throw new Error();
   };
 
   return (
@@ -47,8 +46,6 @@ const Container = styled.div<{ isActive: boolean }>`
     background: ${(props) => (props.isActive ? colors.brand900 : colors.grey100)};
     color: ${(props) => (props.isActive ? colors.white : colors.grey300)};
     font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
     font-weight: 700;
     cursor: ${(props) => (props.isActive ? "pointer" : "default")};
   }

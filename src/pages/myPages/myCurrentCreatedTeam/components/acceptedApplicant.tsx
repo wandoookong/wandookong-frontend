@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { colors } from "../../../../styles/colors";
-import { setAcceptedMemberCancelApi } from "../../../../api/myPages/myCreatedTeam/setAcceptedMemberCancelApi";
 import ConfirmModal from "../../components/confirmModal";
 import { careerRangeText, roleDetailText } from "../../../../services/convertValueToName";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import MoreIcon from "../../../../assets/icons/more.png";
 import { MyCreatedTeamAcceptedMember } from "../../../../@types/dto/myCreatedTeamAcceptedMember";
+import { setAcceptedMemberCancelApi } from "../../../../api/myPages/myCreatedTeam/setAcceptedMemberCancelApi";
 
 export default function AcceptedMember({
   teamMemberId,

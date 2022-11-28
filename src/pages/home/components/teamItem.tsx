@@ -4,6 +4,8 @@ import { DdayPill } from "../../../components/pill/DdayPill";
 import { colors } from "../../../styles/colors";
 import { teamCategoryText } from "../../../services/convertValueToName";
 import { Team } from "../../../@types/dto/getHomeTeams";
+import { convertValueToImageUrl } from "../../../services/convertValueToImageUrl";
+import { ROLE_DETAIL } from "../../../@types/model/fieldType";
 
 interface Props {
   teamId: number;
@@ -25,7 +27,7 @@ export default function TeamItem({ teamId, teamData, isDday }: Props) {
       </div>
       <ul>
         {teamData.teamCapacityList.map((position, index) => (
-          <PositionItem key={index} roleMemberCount={position.roleMemberCount}>
+          <PositionItem key={index} roleMemberCount={position.roleMemberCount} roleDetail={position.roleDetail}>
             <div className="position-image" />
             <span>{position.roleDetailName}</span>
           </PositionItem>
@@ -81,7 +83,7 @@ const Container = styled.section`
   }
 `;
 
-const PositionItem = styled.li<{ roleMemberCount: number }>`
+const PositionItem = styled.li<{ roleMemberCount: number; roleDetail: ROLE_DETAIL }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,7 +93,8 @@ const PositionItem = styled.li<{ roleMemberCount: number }>`
     height: 48px;
     margin: 0;
     border-radius: 28px;
-    background: ${(props) => (!props.roleMemberCount ? colors.grey900 : colors.grey100)};
+    background: transparent url(${(props) => convertValueToImageUrl(props.roleDetail)}) center / 100% no-repeat;
+    filter: grayscale(${(props) => (!props.roleMemberCount ? 0 : 1)});
   }
   span {
     margin-top: 10px;

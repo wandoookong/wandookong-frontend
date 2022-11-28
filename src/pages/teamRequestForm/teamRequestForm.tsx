@@ -48,6 +48,7 @@ export default function TeamRequestForm() {
         <FloatingModal
           title="완두콩이 생성되었습니다"
           content="컨텐츠가 들어갑니다"
+          modalIcon="check"
           buttonLabel="확인"
           onClickButton={() => navigate("/")}
           onClose={() => navigate("/")}
@@ -58,6 +59,7 @@ export default function TeamRequestForm() {
         <FloatingModal
           title="아직 모집중인 완두콩이 있습니다!"
           content={`현재 모집중인 완두콩이 마감되어야 \n 새로운 완두콩을 만들 수 있습니다. \n 모집중인 완두콩으로 이동하시겠습니까?`}
+          modalIcon="exclamation"
           prevLabel="아니요"
           nextLabel="네"
           onPrev={() => setIsFailModalOn(!isFailModalOn)}

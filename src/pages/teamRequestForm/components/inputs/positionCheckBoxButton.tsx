@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import CheckIcon from "../../../../assets/icons/select-white.svg";
 import { colors } from "../../../../styles/colors";
+import { convertValueToImageUrl } from "../../../../services/convertValueToImageUrl";
+import CheckIcon from "../../../../assets/icons/select-white.svg";
 
 interface Props {
   label: string;
@@ -12,7 +13,7 @@ interface Props {
 
 export function PositionCheckBoxButton({ label, value, isChecked, isDisabled, onChange }: Props) {
   return (
-    <Label isChecked={isChecked} isDisabled={isDisabled}>
+    <Label isChecked={isChecked} isDisabled={isDisabled} position={value}>
       <label>
         <div className="profile-image">
           {isChecked && <div className="check-icon" />}
@@ -32,7 +33,7 @@ export function PositionCheckBoxButton({ label, value, isChecked, isDisabled, on
   );
 }
 
-const Label = styled.li<{ isChecked: boolean; isDisabled: boolean }>`
+const Label = styled.li<{ isChecked: boolean; isDisabled: boolean; position: string }>`
   label {
     display: flex;
     flex-direction: column;
@@ -62,31 +63,19 @@ const Label = styled.li<{ isChecked: boolean; isDisabled: boolean }>`
       font-size: 16px;
       font-weight: 700;
       color: ${colors.white};
-      background: ${(props) => {
-        if (props.isDisabled) {
-          return colors.grey900;
-        }
-        if (props.isChecked) {
-          return colors.brand900;
-        }
-        return colors.grey900;
-      }};
-      opacity: ${(props) => {
-        if (props.isDisabled) {
-          return "40%";
-        }
-        if (props.isChecked) {
-          return "80%";
-        }
-        return "100%";
-      }};
+      background: url(${(props) => convertValueToImageUrl(props.position)}), yellow;
+      background-size: cover;
+      filter: grayscale(${(props) => (!props.isDisabled ? 0 : 1)});
 
       div.check-icon {
         width: 24px;
         height: 24px;
         border: none;
-        background: transparent url(${CheckIcon}) center / 100% no-repeat;
+        background: red url(${CheckIcon}) center / 100 % no-repeat;
       }
     }
   }
 `;
+
+//background-color: rgba(71, 181, 97, 0.5);
+// background-color: ${(props) => (props.isChecked ? "rgba(71, 181, 97, 1)" : "transparent")};

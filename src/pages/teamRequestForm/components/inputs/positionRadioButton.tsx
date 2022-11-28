@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
 import CheckIcon from "../../../../assets/icons/select-white.svg";
+import { convertValueToImageUrl } from "../../../../services/convertValueToImageUrl";
+import { ROLE_DETAIL } from "../../../../@types/model/fieldType";
 
 interface Props {
   label: string;
@@ -11,7 +13,7 @@ interface Props {
 
 export function PositionRadioButton({ label, value, isChecked, onChange }: Props) {
   return (
-    <Container isChecked={isChecked}>
+    <Container isChecked={isChecked} position={value}>
       <label>
         <div className="position-image">{isChecked && <div className="check-icon" />}</div>
         <input type="radio" name="myRole" value={value} onChange={onChange} />
@@ -21,7 +23,7 @@ export function PositionRadioButton({ label, value, isChecked, onChange }: Props
   );
 }
 
-const Container = styled.li<{ isChecked: boolean }>`
+const Container = styled.li<{ isChecked: boolean; position: ROLE_DETAIL }>`
   label {
     display: flex;
     flex-direction: column;
@@ -49,8 +51,8 @@ const Container = styled.li<{ isChecked: boolean }>`
     padding: 0;
     border: 0;
     border-radius: 50px;
-    background: ${(props) => (props.isChecked ? colors.brand900 : colors.grey900)};
-    opacity: ${(props) => (props.isChecked ? "80%" : "100%")};
+    background: transparent url(${(props) => convertValueToImageUrl(props.position)}) center / 100% no-repeat;
+    filter: grayscale(${(props) => (props.isChecked ? 1 : 0)});
 
     div.check-icon {
       width: 24px;

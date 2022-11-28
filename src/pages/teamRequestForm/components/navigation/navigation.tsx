@@ -27,15 +27,8 @@ export function Navigation({ step }: Props) {
       {isModalOn && (
         <FloatingModal
           title="완두콩이 거의 다 완료됐어요!"
-          content={
-            <span>
-              지금 돌아가면 작성 사항이
-              <br />
-              모두 삭제됩니다. 작성한 내용을
-              <br />
-              삭제하시겠습니까?
-            </span>
-          }
+          content={`지금 돌아가면 작성 사항이 \n 모두 삭제됩니다. 작성한 내용을 \n 삭제하시겠습니까?`}
+          modalIcon="exclamation"
           onClose={() => setIsModalOn(false)}
           showClose={false}
           prevLabel="나가기"

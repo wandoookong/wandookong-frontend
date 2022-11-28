@@ -1,7 +1,7 @@
 import { ROLE_DETAIL } from "../model/fieldType";
 
 export interface ApplyTeamForm {
-  roleDetail: ROLE_DETAIL;
+  roleDetail: ROLE_DETAIL | "";
   memo: string;
 }
 

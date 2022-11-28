@@ -102,6 +102,7 @@ export default function MyCurrentCreatedTeam() {
         <FloatingModal
           title={`현재 수락된 참여자가 있어 \n 완두콩 삭제가 어려워요!`}
           content="수락한 참여자 삭제시 완두콩 삭제가 가능합니다. 참여자 화면으로 이동하시겠습니까?"
+          modalIcon="exclamation"
           onClose={() => setIsNotDeleteModalOn(!isNotDeleteModalOn)}
           buttonLabel="이동하기"
           onClickButton={onClickMoveToAcceptedMemberTab}
@@ -166,7 +167,7 @@ export default function MyCurrentCreatedTeam() {
 }
 
 const ContentWrapper = styled.div<{ currentTab }>`
-  margin-top: 92px;
+  margin: 92px 0 90px 0;
 
   header {
     display: flex;
@@ -246,5 +247,9 @@ const ContentWrapper = styled.div<{ currentTab }>`
 
   section.applicants-wrapper {
     margin: 11px 20px 0;
+
+    div:last-child {
+      border-bottom: none;
+    }
   }
 `;

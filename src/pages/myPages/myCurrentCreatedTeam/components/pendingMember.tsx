@@ -4,10 +4,10 @@ import { colors } from "../../../../styles/colors";
 import MoreIcon from "../../../../assets/icons/more.png";
 import { css } from "@emotion/react";
 import { careerRangeText, roleDetailText } from "../../../../services/convertValueToName";
-import { setApplicantAcceptApi } from "../../../../api/myPages/myCreatedTeam/setApplicantAcceptApi";
-import { setApplicantRejectApi } from "../../../../api/myPages/myCreatedTeam/setApplicantRejectApi";
 import { MyCreatedTeamPendingMember } from "../../../../@types/dto/myCreatedTeamPendingMember";
 import ToastPopUp from "./toastPopUp";
+import { setApplicantAcceptApi } from "../../../../api/myPages/myCreatedTeam/setApplicantAcceptApi";
+import { setApplicantRejectApi } from "../../../../api/myPages/myCreatedTeam/setApplicantRejectApi";
 
 export default function PendingMember({
   teamMemberId,
@@ -26,7 +26,6 @@ export default function PendingMember({
     try {
       const response = await setApplicantAcceptApi(teamMemberId);
       setDisable(!disable);
-      window.location.reload();
       setIsToastPopUpOpen(!isToastPopUpOpen);
     } catch (error) {
       throw error;
@@ -37,8 +36,6 @@ export default function PendingMember({
     try {
       const response = await setApplicantRejectApi(teamMemberId);
       setDisable(!disable);
-      window.location.reload();
-      setIsToastPopUpOpen(!isToastPopUpOpen);
     } catch (error) {
       throw error;
     }
@@ -46,13 +43,13 @@ export default function PendingMember({
 
   useEffect(() => {
     setTimeout(() => {
-      setIsToastPopUpOpen(!isToastPopUpOpen);
-    }, 3000);
+      setIsToastPopUpOpen(false);
+    }, 3500);
   }, [isToastPopUpOpen]);
 
   return (
     <>
-      {isToastPopUpOpen && <ToastPopUp message={`${nickname}님을 수락했습니다.`} buttonLabel="완두콩 상세보기" />}
+      <ToastPopUp message={`${nickname}님을 수락했습니다.`} isActive={isToastPopUpOpen} />
       <Container isDescriptionOpen={isDescriptionOpen} disabled={disable}>
         <div className="applicant-content-wrapper">
           <div className="box-content-wrapper">
@@ -89,6 +86,7 @@ export default function PendingMember({
 const Container = styled.div<{ isDescriptionOpen: boolean; disabled: boolean }>`
     display: ${(props) => (props.disabled ? "none" : "flex")};
     flex-direction: column;
+  margin-bottom: 16px;
     border-bottom: 1px solid ${colors.subBrand50};
 
   div.applicant-content-wrapper {

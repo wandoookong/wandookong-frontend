@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/colors";
+import { convertNameToImageUrl } from "../../../services/convertValueToImageUrl";
 
 interface Props {
   positionName: string;
@@ -11,7 +12,7 @@ interface Props {
 
 export default function PositionItem({ positionName, isPositionValid, isLeader, careerRangeName, tags }: Props) {
   return (
-    <Container isPositionEmpty={isPositionValid}>
+    <Container isPositionEmpty={isPositionValid} position={positionName}>
       <div className="profile-image" />
       <div className="position-content-wrapper">
         <div className="position-header-wrapper">
@@ -27,7 +28,7 @@ export default function PositionItem({ positionName, isPositionValid, isLeader, 
   );
 }
 
-const Container = styled.li<{ isPositionEmpty: boolean }>`
+const Container = styled.li<{ isPositionEmpty: boolean; position: string }>`
   display: flex;
   align-items: center;
   width: 100%;
@@ -42,7 +43,7 @@ const Container = styled.li<{ isPositionEmpty: boolean }>`
     height: 50px;
     margin: 0;
     border-radius: 100px;
-    background: ${colors.grey900};
+    background: transparent url(${(props) => convertNameToImageUrl(props.position)}) center / 100% no-repeat;
   }
 
   div.position-content-wrapper {

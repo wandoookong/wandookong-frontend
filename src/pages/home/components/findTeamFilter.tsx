@@ -52,7 +52,7 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
               isChecked={filters.roleDetail.length === 0}
               onClick={() => setFilters({ ...filters, roleDetail: "" })}
             >
-              전체
+              <button>전체</button>
             </Filter>
             {roleData.map((role, index) => (
               <Filter
@@ -62,7 +62,7 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
                   setFilters({ ...filters, roleDetail: role.value });
                 }}
               >
-                {role.label}
+                <button>{role.label}</button>
               </Filter>
             ))}
           </ul>
@@ -74,19 +74,19 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
               isChecked={filters.teamCategory.length === 0}
               onClick={() => setFilters({ ...filters, teamCategory: "" })}
             >
-              전체
+              <button>전체</button>
             </Filter>
             <Filter
               isChecked={filters.teamCategory === "portfolio"}
               onClick={() => setFilters({ ...filters, teamCategory: "portfolio" })}
             >
-              포트폴리오
+              <button>포트폴리오</button>
             </Filter>
             <Filter
               isChecked={filters.teamCategory === "side_project"}
               onClick={() => setFilters({ ...filters, teamCategory: "side_project" })}
             >
-              사이드 프로젝트
+              <button>사이드 프로젝트</button>
             </Filter>
           </ul>
         </FilterContent>
@@ -116,7 +116,6 @@ const Container = styled.section`
 const FilterContent = styled.div`
   display: flex;
   align-items: center;
-  height: 100%;
   white-space: nowrap;
   margin: 0 0 8px 0;
   font-size: 12px;
@@ -131,7 +130,6 @@ const FilterContent = styled.div`
     display: flex;
     align-items: center;
     gap: 8px;
-    height: 29px;
     margin-left: 12px;
     overflow-y: hidden;
     scroll-behavior: smooth;
@@ -143,11 +141,19 @@ const FilterContent = styled.div`
 `;
 
 const Filter = styled.li<{ isChecked: boolean }>`
-  border: 1px solid ${colors.subBrand600};
-  padding: 6px 8px;
-  border-radius: 32px;
-  background: ${(props) => (props.isChecked ? colors.subBrand300 : colors.white)};
-  box-shadow: 0 1px 3px rgba(181, 191, 197, 0.3);
-  text-align: center;
-  cursor: pointer;
+  display: block;
+
+  button {
+    border: 1px solid ${colors.subBrand600};
+    padding: 6px 8px;
+    border-radius: 32px;
+    background: ${(props) => (props.isChecked ? colors.subBrand300 : colors.white)};
+    box-shadow: 0 1px 3px rgba(181, 191, 197, 0.3);
+    color: ${(props) => (props.isChecked ? colors.grey900 : colors.grey600)};
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 17px;
+    text-align: center;
+    cursor: pointer;
+  }
 `;

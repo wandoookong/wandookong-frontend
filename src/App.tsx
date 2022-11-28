@@ -10,7 +10,7 @@ import MyProfilePage from "./pages/myPages/myProfilePage/MyProfilePage";
 import MyCurrentCreatedTeam from "./pages/myPages/myCurrentCreatedTeam/myCurrentCreatedTeam";
 import MyTeamHistoryPage from "./pages/myPages/myTeamHistoryPage/MyTeamHistoryPage";
 import { TeamDetail } from "./pages/teamDetail/teamDetail";
-import ApplyTeam from "./pages/teamDetail/applyTeam/applyTeam";
+import ApplyTeam from "./pages/teamDetail/applyTeam";
 import Terms from "./pages/policy/terms";
 import PrivacyInfo from "./pages/policy/privacyInfo";
 import MyJoinedTeams from "./pages/myPages/myJoinedTeams/MyJoinedTeams";

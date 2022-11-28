@@ -11,7 +11,7 @@ import { teamCategoryText } from "../../services/convertValueToName";
 import { DdayPill } from "../../components/pill/DdayPill";
 import { getTeamDetailApi } from "../../api/teamDetail/getTeamDetailApi";
 import { TeamDetailType } from "../../@types/dto/getTeamDetail";
-import TeamApplyResultModal from "./applyTeam/components/teamApplyResultModal";
+import TeamApplyFailModal from "./components/teamApplyFailModal";
 import { applyFailModalContent } from "./utilities/applyFailModalContent";
 
 export function TeamDetail() {
@@ -60,7 +60,7 @@ export function TeamDetail() {
   return (
     <Container>
       {isApplyFailModalOn && (
-        <TeamApplyResultModal
+        <TeamApplyFailModal
           onClick={() => setIsApplyFailModalOn(!isApplyFailModalOn)}
           title={applyFailModalContent(teamDetailData.teamDetailStatus).title}
           content={applyFailModalContent(teamDetailData.teamDetailStatus).content}

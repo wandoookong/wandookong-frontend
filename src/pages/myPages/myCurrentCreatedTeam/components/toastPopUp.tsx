@@ -3,37 +3,45 @@ import { colors } from "../../../../styles/colors";
 
 interface Props {
   message: string;
-  buttonLabel?: string;
+  isActive: boolean;
 }
 
-export default function ToastPopUp({ message, buttonLabel }: Props) {
+export default function ToastPopUp({ message, isActive }: Props) {
   return (
-    <Container>
+    <Container isActive={isActive}>
       <p>{message}</p>
-      <button>{buttonLabel}</button>
     </Container>
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ isActive: boolean }>`
   position: fixed;
-  display: flex;
-  justify-content: space-between;
   left: 20px;
   right: 20px;
   bottom: 40px;
-  width: 100%;
-  padding: 12px 16px;
+  padding: 16px 12px;
   border-radius: 10px;
   background: ${colors.brand300};
+  box-shadow: 0 0 20px -4px rgba(0, 0, 0, 0.2);
   font-size: 13px;
-  font-weight: 500;
   line-height: 16px;
+  font-weight: 500;
   color: ${colors.grey900};
+  opacity: 0;
+  animation: ${(props) => (props.isActive ? "fadeInOut 2.8s ease-in-out" : "none")};
 
-  button {
-    font-weight: 700;
-    border: none;
-    background: transparent;
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    10% {
+      opacity: 100%;
+    }
+    85% {
+      opacity: 80%;
+    }
+    100% {
+      opacity: 0;
+    }
   }
 `;

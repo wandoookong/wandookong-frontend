@@ -26,29 +26,38 @@ export default function MyJoinedTeams() {
         <h1>참여한 완두콩 보기</h1>
       </nav>
       {isEmpty(acceptedTeamData) && <p className="loading-wrapper">생성된 완두콩이 없습니다.</p>}
-      {acceptedTeamData &&
-        acceptedTeamData.map((team, index) => (
-          <JoinedItem
-            key={index}
-            teamId={team.teamId}
-            createdAt={team.createdAt}
-            memo={team.memo}
-            memberStatus={team.memberStatus}
-            roleDetail={team.roleDetail}
-            teamCategory={team.teamCategory}
-            title={team.title}
-          />
-        ))}
+      <div>
+        {acceptedTeamData &&
+          acceptedTeamData.map((team, index) => (
+            <JoinedItem
+              key={index}
+              teamId={team.teamId}
+              createdAt={team.createdAt}
+              memo={team.memo}
+              memberStatus={team.memberStatus}
+              roleDetail={team.roleDetail}
+              teamCategory={team.teamCategory}
+              title={team.title}
+            />
+          ))}
+      </div>
     </Container>
   );
 }
 
 const Container = styled.div`
+  padding-top: 72px;
+
   nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
     display: flex;
     align-items: center;
     margin-bottom: 13px;
     padding: 44px 16px 0;
+    background: ${colors.background};
+    z-index: 4;
 
     button {
       width: 24px;
@@ -73,5 +82,11 @@ const Container = styled.div`
     font-size: 14px;
     color: ${colors.grey300};
     text-align: center;
+  }
+
+  div {
+    section:last-child {
+      border-bottom: none;
+    }
   }
 `;
