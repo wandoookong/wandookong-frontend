@@ -28,7 +28,12 @@ function Timer({ diffSeconds }) {
 
     const intervalId = setInterval(() => {
       timerSeconds--;
-      setSeconds(timerSeconds);
+
+      if (timerSeconds < 0) {
+        clearInterval(intervalId);
+      } else {
+        setSeconds(timerSeconds);
+      }
     }, 1000);
 
     return () => clearInterval(intervalId);
@@ -42,7 +47,9 @@ function formatTime(seconds) {
   const min = Math.floor((seconds - hour * 3600) / 60);
   const sec = (seconds - hour * 3600) % 60;
 
-  return `${hour}:${min}:${sec}`;
+  const zeroPad = (v) => (v < 10 ? `0${v}` : v);
+
+  return `${zeroPad(hour)}:${zeroPad(min)}:${zeroPad(sec)}`;
 }
 
 const stylePill = css`
