@@ -63,7 +63,7 @@ const Label = styled.li<{ isChecked: boolean; isDisabled: boolean; position: str
       font-size: 16px;
       font-weight: 700;
       color: ${colors.white};
-      background: url(${(props) => convertValueToImageUrl(props.position)}), yellow;
+      background: url(${(props) => convertValueToImageUrl(props.position)});
       background-size: cover;
       filter: grayscale(${(props) => (!props.isDisabled ? 0 : 1)});
 

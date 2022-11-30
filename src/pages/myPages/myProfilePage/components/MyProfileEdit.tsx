@@ -1,86 +1,28 @@
 import { useEffect, useState } from "react";
-import Nickname from "./Nickname";
-import Line from "./Line";
-import Position from "./Position";
-import Space from "./Space";
-import CareerRange from "./CareerRange";
-import Tag from "./Tag";
-import { SingleButton } from "../../../../components/buttons/singleButton";
+import styled from "@emotion/styled";
 
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { UserMyInfo } from "../../../../@types/dto/userMyInfo";
-import UserApi from "../../../../api/userApi";
-import { getUserMyInfoApi } from "../../../../api/myPages/myPage/getUserMyInfoApi";
-
-export default function MyProfileEdit({ meInfo, setMeInfo }: { meInfo: UserMyInfo; setMeInfo: any }) {
+export default function MyProfileEdit({ myInfo }) {
   const [isEdit, setIsEdit] = useState(false);
-  const [nickname, setNickname] = useState(meInfo.nickname);
-  const [roleMain, setRoleMain] = useState(meInfo.roleMain);
-  const [careerRange, setCareerRange] = useState(meInfo.careerRange);
-  const [tagNameList, setTagNameList] = useState(meInfo.tagList);
+  const [nickname, setNickname] = useState(myInfo.nickname);
+  const [roleMain, setRoleMain] = useState(myInfo.roleMain);
+  const [careerRange, setCareerRange] = useState(myInfo.careerRange);
+  const [tagNameList, setTagNameList] = useState(myInfo.tagList);
 
-  meInfo.tagList.sort((a, b) => (a < b ? -1 : 1));
+  myInfo.tagList.sort((a, b) => (a < b ? -1 : 1));
 
   useEffect(() => {
     if (isEdit) return;
-
     if (
-      meInfo.nickname !== nickname ||
-      meInfo.roleMain !== roleMain ||
-      meInfo.careerRange !== careerRange ||
-      JSON.stringify(meInfo.tagList) !== JSON.stringify(tagNameList.sort((a, b) => (a < b ? -1 : 1)))
+      myInfo.nickname !== nickname ||
+      myInfo.roleMain !== roleMain ||
+      myInfo.careerRange !== careerRange ||
+      JSON.stringify(myInfo.tagList) !== JSON.stringify(tagNameList.sort((a, b) => (a < b ? -1 : 1)))
     ) {
       setIsEdit(true);
     }
   }, [nickname, roleMain, careerRange, tagNameList]);
 
-  const onClickModify = (e) => {
-    e.preventDefault();
-
-    UserApi.updateUserMe({ nickname, roleMain, careerRange, tagNameList })
-      .then(() => getUserMyInfoApi())
-      .then((res) => {
-        setMeInfo(res);
-        setIsEdit(false);
-      });
-
-    toast.success("저장되었습니다~!", {
-      position: "bottom-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-  };
-
-  return (
-    <>
-      <div>
-        <Nickname nickname={meInfo.nickname} setNickname={setNickname} />
-        <Line />
-        <Position roleMain={meInfo.roleMain} setRoleMain={setRoleMain} />
-        <Space />
-        <CareerRange careerRange={meInfo.careerRange} setCareerRange={setCareerRange} />
-        <Space />
-        <Tag tagList={meInfo.tagList} setTagNameList={setTagNameList} />
-        <SingleButton label={"수정 완료"} onClick={onClickModify} isActive={isEdit} />
-      </div>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-    </>
-  );
+  return <Container></Container>;
 }
+
+const Container = styled.form``;

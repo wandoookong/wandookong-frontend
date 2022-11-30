@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
-import BackIcon from "../../../assets/icons/back.png";
 import { colors } from "../../../styles/colors";
 import TeamItem from "../../home/components/teamItem";
 import { isEmpty } from "../../../@types/utility/typeGuard";
 import { getMyCreatedTeamsHistoryApi } from "../../../api/myPages/getMyCreatedTeamsHistoryApi";
 import { MyCreatedTeamsHistory } from "../../../@types/dto/myCreatedTeamsHistory";
+import MyPageHeader from "../components/myPageHeader";
 
 export default function MyTeamHistoryPage() {
   const navigate = useNavigate();
@@ -38,10 +38,7 @@ export default function MyTeamHistoryPage() {
 
   return (
     <Container>
-      <nav>
-        <button onClick={() => navigate(-1)} />
-        <h1>내가 만든 완두콩 모두보기</h1>
-      </nav>
+      <MyPageHeader title="내가 만든 완두콩 모두보기" onClick={() => navigate(-1)} />
       {isEmpty(teamHistoryList) && <p>생성된 완두콩이 없습니다.</p>}
       {teamHistoryList !== undefined &&
         teamHistoryList.map((item, index) => (
@@ -53,34 +50,6 @@ export default function MyTeamHistoryPage() {
 
 const Container = styled.div`
   padding-top: 72px;
-
-  nav {
-    position: fixed;
-    top: 0;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 44px 16px 4px;
-    background: ${colors.background};
-    z-index: 5;
-
-    button {
-      width: 24px;
-      height: 24px;
-      padding: 0;
-      border: none;
-      background: transparent url(${BackIcon}) center / 100% no-repeat;
-      cursor: pointer;
-    }
-
-    h1 {
-      margin-left: 8px;
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 19px;
-      color: ${colors.grey900};
-    }
-  }
 
   p {
     margin-top: 200px;
