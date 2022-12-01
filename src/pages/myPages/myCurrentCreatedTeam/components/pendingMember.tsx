@@ -8,6 +8,7 @@ import { MyCreatedTeamPendingMember } from "../../../../@types/dto/myCreatedTeam
 import ToastPopUp from "./toastPopUp";
 import { setApplicantAcceptApi } from "../../../../api/myPages/myCreatedTeam/setApplicantAcceptApi";
 import { setApplicantRejectApi } from "../../../../api/myPages/myCreatedTeam/setApplicantRejectApi";
+import { isEmpty } from "../../../../@types/utility/typeGuard";
 
 export default function PendingMember({
   teamMemberId,
@@ -36,6 +37,7 @@ export default function PendingMember({
     try {
       const response = await setApplicantRejectApi(teamMemberId);
       setDisable(!disable);
+      window.location.reload();
     } catch (error) {
       throw error;
     }
@@ -60,11 +62,7 @@ export default function PendingMember({
                   {roleDetailText(roleDetail)}, {careerRangeText(careerRange)}
                 </span>
               </div>
-              <ul>
-                {tagList.map((tag, index) => (
-                  <li key={index}>{tag}</li>
-                ))}
-              </ul>
+              <ul>{!isEmpty(tagList) && tagList.map((tag, index) => <li key={index}>{tag}</li>)}</ul>
             </div>
             <p className="description-wrapper">{memo}</p>
           </div>

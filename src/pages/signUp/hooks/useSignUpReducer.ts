@@ -1,10 +1,11 @@
 import { useReducer } from "react";
+import { CAREER_RANGE, ROLE_MAIN } from "../../../@types/model/fieldType";
 
 interface State {
   userSocialId: number;
   nickname: string;
-  roleMain: MyRole;
-  careerRange: CareerRange;
+  roleMain: ROLE_MAIN | "";
+  careerRange: CAREER_RANGE | "";
   tagNameList: string[];
 }
 
@@ -49,8 +50,8 @@ export function useSignUpReducer() {
   const onChangeUserSocialId = (value: number) =>
     dispatch({ type: "ON_CHANGE_STATE_ACTION", key: "userSocialId", value });
   const onChangeNickname = (value: string) => dispatch({ type: "ON_CHANGE_STATE_ACTION", key: "nickname", value });
-  const onChangeRoleMain = (value: MyRole) => dispatch({ type: "ON_CHANGE_STATE_ACTION", key: "roleMain", value });
-  const onChangeCareerRange = (value: CareerRange) =>
+  const onChangeRoleMain = (value: ROLE_MAIN) => dispatch({ type: "ON_CHANGE_STATE_ACTION", key: "roleMain", value });
+  const onChangeCareerRange = (value: CAREER_RANGE) =>
     dispatch({ type: "ON_CHANGE_STATE_ACTION", key: "careerRange", value });
   const onChangeTagNameList = (value: string) => dispatch({ type: "ON_CHANGE_TAG_ACTION", value });
 

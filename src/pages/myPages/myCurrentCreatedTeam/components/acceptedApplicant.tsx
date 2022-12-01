@@ -7,6 +7,7 @@ import { css } from "@emotion/react";
 import MoreIcon from "../../../../assets/icons/more.png";
 import { MyCreatedTeamAcceptedMember } from "../../../../@types/dto/myCreatedTeamAcceptedMember";
 import { setAcceptedMemberCancelApi } from "../../../../api/myPages/myCreatedTeam/setAcceptedMemberCancelApi";
+import { isEmpty } from "../../../../@types/utility/typeGuard";
 
 export default function AcceptedMember({
   teamMemberId,
@@ -21,6 +22,7 @@ export default function AcceptedMember({
   const [isModalOn, setIsModalOn] = useState(false);
 
   const onClickCancelMember = async () => {
+    //FIXME API가 없었네
     try {
       const response = await setAcceptedMemberCancelApi(teamMemberId);
       setDisable(!disable);
@@ -49,11 +51,7 @@ export default function AcceptedMember({
                 {roleDetailText(roleDetail)}, {careerRangeText(careerRange)}
               </span>
             </div>
-            <ul>
-              {tagList.map((tag, index) => (
-                <li key={index}>{tag}</li>
-              ))}
-            </ul>
+            <ul>{!isEmpty(tagList) && tagList.map((tag, index) => <li key={index}>{tag}</li>)}</ul>
           </div>
           <p className="description-wrapper">{memo}</p>
         </div>

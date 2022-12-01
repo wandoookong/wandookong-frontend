@@ -144,12 +144,13 @@
     "resetMocks": true
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.191",
     "@types/qs": "^6.9.7",
     "customize-cra": "^1.0.0",
+    "lodash": "^4.17.21",
     "qs": "^6.11.0",
     "react-app-rewired": "^2.2.1",
     "react-responsive": "^9.0.0-beta.8"
   },
-  "resolutions": {
-  }
+  "resolutions": {}
 }

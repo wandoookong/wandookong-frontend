@@ -1,11 +1,11 @@
 import requester from "../config/config";
-import { CAREER_RANGE } from "../../@types/model/fieldType";
+import { CAREER_RANGE, ROLE_MAIN } from "../../@types/model/fieldType";
 import { isEmpty } from "../../@types/utility/typeGuard";
 
 interface Request {
   userSocialId: number;
   nickname: string;
-  roleMain: MyRole | "";
+  roleMain: ROLE_MAIN | "";
   careerRange: CAREER_RANGE | "";
   tagNameList?: string[];
 }

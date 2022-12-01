@@ -33,7 +33,7 @@ export default function MyOpenTeam({
           <span className="team-category">{teamCategoryText(teamCategory)}</span>
           <DdayPill closeDueYmd={closeDueYmd} currentTimestamp={currentTimestamp} />
         </div>
-        <h2 onClick={() => navigate("/myCreatedTeam")}>{title}</h2>
+        <h2 onClick={() => navigate("/myCreatedTeam?category=pending")}>{title}</h2>
         <div className="team-applicants-wrapper">
           <div onClick={() => navigate("/myCreatedTeam?category=pending")}>
             <b>{applyCount}</b>

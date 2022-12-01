@@ -6,12 +6,13 @@ import InputValidationErrorMessage from "../inputValidationErrorMessage";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
+import { CAREER_RANGE, ROLE_MAIN } from "../../../../@types/model/fieldType";
 
 interface Props {
-  roleMain: MyRole;
-  careerRange: CareerRange;
-  onChangeRoleMain(value: MyRole): void;
-  onChangeCareerRange(value: CareerRange): void;
+  roleMain: ROLE_MAIN | "";
+  careerRange: CAREER_RANGE | "";
+  onChangeRoleMain(value: ROLE_MAIN): void;
+  onChangeCareerRange(value: CAREER_RANGE): void;
   onNext(): void;
   onPrev(): void;
 }
@@ -24,7 +25,7 @@ export default function SetPositionStep({
   onNext,
   onPrev,
 }: Props) {
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState("");
   const onChangeRoleHandler = (e) => onChangeRoleMain(e.currentTarget.value);
   const onChangeCareerHandler = (e) => onChangeCareerRange(e.currentTarget.value);
 
@@ -48,6 +49,7 @@ export default function SetPositionStep({
       <Container>
         <section>
           <p>현재 포지션을 선택해주세요</p>
+          <p>현재 포지션을 선택해주세요.</p>
           <ul>
             {position.map((position, index) => (
               <Button key={index} isChecked={position.value === roleMain}>
@@ -67,6 +69,7 @@ export default function SetPositionStep({
         </section>
         <section>
           <p>연차를 선택해주세요</p>
+          <p>년차를 선택해주세요.</p>
           <ul>
             {career.map((career, index) => (
               <Button key={index} isChecked={career.value === careerRange}>
@@ -99,7 +102,7 @@ const Container = styled.div`
     margin-bottom: 36px;
 
     p {
-      margin-bottom: 30px;
+      margin-bottom: 12px;
       font-weight: 500;
       font-size: 16px;
       line-height: 19px;
@@ -114,6 +117,8 @@ const Container = styled.div`
 `;
 
 const Button = styled.li<{ isChecked: boolean }>`
+  display: contents;
+
   label {
     padding: 16px 24px;
     border: 1.5px solid ${(props) => (props.isChecked ? colors.brand600 : colors.brand300)};

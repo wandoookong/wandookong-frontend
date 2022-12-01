@@ -1,5 +1,14 @@
 import styled from "@emotion/styled";
 
+export function ModalButton({ prevLabel, nextLabel, onPrev, onNext }) {
+  return (
+    <Wrapper>
+      <PrevButton onClick={onPrev}>{prevLabel}</PrevButton>
+      <NextButton onClick={onNext}>{nextLabel}</NextButton>
+    </Wrapper>
+  );
+}
+
 const Wrapper = styled.div`
   position: absolute;
   display: flex;
@@ -35,12 +44,3 @@ const NextButton = styled.button`
   color: #ffffff;
   cursor: pointer;
 `;
-
-export function ModalButton({ prevLabel, nextLabel, onPrev, onNext }) {
-  return (
-    <Wrapper>
-      <PrevButton onClick={onPrev}>{prevLabel}</PrevButton>
-      <NextButton onClick={onNext}>{nextLabel}</NextButton>
-    </Wrapper>
-  );
-}

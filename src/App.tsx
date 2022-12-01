@@ -6,7 +6,7 @@ import NotFound from "./pages/notFound/NotFound";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signUp/signUp";
 import MyPage from "./pages/myPages/myPage/myPage";
-import MyProfilePage from "./pages/myPages/myProfilePage/MyProfilePage";
+import MyProfileEdit from "./pages/myPages/myProfileEdit/MyProfileEdit";
 import MyCurrentCreatedTeam from "./pages/myPages/myCurrentCreatedTeam/myCurrentCreatedTeam";
 import MyTeamHistoryPage from "./pages/myPages/myTeamHistoryPage/MyTeamHistoryPage";
 import { TeamDetail } from "./pages/teamDetail/teamDetail";
@@ -28,7 +28,7 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/request" element={<TeamRequestForm />} />
         <Route path="/myAccount" element={<MyPage />} />
-        <Route path="/my-profile" element={<MyProfilePage />} />
+        <Route path="/my-profile" element={<MyProfileEdit />} />
         <Route path="/myCreatedTeam" element={<MyCurrentCreatedTeam />} />
         <Route path="/my-team-history" element={<MyTeamHistoryPage />} />
         <Route path="/my-team-party" element={<MyJoinedTeams />} />

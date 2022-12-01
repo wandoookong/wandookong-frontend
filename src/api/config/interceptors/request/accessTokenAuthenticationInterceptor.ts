@@ -8,7 +8,7 @@ export const accessTokenAuthenticationInterceptor = {
     if (config.url && requiredAccessTokenUrlWhiteList.includes(config.url)) {
       const accessTokenFromStorage = localStorage.getItem(ACCESS_TOKEN_NAME);
       if (!accessTokenFromStorage) {
-        return (window.location.href = "/login");
+        return (document.location.href = "/login");
       }
     }
     return config;

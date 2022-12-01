@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getUserMyInfoApi } from "../../../api/myPages/myPage/getUserMyInfoApi";
-import { UserMyInfo } from "../../../@types/dto/userMyInfo";
 import MyPageHeader from "../components/myPageHeader";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
@@ -10,49 +9,61 @@ import { SingleButton } from "../../../components/buttons/singleButton";
 import MyProfileEditPositionSelector from "./components/myProfileEditPositionSelector";
 import MyProfileEditCareerRangeSelector from "./components/myProfileEditCareerRangeSelector";
 import MyProfileEditTagSelector from "./components/myProfileEditTagSelector";
+import _ from "lodash";
+import setUpdateMyProfileApi from "../../../api/myPages/myPage/setUpdateMyProfileApi";
 
-export default function MyProfilePage() {
+export default function MyProfileEdit() {
   const navigate = useNavigate();
-  const [isActive, setIsActive] = useState(false);
-  const [myInfo, setMyInfo] = useState<UserMyInfo>({
-    careerRange: "0_4",
-    email: "",
+  const [isDifferent, setIsDifferent] = useState(false);
+  const [myInfo, setMyInfo] = useState({
     nickname: "",
     roleMain: "dev",
+    careerRange: "0_4",
     tagList: [],
   });
 
   const { state, onChangeNickname, onChangeMyPosition, onChangeCareerRange, onChangeTagNameList } =
     useEditProfileReducer();
 
-  const onClickSave = () => {};
+  const onClickSave = async () => {
+    try {
+      if (isDifferent) {
+        const response = await setUpdateMyProfileApi(state);
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
 
   useEffect(() => {
     (async function () {
       const response = await getUserMyInfoApi();
-      setMyInfo(response);
+      const tagList = response.tagList.sort((a, b) => (a < b ? -1 : 1));
+      setMyInfo({
+        nickname: response.nickname,
+        roleMain: response.roleMain,
+        careerRange: response.careerRange,
+        tagList: tagList,
+      });
       onChangeNickname(response.nickname);
       onChangeMyPosition(response.roleMain);
       onChangeCareerRange(response.careerRange);
-      response.tagList.map((tag) => onChangeTagNameList(tag));
+      response.tagList.forEach((tag) => onChangeTagNameList(tag));
     })();
   }, []);
 
-  const result = myInfo.tagList.every((tag) => state.tagNameList.includes(tag));
-
   useEffect(() => {
-    if (
-      myInfo.nickname !== state.nickname ||
-      myInfo.careerRange !== state.careerRange ||
-      myInfo.roleMain !== state.myPosition
-    ) {
-      return setIsActive(true);
+    const isEqual = _.isEqual(state, myInfo);
+    if (!isEqual) {
+      return setIsDifferent(true);
+    } else {
+      return setIsDifferent(false);
     }
   }, [state]);
 
   return (
     <>
-      <MyPageHeader title="프로필 수정" onClick={() => navigate(-1)} />
+      <MyPageHeader title="프로필 수정" onClick={() => navigate("/myAccount")} />
       <Container>
         <div className="nickname-input">
           <input
@@ -64,21 +75,21 @@ export default function MyProfilePage() {
           <span>{state.nickname.length}/20</span>
         </div>
         <MyProfileEditPositionSelector
-          myPosition={state.myPosition}
+          myPosition={state.roleMain}
           onChange={(e) => onChangeMyPosition(e.currentTarget.value)}
         />
         <MyProfileEditCareerRangeSelector
           myCareerRange={state.careerRange}
           onChange={(e) => onChangeCareerRange(e.currentTarget.value)}
         />
-        <MyProfileEditTagSelector tags={state.tagNameList} onChange={onChangeTagNameList} />
-        <SingleButton label="수정 완료" onClick={onClickSave} isActive={isActive} />
+        <MyProfileEditTagSelector tags={state.tagList} onChange={onChangeTagNameList} />
+        <SingleButton label="수정 완료" onClick={onClickSave} isActive={isDifferent} />
       </Container>
     </>
   );
 }
 
-const Container = styled.form`
+const Container = styled.div`
   padding: 72px 20px 140px;
 
   div.nickname-input {

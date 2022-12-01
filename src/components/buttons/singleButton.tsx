@@ -3,7 +3,7 @@ import { colors } from "../../styles/colors";
 
 interface Props {
   label: string;
-  onClick(e): void;
+  onClick(value?: any): void;
 
   /**
    * 버튼의 활성화 여부
@@ -12,9 +12,9 @@ interface Props {
 }
 
 export function SingleButton({ label, onClick, isActive }: Props) {
-  const onClickHandler = (e) => {
+  const onClickHandler = () => {
     if (isActive) {
-      return onClick(e);
+      return onClick();
     }
   };
 
