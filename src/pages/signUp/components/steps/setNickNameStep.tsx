@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useMemo, useState } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { SingleButton } from "../../../../components/buttons/singleButton";
 import { FormHeader } from "../../../../components/form/header/formHeader";
 import { SingleTextInput } from "../../../teamRequestForm/components/inputs/singleTextInput";
@@ -6,6 +6,8 @@ import { isEmpty } from "../../../../@types/utility/typeGuard";
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
 import { validateNickName } from "../../utilities/signUpValidations";
+import checkNicknameApi from "../../../../api/signUp/checkNicknameApi";
+import { CheckNickname } from "../../../../@types/dto/checkNickname";
 
 interface Props {
   nickname: string;
@@ -26,17 +28,16 @@ export default function SetNickNameStep({ nickname, onChange, onNext }: Props) {
     onChange(e.currentTarget.value);
   };
 
-  //FIXME nickname validation 에러남
   const onNextHandler = () => {
     if (isValidNickName) {
       onNext();
     } else {
       (async function () {
         if (!isEmpty(nickname)) {
-          // const response = await signUpApi.checkNickname({ nickname });
-          // if (!response.isAvailable) {
-          //   return setErrorMessage("이미 사용중인 닉네임입니다.");
-          // }
+          const response: CheckNickname = await checkNicknameApi({ nickname });
+          if (!response.isAvailable) {
+            return setErrorMessage("이미 사용중인 닉네임입니다.");
+          }
           const validateErrorMessage = validateNickName(nickname);
           setErrorMessage(validateErrorMessage);
         }
@@ -44,16 +45,16 @@ export default function SetNickNameStep({ nickname, onChange, onNext }: Props) {
     }
   };
 
-  // useEffect(() => {
-  //   (async function () {
-  //     if (!isEmpty(nickname)) {
-  //       const response = await signUpApi.checkNickname({ nickname });
-  //       if (!response.isAvailable) {
-  //         return setErrorMessage("이미 사용중인 닉네임입니다.");
-  //       }
-  //     }
-  //   })();
-  // }, [nickname]);
+  useEffect(() => {
+    (async function () {
+      if (!isEmpty(nickname)) {
+        const response: CheckNickname = await checkNicknameApi({ nickname });
+        if (!response.isAvailable) {
+          return setErrorMessage("이미 사용중인 닉네임입니다.");
+        }
+      }
+    })();
+  }, [nickname]);
 
   return (
     <>

@@ -7,6 +7,7 @@ import { isEmpty } from "../../../../@types/utility/typeGuard";
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
 import { CAREER_RANGE, ROLE_MAIN } from "../../../../@types/model/fieldType";
+import { validatePosition } from "../../utilities/signUpValidations";
 
 interface Props {
   roleMain: ROLE_MAIN | "";
@@ -25,22 +26,28 @@ export default function SetPositionStep({
   onNext,
   onPrev,
 }: Props) {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState({ position: "", career: "" });
   const onChangeRoleHandler = (e) => onChangeRoleMain(e.currentTarget.value);
   const onChangeCareerHandler = (e) => onChangeCareerRange(e.currentTarget.value);
 
   const onNextHandler = () => {
-    if (isEmpty(roleMain) || isEmpty(careerRange)) {
-      setErrorMessage("포지션과 연차를 모두 선택해주세요");
-      return;
+    const errorMessages = validatePosition(roleMain, careerRange);
+    setErrorMessage({ ...errorMessages });
+    if (isEmpty(errorMessages.position) && isEmpty(errorMessages.career)) {
+      return onNext();
     }
-    onNext();
   };
 
   useEffect(() => {
-    if (errorMessage) {
-      setErrorMessage("");
+    let position = errorMessage.position;
+    let career = errorMessage.career;
+    if (roleMain) {
+      position = "";
     }
+    if (careerRange) {
+      career = "";
+    }
+    return setErrorMessage({ position, career });
   }, [roleMain, careerRange]);
 
   return (
@@ -48,8 +55,8 @@ export default function SetPositionStep({
       <FormHeader title="어떤 포지션의 콩인가요?" />
       <Container>
         <section>
-          <p>현재 포지션을 선택해주세요</p>
-          <p>현재 포지션을 선택해주세요.</p>
+          <p className="title">현재 포지션을 선택해주세요</p>
+          {!isEmpty(errorMessage.position) && <InputValidationErrorMessage text={errorMessage.position} />}
           <ul>
             {position.map((position, index) => (
               <Button key={index} isChecked={position.value === roleMain}>
@@ -68,8 +75,8 @@ export default function SetPositionStep({
           </ul>
         </section>
         <section>
-          <p>연차를 선택해주세요</p>
-          <p>년차를 선택해주세요.</p>
+          <p className="title">연차를 선택해주세요</p>
+          {!isEmpty(errorMessage.career) && <InputValidationErrorMessage text={errorMessage.career} />}
           <ul>
             {career.map((career, index) => (
               <Button key={index} isChecked={career.value === careerRange}>
@@ -87,7 +94,6 @@ export default function SetPositionStep({
             ))}
           </ul>
         </section>
-        {!isEmpty(errorMessage) && <InputValidationErrorMessage text={errorMessage} />}
       </Container>
       <DoubleButton onNextStep={onNextHandler} onPrevStep={onPrev} nextButtonLabel="다음" prevButtonLabel="이전" />
     </>
@@ -101,8 +107,8 @@ const Container = styled.div`
   section {
     margin-bottom: 36px;
 
-    p {
-      margin-bottom: 12px;
+    p.title {
+      margin-bottom: 7px;
       font-weight: 500;
       font-size: 16px;
       line-height: 19px;
@@ -112,6 +118,7 @@ const Container = styled.div`
     ul {
       display: flex;
       justify-content: space-between;
+      margin-top: 12px;
     }
   }
 `;

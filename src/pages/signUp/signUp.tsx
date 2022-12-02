@@ -5,9 +5,9 @@ import SetPositionStep from "./components/steps/setPositionStep";
 import SetTagsStep from "./components/steps/setTagsStep";
 import { useSignUpReducer } from "./hooks/useSignUpReducer";
 import qs from "qs";
-import signUpApi from "../../api/signUp/signUpApi";
 import SetNickNameStep from "./components/steps/setNickNameStep";
 import styled from "@emotion/styled";
+import { signUpApi } from "../../api/signUp/signUpApi";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function SignUp() {
 
   const onSubmit = async () => {
     try {
-      const response = await signUpApi.createUser(state);
+      const response = await signUpApi(state);
       navigate("/");
     } catch (e) {
       throw new Error();

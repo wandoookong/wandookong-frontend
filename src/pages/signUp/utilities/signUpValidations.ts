@@ -1,4 +1,5 @@
-import { required } from "../../../@types/utility/typeGuard";
+import { isEmpty, required } from "../../../@types/utility/typeGuard";
+import { CAREER_RANGE, ROLE_MAIN } from "../../../@types/model/fieldType";
 
 const validateNickNameLength = (target: string): boolean => {
   return target.length < 11;
@@ -31,4 +32,16 @@ export const validateNickName = (value: string): string => {
     return isValid;
   });
   return result;
+};
+
+export const validatePosition = (roleMain: ROLE_MAIN | "", careerRange: CAREER_RANGE | "") => {
+  let position = "";
+  let career = "";
+  if (isEmpty(roleMain)) {
+    position = "현재 포지션을 선택해주세요.";
+  }
+  if (isEmpty(careerRange)) {
+    career = "연차를 선택해주세요.";
+  }
+  return { position, career };
 };
