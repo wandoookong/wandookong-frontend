@@ -107,7 +107,7 @@ export default function MyPage() {
 }
 
 const ContentWrapper = styled.div`
-  margin: 108px 0 60px 0;
+  margin: 80px 0 60px 0;
 
   h1.loading-wrapper {
     font-size: 18px;

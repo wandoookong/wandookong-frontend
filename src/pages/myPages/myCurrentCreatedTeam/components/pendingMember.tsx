@@ -6,9 +6,9 @@ import { css } from "@emotion/react";
 import { careerRangeText, roleDetailText } from "../../../../services/convertValueToName";
 import { MyCreatedTeamPendingMember } from "../../../../@types/dto/myCreatedTeamPendingMember";
 import ToastPopUp from "./toastPopUp";
-import { setApplicantAcceptApi } from "../../../../api/myPages/myCreatedTeam/setApplicantAcceptApi";
 import { setApplicantRejectApi } from "../../../../api/myPages/myCreatedTeam/setApplicantRejectApi";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
+import { setApplicantAcceptApi } from "../../../../api/myPages/myCreatedTeam/setApplicantAcceptApi";
 
 export default function PendingMember({
   teamMemberId,

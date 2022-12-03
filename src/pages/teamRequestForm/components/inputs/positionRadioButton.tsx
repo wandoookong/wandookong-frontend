@@ -51,8 +51,8 @@ const Container = styled.li<{ isChecked: boolean; position: ROLE_DETAIL }>`
     padding: 0;
     border: 0;
     border-radius: 50px;
-    background: transparent url(${(props) => convertValueToImageUrl(props.position)}) center / 100% no-repeat;
-    filter: grayscale(${(props) => (props.isChecked ? 1 : 0)});
+    background: rgba(0, 0, 0, 0.5) url(${(props) => convertValueToImageUrl(props.position)}) center / 100% no-repeat;
+    //filter: grayscale(${(props) => (props.isChecked ? 1 : 0)});
 
     div.check-icon {
       width: 24px;

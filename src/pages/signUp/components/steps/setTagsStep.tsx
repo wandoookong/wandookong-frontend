@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default function SetTagsStep({ nickname, tags, onChange, onNext, onPrev }: Props) {
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (tags.length < 4) {
@@ -27,8 +27,9 @@ export default function SetTagsStep({ nickname, tags, onChange, onNext, onPrev }
   return (
     <>
       <FormHeader title={`${nickname}님에 대해  \n 조금만 더 \n 알려주시겠어요?`} />
-      <Container>
+      <Container isError={errorMessage}>
         <p className="description">(선택) 자기소개 태그는 최대 4개까지 선택할 수 있어요</p>
+        {!isEmpty(errorMessage) && <InputValidationErrorMessage text={errorMessage} />}
         <div className="tags-wrapper">
           {tagKeywords.map((tag, index) => (
             <Label key={index} isChecked={tags.includes(tag.value)}>
@@ -51,19 +52,18 @@ export default function SetTagsStep({ nickname, tags, onChange, onNext, onPrev }
             </Label>
           ))}
         </div>
-        {!isEmpty(errorMessage) && <InputValidationErrorMessage text={errorMessage} />}
       </Container>
       <DoubleButton prevButtonLabel="이전" nextButtonLabel="회원가입 완료" onNextStep={onNext} onPrevStep={onPrev} />
     </>
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ isError: string }>`
   margin-top: 73px;
   padding: 0 20px;
 
   p.description {
-    margin-bottom: 12px;
+    margin-bottom: ${(props) => (props.isError ? "7px" : "0")};
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
@@ -74,6 +74,7 @@ const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 25px;
+    margin-top: 12px;
   }
 `;
 
