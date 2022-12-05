@@ -6,6 +6,7 @@ export default function InputValidationErrorMessage({ text }) {
 }
 
 const Message = styled.p`
+  display: inline-block;
   font-size: 12px;
   font-weight: 500;
   color: ${colors.red};

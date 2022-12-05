@@ -25,6 +25,10 @@ export default function JoinedItem({
     setMyTeamState("deny");
   };
 
+  const year = createdAt.slice(0, 4);
+  const month = createdAt.slice(5, 7);
+  const date = createdAt.slice(8, 10);
+
   useEffect(() => {
     setMyTeamState(memberStatus);
   }, []);
@@ -41,7 +45,7 @@ export default function JoinedItem({
         />
       )}
       <Container isDescriptionOpen={isDescriptionOpen} myTeamState={myTeamState}>
-        <span className="date-wrapper">{createdAt.slice(0, 10)}</span>
+        <span className="date-wrapper">{`${year}.${month}.${date}`}</span>
         <div className="content-wrapper">
           <div className="inner-content-wrapper">
             <div className="header-wrapper">

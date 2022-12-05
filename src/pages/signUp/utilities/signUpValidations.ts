@@ -5,19 +5,14 @@ const validateNickNameLength = (target: string): boolean => {
   return target.length < 11;
 };
 
-export const ErrorMessageState = {
-  empty: "닉네임을 입력해주세요.",
-  over: "최대 10자까지 입력할 수 있습니다.",
-};
-
 const validate = [
   {
     validation: required,
-    errorMessage: ErrorMessageState.empty,
+    errorMessage: "닉네임을 입력해주세요.",
   },
   {
     validation: validateNickNameLength,
-    errorMessage: ErrorMessageState.over,
+    errorMessage: "최대 10자까지 입력할 수 있습니다.",
   },
 ];
 

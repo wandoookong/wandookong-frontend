@@ -28,6 +28,7 @@ export default function PendingMember({
       const response = await setApplicantAcceptApi(teamMemberId);
       setDisable(!disable);
       setIsToastPopUpOpen(!isToastPopUpOpen);
+      window.location.reload();
     } catch (error) {
       throw error;
     }

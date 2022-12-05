@@ -22,10 +22,10 @@ export default function AcceptedMember({
   const [isModalOn, setIsModalOn] = useState(false);
 
   const onClickCancelMember = async () => {
-    //FIXME API가 없었네
     try {
       const response = await setAcceptedMemberCancelApi(teamMemberId);
       setDisable(!disable);
+      window.location.reload();
     } catch (error) {
       throw error;
     }

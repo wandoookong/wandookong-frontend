@@ -1,6 +1,13 @@
 import { useEffect } from "react";
+import styled from "@emotion/styled";
+import { colors } from "../../styles/colors";
+import { useNavigate } from "react-router-dom";
+import Logo from "../../assets/images/logo.png";
+import CommonModalHeader from "../../components/header/commonModalHeader";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!document.getElementById("id__google_onSignIn")) {
       const script = document.createElement("script");
@@ -55,6 +62,11 @@ export default function Login() {
 
   return (
     <>
+      <CommonModalHeader onClick={() => navigate(-1)} />
+      <ImageWrapper>
+        <img src={Logo} alt="완두콩 로고" />
+      </ImageWrapper>
+
       <div
         id="g_id_onload"
         data-client_id="572618992504-dm52b32m1e7pclkn3h9bm3ccksi0aqtc.apps.googleusercontent.com"
@@ -62,7 +74,7 @@ export default function Login() {
         data-auto_prompt="false"
       />
       <div
-        id="test"
+        style={style}
         className="g_id_signin"
         data-type="standard"
         data-size="large"
@@ -72,6 +84,44 @@ export default function Login() {
         data-logo_alignment="left"
         data-locale="ko_KR"
       />
+      <Container>
+        <button onClick={() => navigate("/terms")}>서비스 이용약관</button>
+        <button onClick={() => navigate("/privacy-info")}>개인정보처리방침</button>
+      </Container>
     </>
   );
 }
+
+const style = {
+  display: "flex",
+  justifyContent: "center",
+  paddingBottom: "12px",
+};
+
+const ImageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 200px 0 240px;
+
+  img {
+    width: 150px;
+    height: auto;
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+
+  button {
+    margin-bottom: 12px;
+    border: none;
+    background: none;
+    color: ${colors.grey600};
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    cursor: pointer;
+  }
+`;

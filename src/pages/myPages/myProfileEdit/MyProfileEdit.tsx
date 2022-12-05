@@ -11,10 +11,13 @@ import MyProfileEditCareerRangeSelector from "./components/myProfileEditCareerRa
 import MyProfileEditTagSelector from "./components/myProfileEditTagSelector";
 import _ from "lodash";
 import setUpdateMyProfileApi from "../../../api/myPages/myPage/setUpdateMyProfileApi";
+import InputValidationErrorMessage from "../../signUp/components/inputValidationErrorMessage";
+import { isEmpty } from "../../../@types/utility/typeGuard";
 
 export default function MyProfileEdit() {
   const navigate = useNavigate();
   const [isDifferent, setIsDifferent] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [myInfo, setMyInfo] = useState({
     nickname: "",
     roleMain: "dev",
@@ -26,12 +29,12 @@ export default function MyProfileEdit() {
     useEditProfileReducer();
 
   const onClickSave = async () => {
-    try {
-      if (isDifferent) {
-        const response = await setUpdateMyProfileApi(state);
-      }
-    } catch (error) {
-      throw error;
+    if (isEmpty(errorMessage)) {
+      return setErrorMessage("닉네임을 입력하세요.");
+    }
+    if (isDifferent) {
+      const response = await setUpdateMyProfileApi(state);
+      window.location.reload();
     }
   };
 
@@ -64,7 +67,7 @@ export default function MyProfileEdit() {
   return (
     <>
       <MyPageHeader title="프로필 수정" onClick={() => navigate("/myAccount")} />
-      <Container>
+      <Container isError={errorMessage}>
         <div className="nickname-input">
           <input
             type="text"
@@ -72,7 +75,10 @@ export default function MyProfileEdit() {
             onChange={(e) => onChangeNickname(e.currentTarget.value)}
             maxLength={20}
           />
-          <span>{state.nickname.length}/20</span>
+          <div className="text-wrapper">
+            {errorMessage && <InputValidationErrorMessage text={errorMessage} />}
+            <span>{state.nickname.length}/20</span>
+          </div>
         </div>
         <MyProfileEditPositionSelector
           myPosition={state.roleMain}
@@ -89,7 +95,7 @@ export default function MyProfileEdit() {
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ isError: string }>`
   padding: 72px 20px 140px;
 
   div.nickname-input {
@@ -114,15 +120,19 @@ const Container = styled.div`
       }
     }
 
-    span {
-      display: block;
-      margin-top: 2px;
-      font-size: 12px;
-      font-weight: 400;
-      line-height: 14px;
-      letter-spacing: -0.4px;
-      color: ${colors.subBrand400};
-      text-align: right;
+    div.text-wrapper {
+      display: flex;
+      justify-content: ${(props) => (props.isError ? "space-between" : "flex-end")};
+      margin-top: 6px;
+
+      span {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 14px;
+        letter-spacing: -0.4px;
+        color: ${colors.subBrand400};
+        text-align: right;
+      }
     }
   }
 `;
