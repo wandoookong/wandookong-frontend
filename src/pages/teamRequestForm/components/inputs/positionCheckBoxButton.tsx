@@ -16,8 +16,10 @@ export function PositionCheckBoxButton({ label, value, isChecked, isDisabled, on
     <Label isChecked={isChecked} isDisabled={isDisabled} position={value}>
       <label>
         <div className="profile-image">
-          {isChecked && <div className="check-icon" />}
-          {isDisabled && "나"}
+          <div className="checked-background">
+            {isChecked && <div className="check-icon" />}
+            {isDisabled && "나"}
+          </div>
         </div>
         <input
           type="checkbox"
@@ -52,9 +54,6 @@ const Label = styled.li<{ isChecked: boolean; isDisabled: boolean; position: str
     }
 
     div.profile-image {
-      display: flex;
-      justify-content: center;
-      align-items: center;
       width: 51px;
       height: 51px;
       margin: 0 0 8px 0;
@@ -63,19 +62,31 @@ const Label = styled.li<{ isChecked: boolean; isDisabled: boolean; position: str
       font-size: 16px;
       font-weight: 700;
       color: ${colors.white};
-      background: url(${(props) => convertValueToImageUrl(props.position)});
-      background-size: cover;
-      filter: grayscale(${(props) => (!props.isDisabled ? 0 : 1)});
+      background: url(${(props) => convertValueToImageUrl(props.position)}) center / 100% no-repeat;
 
-      div.check-icon {
-        width: 24px;
-        height: 24px;
-        border: none;
-        background: red url(${CheckIcon}) center / 100 % no-repeat;
+      div.checked-background {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 100px;
+        background-color: ${(props) => {
+          if (props.isChecked) {
+            return "rgba(71, 181, 97, 0.8)";
+          }
+          if (props.isDisabled) {
+            return "rgba(0, 0, 0, 0.4)";
+          }
+        }};
+
+        div.check-icon {
+          width: 24px;
+          height: 24px;
+          border: none;
+          background: url(${CheckIcon}) center / 100% no-repeat;
+        }
       }
     }
   }
 `;
-
-//background-color: rgba(71, 181, 97, 0.5);
-// background-color: ${(props) => (props.isChecked ? "rgba(71, 181, 97, 1)" : "transparent")};

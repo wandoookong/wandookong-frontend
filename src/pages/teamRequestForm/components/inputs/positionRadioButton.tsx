@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
-import CheckIcon from "../../../../assets/icons/select-white.svg";
 import { convertValueToImageUrl } from "../../../../services/convertValueToImageUrl";
 import { ROLE_DETAIL } from "../../../../@types/model/fieldType";
+import CheckIcon from "../../../../assets/icons/select-white.svg";
 
 interface Props {
   label: string;
@@ -15,7 +15,13 @@ export function PositionRadioButton({ label, value, isChecked, onChange }: Props
   return (
     <Container isChecked={isChecked} position={value}>
       <label>
-        <div className="position-image">{isChecked && <div className="check-icon" />}</div>
+        <div className="position-image">
+          {isChecked && (
+            <div className="background">
+              <div className="check-icon" />
+            </div>
+          )}
+        </div>
         <input type="radio" name="myRole" value={value} onChange={onChange} />
         <span>{label}</span>
       </label>
@@ -42,23 +48,29 @@ const Container = styled.li<{ isChecked: boolean; position: ROLE_DETAIL }>`
   }
 
   div.position-image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 51px;
     height: 51px;
     margin-bottom: 8px;
     padding: 0;
     border: 0;
     border-radius: 50px;
-    background: rgba(0, 0, 0, 0.5) url(${(props) => convertValueToImageUrl(props.position)}) center / 100% no-repeat;
-    //filter: grayscale(${(props) => (props.isChecked ? 1 : 0)});
+    background: url(${(props) => convertValueToImageUrl(props.position)}) center / 100% no-repeat;
 
-    div.check-icon {
-      width: 24px;
-      height: 24px;
-      border: none;
-      background: transparent url(${CheckIcon}) center / 100% no-repeat;
+    div.background {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      border-radius: 100px;
+      background-color: rgba(71, 181, 97, 0.8);
+
+      div.check-icon {
+        width: 24px;
+        height: 24px;
+        border: none;
+        background: transparent url(${CheckIcon}) center / 100% no-repeat;
+      }
     }
   }
 
