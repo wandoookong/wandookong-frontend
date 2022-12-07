@@ -5,7 +5,10 @@ const requiredAccessTokenUrlWhiteList = ["/myAccount", "/request", `/team/:teamI
 
 export const accessTokenAuthenticationInterceptor = {
   onFulfilled: (config: AxiosRequestConfig) => {
-    if (config.url && requiredAccessTokenUrlWhiteList.includes(config.url)) {
+    const isRequiredAccessTokenUrl = requiredAccessTokenUrlWhiteList.some((whiteListUrl) => {
+      return config.url?.includes(whiteListUrl);
+    });
+    if (isRequiredAccessTokenUrl) {
       const accessTokenFromStorage = localStorage.getItem(ACCESS_TOKEN_NAME);
       if (!accessTokenFromStorage) {
         return (document.location.href = "/login");

@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { DdayPill } from "../../../components/pill/DdayPill";
 import { colors } from "../../../styles/colors";
 import { teamCategoryText } from "../../../services/convertValueToName";
-import { Team } from "../../../@types/dto/getHomeTeams";
+import { HomeTeam } from "../../../@types/dto/getHomeTeam";
 import { convertValueToImageUrl } from "../../../services/convertValueToImageUrl";
 import { ROLE_DETAIL } from "../../../@types/model/fieldType";
 
 interface Props {
   teamId: number;
-  teamData: Team;
+  teamData: HomeTeam;
   isDday: boolean;
 }
 

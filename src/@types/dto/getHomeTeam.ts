@@ -1,6 +1,6 @@
 import { ROLE_DETAIL, TEAM_CATEGORY } from "../model/fieldType";
 
-export interface Team {
+export interface HomeTeam {
   closeDueYmd: string;
   createdAt: string;
   teamCategory: TEAM_CATEGORY;

@@ -8,22 +8,39 @@ import { isEmpty } from "../../@types/utility/typeGuard";
 import { colors } from "../../styles/colors";
 import CarouselImg from "./assets/image.jpg";
 import { getHomeTeamsApi } from "../../api/home/getHomeTeamsApi";
-import { TeamFilters } from "../../@types/model/homeCategoryFilters";
-import { Team } from "../../@types/dto/getHomeTeams";
+import { TeamFilters } from "../../@types/model/homeFindTeamsFilters";
+import { HomeTeam } from "../../@types/dto/getHomeTeam";
 import { getIsValidToCreateTeamApi } from "../../api/home/getIsValidToCreateTeamApi";
 import FloatingModal from "../../components/modal/FloatingModal";
 import { IsValidToCreateTeam } from "../../@types/dto/isValidToCreateTeam";
+import WalkThrough from "./walkThrough";
 
 export default function Home() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { search } = useLocation();
+  const [isWalkThrough, setIsWalkThrough] = useState(false);
   const [isCreateTeamFailModalOn, setIsCreateTeamFailModalOn] = useState(false);
   const [createdMyTeamId, setCreatedMyTeamId] = useState(0);
-  const [teamsData, setTeamsData] = useState<Team[]>([]);
+  const [teamsData, setTeamsData] = useState<HomeTeam[]>([]);
   const [findTeamFilters, setFindTeamFilters] = useState<TeamFilters>({
     roleDetail: "",
     teamCategory: "",
   });
+
+  const getWalkThrough = () => {
+    const isValid = localStorage.getItem("walkThrough");
+    if (isValid === null) {
+      localStorage.setItem("walkThrough", "true");
+      return setIsWalkThrough(true);
+    }
+    if (!isValid) {
+      return setIsWalkThrough(false);
+    }
+  };
+
+  const onClickCloseWalkThrough = () => {
+    setIsWalkThrough(false);
+  };
 
   const onClickHandler = () => {
     setIsCreateTeamFailModalOn(!isCreateTeamFailModalOn);
@@ -42,13 +59,14 @@ export default function Home() {
 
   useEffect(() => {
     (async function () {
-      const response = await getHomeTeamsApi(location.search);
+      const response = await getHomeTeamsApi(search);
       setTeamsData(response);
     })();
-  }, [location]);
+  }, [search]);
 
   return (
     <>
+      {isWalkThrough && <WalkThrough onClick={onClickCloseWalkThrough} />}
       {isCreateTeamFailModalOn && (
         <FloatingModal
           title="아직 모집중인 완두콩이 있습니다!"

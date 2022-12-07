@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import qs from "qs";
 import { colors } from "../../../styles/colors";
-import { TeamFilters } from "../../../@types/model/homeCategoryFilters";
+import { TeamFilters } from "../../../@types/model/homeFindTeamsFilters";
 
 interface Props {
   filters: TeamFilters;

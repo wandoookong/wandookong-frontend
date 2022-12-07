@@ -9,8 +9,8 @@ import { Nullable } from "../../../@types/utility/nullable";
 
 export const HomeHeader = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useState<Nullable<string>>("");
   const [isScrollOn, setIsScrollOn] = useState(false);
+  const token: Nullable<string> = localStorage.getItem(ACCESS_TOKEN_NAME);
 
   const handleScroll = () => {
     if (window.scrollY >= 220) {
@@ -22,15 +22,10 @@ export const HomeHeader = () => {
   const onClickLogin = () => {
     if (!token) {
       navigate("/login");
-      return;
+      return window.location.reload();
     }
-    navigate("/myAccount");
-    return;
+    return navigate("/myAccount");
   };
-
-  useEffect(() => {
-    setToken(localStorage.getItem(ACCESS_TOKEN_NAME));
-  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, true);
