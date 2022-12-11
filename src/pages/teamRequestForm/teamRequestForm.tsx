@@ -47,7 +47,7 @@ export default function TeamRequestForm() {
       {isSuccessModalOn && (
         <FloatingModal
           title="완두콩을 성공적으로 만들었습니다!"
-          content={`만드신 완두콩에 대한 상세정보와 \n 참여신청자는 [마이페이지]에서 \n 확인하실 수 있습니다.`}
+          content={`만드신 완두콩은 \n 참여신청자는 [마이페이지]에서 \n 확인하실 수 있습니다.`}
           modalIcon="check"
           buttonLabel="확인"
           onClickButton={() => navigate("/")}

@@ -10,6 +10,7 @@ import MyPageHeader from "../components/myPageHeader";
 
 export default function MyTeamHistoryPage() {
   const navigate = useNavigate();
+  const [isFetchValid, setIsFetchValid] = useState(false);
   const [teamHistoryList, setTeamHistoryList] = useState<MyCreatedTeamsHistory[]>([
     {
       teamId: 1,
@@ -33,14 +34,17 @@ export default function MyTeamHistoryPage() {
     (async function () {
       const response = await getMyCreatedTeamsHistoryApi();
       setTeamHistoryList(response);
+      setIsFetchValid(!isFetchValid);
     })();
   }, []);
 
   return (
     <Container>
       <MyPageHeader title="내가 만든 완두콩 모두보기" onClick={() => navigate(-1)} />
-      {isEmpty(teamHistoryList) && <p>생성된 완두콩이 없습니다.</p>}
-      {teamHistoryList !== undefined &&
+      {!isFetchValid && <p>불러오는 중 입니다...</p>}
+      {isFetchValid && isEmpty(teamHistoryList) && <p>생성한 완두콩이 없습니다.</p>}
+      {isFetchValid &&
+        teamHistoryList !== undefined &&
         teamHistoryList.map((item, index) => (
           <TeamItem key={index} teamId={item.teamId} teamData={item} isDday={false} />
         ))}

@@ -38,9 +38,9 @@ export default function SetNickNameStep({ nickname, onChange, onNext }: Props) {
           if (!response.isAvailable) {
             return setErrorMessage("이미 사용중인 닉네임입니다.");
           }
-          const validateErrorMessage = validateNickName(nickname);
-          setErrorMessage(validateErrorMessage);
         }
+        const validateErrorMessage = validateNickName(nickname);
+        setErrorMessage(validateErrorMessage);
       })();
     }
   };

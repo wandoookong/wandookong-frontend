@@ -1,21 +1,57 @@
 import { useNavigate } from "react-router-dom";
+import styled from "@emotion/styled";
+import CloseIcon from "../../assets/icons/close-grey900.svg";
+import { colors } from "../../styles/colors";
 
 export default function Terms() {
   const navigate = useNavigate();
 
   return (
-    <>
+    <Container>
       <header>
-        <button onClick={() => navigate(-1)}>닫기</button>
+        <button onClick={() => navigate(-1)} />
       </header>
-      <h1>서비스 이용약관</h1>
-      <p>
-        네이버 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 네이버 서비스의 이용과
-        관련하여 네이버 서비스를 제공하는 네이버 주식회사(이하 ‘네이버’)와 이를 이용하는 네이버 서비스 회원(이하 ‘회원’)
-        또는 비회원과의 관계를 설명하며, 아울러 여러분의 네이버 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고
-        있습니다. 네이버 서비스를 이용하시거나 네이버 서비스 회원으로 가입하실 경우 여러분은 본 약관 및 관련 운영 정책을
-        확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다
-      </p>
-    </>
+      <div>
+        <h1>서비스 이용약관</h1>
+        <strong>제1조(목적)</strong>
+        <p>
+          산타파이브의 서비스를 이용해주셔서 감사합니다. 이 약관은 완두콩(이하 “회사”)가 운영하는 인터넷 사이트 내
+          트리를 꾸며줘!(이하 “사이트”)를 이용함에 있어 회사와 이용자의 권리·의무 및 책임사항을 규정함을 목적으로
+          합니다.
+        </p>
+      </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 40px 20px 24px;
+
+    button {
+      width: 24px;
+      height: 24px;
+      background: transparent url(${CloseIcon}) center / 100% no-repeat;
+      border: none;
+    }
+  }
+  div {
+    padding: 0 20px 80px;
+
+    h1 {
+      margin-bottom: 24px;
+      font-size: 24px;
+      font-weight: 700;
+      color: ${colors.grey900};
+    }
+
+    strong {
+      display: block;
+      margin-bottom: 12px;
+      font-weight: 700;
+      color: ${colors.grey900};
+    }
+  }
+`;

@@ -13,6 +13,7 @@ import { MyCreatedTeam } from "../../../@types/dto/myCreatedTeam";
 
 export default function MyPage() {
   const navigate = useNavigate();
+  const [isFetchDone, setIsFetchDone] = useState(false);
   const [myOpenTeam, setMyOpenTeam] = useState<MyCreatedTeam>({
     teamId: 1,
     teamCategory: "portfolio",
@@ -39,15 +40,10 @@ export default function MyPage() {
 
   useEffect(() => {
     (async function () {
-      const response = await getUserMyInfoApi();
-      setMyInfo(response);
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async function () {
-      const response = await getMyCreatedTeamApi();
-      setMyOpenTeam(response);
+      const response = await Promise.all([getUserMyInfoApi(), getMyCreatedTeamApi()]);
+      setMyInfo(response[0]);
+      setMyOpenTeam(response[1]);
+      setIsFetchDone(!isFetchDone);
     })();
   }, []);
 
@@ -55,8 +51,8 @@ export default function MyPage() {
     <>
       <CommonModalHeader onClick={() => navigate("/")} />
       <ContentWrapper>
-        {!myInfo && <h1 className="loading-wrapper">로그인 정보를 불러오는 중입니다...</h1>}
-        {myInfo && (
+        {!isFetchDone && <h1 className="loading-wrapper">불러오는 중입니다...</h1>}
+        {isFetchDone && myInfo && (
           <MyInfo
             nickname={myInfo.nickname}
             email={myInfo.email}
@@ -65,7 +61,7 @@ export default function MyPage() {
             tagList={myInfo.tagList}
           />
         )}
-        {myOpenTeam && (
+        {isFetchDone && myOpenTeam && (
           <MyOpenTeam
             teamCategory={myOpenTeam.teamCategory}
             title={myOpenTeam.title}
@@ -76,14 +72,16 @@ export default function MyPage() {
             capacityCount={myOpenTeam.capacityCount}
           />
         )}
-        <ul className="menu-wrapper">
-          <li>
-            <button onClick={() => navigate("/my-team-history")}>내가 만든 완두콩 모두 보기</button>
-          </li>
-          <li>
-            <button onClick={() => navigate("/my-team-party")}>참여한 완두콩 보기</button>
-          </li>
-        </ul>
+        {isFetchDone && (
+          <ul className="menu-wrapper">
+            <li>
+              <button onClick={() => navigate("/my-team-history")}>내가 만든 완두콩 모두 보기</button>
+            </li>
+            <li>
+              <button onClick={() => navigate("/my-team-party")}>참여한 완두콩 보기</button>
+            </li>
+          </ul>
+        )}
         <section>
           <h1 className="menu-title">기타</h1>
           <ul className="menu-wrapper">
@@ -110,6 +108,8 @@ const ContentWrapper = styled.div`
   margin: 80px 0 60px 0;
 
   h1.loading-wrapper {
+    width: 100%;
+    padding: 0 20px 32px;
     font-size: 18px;
     font-weight: 700;
     line-height: 22px;

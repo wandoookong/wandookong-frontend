@@ -17,6 +17,7 @@ import { applyFailModalContent } from "./utilities/applyFailModalContent";
 export function TeamDetail() {
   const navigate = useNavigate();
   const param = useParams();
+  const [isFetchValid, setIsFetchValid] = useState(false);
   const [isApplyFailModalOn, setIsApplyFailModalOn] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   const [teamDetailData, setTeamDetailData] = useState<TeamDetailType>({
@@ -54,6 +55,7 @@ export function TeamDetail() {
     (async function () {
       const response = await getTeamDetailApi(Number(param.teamId));
       setTeamDetailData(response);
+      setIsFetchValid(!isFetchValid);
     })();
   }, [param.teamId]);
 
@@ -75,33 +77,36 @@ export function TeamDetail() {
           </div>
           <h1>{teamDetailData.title}</h1>
         </header>
-        <div>
-          <section>
-            <h2>완두콩 소개</h2>
-            <TeamDescriptionWrapper isDescriptionOpen={isDescriptionOpen}>
-              <p>{teamDetailData.description}</p>
-              <ShowMoreButton
-                isDescriptionOpen={isDescriptionOpen}
-                onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}
-              />
-            </TeamDescriptionWrapper>
-          </section>
-          <section className="position-wrapper">
-            <h2>멤버 콩</h2>
-            <ul>
-              {teamDetailData.teamCapacityList.map((role, index) => (
-                <PositionItem
-                  key={index}
-                  positionName={role.roleDetailName}
-                  isPositionValid={Object.keys(role).includes("careerRangeName")}
-                  isLeader={role.teamLead}
-                  careerRangeName={role.careerRangeName}
-                  tags={role.tagList}
+        {!isFetchValid && <p>불러오는 중 입니다...</p>}
+        {isFetchValid && (
+          <div>
+            <section>
+              <h2>완두콩 소개</h2>
+              <TeamDescriptionWrapper isDescriptionOpen={isDescriptionOpen}>
+                <p>{teamDetailData.description}</p>
+                <ShowMoreButton
+                  isDescriptionOpen={isDescriptionOpen}
+                  onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}
                 />
-              ))}
-            </ul>
-          </section>
-        </div>
+              </TeamDescriptionWrapper>
+            </section>
+            <section className="position-wrapper">
+              <h2>멤버 콩</h2>
+              <ul>
+                {teamDetailData.teamCapacityList.map((role, index) => (
+                  <PositionItem
+                    key={index}
+                    positionName={role.roleDetailName}
+                    isPositionValid={Object.keys(role).includes("careerRangeName")}
+                    isLeader={role.teamLead}
+                    careerRangeName={role.careerRangeName}
+                    tags={role.tagList}
+                  />
+                ))}
+              </ul>
+            </section>
+          </div>
+        )}
         <SingleButton
           label={teamDetailData.teamStatus === "open" ? "참여하기" : "모집 마감"}
           onClick={onClickApply}

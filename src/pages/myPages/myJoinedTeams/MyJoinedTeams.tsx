@@ -10,21 +10,25 @@ import MyPageHeader from "../components/myPageHeader";
 
 export default function MyJoinedTeams() {
   const navigate = useNavigate();
+  const [isFetchValid, setIsFetchValid] = useState(false);
   const [acceptedTeamData, setAcceptedTeamData] = useState<MyJoinedTeamType[]>([]);
 
   useEffect(() => {
     (async function () {
       const response = await getMyJoinedTeamsApi();
       setAcceptedTeamData(response);
+      setIsFetchValid(!isFetchValid);
     })();
   }, []);
 
   return (
     <Container>
       <MyPageHeader title="참여한 완두콩 보기" onClick={() => navigate(-1)} />
-      {isEmpty(acceptedTeamData) && <p className="loading-wrapper">생성된 완두콩이 없습니다.</p>}
+      {!isFetchValid && <p className="loading-wrapper">불러오는 중 입니다...</p>}
+      {isFetchValid && isEmpty(acceptedTeamData) && <p className="loading-wrapper">생성된 완두콩이 없습니다.</p>}
       <div>
-        {acceptedTeamData &&
+        {isFetchValid &&
+          acceptedTeamData &&
           acceptedTeamData.map((team, index) => (
             <JoinedItem
               key={index}

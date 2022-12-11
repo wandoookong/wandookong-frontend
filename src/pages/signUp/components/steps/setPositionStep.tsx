@@ -127,10 +127,13 @@ const Button = styled.li<{ isChecked: boolean }>`
   display: contents;
 
   label {
-    padding: 16px 24px;
+    min-width: 90px;
+    padding: 16px 13px;
+    box-sizing: border-box;
     border: 1.5px solid ${(props) => (props.isChecked ? colors.brand600 : colors.brand300)};
     border-radius: 100px;
     background: ${(props) => (props.isChecked ? colors.brand300 : "transparent")};
+    text-align: center;
     font-size: 16px;
     font-weight: ${(props) => (props.isChecked ? "700" : "500")};
     line-height: 19px;

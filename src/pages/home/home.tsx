@@ -19,6 +19,7 @@ export default function Home() {
   const navigate = useNavigate();
   const { search } = useLocation();
   const [isWalkThrough, setIsWalkThrough] = useState(false);
+  const [isFetchValid, setIsFetchValid] = useState(false);
   const [isCreateTeamFailModalOn, setIsCreateTeamFailModalOn] = useState(false);
   const [createdMyTeamId, setCreatedMyTeamId] = useState(0);
   const [teamsData, setTeamsData] = useState<HomeTeam[]>([]);
@@ -61,6 +62,7 @@ export default function Home() {
     (async function () {
       const response = await getHomeTeamsApi(search);
       setTeamsData(response);
+      setIsFetchValid(true);
     })();
   }, [search]);
 
@@ -84,9 +86,10 @@ export default function Home() {
           <button onClick={onClickCreateTeam}>완두콩 만들기</button>
         </Carousel>
         <FindTeamFilter filters={findTeamFilters} setFilters={setFindTeamFilters} />
-        {!teamsData && <p>완두콩 불러오는 중...</p>}
-        {isEmpty(teamsData) && <p>아직 만들어진 완두콩이 없습니다.</p>}
-        {!isEmpty(teamsData) &&
+        {!isFetchValid && <p>완두콩 불러오는 중...</p>}
+        {isFetchValid && isEmpty(teamsData) && <p>아직 만들어진 완두콩이 없습니다.</p>}
+        {isFetchValid &&
+          !isEmpty(teamsData) &&
           teamsData.map((data, index) => <TeamItem key={index} teamId={data.teamId} teamData={data} isDday={true} />)}
       </Container>
     </>

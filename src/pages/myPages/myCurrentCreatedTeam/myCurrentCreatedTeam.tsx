@@ -23,6 +23,7 @@ import { DeleteFailMyCreateTeam } from "../../../@types/dto/deleteFailMyCreateTe
 export default function MyCurrentCreatedTeam() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isFetchValid, setIsFetchValid] = useState(false);
   const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
   const [isNotDeleteModalOn, setIsNotDeleteModalOn] = useState(false);
   const [myCreatedTeam, setMyCreatedTeam] = useState<MyCreatedTeam>({
@@ -84,6 +85,7 @@ export default function MyCurrentCreatedTeam() {
       setMyCreatedTeam(response[0]);
       setPendingMembers(response[1]);
       setAcceptedMembers(response[2]);
+      setIsFetchValid(!isFetchValid);
     })();
   }, []);
 
@@ -126,14 +128,16 @@ export default function MyCurrentCreatedTeam() {
             참여자
           </button>
         </div>
-        {category === "pending" && (isEmpty(pendingMembers) || !pendingMembers) && (
+        {!isFetchValid && <p className="empty-wrapper">불러오고 있습니다...</p>}
+        {isFetchValid && category === "pending" && (isEmpty(pendingMembers) || !pendingMembers) && (
           <p className="empty-wrapper">아직 아무도 없어요</p>
         )}
-        {category === "accepted" && (isEmpty(acceptedMembers) || !acceptedMembers) && (
+        {isFetchValid && category === "accepted" && (isEmpty(acceptedMembers) || !acceptedMembers) && (
           <p className="empty-wrapper">아직 아무도 없어요</p>
         )}
         <section className="applicants-wrapper">
-          {pendingMembers &&
+          {isFetchValid &&
+            pendingMembers &&
             category === "pending" &&
             pendingMembers.map((applicant, index) => (
               <PendingMember
@@ -147,7 +151,8 @@ export default function MyCurrentCreatedTeam() {
                 memberStatus={applicant.memberStatus}
               />
             ))}
-          {acceptedMembers &&
+          {isFetchValid &&
+            acceptedMembers &&
             category === "accepted" &&
             acceptedMembers.map((applicant, index) => (
               <AcceptedMember

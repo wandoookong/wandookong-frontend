@@ -115,6 +115,7 @@ const CloseButtonWrapper = styled.div`
     height: 28px;
     border: none;
     background: transparent url(${CloseIcon}) center / 100% no-repeat;
+    cursor: pointer;
   }
 `;
 
