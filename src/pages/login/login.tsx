@@ -66,7 +66,6 @@ export default function Login() {
       <ImageWrapper>
         <img src={Logo} alt="완두콩 로고" />
       </ImageWrapper>
-
       <div
         id="g_id_onload"
         data-client_id="572618992504-dm52b32m1e7pclkn3h9bm3ccksi0aqtc.apps.googleusercontent.com"
@@ -102,7 +101,7 @@ const ImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 200px 0 240px;
+  padding: 200px 0 220px;
 
   img {
     width: 150px;

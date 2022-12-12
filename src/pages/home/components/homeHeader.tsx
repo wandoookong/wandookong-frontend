@@ -6,6 +6,7 @@ import { colors } from "../../../styles/colors";
 import AccountIcon from "../../../assets/icons/account.svg";
 import { isEmpty } from "../../../@types/utility/typeGuard";
 import { Nullable } from "../../../@types/utility/nullable";
+import Logo from "../../../assets/images/logo.png";
 
 export const HomeHeader = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ export const HomeHeader = () => {
 
   return (
     <Container isScrollOn={isScrollOn}>
-      <h1 onClick={() => window.location.reload()}>완두콩</h1>
+      <button className="logo" onClick={() => window.location.reload()} />
       <RightWrapper>
         {isScrollOn && (
           <button className="set-team-button" onClick={() => navigate("/request")}>
@@ -67,11 +68,12 @@ const Container = styled.nav<{ isScrollOn: boolean }>`
   backdrop-filter: ${(props) => (props.isScrollOn ? "blur(150px)" : "none")};
   z-index: 900;
 
-  h1 {
+  button.logo {
     margin: 0;
-    font-size: 24px;
-    font-weight: 700;
-    color: ${colors.grey900};
+    width: 64px;
+    height: 24px;
+    border: none;
+    background: transparent url(${Logo}) center / 100% no-repeat;
     cursor: pointer;
   }
 `;

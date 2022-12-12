@@ -5,19 +5,26 @@ import { colors } from "../../styles/colors";
 
 export default function Terms() {
   const navigate = useNavigate();
+  const onClick = () => {
+    navigate(-1);
+  };
 
   return (
     <Container>
       <header>
-        <button onClick={() => navigate(-1)} />
+        <button onClick={onClick} />
       </header>
       <div>
         <h1>서비스 이용약관</h1>
         <strong>제1조(목적)</strong>
         <p>
-          산타파이브의 서비스를 이용해주셔서 감사합니다. 이 약관은 완두콩(이하 “회사”)가 운영하는 인터넷 사이트 내
-          트리를 꾸며줘!(이하 “사이트”)를 이용함에 있어 회사와 이용자의 권리·의무 및 책임사항을 규정함을 목적으로
-          합니다.
+          이 약관은 완두콩(이하 “회사”)가 운영하는 인터넷 사이트 완두콩 (이하 “사이트”)를 이용함에 있어 회사와 이용자의
+          권리·의무 및 책임사항을 규정함을 목적으로 합니다.
+        </p>
+        <strong>제1조(목적)</strong>
+        <p>
+          이 약관은 완두콩(이하 “회사”)가 운영하는 인터넷 사이트 완두콩 (이하 “사이트”)를 이용함에 있어 회사와 이용자의
+          권리·의무 및 책임사항을 규정함을 목적으로 합니다.
         </p>
       </div>
     </Container>
@@ -26,19 +33,26 @@ export default function Terms() {
 
 const Container = styled.div`
   header {
+    position: fixed;
+    top: 0;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
-    padding: 40px 20px 24px;
+    padding: 44px 20px 24px;
+    box-sizing: border-box;
+    background: ${colors.background};
 
     button {
       width: 24px;
       height: 24px;
       background: transparent url(${CloseIcon}) center / 100% no-repeat;
       border: none;
+      cursor: pointer;
     }
   }
   div {
-    padding: 0 20px 80px;
+    padding: 92px 20px 80px;
+    overflow-x: hidden;
 
     h1 {
       margin-bottom: 24px;
@@ -52,6 +66,12 @@ const Container = styled.div`
       margin-bottom: 12px;
       font-weight: 700;
       color: ${colors.grey900};
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: ${colors.grey900};
+      line-height: 20px;
     }
   }
 `;

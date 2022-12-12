@@ -9,7 +9,7 @@ export const roleData = [
 export const position = [
   { id: 1, label: "개발자", value: "dev" },
   { id: 2, label: "디자이너", value: "design" },
-  { id: 3, label: "기획자", value: "po" },
+  { id: 3, label: "기획자", value: "pm" },
 ];
 
 export const career = [

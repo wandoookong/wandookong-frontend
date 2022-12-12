@@ -18,7 +18,7 @@ import WalkThrough from "./walkThrough";
 export default function Home() {
   const navigate = useNavigate();
   const { search } = useLocation();
-  const [isWalkThrough, setIsWalkThrough] = useState(false);
+  const [isWalkThroughClicked, setIsWalkThroughClicked] = useState(false);
   const [isFetchValid, setIsFetchValid] = useState(false);
   const [isCreateTeamFailModalOn, setIsCreateTeamFailModalOn] = useState(false);
   const [createdMyTeamId, setCreatedMyTeamId] = useState(0);
@@ -28,19 +28,9 @@ export default function Home() {
     teamCategory: "",
   });
 
-  const getWalkThrough = () => {
-    const isValid = localStorage.getItem("walkThrough");
-    if (isValid === null) {
-      localStorage.setItem("walkThrough", "true");
-      return setIsWalkThrough(true);
-    }
-    if (!isValid) {
-      return setIsWalkThrough(false);
-    }
-  };
-
   const onClickCloseWalkThrough = () => {
-    setIsWalkThrough(false);
+    localStorage.setItem("isWalkThroughClicked", "true");
+    setIsWalkThroughClicked(true);
   };
 
   const onClickHandler = () => {
@@ -66,9 +56,20 @@ export default function Home() {
     })();
   }, [search]);
 
+  useEffect(() => {
+    const isValid = localStorage.getItem("isWalkThroughClicked");
+    if (isValid === null) {
+      localStorage.setItem("isWalkThroughClicked", "false");
+      return setIsWalkThroughClicked(false);
+    }
+    if (isValid === "true") {
+      setIsWalkThroughClicked(true);
+    }
+  }, []);
+
   return (
     <>
-      {isWalkThrough && <WalkThrough onClick={onClickCloseWalkThrough} />}
+      {!isWalkThroughClicked && <WalkThrough onClick={onClickCloseWalkThrough} />}
       {isCreateTeamFailModalOn && (
         <FloatingModal
           title="아직 모집중인 완두콩이 있습니다!"
@@ -100,9 +101,9 @@ const Container = styled.main`
   position: absolute;
   top: 0;
   margin: 0;
-  padding: 0;
+  padding: 0 0 80px 0;
   width: 100%;
-  overflow-y: hidden;
+  overflow-x: hidden;
 
   p {
     margin-top: 80px;

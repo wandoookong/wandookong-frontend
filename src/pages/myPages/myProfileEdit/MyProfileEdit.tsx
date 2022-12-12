@@ -29,7 +29,7 @@ export default function MyProfileEdit() {
     useEditProfileReducer();
 
   const onClickSave = async () => {
-    if (isEmpty(errorMessage)) {
+    if (isEmpty(myInfo.nickname)) {
       return setErrorMessage("닉네임을 입력하세요.");
     }
     if (isDifferent) {
