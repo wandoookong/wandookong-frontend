@@ -1,45 +1,48 @@
 import styled from "@emotion/styled";
 import { roleData } from "../../teamRequestForm/utilities/roleData";
-import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import qs from "qs";
 import { colors } from "../../../styles/colors";
-import { TeamFilters } from "../../../@types/model/homeFindTeamsFilters";
+import qs from "qs";
 
-interface Props {
-  filters: TeamFilters;
-  setFilters(value: TeamFilters): void;
-}
-
-export default function FindTeamFilter({ filters, setFilters }: Props) {
+export default function FindTeamFilter() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    const query = qs.parse(location.search, { ignoreQueryPrefix: true });
-    if (filters.roleDetail.length !== 0) {
-      const parsedQuery = { ...query, roleDetail: filters.roleDetail };
-      navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
-      return;
-    }
-    const parsedQuery = { ...query };
-    delete parsedQuery.roleDetail;
-    navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
-    return;
-  }, [filters.roleDetail]);
+  const getQuery = qs.parse(location.search, { ignoreQueryPrefix: true });
 
-  useEffect(() => {
-    const query = qs.parse(location.search, { ignoreQueryPrefix: true });
-    if (filters.teamCategory.length !== 0) {
-      const parsedQuery = { ...query, teamCategory: filters.teamCategory };
-      navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
-      return;
+  const onChangeRoleDetailAllFilter = () => {
+    if (getQuery.teamCategory !== undefined) {
+      const parsedQuery = { ...getQuery };
+      delete parsedQuery.roleDetail;
+      return navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
     }
-    const parsedQuery = { ...query };
-    delete parsedQuery.teamCategory;
-    navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
-    return;
-  }, [filters.teamCategory]);
+    return navigate("/");
+  };
+
+  const onChangeRoleDetailFilters = (value) => {
+    if (getQuery.teamCategory !== undefined) {
+      const parsedQuery = { ...getQuery, roleDetail: value };
+      return navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
+    }
+    return navigate(`/?roleDetail=${value}`);
+  };
+
+  const onChangeCategoryAllFilter = () => {
+    if (getQuery.roleDetail !== undefined) {
+      const parsedQuery = { ...getQuery };
+      delete parsedQuery.teamCategory;
+      return navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
+    }
+    return navigate("/");
+  };
+
+  const onChangeTeamCategoryFilters = (value) => {
+    if (getQuery.roleDetail !== undefined) {
+      const parsedQuery = { ...getQuery, teamCategory: value };
+      return navigate(qs.stringify(parsedQuery, { addQueryPrefix: true }));
+    }
+    return navigate(`/?teamCategory=${value}`);
+  };
 
   return (
     <Container>
@@ -48,19 +51,14 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
         <FilterContent>
           <span>직군콩 |</span>
           <ul>
-            <Filter
-              isChecked={filters.roleDetail.length === 0}
-              onClick={() => setFilters({ ...filters, roleDetail: "" })}
-            >
+            <Filter isChecked={getQuery.roleDetail === undefined} onClick={onChangeRoleDetailAllFilter}>
               <button>전체</button>
             </Filter>
             {roleData.map((role, index) => (
               <Filter
                 key={index}
-                isChecked={filters.roleDetail === role.value}
-                onClick={() => {
-                  setFilters({ ...filters, roleDetail: role.value });
-                }}
+                isChecked={getQuery.roleDetail === role.value}
+                onClick={() => onChangeRoleDetailFilters(role.value)}
               >
                 <button>{role.label}</button>
               </Filter>
@@ -70,21 +68,18 @@ export default function FindTeamFilter({ filters, setFilters }: Props) {
         <FilterContent>
           <span>카테고리 |</span>
           <ul>
-            <Filter
-              isChecked={filters.teamCategory.length === 0}
-              onClick={() => setFilters({ ...filters, teamCategory: "" })}
-            >
+            <Filter isChecked={getQuery.teamCategory === undefined} onClick={onChangeCategoryAllFilter}>
               <button>전체</button>
             </Filter>
             <Filter
-              isChecked={filters.teamCategory === "portfolio"}
-              onClick={() => setFilters({ ...filters, teamCategory: "portfolio" })}
+              isChecked={getQuery.teamCategory === "portfolio"}
+              onClick={() => onChangeTeamCategoryFilters("portfolio")}
             >
               <button>포트폴리오</button>
             </Filter>
             <Filter
-              isChecked={filters.teamCategory === "side_project"}
-              onClick={() => setFilters({ ...filters, teamCategory: "side_project" })}
+              isChecked={getQuery.teamCategory === "side_project"}
+              onClick={() => onChangeTeamCategoryFilters("side_project")}
             >
               <button>사이드 프로젝트</button>
             </Filter>

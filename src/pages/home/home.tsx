@@ -7,13 +7,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { isEmpty } from "../../@types/utility/typeGuard";
 import { colors } from "../../styles/colors";
 import CarouselImg from "./assets/image.jpg";
-import { getHomeTeamsApi } from "../../api/home/getHomeTeamsApi";
-import { TeamFilters } from "../../@types/model/homeFindTeamsFilters";
 import { HomeTeam } from "../../@types/dto/getHomeTeam";
 import { getIsValidToCreateTeamApi } from "../../api/home/getIsValidToCreateTeamApi";
 import FloatingModal from "../../components/modal/FloatingModal";
 import { IsValidToCreateTeam } from "../../@types/dto/isValidToCreateTeam";
 import WalkThrough from "./walkThrough";
+import { getHomeTeamsApi } from "../../api/home/getHomeTeamsApi";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -23,22 +22,18 @@ export default function Home() {
   const [isCreateTeamFailModalOn, setIsCreateTeamFailModalOn] = useState(false);
   const [createdMyTeamId, setCreatedMyTeamId] = useState(0);
   const [teamsData, setTeamsData] = useState<HomeTeam[]>([]);
-  const [findTeamFilters, setFindTeamFilters] = useState<TeamFilters>({
-    roleDetail: "",
-    teamCategory: "",
-  });
 
-  const onClickCloseWalkThrough = () => {
+  const onCloseWalkThroughHandler = () => {
     localStorage.setItem("isWalkThroughClicked", "true");
     setIsWalkThroughClicked(true);
   };
 
-  const onClickHandler = () => {
+  const onCloseModalHandler = () => {
     setIsCreateTeamFailModalOn(!isCreateTeamFailModalOn);
     navigate(`/team/${createdMyTeamId}`);
   };
 
-  const onClickCreateTeam = async () => {
+  const onCreateTeamHandler = async () => {
     const response: IsValidToCreateTeam = await getIsValidToCreateTeamApi();
     if (!response.result) {
       setCreatedMyTeamId(response.teamId);
@@ -62,21 +57,19 @@ export default function Home() {
       localStorage.setItem("isWalkThroughClicked", "false");
       return setIsWalkThroughClicked(false);
     }
-    if (isValid === "true") {
-      setIsWalkThroughClicked(true);
-    }
+    setIsWalkThroughClicked(true);
   }, []);
 
   return (
     <>
-      {!isWalkThroughClicked && <WalkThrough onClick={onClickCloseWalkThrough} />}
+      {!isWalkThroughClicked && <WalkThrough onClick={onCloseWalkThroughHandler} />}
       {isCreateTeamFailModalOn && (
         <FloatingModal
           title="아직 모집중인 완두콩이 있습니다!"
           content="현재 모집중인 완두콩이 마감 되어야 새로운 완두콩을 만들 수 있습니다. 모집중인 완두콩으로 이동하시겠습니까?"
           modalIcon="exclamation"
           buttonLabel="내 완두콩으로 이동하기"
-          onClickButton={onClickHandler}
+          onClickButton={onCloseModalHandler}
           onClose={() => setIsCreateTeamFailModalOn(!isCreateTeamFailModalOn)}
           showClose={true}
         />
@@ -84,9 +77,9 @@ export default function Home() {
       <HomeHeader />
       <Container>
         <Carousel>
-          <button onClick={onClickCreateTeam}>완두콩 만들기</button>
+          <button onClick={onCreateTeamHandler}>완두콩 만들기</button>
         </Carousel>
-        <FindTeamFilter filters={findTeamFilters} setFilters={setFindTeamFilters} />
+        <FindTeamFilter />
         {!isFetchValid && <p>완두콩 불러오는 중...</p>}
         {isFetchValid && isEmpty(teamsData) && <p>아직 만들어진 완두콩이 없습니다.</p>}
         {isFetchValid &&
