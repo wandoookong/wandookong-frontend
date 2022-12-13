@@ -9,7 +9,7 @@ import CommonModalHeader from "../../components/header/commonModalHeader";
 import { colors } from "../../styles/colors";
 import CheckIcon from "../../assets/icons/select-grey900.svg";
 import { teamCategoryText } from "../../services/convertValueToName";
-import { DdayPill } from "../../components/pill/DdayPill";
+import { DdayTimer } from "../../components/ddayTimer/DdayTimer";
 import { TeamDetailType } from "../../@types/dto/getTeamDetail";
 import { getTeamDetailApi } from "../../api/teamDetail/getTeamDetailApi";
 import { ApplyTeamForm } from "../../@types/dto/setApplyTeam";
@@ -113,7 +113,7 @@ export default function ApplyTeam() {
         <TitleWrapper>
           <div className="title-wrapper">
             <p>{teamCategoryText(teamDetailData.teamCategory)}</p>
-            <DdayPill closeDueYmd={teamDetailData.closeDueYmd} currentTimestamp={Date.now()} />
+            <DdayTimer closeDueYmd={teamDetailData.closeDueYmd} currentTimestamp={Date.now()} />
           </div>
           <h1>{teamDetailData.title}</h1>
         </TitleWrapper>

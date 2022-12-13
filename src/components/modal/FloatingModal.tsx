@@ -121,7 +121,7 @@ const CloseButtonWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   margin: 0;
-  padding: 0;
+  padding: 0 20px;
 
   color: ${colors.grey900};
 

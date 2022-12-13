@@ -16,6 +16,7 @@ export default function JoinedItem({
   createdAt,
   roleDetail,
   memberStatus,
+  contact,
 }: MyJoinedTeamType) {
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
@@ -28,6 +29,7 @@ export default function JoinedItem({
   const year = createdAt.slice(0, 4);
   const month = createdAt.slice(5, 7);
   const date = createdAt.slice(8, 10);
+  const createdDate = year + "." + month + "." + date;
 
   useEffect(() => {
     setMyTeamState(memberStatus);
@@ -45,7 +47,7 @@ export default function JoinedItem({
         />
       )}
       <Container isDescriptionOpen={isDescriptionOpen} myTeamState={myTeamState}>
-        <span className="date-wrapper">{`${year}.${month}.${date}`}</span>
+        <span className="date-wrapper">{createdDate}</span>
         <div className="content-wrapper">
           <div className="inner-content-wrapper">
             <div className="header-wrapper">
@@ -64,7 +66,7 @@ export default function JoinedItem({
               </div>
               <div className="contents">
                 <span>연락 수단:</span>
-                <p>연락 수단이 여기 들어갑니다.</p>
+                <p>{contact}</p>
               </div>
             </div>
           </div>

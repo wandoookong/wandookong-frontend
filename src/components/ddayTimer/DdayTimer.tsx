@@ -2,7 +2,7 @@
 import { css } from "@emotion/react/macro";
 import { useEffect, useState } from "react";
 
-export function DdayPill({ closeDueYmd, currentTimestamp }) {
+export function DdayTimer({ closeDueYmd, currentTimestamp }) {
   const diffSeconds = Math.floor((new Date(`${closeDueYmd} 24:00:00+09:00`).getTime() - currentTimestamp) / 1000);
 
   if (Number.isNaN(diffSeconds)) return null;

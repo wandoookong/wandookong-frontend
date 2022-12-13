@@ -28,11 +28,6 @@ export default function Home() {
     setIsWalkThroughClicked(true);
   };
 
-  const onCloseModalHandler = () => {
-    setIsCreateTeamFailModalOn(!isCreateTeamFailModalOn);
-    navigate(`/team/${createdMyTeamId}`);
-  };
-
   const onCreateTeamHandler = async () => {
     const response: IsValidToCreateTeam = await getIsValidToCreateTeamApi();
     if (!response.result) {
@@ -41,6 +36,11 @@ export default function Home() {
       return;
     }
     return navigate("/request");
+  };
+
+  const onCloseModalHandler = () => {
+    setIsCreateTeamFailModalOn(!isCreateTeamFailModalOn);
+    navigate(`/team/${createdMyTeamId}`);
   };
 
   useEffect(() => {

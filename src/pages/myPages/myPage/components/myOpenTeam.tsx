@@ -1,4 +1,4 @@
-import { DdayPill } from "../../../../components/pill/DdayPill";
+import { DdayTimer } from "../../../../components/ddayTimer/DdayTimer";
 import { teamCategoryText } from "../../../../services/convertValueToName";
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
@@ -31,7 +31,7 @@ export default function MyOpenTeam({
       <div className="my-team-wrapper">
         <div className="sub-content">
           <span className="team-category">{teamCategoryText(teamCategory)}</span>
-          <DdayPill closeDueYmd={closeDueYmd} currentTimestamp={currentTimestamp} />
+          <DdayTimer closeDueYmd={closeDueYmd} currentTimestamp={currentTimestamp} />
         </div>
         <h2 onClick={() => navigate("/myCreatedTeam?category=pending")}>{title}</h2>
         <div className="team-applicants-wrapper">

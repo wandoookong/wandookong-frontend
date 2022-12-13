@@ -8,7 +8,7 @@ import { colors } from "../../styles/colors";
 import CommonModalHeader from "../../components/header/commonModalHeader";
 import PositionItem from "./components/positionItem";
 import { teamCategoryText } from "../../services/convertValueToName";
-import { DdayPill } from "../../components/pill/DdayPill";
+import { DdayTimer } from "../../components/ddayTimer/DdayTimer";
 import { getTeamDetailApi } from "../../api/teamDetail/getTeamDetailApi";
 import { TeamDetailType } from "../../@types/dto/getTeamDetail";
 import TeamApplyFailModal from "./components/teamApplyFailModal";
@@ -73,7 +73,7 @@ export function TeamDetail() {
         <header>
           <div className="header-wrapper">
             <p>{teamCategoryText(teamDetailData.teamCategory)}</p>
-            <DdayPill closeDueYmd={teamDetailData.closeDueYmd} currentTimestamp={Date.now()} />
+            <DdayTimer closeDueYmd={teamDetailData.closeDueYmd} currentTimestamp={Date.now()} />
           </div>
           <h1>{teamDetailData.title}</h1>
         </header>

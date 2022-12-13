@@ -13,10 +13,12 @@ import _ from "lodash";
 import setUpdateMyProfileApi from "../../../api/myPages/myPage/setUpdateMyProfileApi";
 import InputValidationErrorMessage from "../../signUp/components/inputValidationErrorMessage";
 import { isEmpty } from "../../../@types/utility/typeGuard";
+import FloatingModal from "../../../components/modal/FloatingModal";
 
 export default function MyProfileEdit() {
   const navigate = useNavigate();
   const [isDifferent, setIsDifferent] = useState(false);
+  const [isModalOn, setIsModalOn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [myInfo, setMyInfo] = useState({
     nickname: "",
@@ -28,13 +30,35 @@ export default function MyProfileEdit() {
   const { state, onChangeNickname, onChangeMyPosition, onChangeCareerRange, onChangeTagNameList } =
     useEditProfileReducer();
 
-  const onClickSave = async () => {
+  const onSaveHandler = async () => {
     if (isEmpty(myInfo.nickname)) {
       return setErrorMessage("닉네임을 입력하세요.");
     }
     if (isDifferent) {
       const response = await setUpdateMyProfileApi(state);
       window.location.reload();
+    }
+  };
+
+  const onCloseModal = () => {
+    setIsModalOn(!isModalOn);
+    navigate("/myAccount");
+  };
+
+  const onNavigateBack = () => {
+    if (isDifferent) {
+      return setIsModalOn(!isModalOn);
+    }
+    navigate("/myAccount");
+  };
+
+  const onModalSaveHandler = async () => {
+    if (isEmpty(myInfo.nickname)) {
+      return setErrorMessage("닉네임을 입력하세요.");
+    }
+    if (isDifferent) {
+      const response = await setUpdateMyProfileApi(state);
+      navigate("/myAccount");
     }
   };
 
@@ -66,7 +90,18 @@ export default function MyProfileEdit() {
 
   return (
     <>
-      <MyPageHeader title="프로필 수정" onClick={() => navigate("/myAccount")} />
+      {isModalOn && (
+        <FloatingModal
+          title="변경된 사항을 저장하시겠습니까?"
+          content="페이지를 나가면 변경사항이 저장되지 않습니다."
+          modalIcon="ExclamationImage"
+          showClose={true}
+          onClose={onCloseModal}
+          buttonLabel="저장하기"
+          onClickButton={onModalSaveHandler}
+        />
+      )}
+      <MyPageHeader title="프로필 수정" onClick={onNavigateBack} />
       <Container isError={errorMessage}>
         <div className="nickname-input">
           <input
@@ -89,7 +124,7 @@ export default function MyProfileEdit() {
           onChange={(e) => onChangeCareerRange(e.currentTarget.value)}
         />
         <MyProfileEditTagSelector tags={state.tagList} onChange={onChangeTagNameList} />
-        <SingleButton label="수정 완료" onClick={onClickSave} isActive={isDifferent} />
+        <SingleButton label="수정 완료" onClick={onSaveHandler} isActive={isDifferent} />
       </Container>
     </>
   );

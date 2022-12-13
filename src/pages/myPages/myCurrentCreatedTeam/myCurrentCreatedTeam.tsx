@@ -4,7 +4,7 @@ import ConfirmModal from "../components/confirmModal";
 import FloatingModal from "../../../components/modal/FloatingModal";
 import MyCreatedTeamNavigation from "./components/myCreatedTeamNavigation";
 import { teamCategoryText } from "../../../services/convertValueToName";
-import { DdayPill } from "../../../components/pill/DdayPill";
+import { DdayTimer } from "../../../components/ddayTimer/DdayTimer";
 import { isEmpty } from "../../../@types/utility/typeGuard";
 import PendingMember from "./components/pendingMember";
 import AcceptedMember from "./components/acceptedApplicant";
@@ -116,7 +116,7 @@ export default function MyCurrentCreatedTeam() {
         <header>
           <div className="title-wrapper">
             <p>{teamCategoryText(myCreatedTeam.teamCategory)}</p>
-            <DdayPill closeDueYmd={myCreatedTeam.closeDueYmd} currentTimestamp={myCreatedTeam.currentTimestamp} />
+            <DdayTimer closeDueYmd={myCreatedTeam.closeDueYmd} currentTimestamp={myCreatedTeam.currentTimestamp} />
           </div>
           <h1>{myCreatedTeam.title}</h1>
         </header>

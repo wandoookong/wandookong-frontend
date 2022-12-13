@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-import { DdayPill } from "../../../components/pill/DdayPill";
+import { DdayTimer } from "../../../components/ddayTimer/DdayTimer";
 import { colors } from "../../../styles/colors";
 import { teamCategoryText } from "../../../services/convertValueToName";
 import { HomeTeam } from "../../../@types/dto/getHomeTeam";
@@ -21,7 +21,7 @@ export default function TeamItem({ teamId, teamData, isDday }: Props) {
       <div className="top-wrapper">
         <div className="title-wrapper">
           <span className="team-category">{teamCategoryText(teamData.teamCategory)}</span>
-          {isDday && <DdayPill closeDueYmd={teamData.closeDueYmd} currentTimestamp={Date.now()} />}
+          {isDday && <DdayTimer closeDueYmd={teamData.closeDueYmd} currentTimestamp={Date.now()} />}
         </div>
         <h2>{teamData.title}</h2>
       </div>

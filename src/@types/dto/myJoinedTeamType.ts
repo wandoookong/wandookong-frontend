@@ -8,4 +8,5 @@ export interface MyJoinedTeamType {
   teamCategory: TEAM_CATEGORY;
   teamId: number;
   title: string;
+  contact: string;
 }

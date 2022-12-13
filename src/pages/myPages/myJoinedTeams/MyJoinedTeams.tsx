@@ -39,6 +39,7 @@ export default function MyJoinedTeams() {
               roleDetail={team.roleDetail}
               teamCategory={team.teamCategory}
               title={team.title}
+              contact={team.contact}
             />
           ))}
       </div>
