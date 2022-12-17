@@ -95,6 +95,9 @@ export default function MyPage() {
               <a href="mailto:wandookongproject@gmail.com">문의하기</a>
             </li>
             <li>
+              <a href="#" target='_blank'>완두콩 팀 소개</a>
+            </li>
+            <li>
               <button onClick={onClickLogout}>로그아웃</button>
             </li>
           </ul>

@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import { useLocation, useNavigate } from "react-router-dom";
 import { isEmpty } from "../../@types/utility/typeGuard";
 import { colors } from "../../styles/colors";
-import CarouselImg from "./assets/image.jpg";
+import CarouselImg from "./assets/mainBanner.png";
 import { HomeTeam } from "../../@types/dto/getHomeTeam";
 import { getIsValidToCreateTeamApi } from "../../api/home/getIsValidToCreateTeamApi";
 import FloatingModal from "../../components/modal/FloatingModal";
