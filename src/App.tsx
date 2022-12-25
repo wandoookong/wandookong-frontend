@@ -8,12 +8,10 @@ import SignUp from "./pages/signUp/signUp";
 import MyPage from "./pages/myPages/myPage/myPage";
 import MyProfileEdit from "./pages/myPages/myProfileEdit/MyProfileEdit";
 import MyCurrentCreatedTeam from "./pages/myPages/myCurrentCreatedTeam/myCurrentCreatedTeam";
-import MyTeamHistoryPage from "./pages/myPages/myTeamHistoryPage/MyTeamHistoryPage";
 import { TeamDetail } from "./pages/teamDetail/teamDetail";
 import ApplyTeam from "./pages/teamDetail/applyTeam";
-import Terms from "./pages/policy/terms";
-import PrivacyInfo from "./pages/policy/privacyInfo";
 import MyJoinedTeams from "./pages/myPages/myJoinedTeams/MyJoinedTeams";
+import MyTeamHistoryPage from "./pages/myPages/myTeamHistoryPage/MyTeamHistoryPage";
 
 function App() {
   return (
@@ -22,8 +20,6 @@ function App() {
         <Route path="/team/:teamId/apply" element={<ApplyTeam />} />
         <Route path="/team/:teamId" element={<TeamDetail />} />
         <Route path="/" element={<Home />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/privacy-info" element={<PrivacyInfo />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/request" element={<TeamRequestForm />} />

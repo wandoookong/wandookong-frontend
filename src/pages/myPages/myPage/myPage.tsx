@@ -86,16 +86,34 @@ export default function MyPage() {
           <h1 className="menu-title">기타</h1>
           <ul className="menu-wrapper">
             <li>
-              <button onClick={() => navigate("/terms")}>서비스 이용약관</button>
+              <a
+                href="https://shared-fin-843.notion.site/c92dd8478738454fabf93fc7265916d9"
+                target="_blank"
+                rel="noreferrer"
+              >
+                서비스 이용약관
+              </a>
             </li>
             <li>
-              <button onClick={() => navigate("/privacy-info")}>개인정보처리방침</button>
+              <a
+                href="https://shared-fin-843.notion.site/3af247fe59404ef899c4eca033062835"
+                target="_blank"
+                rel="noreferrer"
+              >
+                개인정보처리방침
+              </a>
             </li>
             <li>
               <a href="mailto:wandookongproject@gmail.com">문의하기</a>
             </li>
             <li>
-              <a href="#" target='_blank'>완두콩 팀 소개</a>
+              <a
+                href="https://shared-fin-843.notion.site/b87cf3a1417f4b748bcbc755755a50be"
+                target="_blank"
+                rel="noreferrer"
+              >
+                완두콩 팀 소개
+              </a>
             </li>
             <li>
               <button onClick={onClickLogout}>로그아웃</button>
