@@ -151,6 +151,5 @@
     "qs": "^6.11.0",
     "react-app-rewired": "^2.2.1",
     "react-responsive": "^9.0.0-beta.8"
-  },
-  "resolutions": {}
+  }
 }
