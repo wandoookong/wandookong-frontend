@@ -26,7 +26,7 @@ export default function Login() {
 
   function onSignIn(googleUser) {
     const ACCESS_TOKEN_NAME = "w_d_k_t";
-    fetch(`${process.env.REACT_APP_HOST_NAME}/api/auth/google`, {
+    fetch(`/auth/google`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ credential: googleUser.credential }),
