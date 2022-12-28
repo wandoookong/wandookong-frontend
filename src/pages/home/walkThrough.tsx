@@ -7,24 +7,37 @@ import step2 from "./assets/step2.png";
 import step3 from "./assets/step3.png";
 import { colors } from "../../styles/colors";
 import { SingleButton } from "../../components/buttons/singleButton";
+import { useRef, useState } from "react";
 
 export default function WalkThrough({ onClick }) {
+  const sliderRef = useRef(null);
+  const [slideIndex, setSlideIndex] = useState(0);
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: false,
+    afterChange: (index: number) => {
+      setSlideIndex(index);
+    },
   };
 
-  const onClickHandler = () => {};
+  const onNextHandler = () => {
+    if (slideIndex === 2) {
+      return onClick();
+    }
+    // @ts-ignore
+    sliderRef.current.slickNext();
+  };
 
   return (
     <Container>
       <button className="close-button" onClick={onClick}>
         건너뛰기
       </button>
-      <Slider {...settings}>
+      <Slider ref={sliderRef} {...settings}>
         <div className="slider-item-wrapper">
           <img
             width="186px"
@@ -49,35 +62,39 @@ export default function WalkThrough({ onClick }) {
             src={step3}
             alt="함께 사이드 프로젝트를 하고 싶은 직군만 있다면 팀원을 빠르게 모집할 수 있습니다."
           />
-          <strong>이젠, 완두콩으로 더욱 쉽고 재밌게</strong>
-          <strong>사이드 프로젝트 팀원을 찾아보세요</strong>
+          <div className="text-wrapper">
+            <strong>이젠, 완두콩으로 더욱 쉽고 재밌게</strong>
+            <strong>사이드 프로젝트 팀원을 찾아보세요</strong>
+          </div>
         </div>
       </Slider>
-      <SingleButton label="다음" onClick={onClickHandler} isActive={true} />
+      <SingleButton label={slideIndex !== 2 ? "다음" : "시작하기"} onClick={onNextHandler} isActive={true} />
     </Container>
   );
 }
 
 const Container = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  width: 100%;
+  height: 100%;
   background: ${colors.background};
   text-align: center;
   z-index: 998;
 
+  .slick-dots li {
+    margin: 0;
+  }
+
   button.close-button {
-    position: fixed;
-    top: 57px;
+    position: absolute;
+    top: 49px;
     right: 20px;
     background: none;
     border: none;
     font-weight: 700;
     font-size: 13px;
     color: ${colors.grey900};
-    z-index: 10;
+    z-index: 990;
     cursor: pointer;
   }
 
@@ -105,6 +122,12 @@ const Container = styled.div`
       line-height: 23px;
       color: ${colors.grey900};
       font-weight: 700;
+    }
+
+    div.text-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 `;

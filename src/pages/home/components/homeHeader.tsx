@@ -68,7 +68,7 @@ const Container = styled.nav<{ isScrollOn: boolean }>`
       : "linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 90%)"};
   box-shadow: ${(props) => (props.isScrollOn ? "0 0 20px -4px rgba(0, 0, 0, 0.2)" : "none")};
   backdrop-filter: ${(props) => (props.isScrollOn ? "blur(150px)" : "none")};
-  z-index: 900;
+  z-index: 50;
 
   button.logo {
     margin: 0;

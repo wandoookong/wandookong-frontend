@@ -74,18 +74,24 @@ export default function Home() {
           showClose={true}
         />
       )}
-      <HomeHeader />
-      <Container>
-        <Carousel>
-          <button onClick={onCreateTeamHandler}>완두콩 만들기</button>
-        </Carousel>
-        <FindTeamFilter />
-        {!isFetchValid && <p>완두콩 불러오는 중...</p>}
-        {isFetchValid && isEmpty(teamsData) && <p>아직 만들어진 완두콩이 없습니다.</p>}
-        {isFetchValid &&
-          !isEmpty(teamsData) &&
-          teamsData.map((data, index) => <TeamItem key={index} teamId={data.teamId} teamData={data} isDday={true} />)}
-      </Container>
+      {isWalkThroughClicked && (
+        <>
+          <HomeHeader />{" "}
+          <Container>
+            <Carousel>
+              <button onClick={onCreateTeamHandler}>완두콩 만들기</button>
+            </Carousel>
+            <FindTeamFilter />
+            {!isFetchValid && <p>완두콩 불러오는 중...</p>}
+            {isFetchValid && isEmpty(teamsData) && <p>아직 만들어진 완두콩이 없습니다.</p>}
+            {isFetchValid &&
+              !isEmpty(teamsData) &&
+              teamsData.map((data, index) => (
+                <TeamItem key={index} teamId={data.teamId} teamData={data} isDday={true} />
+              ))}
+          </Container>{" "}
+        </>
+      )}
     </>
   );
 }
