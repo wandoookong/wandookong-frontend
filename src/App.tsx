@@ -13,7 +13,7 @@ import ApplyTeam from "./pages/teamDetail/applyTeam";
 import MyJoinedTeams from "./pages/myPages/myJoinedTeams/MyJoinedTeams";
 import MyTeamHistoryPage from "./pages/myPages/myTeamHistoryPage/MyTeamHistoryPage";
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
@@ -33,5 +33,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;

@@ -17,16 +17,4 @@ requester.interceptors.request.use(
   accessTokenAuthenticationInterceptor.onRejected,
 );
 
-// requester.interceptors.response.use(
-//   (response) => response.data,
-//   (error) => {
-//     if (error.response?.status === 401) {
-//       console.log("auth error");
-//       return (window.location.href = "/login");
-//     }
-//     alert(error.response?.data?.message ?? "잠시 후 다시 시도해주세요");
-//     console.log(error.response?.data);
-//   },
-// );
-
 export default requester;

@@ -51,6 +51,8 @@ const Container = styled.nav`
   display: flex;
   align-items: center;
   width: 100%;
+  min-width: 360px;
+  max-width: 480px;
   height: auto;
   padding: 52px 20px 34px;
   box-sizing: border-box;

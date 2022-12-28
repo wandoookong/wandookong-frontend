@@ -107,12 +107,12 @@ export function TeamDetail() {
             </section>
           </div>
         )}
-        <SingleButton
-          label={teamDetailData.teamStatus === "open" ? "참여하기" : "모집 마감"}
-          onClick={onClickApply}
-          isActive={teamDetailData.teamStatus === "open"}
-        />
       </main>
+      <SingleButton
+        label={teamDetailData.teamStatus === "open" ? "참여하기" : "모집 마감"}
+        onClick={onClickApply}
+        isActive={teamDetailData.teamStatus === "open"}
+      />
     </Container>
   );
 }

@@ -27,22 +27,20 @@ export function SingleButton({ label, onClick, isActive }: Props) {
 
 const Container = styled.div<{ isActive: boolean }>`
   position: fixed;
-  left: 0;
-  right: 0;
   bottom: 0;
   width: 100%;
+  min-width: 360px;
+  max-width: 480px;
   height: 113px;
+  padding: 20px 20px 0;
+  box-sizing: border-box;
   background: ${colors.background};
 
   button {
-    position: fixed;
-    left: 20px;
-    right: 20px;
-    bottom: 42px;
-    width: auto;
+    width: 100%;
     height: 52px;
+    border: none;
     border-radius: 12px;
-    border: 0;
     background: ${(props) => (props.isActive ? colors.brand900 : colors.grey100)};
     color: ${(props) => (props.isActive ? colors.white : colors.grey300)};
     font-size: 16px;

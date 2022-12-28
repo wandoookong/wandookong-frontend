@@ -25,20 +25,18 @@ export function DoubleButton({ prevButtonLabel, nextButtonLabel, onPrevStep, onN
 
 const Container = styled.div`
   position: fixed;
-  left: 0;
-  right: 0;
   bottom: 0;
   width: 100%;
+  min-width: 360px;
+  max-width: 480px;
   height: 113px;
+  padding: 20px 20px 0;
+  box-sizing: border-box;
   background: ${colors.background};
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
-  position: absolute;
-  left: 20px;
-  right: 20px;
-  bottom: 42px;
 
   button.prev-button {
     flex: 1;

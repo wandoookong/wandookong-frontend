@@ -58,6 +58,8 @@ const Container = styled.nav<{ isScrollOn: boolean }>`
   align-items: center;
   top: 0;
   width: 100%;
+  min-width: 360px;
+  max-width: 480px;
   padding: 57px 20px 20px 20px;
   box-sizing: border-box;
   background: ${(props) =>

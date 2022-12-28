@@ -1,6 +1,4 @@
 import styled from "@emotion/styled";
-import CloseIcon from "../../assets/icons/close-grey900.svg";
-import Background from "./assets/background.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -8,6 +6,7 @@ import step1 from "./assets/step1.png";
 import step2 from "./assets/step2.png";
 import step3 from "./assets/step3.png";
 import { colors } from "../../styles/colors";
+import { SingleButton } from "../../components/buttons/singleButton";
 
 export default function WalkThrough({ onClick }) {
   const settings = {
@@ -18,9 +17,13 @@ export default function WalkThrough({ onClick }) {
     slidesToScroll: 1,
   };
 
+  const onClickHandler = () => {};
+
   return (
     <Container>
-      <button className="close-button" onClick={onClick} />
+      <button className="close-button" onClick={onClick}>
+        건너뛰기
+      </button>
       <Slider {...settings}>
         <div className="slider-item-wrapper">
           <img
@@ -48,9 +51,9 @@ export default function WalkThrough({ onClick }) {
           />
           <strong>이젠, 완두콩으로 더욱 쉽고 재밌게</strong>
           <strong>사이드 프로젝트 팀원을 찾아보세요</strong>
-          <button>시작하기</button>
         </div>
       </Slider>
+      <SingleButton label="다음" onClick={onClickHandler} isActive={true} />
     </Container>
   );
 }
@@ -61,7 +64,7 @@ const Container = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: url(${Background});
+  background: ${colors.background};
   text-align: center;
   z-index: 998;
 
@@ -69,10 +72,12 @@ const Container = styled.div`
     position: fixed;
     top: 57px;
     right: 20px;
-    width: 24px;
-    height: 24px;
-    background: transparent url(${CloseIcon}) center / 100% no-repeat;
+    background: none;
     border: none;
+    font-weight: 700;
+    font-size: 13px;
+    color: ${colors.grey900};
+    z-index: 10;
     cursor: pointer;
   }
 
