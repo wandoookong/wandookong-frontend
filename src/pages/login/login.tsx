@@ -35,7 +35,7 @@ export default function Login() {
       .then(({ userSocialId, accessToken }) => {
         if (accessToken) {
           localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
-          window.location.replace("/");
+          window.location.href = "/";
         } else if (userSocialId) {
           window.location.href = "/signUp?userSocialId=" + userSocialId;
         } else {
