@@ -11,7 +11,7 @@ export default function Login() {
   useEffect(() => {
     if (!document.getElementById("id__google_onSignIn")) {
       const script = document.createElement("script");
-      script.innerHTML = onSignIn.toString();
+      script.innerHTML = "var onSignIn = " + onSignIn.toString() + ";";
       script.async = true;
       document.body.appendChild(script);
       script.setAttribute("id", "id__google_onSignIn");
