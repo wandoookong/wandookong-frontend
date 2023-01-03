@@ -87,7 +87,7 @@ export default function MyPage() {
           <ul className="menu-wrapper">
             <li>
               <a
-                href="https://shared-fin-843.notion.site/c92dd8478738454fabf93fc7265916d9"
+                href="https://wandookong.notion.site/c92dd8478738454fabf93fc7265916d9"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -96,7 +96,7 @@ export default function MyPage() {
             </li>
             <li>
               <a
-                href="https://shared-fin-843.notion.site/3af247fe59404ef899c4eca033062835"
+                href="https://wandookong.notion.site/3af247fe59404ef899c4eca033062835"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -108,7 +108,7 @@ export default function MyPage() {
             </li>
             <li>
               <a
-                href="https://shared-fin-843.notion.site/b87cf3a1417f4b748bcbc755755a50be"
+                href="https://wandookong.notion.site/b87cf3a1417f4b748bcbc755755a50be"
                 target="_blank"
                 rel="noreferrer"
               >
