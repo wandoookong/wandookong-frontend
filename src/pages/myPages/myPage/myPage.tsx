@@ -82,16 +82,24 @@ export default function MyPage() {
             </li>
           </ul>
         )}
-        <section className="menu-section-wrapper">
+        <section>
           <h1 className="menu-title">기타</h1>
           <ul className="menu-wrapper">
             <li>
-              <a href="/terms" target="_blank" rel="noreferrer">
+              <a
+                href="https://wandookong.notion.site/c92dd8478738454fabf93fc7265916d9"
+                target="_blank"
+                rel="noreferrer"
+              >
                 서비스 이용약관
               </a>
             </li>
             <li>
-              <a href="/privacy" target="_blank" rel="noreferrer">
+              <a
+                href="https://wandookong.notion.site/3af247fe59404ef899c4eca033062835"
+                target="_blank"
+                rel="noreferrer"
+              >
                 개인정보처리방침
               </a>
             </li>
@@ -100,7 +108,7 @@ export default function MyPage() {
             </li>
             <li>
               <a
-                href="https://shared-fin-843.notion.site/b87cf3a1417f4b748bcbc755755a50be"
+                href="https://wandookong.notion.site/b87cf3a1417f4b748bcbc755755a50be"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -119,10 +127,6 @@ export default function MyPage() {
 
 const ContentWrapper = styled.div`
   margin: 80px 0 60px 0;
-
-  section.menu-section-wrapper {
-    margin-bottom: 100px;
-  }
 
   h1.loading-wrapper {
     width: 100%;

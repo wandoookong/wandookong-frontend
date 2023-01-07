@@ -11,7 +11,7 @@ export default function Login() {
   useEffect(() => {
     if (!document.getElementById("id__google_onSignIn")) {
       const script = document.createElement("script");
-      script.innerHTML = onSignIn.toString();
+      script.innerHTML = "var onSignIn = " + onSignIn.toString() + ";";
       script.async = true;
       document.body.appendChild(script);
       script.setAttribute("id", "id__google_onSignIn");
@@ -72,9 +72,13 @@ export default function Login() {
         data-locale="ko_KR"
       />
       <Container>
-        <button onClick={() => navigate("/terms")}>서비스 이용약관</button>
+        <a href="https://wandookong.notion.site/c92dd8478738454fabf93fc7265916d9" rel="noreferrer" target="_blank">
+          서비스 이용약관
+        </a>
         <p>및</p>
-        <button onClick={() => navigate("/privacy")}>개인정보처리방침</button>
+        <a href="https://wandookong.notion.site/3af247fe59404ef899c4eca033062835" rel="noreferrer" target="_blank">
+          개인정보처리방침
+        </a>
         <p>에 동의합니다.</p>
       </Container>
     </>
@@ -102,8 +106,9 @@ const ImageWrapper = styled.div`
 const Container = styled.div`
   display: flex;
   justify-content: center;
+  gap: 6px;
 
-  button {
+  a {
     margin-bottom: 12px;
     border: none;
     background: none;
@@ -111,7 +116,6 @@ const Container = styled.div`
     font-size: 12px;
     font-weight: 400;
     line-height: 14px;
-    text-decoration: underline;
     cursor: pointer;
   }
   p {
