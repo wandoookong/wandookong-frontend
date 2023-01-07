@@ -72,13 +72,9 @@ export default function Login() {
         data-locale="ko_KR"
       />
       <Container>
-        <a href="https://shared-fin-843.notion.site/c92dd8478738454fabf93fc7265916d9" rel="noreferrer" target="_blank">
-          서비스 이용약관
-        </a>
+        <button onClick={() => navigate("/terms")}>서비스 이용약관</button>
         <p>및</p>
-        <a href="https://shared-fin-843.notion.site/3af247fe59404ef899c4eca033062835" rel="noreferrer" target="_blank">
-          개인정보처리방침
-        </a>
+        <button onClick={() => navigate("/privacy")}>개인정보처리방침</button>
         <p>에 동의합니다.</p>
       </Container>
     </>
@@ -106,9 +102,8 @@ const ImageWrapper = styled.div`
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  gap: 6px;
 
-  a {
+  button {
     margin-bottom: 12px;
     border: none;
     background: none;
@@ -116,6 +111,7 @@ const Container = styled.div`
     font-size: 12px;
     font-weight: 400;
     line-height: 14px;
+    text-decoration: underline;
     cursor: pointer;
   }
   p {

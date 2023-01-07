@@ -17,6 +17,8 @@ export default function MyCreatedTeamNavigation({ onClickDelete }) {
 const Container = styled.nav`
   position: fixed;
   top: 0;
+  min-width: 360px;
+  max-width: 480px;
   width: 100%;
   display: flex;
   justify-content: space-between;

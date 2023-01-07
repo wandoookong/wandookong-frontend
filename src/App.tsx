@@ -12,11 +12,15 @@ import { TeamDetail } from "./pages/teamDetail/teamDetail";
 import ApplyTeam from "./pages/teamDetail/applyTeam";
 import MyJoinedTeams from "./pages/myPages/myJoinedTeams/MyJoinedTeams";
 import MyTeamHistoryPage from "./pages/myPages/myTeamHistoryPage/MyTeamHistoryPage";
+import ConditionTerms from "./pages/terms/conditionTerms";
+import PrivacyTerms from "./pages/terms/privacyTerms";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/privacy" element={<PrivacyTerms />} />
+        <Route path="/terms" element={<ConditionTerms />} />
         <Route path="/team/:teamId/apply" element={<ApplyTeam />} />
         <Route path="/team/:teamId" element={<TeamDetail />} />
         <Route path="/" element={<Home />} />
