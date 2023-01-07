@@ -86,22 +86,10 @@ export default function MyPage() {
           <h1 className="menu-title">기타</h1>
           <ul className="menu-wrapper">
             <li>
-              <a
-                href="https://wandookong.notion.site/c92dd8478738454fabf93fc7265916d9"
-                target="_blank"
-                rel="noreferrer"
-              >
-                서비스 이용약관
-              </a>
+              <button onClick={() => navigate("/terms")}>서비스 이용약관</button>
             </li>
             <li>
-              <a
-                href="https://wandookong.notion.site/3af247fe59404ef899c4eca033062835"
-                target="_blank"
-                rel="noreferrer"
-              >
-                개인정보처리방침
-              </a>
+              <button onClick={() => navigate("/privacy")}>개인정보처리방침</button>
             </li>
             <li>
               <a href="mailto:wandookongproject@gmail.com">문의하기</a>
