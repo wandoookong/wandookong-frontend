@@ -86,10 +86,10 @@ export default function MyPage() {
           <h1 className="menu-title">기타</h1>
           <ul className="menu-wrapper">
             <li>
-              <button onClick={() => navigate("/terms")}>서비스 이용약관</button>
+              <button onClick={() => (window.location.href = "/terms")}>서비스 이용약관</button>
             </li>
             <li>
-              <button onClick={() => navigate("/privacy")}>개인정보처리방침</button>
+              <button onClick={() => (window.location.href = "/privacy")}>개인정보처리방침</button>
             </li>
             <li>
               <a href="mailto:wandookongproject@gmail.com">문의하기</a>
@@ -115,6 +115,7 @@ export default function MyPage() {
 
 const ContentWrapper = styled.div`
   margin: 80px 0 60px 0;
+  padding-bottom: 60px;
 
   h1.loading-wrapper {
     width: 100%;

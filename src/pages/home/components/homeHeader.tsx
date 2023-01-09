@@ -8,7 +8,11 @@ import { isEmpty } from "../../../@types/utility/typeGuard";
 import { Nullable } from "../../../@types/utility/nullable";
 import Logo from "../../../assets/images/logo.png";
 
-export const HomeHeader = () => {
+interface Props {
+  onClickRequest(value?: any): void;
+}
+
+export const HomeHeader = ({ onClickRequest }: Props) => {
   const navigate = useNavigate();
   const [isScrollOn, setIsScrollOn] = useState(false);
   const token: Nullable<string> = localStorage.getItem(ACCESS_TOKEN_NAME);
@@ -38,7 +42,7 @@ export const HomeHeader = () => {
       <button className="logo" onClick={() => window.location.reload()} />
       <RightWrapper>
         {isScrollOn && (
-          <button className="set-team-button" onClick={() => navigate("/request")}>
+          <button className="set-team-button" onClick={onClickRequest}>
             완두콩 만들기
           </button>
         )}

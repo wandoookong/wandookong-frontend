@@ -76,7 +76,7 @@ export default function Home() {
       )}
       {isWalkThroughClicked && (
         <>
-          <HomeHeader />{" "}
+          <HomeHeader onClickRequest={onCreateTeamHandler} />
           <Container>
             <Carousel>
               <button onClick={onCreateTeamHandler}>완두콩 만들기</button>

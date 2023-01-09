@@ -67,12 +67,10 @@ export default function ApplyTeam() {
         const response = await setApplyTeamApi(Number(param.teamId), applyTeamFormData);
         if (response.result) {
           setSuccessModalOn(!isSuccessModalOn);
-          return;
         }
-        return;
       }
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   };
 

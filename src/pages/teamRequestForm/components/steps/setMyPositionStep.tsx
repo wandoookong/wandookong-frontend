@@ -8,6 +8,7 @@ import { PositionRadioButton } from "../inputs/positionRadioButton";
 import styled from "@emotion/styled";
 import { ContentWrapper } from "../layout/contentWrapper";
 import { ROLE_DETAIL, ROLE_MAIN } from "../../../../@types/model/fieldType";
+import { getUserMyInfoApi } from "../../../../api/myPages/myPage/getUserMyInfoApi";
 
 interface Props {
   myPosition: ROLE_DETAIL | "";
@@ -17,8 +18,8 @@ interface Props {
 }
 
 export default function SetMyPositionStep({ myPosition, onChangeRole, onNext, onPrevious }: Props) {
+  const [name, setName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
   const onChange = (e: ChangeEvent<HTMLInputElement>) => onChangeRole(e.currentTarget.value as ROLE_MAIN);
   const onNextStep = () => {
     const myRoleErrorMessage = myRoleValidation(myPosition);
@@ -34,9 +35,16 @@ export default function SetMyPositionStep({ myPosition, onChangeRole, onNext, on
     }
   }, [myPosition]);
 
+  useEffect(() => {
+    (async function () {
+      const response = await getUserMyInfoApi();
+      setName(response.nickname);
+    })();
+  }, []);
+
   return (
     <>
-      <FormHeader title={`님의 포지션은 \n 무엇인가요?`} errorMessage={errorMessage} />
+      <FormHeader title={`${name}님의 포지션은 \n 무엇인가요?`} errorMessage={errorMessage} />
       <ContentWrapper>
         <InputWrapper>
           {roleData.map((role) => (

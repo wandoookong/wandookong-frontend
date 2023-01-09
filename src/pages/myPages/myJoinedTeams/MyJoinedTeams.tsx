@@ -25,7 +25,7 @@ export default function MyJoinedTeams() {
     <Container>
       <MyPageHeader title="참여한 완두콩 보기" onClick={() => navigate(-1)} />
       {!isFetchValid && <p className="loading-wrapper">불러오는 중 입니다...</p>}
-      {isFetchValid && isEmpty(acceptedTeamData) && <p className="loading-wrapper">생성된 완두콩이 없습니다.</p>}
+      {isFetchValid && isEmpty(acceptedTeamData) && <p className="loading-wrapper">참여한 완두콩이 없습니다.</p>}
       <div>
         {isFetchValid &&
           acceptedTeamData &&

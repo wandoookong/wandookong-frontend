@@ -34,6 +34,10 @@ export default function PendingMember({
     }
   };
 
+  const onTest = () => {
+    setIsToastPopUpOpen(!isToastPopUpOpen);
+  };
+
   const onClickReject = async () => {
     try {
       const response = await setApplicantRejectApi(teamMemberId);
@@ -75,7 +79,7 @@ export default function PendingMember({
             <button className="decline-button" onClick={onClickReject}>
               거절
             </button>
-            <button className="accept-button" onClick={onClickAccept}>
+            <button className="accept-button" onClick={onTest}>
               수락
             </button>
           </div>

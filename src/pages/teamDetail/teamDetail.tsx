@@ -118,6 +118,8 @@ export function TeamDetail() {
 }
 
 const Container = styled.div`
+  padding-bottom: 60px;
+
   h2 {
     margin-bottom: 12px;
     font-size: 18px;

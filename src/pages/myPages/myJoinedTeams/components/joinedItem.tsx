@@ -64,10 +64,12 @@ export default function JoinedItem({
                 <span>나의 메시지:</span>
                 <p>{memo}</p>
               </div>
-              <div className="contents">
-                <span>연락 수단:</span>
-                <p>{contact}</p>
-              </div>
+              {memberStatus !== "deny" && (
+                <div className="contents">
+                  <span>연락 수단:</span>
+                  <p>{contact}</p>
+                </div>
+              )}
             </div>
           </div>
           <button className="open-description-button" onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}>

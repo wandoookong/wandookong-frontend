@@ -151,6 +151,15 @@ export default function MyCurrentCreatedTeam() {
                 memberStatus={applicant.memberStatus}
               />
             ))}
+          <PendingMember
+            nickname="dfsd"
+            teamMemberId={2}
+            tagList={["dsf", "dfsdf"]}
+            careerRange="0_4"
+            roleDetail="product"
+            memo="sdfsdf"
+            memberStatus="apply"
+          />
           {isFetchValid &&
             acceptedMembers &&
             category === "accepted" &&

@@ -30,6 +30,7 @@ const Container = styled.div`
   bottom: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   background: rgba(1, 1, 1, 0.8);
@@ -40,6 +41,8 @@ const Container = styled.div`
     position: fixed;
     top: 0;
     width: 100%;
+    min-width: 360px;
+    max-width: 480px;
     height: 80px;
     padding: 42px 18px 0;
     background: transparent;

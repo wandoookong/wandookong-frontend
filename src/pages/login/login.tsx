@@ -35,7 +35,7 @@ export default function Login() {
       .then(({ userSocialId, accessToken }) => {
         if (accessToken) {
           localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
-          window.location.href = "/";
+          window.location.replace("/");
         } else if (userSocialId) {
           window.location.href = "/signUp?userSocialId=" + userSocialId;
         } else {
@@ -72,9 +72,9 @@ export default function Login() {
         data-locale="ko_KR"
       />
       <Container>
-        <button onClick={() => navigate("/terms")}>서비스 이용약관</button>
+        <button onClick={() => (window.location.href = "/terms")}>서비스 이용약관</button>
         <p>및</p>
-        <button onClick={() => navigate("/privacy")}>개인정보처리방침</button>
+        <button onClick={() => (window.location.href = "/privacy")}>개인정보처리방침</button>
         <p>에 동의합니다.</p>
       </Container>
     </>
@@ -102,16 +102,15 @@ const ImageWrapper = styled.div`
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  gap: 6px;
+  gap: 2px;
 
   button {
-    margin-bottom: 12px;
+    padding: 0 4px 0;
     border: none;
     background: none;
     color: ${colors.grey600};
     font-size: 12px;
     font-weight: 400;
-    line-height: 14px;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -119,6 +118,6 @@ const Container = styled.div`
     color: ${colors.grey600};
     font-size: 12px;
     font-weight: 400;
-    line-height: 14px;
+    line-height: 1.5;
   }
 `;
