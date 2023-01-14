@@ -3,7 +3,16 @@
 사이드 프로젝트 팀원이 구하기 어렵다면 완두콩 플랫폼을 사용해보세요. 해커톤과 같이 빠르게 팀원을 모아서 프로젝트를 만들 수 있습니다.
 
 ### 팀원
-|[@ireneworks]|오른쪽정렬|중앙정렬|
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href=""><img src="width="100px;" alt=""/><br /><sub><b>Product Designer</b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>Front-end Engineer  </b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>Back-end Engineer </b></sub></a><br /></td>
+     <tr/>
+  </tbody>
+</table>
 
 
 ### 사용 기술
