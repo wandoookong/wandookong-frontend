@@ -1,8 +1,14 @@
 <img width="1200" alt="Main Banner" src="https://user-images.githubusercontent.com/26430232/208241004-aad1fbf6-9a30-4c7d-9cce-0776dfb98e3f.png">
 
-사이드 프로젝트 팀원이 구하기 어렵다면 완두콩 플랫폼을 사용해보세요. 
+# 완두콩
 
-해커톤에서 빠르게 팀원을 모아서 프로젝트를 진행하는 것과 같이 사이드 프로젝트와 팀원을 구할 수 있어요.
+>해커톤에서 빠르게 팀원을 모아서 프로젝트를 진행하는 것과 같이 사이드 프로젝트와 팀원을 구할 수 있어요.
+>
+###### 2022.05.21 ~
+
+https://wandookongproject.com
+
+---
 
 ### 팀원
 
@@ -16,7 +22,8 @@
   </tbody>
 </table>
 
-
+---
+        
 ### 사용 기술
 
 ##### Font-end
