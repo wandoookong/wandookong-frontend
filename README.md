@@ -2,11 +2,9 @@
 
 # 완두콩
 
-<hr/>
-
 해커톤에서 빠르게 팀원을 모아서 프로젝트를 진행하는 것과 같이 완두콩에서 사이드 프로젝트와 팀원을 구할 수 있는 플랫폼입니다. 
 
-https://wandookongproject.com | 2022.05.21 ~
+###### 2022.05.21 ~ | https://wandookongproject.com
 
 ---
 
