@@ -24,6 +24,7 @@ export default function MyCurrentCreatedTeam() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isFetchValid, setIsFetchValid] = useState(false);
+  const [isToastPopupOpen, setIsToastPopupOpen] = useState(false);
   const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
   const [isNotDeleteModalOn, setIsNotDeleteModalOn] = useState(false);
   const [myCreatedTeam, setMyCreatedTeam] = useState<MyCreatedTeam>({
