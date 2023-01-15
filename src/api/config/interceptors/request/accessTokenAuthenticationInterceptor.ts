@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 import { ACCESS_TOKEN_NAME } from "../../config";
 
-const requiredAccessTokenUrlWhiteList = ["/myAccount", "/request", `/team/:teamId/apply`, "/pre-create"];
+const requiredAccessTokenUrlWhiteList = ["/myAccount", "/request", "/pre-create"];
 
 export const accessTokenAuthenticationInterceptor = {
   onFulfilled: (config: AxiosRequestConfig) => {

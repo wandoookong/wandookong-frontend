@@ -9,6 +9,7 @@ import ToastPopUp from "./toastPopUp";
 import { setApplicantRejectApi } from "../../../../api/myPages/myCreatedTeam/setApplicantRejectApi";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
 import { setApplicantAcceptApi } from "../../../../api/myPages/myCreatedTeam/setApplicantAcceptApi";
+import ConfirmModal from "../../components/confirmModal";
 
 export default function PendingMember({
   teamMemberId,
@@ -22,10 +23,13 @@ export default function PendingMember({
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   const [isToastPopUpOpen, setIsToastPopUpOpen] = useState(false);
   const [disable, setDisable] = useState(false);
+  const [acceptModal, setAcceptModal] = useState(false);
+  const [denyModal, setDenyModal] = useState(false);
 
   const onClickAccept = async () => {
     try {
       const response = await setApplicantAcceptApi(teamMemberId);
+      setAcceptModal(!acceptModal);
       setDisable(!disable);
       setIsToastPopUpOpen(!isToastPopUpOpen);
       window.location.reload();
@@ -34,14 +38,10 @@ export default function PendingMember({
     }
   };
 
-  const onTest = () => {
-    setIsToastPopUpOpen(!isToastPopUpOpen);
-  };
-
   const onClickReject = async () => {
     try {
       const response = await setApplicantRejectApi(teamMemberId);
-      setDisable(!disable);
+      await setDisable(!disable);
       window.location.reload();
     } catch (error) {
       throw error;
@@ -56,6 +56,24 @@ export default function PendingMember({
 
   return (
     <>
+      {acceptModal && (
+        <ConfirmModal
+          title="신청자를 수락하시겠습니까?"
+          leftButtonLabel="취소"
+          rightButtonLabel="수락하기"
+          onClickRightButton={() => onClickAccept}
+          onClickLeftButton={() => setAcceptModal(!acceptModal)}
+        />
+      )}
+      {denyModal && (
+        <ConfirmModal
+          title="신청자를 거절하시겠습니까?"
+          leftButtonLabel="취소"
+          rightButtonLabel="거절하기"
+          onClickRightButton={() => onClickReject}
+          onClickLeftButton={() => setDenyModal(!denyModal)}
+        />
+      )}
       <ToastPopUp message={`${nickname}님을 수락했습니다.`} isActive={isToastPopUpOpen} />
       <Container isDescriptionOpen={isDescriptionOpen} disabled={disable}>
         <div className="applicant-content-wrapper">
@@ -76,10 +94,10 @@ export default function PendingMember({
         </div>
         {memberStatus !== "deny" && (
           <div className="button-wrapper">
-            <button className="decline-button" onClick={onClickReject}>
+            <button className="decline-button" onClick={() => setDenyModal(!denyModal)}>
               거절
             </button>
-            <button className="accept-button" onClick={onTest}>
+            <button className="accept-button" onClick={() => setAcceptModal(!acceptModal)}>
               수락
             </button>
           </div>
