@@ -8,8 +8,11 @@ import { MyCreatedTeamPendingMember } from "../../../../@types/dto/myCreatedTeam
 import ToastPopUp from "./toastPopUp";
 import { setApplicantRejectApi } from "../../../../api/myPages/myCreatedTeam/setApplicantRejectApi";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
-import { setApplicantAcceptApi } from "../../../../api/myPages/myCreatedTeam/setApplicantAcceptApi";
 import ConfirmModal from "../../components/confirmModal";
+
+interface Props {
+  setAcceptedMembersList(value?: any): void;
+}
 
 export default function PendingMember({
   teamMemberId,
@@ -19,23 +22,31 @@ export default function PendingMember({
   roleDetail,
   memo,
   memberStatus,
-}: MyCreatedTeamPendingMember) {
+  setAcceptedMembersList,
+}: MyCreatedTeamPendingMember & Props) {
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   const [isToastPopUpOpen, setIsToastPopUpOpen] = useState(false);
   const [disable, setDisable] = useState(false);
   const [acceptModal, setAcceptModal] = useState(false);
   const [denyModal, setDenyModal] = useState(false);
 
-  const onClickAccept = async () => {
-    try {
-      const response = await setApplicantAcceptApi(teamMemberId);
-      setAcceptModal(!acceptModal);
-      setDisable(!disable);
-      setIsToastPopUpOpen(!isToastPopUpOpen);
-      window.location.reload();
-    } catch (error) {
-      throw error;
-    }
+  // const onClickAccept = async () => {
+  //   try {
+  //     const response = await setApplicantAcceptApi(teamMemberId);
+  //     setAcceptModal(!acceptModal);
+  //     setDisable(!disable);
+  //     setIsToastPopUpOpen(!isToastPopUpOpen);
+  //     setAcceptedMembersList(teamMemberId);
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // };
+
+  const onTest = () => {
+    setAcceptModal(!acceptModal);
+    setDisable(!disable);
+    setIsToastPopUpOpen(!isToastPopUpOpen);
+    setAcceptedMembersList(teamMemberId);
   };
 
   const onClickReject = async () => {
@@ -51,7 +62,7 @@ export default function PendingMember({
   useEffect(() => {
     setTimeout(() => {
       setIsToastPopUpOpen(false);
-    }, 3500);
+    }, 4000);
   }, [isToastPopUpOpen]);
 
   return (
@@ -61,7 +72,7 @@ export default function PendingMember({
           title="신청자를 수락하시겠습니까?"
           leftButtonLabel="취소"
           rightButtonLabel="수락하기"
-          onClickRightButton={() => onClickAccept}
+          onClickRightButton={onTest}
           onClickLeftButton={() => setAcceptModal(!acceptModal)}
         />
       )}
@@ -70,7 +81,7 @@ export default function PendingMember({
           title="신청자를 거절하시겠습니까?"
           leftButtonLabel="취소"
           rightButtonLabel="거절하기"
-          onClickRightButton={() => onClickReject}
+          onClickRightButton={onClickReject}
           onClickLeftButton={() => setDenyModal(!denyModal)}
         />
       )}

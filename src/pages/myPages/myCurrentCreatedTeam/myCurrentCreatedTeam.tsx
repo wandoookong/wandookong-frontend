@@ -24,9 +24,9 @@ export default function MyCurrentCreatedTeam() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isFetchValid, setIsFetchValid] = useState(false);
-  const [isToastPopupOpen, setIsToastPopupOpen] = useState(false);
   const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
   const [isNotDeleteModalOn, setIsNotDeleteModalOn] = useState(false);
+  const [acceptedMemberId, setAcceptedMemberId] = useState(0);
   const [myCreatedTeam, setMyCreatedTeam] = useState<MyCreatedTeam>({
     teamId: 1,
     teamCategory: "portfolio",
@@ -40,6 +40,15 @@ export default function MyCurrentCreatedTeam() {
   const [pendingMembers, setPendingMembers] = useState<MyCreatedTeamPendingMember[]>([
     {
       teamMemberId: 1,
+      nickname: "",
+      careerRange: "0_4",
+      tagList: [""],
+      roleDetail: "product",
+      memo: "",
+      memberStatus: "apply",
+    },
+    {
+      teamMemberId: 2,
       nickname: "",
       careerRange: "0_4",
       tagList: [""],
@@ -89,6 +98,10 @@ export default function MyCurrentCreatedTeam() {
       setIsFetchValid(!isFetchValid);
     })();
   }, []);
+
+  useEffect(() => {
+    setPendingMembers(pendingMembers.filter((member) => member.teamMemberId !== acceptedMemberId));
+  }, [acceptedMemberId]);
 
   return (
     <>
@@ -150,6 +163,7 @@ export default function MyCurrentCreatedTeam() {
                 roleDetail={applicant.roleDetail}
                 memo={applicant.memo}
                 memberStatus={applicant.memberStatus}
+                setAcceptedMembersList={setAcceptedMemberId}
               />
             ))}
           {isFetchValid &&

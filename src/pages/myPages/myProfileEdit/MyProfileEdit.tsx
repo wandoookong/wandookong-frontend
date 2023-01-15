@@ -124,8 +124,8 @@ export default function MyProfileEdit() {
           onChange={(e) => onChangeCareerRange(e.currentTarget.value)}
         />
         <MyProfileEditTagSelector tags={state.tagList} onChange={onChangeTagNameList} />
-        <SingleButton label="수정 완료" onClick={onSaveHandler} isActive={isDifferent} />
       </Container>
+      <SingleButton label="수정 완료" onClick={onSaveHandler} isActive={isDifferent} />
     </>
   );
 }
