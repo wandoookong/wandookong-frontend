@@ -1,4 +1,5 @@
-<img width="1200" alt="Main Banner" src="https://user-images.githubusercontent.com/26430232/208241004-aad1fbf6-9a30-4c7d-9cce-0776dfb98e3f.png">
+<img width="1200" alt="Main Banner" src="https://user-images.githubusercontent.com/26430232/212911988-18aa282b-b774-4474-857c-205e109ddebe.png">
+
 
 # 완두콩
 
