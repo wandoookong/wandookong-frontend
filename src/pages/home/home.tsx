@@ -89,7 +89,7 @@ export default function Home() {
               teamsData.map((data, index) => (
                 <TeamItem key={index} teamId={data.teamId} teamData={data} isDday={true} />
               ))}
-          </Container>{" "}
+          </Container>
         </>
       )}
     </>

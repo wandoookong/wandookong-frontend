@@ -9,6 +9,7 @@ import ToastPopUp from "./toastPopUp";
 import { setApplicantRejectApi } from "../../../../api/myPages/myCreatedTeam/setApplicantRejectApi";
 import { isEmpty } from "../../../../@types/utility/typeGuard";
 import ConfirmModal from "../../components/confirmModal";
+import { setApplicantAcceptApi } from "../../../../api/myPages/myCreatedTeam/setApplicantAcceptApi";
 
 interface Props {
   setAcceptedMembersList(value?: any): void;
@@ -30,29 +31,21 @@ export default function PendingMember({
   const [acceptModal, setAcceptModal] = useState(false);
   const [denyModal, setDenyModal] = useState(false);
 
-  // const onClickAccept = async () => {
-  //   try {
-  //     const response = await setApplicantAcceptApi(teamMemberId);
-  //     setAcceptModal(!acceptModal);
-  //     setDisable(!disable);
-  //     setIsToastPopUpOpen(!isToastPopUpOpen);
-  //     setAcceptedMembersList(teamMemberId);
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // };
-
-  const onTest = () => {
-    setAcceptModal(!acceptModal);
-    setDisable(!disable);
-    setIsToastPopUpOpen(!isToastPopUpOpen);
-    setAcceptedMembersList(teamMemberId);
+  const onClickAccept = async () => {
+    try {
+      const response = await setApplicantAcceptApi(teamMemberId);
+      setAcceptModal(!acceptModal);
+      setDisable(!disable);
+      setIsToastPopUpOpen(!isToastPopUpOpen);
+      setAcceptedMembersList(teamMemberId);
+    } catch (error) {
+      throw error;
+    }
   };
 
   const onClickReject = async () => {
     try {
       const response = await setApplicantRejectApi(teamMemberId);
-      await setDisable(!disable);
       window.location.reload();
     } catch (error) {
       throw error;
@@ -72,7 +65,7 @@ export default function PendingMember({
           title="신청자를 수락하시겠습니까?"
           leftButtonLabel="취소"
           rightButtonLabel="수락하기"
-          onClickRightButton={onTest}
+          onClickRightButton={onClickAccept}
           onClickLeftButton={() => setAcceptModal(!acceptModal)}
         />
       )}

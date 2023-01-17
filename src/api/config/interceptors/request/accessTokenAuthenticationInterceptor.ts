@@ -17,6 +17,6 @@ export const accessTokenAuthenticationInterceptor = {
     return config;
   },
   onRejected: (error: unknown) => {
-    throw error;
+    alert(error);
   },
 };

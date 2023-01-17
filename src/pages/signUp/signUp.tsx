@@ -8,6 +8,7 @@ import qs from "qs";
 import SetNickNameStep from "./components/steps/setNickNameStep";
 import styled from "@emotion/styled";
 import { signUpApi } from "../../api/signUp/signUpApi";
+import { ACCESS_TOKEN_NAME } from "../../api/config/config";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ export default function SignUp() {
   const onSubmit = async () => {
     try {
       const response = await signUpApi(state);
+      localStorage.setItem(ACCESS_TOKEN_NAME, response.accessToken);
       navigate("/");
     } catch (e) {
       throw new Error();

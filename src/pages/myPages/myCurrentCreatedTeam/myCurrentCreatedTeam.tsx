@@ -47,15 +47,6 @@ export default function MyCurrentCreatedTeam() {
       memo: "",
       memberStatus: "apply",
     },
-    {
-      teamMemberId: 2,
-      nickname: "",
-      careerRange: "0_4",
-      tagList: [""],
-      roleDetail: "product",
-      memo: "",
-      memberStatus: "apply",
-    },
   ]);
   const [acceptedMembers, setAcceptedMembers] = useState<MyCreatedTeamAcceptedMember[]>([
     {

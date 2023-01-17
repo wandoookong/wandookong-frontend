@@ -63,6 +63,12 @@ export default function ApplyTeam() {
     try {
       const validation = teamApplyValidation(applyTeamFormData);
       setErrorMessages({ ...validation });
+      if (validation.position) {
+        return window.scrollTo({ top: 70, behavior: "smooth" });
+      }
+      if (validation.memo) {
+        return window.scrollTo({ top: 280, behavior: "smooth" });
+      }
       if (isEmpty(validation.position) && isEmpty(validation.memo)) {
         const response = await setApplyTeamApi(Number(param.teamId), applyTeamFormData);
         if (response.result) {
@@ -70,7 +76,7 @@ export default function ApplyTeam() {
         }
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 

@@ -5,14 +5,22 @@ import { convertNameToImageUrl } from "../../../services/convertValueToImageUrl"
 interface Props {
   positionName: string;
   isPositionValid: boolean;
+  onClick(value?: any): void;
   isLeader?: boolean;
   careerRangeName?: string;
   tags?: string[];
 }
 
-export default function PositionItem({ positionName, isPositionValid, isLeader, careerRangeName, tags }: Props) {
+export default function PositionItem({
+  positionName,
+  isPositionValid,
+  isLeader,
+  careerRangeName,
+  tags,
+  onClick,
+}: Props) {
   return (
-    <Container isPositionEmpty={isPositionValid} position={positionName}>
+    <Container isPositionEmpty={isPositionValid} position={positionName} onClick={onClick}>
       <div className="profile-image" />
       <div className="position-content-wrapper">
         <div className="position-header-wrapper">
@@ -37,6 +45,7 @@ const Container = styled.li<{ isPositionEmpty: boolean; position: string }>`
   background: ${(props) => (props.isPositionEmpty ? colors.white : colors.brand300)};
   border-radius: 8px;
   box-sizing: border-box;
+  cursor: pointer;
 
   div.profile-image {
     min-width: 50px;

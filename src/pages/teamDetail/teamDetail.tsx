@@ -101,6 +101,7 @@ export function TeamDetail() {
                     isLeader={role.teamLead}
                     careerRangeName={role.careerRangeName}
                     tags={role.tagList}
+                    onClick={onClickApply}
                   />
                 ))}
               </ul>

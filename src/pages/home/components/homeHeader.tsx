@@ -90,8 +90,8 @@ const RightWrapper = styled.div`
   align-items: center;
 
   button.set-team-button {
-    width: 92px;
     height: 29px;
+    padding: 6px 8px;
     border: none;
     border-radius: 8px;
     background: ${colors.brand900};
