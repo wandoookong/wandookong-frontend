@@ -10,7 +10,7 @@ import { useTeamRequestFormReducer } from "../../hooks/useTeamRequestFormReducer
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import DialogueModal from "../../components/modal/DialogueModal";
-import { setTeamApi } from "../../api/generateTeam/setTeamApi";
+import { createTeamApi } from "../../api/createTeam/setTeamApi";
 import { SetTeamResponse } from "../../@types/dto/setTeam";
 
 export default function TeamRequestForm() {
@@ -32,7 +32,7 @@ export default function TeamRequestForm() {
   const onPreviousHandler = () => setStep((step) => step - 1);
   const onNextHandler = () => setStep((step) => step + 1);
   const onSubmit = async () => {
-    const response: SetTeamResponse = await setTeamApi(state);
+    const response: SetTeamResponse = await createTeamApi(state);
     if (!response.result) {
       setIsFailModalOn(!isFailModalOn);
       setCurrentOpenTeamId(response.teamId);

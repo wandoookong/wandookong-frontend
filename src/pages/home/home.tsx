@@ -12,7 +12,7 @@ import { getIsValidToCreateTeamApi } from "../../api/home/getIsValidToCreateTeam
 import DialogueModal from "../../components/modal/DialogueModal";
 import { IsValidToCreateTeam } from "../../@types/dto/isValidToCreateTeam";
 import WalkThrough from "./walkThrough";
-import { getHomeTeamsApi } from "../../api/home/getHomeTeamsApi";
+import { getCreateTeamsApi } from "../../api/home/getCreateTeamsApi";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ export default function Home() {
 
   useEffect(() => {
     (async function () {
-      const response = await getHomeTeamsApi(search);
+      const response = await getCreateTeamsApi(search);
       setCreatedTeamData(response);
       setIsLoading(!isLoading);
     })();
