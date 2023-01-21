@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/colors";
-import TeamItem from "../../home/components/teamItem";
+import CreatedTeamItem from "../../home/components/createdTeamItem";
 import { isEmpty } from "../../../@types/utility/typeGuard";
 import { getMyCreatedTeamsHistoryApi } from "../../../api/myPages/getMyCreatedTeamsHistoryApi";
 import { MyCreatedTeamsHistory } from "../../../@types/dto/myCreatedTeamsHistory";
@@ -10,7 +10,7 @@ import MyPageHeader from "../components/myPageHeader";
 
 export default function MyTeamHistoryPage() {
   const navigate = useNavigate();
-  const [isFetchValid, setIsFetchValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [teamHistoryList, setTeamHistoryList] = useState<MyCreatedTeamsHistory[]>([
     {
       teamId: 1,
@@ -34,19 +34,19 @@ export default function MyTeamHistoryPage() {
     (async function () {
       const response = await getMyCreatedTeamsHistoryApi();
       setTeamHistoryList(response);
-      setIsFetchValid(!isFetchValid);
+      setIsLoading(!isLoading);
     })();
   }, []);
 
   return (
     <Container>
       <MyPageHeader title="내가 만든 완두콩 모두보기" onClick={() => navigate(-1)} />
-      {!isFetchValid && <p>불러오는 중 입니다...</p>}
-      {isFetchValid && isEmpty(teamHistoryList) && <p>생성한 완두콩이 없습니다.</p>}
-      {isFetchValid &&
+      {isLoading && <p>불러오는 중 입니다...</p>}
+      {!isLoading && isEmpty(teamHistoryList) && <p>생성한 완두콩이 없습니다.</p>}
+      {!isLoading &&
         teamHistoryList !== undefined &&
         teamHistoryList.map((item, index) => (
-          <TeamItem key={index} teamId={item.teamId} teamData={item} isDday={false} />
+          <CreatedTeamItem key={index} teamId={item.teamId} createdTeamItemData={item} isDday={false} />
         ))}
     </Container>
   );

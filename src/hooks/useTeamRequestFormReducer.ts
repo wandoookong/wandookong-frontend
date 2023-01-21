@@ -1,6 +1,6 @@
 import { useReducer } from "react";
-import { AcceptableMembers, SetTeamValue } from "../../../@types/dto/setTeam";
-import { ROLE_DETAIL, TEAM_CATEGORY } from "../../../@types/model/fieldType";
+import { AcceptableMembers, SetTeamValue } from "../@types/dto/setTeam";
+import { ROLE_DETAIL, TEAM_CATEGORY } from "../@types/model/fieldType";
 
 interface OnChangeStateAction {
   type: "ON_CHANGE_STATE_ACTION";

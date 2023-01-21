@@ -3,30 +3,30 @@ import { useNavigate } from "react-router-dom";
 import { DdayTimer } from "../../../components/ddayTimer/DdayTimer";
 import { colors } from "../../../styles/colors";
 import { teamCategoryText } from "../../../services/convertValueToName";
-import { HomeTeam } from "../../../@types/dto/getHomeTeam";
+import { CreatedTeam } from "../../../@types/dto/getHomeTeam";
 import { convertValueToImageUrl } from "../../../services/convertValueToImageUrl";
 import { ROLE_DETAIL } from "../../../@types/model/fieldType";
 
 interface Props {
   teamId: number;
-  teamData: HomeTeam;
+  createdTeamItemData: CreatedTeam;
   isDday: boolean;
 }
 
-export default function TeamItem({ teamId, teamData, isDday }: Props) {
+export default function CreatedTeamItem({ teamId, createdTeamItemData, isDday }: Props) {
   const navigate = useNavigate();
 
   return (
     <Container onClick={() => navigate(`/team/${teamId}`)}>
-      <div className="top-wrapper">
-        <div className="title-wrapper">
-          <span className="team-category">{teamCategoryText(teamData.teamCategory)}</span>
-          {isDday && <DdayTimer closeDueYmd={teamData.closeDueYmd} currentTimestamp={Date.now()} />}
+      <div className="created-team-item-header-wrapper">
+        <div className="item-header-title-wrapper">
+          <span className="item-team-category">{teamCategoryText(createdTeamItemData.teamCategory)}</span>
+          {isDday && <DdayTimer closeDueYmd={createdTeamItemData.closeDueYmd} currentTimestamp={Date.now()} />}
         </div>
-        <h2>{teamData.title}</h2>
+        <h2>{createdTeamItemData.title}</h2>
       </div>
       <ul>
-        {teamData.teamCapacityList.map((position, index) => (
+        {createdTeamItemData.teamCapacityList.map((position, index) => (
           <PositionItem key={index} roleMemberCount={position.roleMemberCount} roleDetail={position.roleDetail}>
             <div className="position-image" />
             <span>{position.roleDetailName}</span>
@@ -37,7 +37,7 @@ export default function TeamItem({ teamId, teamData, isDday }: Props) {
   );
 }
 
-const Container = styled.section`
+const Container = styled.div`
   position: relative;
   margin: 20px;
   padding: 16px 12px 22px 12px;
@@ -45,17 +45,17 @@ const Container = styled.section`
   border-radius: 8px;
   cursor: pointer;
 
-  div.top-wrapper {
+  div.created-team-item-header-wrapper {
     display: flex;
     flex-direction: column;
 
-    div.title-wrapper {
+    div.item-header-title-wrapper {
       display: flex;
       justify-content: space-between;
       flex: 1 1 auto;
       overflow: hidden;
 
-      span.team-category {
+      span.item-team-category {
         font-size: 12px;
         font-weight: 400;
         line-height: 17px;

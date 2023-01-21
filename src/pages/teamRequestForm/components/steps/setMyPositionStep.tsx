@@ -8,7 +8,7 @@ import { PositionRadioButton } from "../inputs/positionRadioButton";
 import styled from "@emotion/styled";
 import { ContentWrapper } from "../layout/contentWrapper";
 import { ROLE_DETAIL, ROLE_MAIN } from "../../../../@types/model/fieldType";
-import { getUserMyInfoApi } from "../../../../api/myPages/myPage/getUserMyInfoApi";
+import { getUserProfileApi } from "../../../../api/myPages/myPage/getUserMyInfoApi";
 
 interface Props {
   myPosition: ROLE_DETAIL | "";
@@ -37,7 +37,7 @@ export default function SetMyPositionStep({ myPosition, onChangeRole, onNext, on
 
   useEffect(() => {
     (async function () {
-      const response = await getUserMyInfoApi();
+      const response = await getUserProfileApi();
       setName(response.nickname);
     })();
   }, []);

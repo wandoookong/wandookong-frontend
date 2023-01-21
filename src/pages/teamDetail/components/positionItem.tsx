@@ -21,7 +21,7 @@ export default function PositionItem({
 }: Props) {
   return (
     <Container isPositionEmpty={isPositionValid} position={positionName} onClick={onClick}>
-      <div className="profile-image" />
+      <div className="profile-image-wrapper" />
       <div className="position-content-wrapper">
         <div className="position-header-wrapper">
           <div className="position-title">
@@ -47,7 +47,7 @@ const Container = styled.li<{ isPositionEmpty: boolean; position: string }>`
   box-sizing: border-box;
   cursor: pointer;
 
-  div.profile-image {
+  div.profile-image-wrapper {
     min-width: 50px;
     height: 50px;
     margin: 0;

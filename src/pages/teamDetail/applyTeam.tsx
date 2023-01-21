@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { useEffect, useMemo, useState } from "react";
 import { MultiTextInput } from "../../components/form/textInput/multiText";
 import { css } from "@emotion/react";
-import FloatingModal from "../../components/modal/FloatingModal";
+import DialogueModal from "../../components/modal/DialogueModal";
 import CommonModalHeader from "../../components/header/commonModalHeader";
 import { colors } from "../../styles/colors";
 import CheckIcon from "../../assets/icons/select-grey900.svg";
@@ -102,25 +102,25 @@ export default function ApplyTeam() {
   return (
     <Container isPositionErrorMessageOn={errorMessages.position}>
       {isSuccessModalOn && (
-        <FloatingModal
+        <DialogueModal
           title="참여 신청했습니다!"
           content={`리더가 참여를 수락하면 \n 해당 완두콩의 연락 정보가 공개됩니다. \n 조금만 기다려주세요. `}
           modalIcon="check"
-          buttonLabel="확인"
-          onClickButton={() => navigate("/")}
+          singleButtonLabel="확인"
+          onClickSingleButton={() => navigate("/")}
           onClose={() => setSuccessModalOn(!isSuccessModalOn)}
-          showClose={false}
+          showCloseButton={false}
         />
       )}
       <CommonModalHeader onClick={() => navigate(-1)} />
       <main>
-        <TitleWrapper>
+        <div className="apply-team-header-wrapper">
           <div className="title-wrapper">
             <p>{teamCategoryText(teamDetailData.teamCategory)}</p>
             <DdayTimer closeDueYmd={teamDetailData.closeDueYmd} currentTimestamp={Date.now()} />
           </div>
           <h1>{teamDetailData.title}</h1>
-        </TitleWrapper>
+        </div>
         <section>
           <h2>참여하고 싶은 포지션의 콩을 선택해주세요</h2>
           {errorMessages.position && <p className="error-message">{errorMessages.position}</p>}
@@ -171,6 +171,38 @@ const Container = styled.div<{ isPositionErrorMessageOn: string }>`
   main {
     padding: 80px 20px;
 
+    div.apply-team-header-wrapper {
+      display: flex;
+      flex-direction: column;
+      margin: 0 0 23px 0;
+      padding: 0;
+
+      div.title-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        p {
+          padding: 0;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 17px;
+          letter-spacing: -0.005em;
+          text-align: left;
+        }
+      }
+
+      h1 {
+        margin-top: 5px;
+        padding: 0;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 29px;
+        letter-spacing: 0;
+        text-align: left;
+        word-break: break-all;
+      }
+    }
+
     p.error-message {
       font-size: 12px;
       font-weight: 500;
@@ -191,38 +223,6 @@ const Container = styled.div<{ isPositionErrorMessageOn: string }>`
       font-size: 16px;
       font-weight: 500;
     }
-  }
-`;
-
-const TitleWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0 0 23px 0;
-  padding: 0;
-
-  div.title-wrapper {
-    display: flex;
-    justify-content: space-between;
-
-    p {
-      padding: 0;
-      font-size: 12px;
-      font-weight: 400;
-      line-height: 17px;
-      letter-spacing: -0.005em;
-      text-align: left;
-    }
-  }
-
-  h1 {
-    margin-top: 5px;
-    padding: 0;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 29px;
-    letter-spacing: 0;
-    text-align: left;
-    word-break: break-all;
   }
 `;
 

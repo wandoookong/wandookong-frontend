@@ -1,4 +1,4 @@
-import { CAREER_RANGE, ROLE_MAIN } from "../../../../@types/model/fieldType";
+import { CAREER_RANGE, ROLE_MAIN } from "../@types/model/fieldType";
 import { useReducer } from "react";
 
 interface State {

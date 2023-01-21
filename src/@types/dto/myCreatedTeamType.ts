@@ -1,6 +1,6 @@
 import { TEAM_CATEGORY } from "../model/fieldType";
 
-export interface MyCreatedTeam {
+export interface MyCreatedTeamType {
   allowCount: number;
   applyCount: number;
   capacityCount: number;

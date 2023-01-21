@@ -11,14 +11,14 @@ interface Props {
 export function DoubleButton({ prevButtonLabel, nextButtonLabel, onPrevStep, onNextStep }: Props) {
   return (
     <Container>
-      <ButtonWrapper>
+      <div className="double-button-wrapper">
         <button className="prev-button" onClick={onPrevStep}>
           {prevButtonLabel}
         </button>
         <button className="next-button" onClick={onNextStep}>
           {nextButtonLabel}
         </button>
-      </ButtonWrapper>
+      </div>
     </Container>
   );
 }
@@ -33,35 +33,35 @@ const Container = styled.div`
   padding: 20px 20px 0;
   box-sizing: border-box;
   background: ${colors.background};
-`;
 
-const ButtonWrapper = styled.div`
-  display: flex;
+  div.double-button-wrapper {
+    display: flex;
 
-  button.prev-button {
-    flex: 1;
-    width: 100%;
-    height: 52px;
-    margin-right: 18px;
-    border-radius: 12px;
-    border: 1px solid ${colors.brand900};
-    background: ${colors.background};
-    font-size: 16px;
-    font-weight: bold;
-    color: ${colors.brand900};
-    cursor: pointer;
-  }
+    button.prev-button {
+      flex: 1;
+      width: 100%;
+      height: 52px;
+      margin-right: 18px;
+      border-radius: 12px;
+      border: 1px solid ${colors.brand900};
+      background: ${colors.background};
+      font-size: 16px;
+      font-weight: bold;
+      color: ${colors.brand900};
+      cursor: pointer;
+    }
 
-  button.next-button {
-    flex: 1;
-    width: 100%;
-    height: 52px;
-    border-radius: 12px;
-    border: 0;
-    background: ${colors.brand900};
-    font-size: 16px;
-    font-weight: bold;
-    color: ${colors.white};
-    cursor: pointer;
+    button.next-button {
+      flex: 1;
+      width: 100%;
+      height: 52px;
+      border-radius: 12px;
+      border: 0;
+      background: ${colors.brand900};
+      font-size: 16px;
+      font-weight: bold;
+      color: ${colors.white};
+      cursor: pointer;
+    }
   }
 `;

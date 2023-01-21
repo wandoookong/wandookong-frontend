@@ -1,6 +1,6 @@
 import { CAREER_RANGE, ROLE_MAIN } from "../model/fieldType";
 
-export interface UserMyInfo {
+export interface UserMyInfoType {
   careerRange: CAREER_RANGE;
   email: string;
   nickname: string;

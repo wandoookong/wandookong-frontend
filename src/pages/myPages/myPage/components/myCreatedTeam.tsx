@@ -15,7 +15,7 @@ interface Props {
   capacityCount: number;
 }
 
-export default function MyOpenTeam({
+export default function MyCreatedTeam({
   teamCategory,
   closeDueYmd,
   currentTimestamp,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ConfirmModal from "../components/confirmModal";
-import FloatingModal from "../../../components/modal/FloatingModal";
+import DialogueModal from "../../../components/modal/DialogueModal";
 import MyCreatedTeamNavigation from "./components/myCreatedTeamNavigation";
 import { teamCategoryText } from "../../../services/convertValueToName";
 import { DdayTimer } from "../../../components/ddayTimer/DdayTimer";
@@ -10,24 +10,22 @@ import PendingMember from "./components/pendingMember";
 import AcceptedMember from "./components/acceptedApplicant";
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/colors";
-import { MyCreatedTeam } from "../../../@types/dto/myCreatedTeam";
+import { MyCreatedTeamType } from "../../../@types/dto/myCreatedTeamType";
 import { MyCreatedTeamAcceptedMember } from "../../../@types/dto/myCreatedTeamAcceptedMember";
-import { getPendingMembersApi } from "../../../api/myPages/myCreatedTeam/getPendingMembersApi";
-import { getMyCreatedTeamApi } from "../../../api/myPages/myPage/getMyCreatedTeamApi";
-import { getAcceptedMembersApi } from "../../../api/myPages/myCreatedTeam/getAcceptedMembersApi";
 import { MyCreatedTeamPendingMember } from "../../../@types/dto/myCreatedTeamPendingMember";
 import qs from "qs";
 import { deleteMyCreatedTeamApi } from "../../../api/myPages/deleteMyCreatedTeamApi";
 import { DeleteFailMyCreateTeam } from "../../../@types/dto/deleteFailMyCreateTeam";
+import { MyCreatedTeamPageApi } from "../../../api/myPages/myCreatedTeam/myCreatedTeamPageApi";
 
 export default function MyCurrentCreatedTeam() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isFetchValid, setIsFetchValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
   const [isNotDeleteModalOn, setIsNotDeleteModalOn] = useState(false);
   const [acceptedMemberId, setAcceptedMemberId] = useState(0);
-  const [myCreatedTeam, setMyCreatedTeam] = useState<MyCreatedTeam>({
+  const [myCreatedTeam, setMyCreatedTeam] = useState<MyCreatedTeamType>({
     teamId: 1,
     teamCategory: "portfolio",
     title: "",
@@ -61,11 +59,11 @@ export default function MyCurrentCreatedTeam() {
 
   const { category } = qs.parse(location.search, { ignoreQueryPrefix: true });
 
-  const onClickNoDeleteAcceptedMember = () => {
+  const onCloseDeleteAcceptedMemberModal = () => {
     setIsDeleteModalOn(!isDeleteModalOn);
   };
 
-  const onClickDeleteMyCreatedTeam = async () => {
+  const onDeleteMyCreatedTeam = async () => {
     const response: DeleteFailMyCreateTeam = await deleteMyCreatedTeamApi(myCreatedTeam.teamId);
     if (response.failCode) {
       setIsDeleteModalOn(!isDeleteModalOn);
@@ -75,18 +73,21 @@ export default function MyCurrentCreatedTeam() {
     navigate("/myAccount");
   };
 
-  const onClickMoveToAcceptedMemberTab = () => {
+  const onMoveToAcceptedMemberTab = () => {
     setIsNotDeleteModalOn(!isNotDeleteModalOn);
     navigate("/myCreatedTeam?category=accepted");
   };
 
   useEffect(() => {
     (async function () {
-      const response = await Promise.all([getMyCreatedTeamApi(), getPendingMembersApi(), getAcceptedMembersApi()]);
-      setMyCreatedTeam(response[0]);
-      setPendingMembers(response[1]);
-      setAcceptedMembers(response[2]);
-      setIsFetchValid(!isFetchValid);
+      const response = await MyCreatedTeamPageApi();
+      if (!response.success) {
+        alert(response.message);
+      }
+      setMyCreatedTeam(response.myCreatedTeam);
+      setPendingMembers(response.pendingMembers);
+      setAcceptedMembers(response.acceptedMembers);
+      setIsLoading(!isLoading);
     })();
   }, []);
 
@@ -101,19 +102,19 @@ export default function MyCurrentCreatedTeam() {
           title="완두콩을 삭제하시겠습니까?"
           leftButtonLabel="유지하기"
           rightButtonLabel="삭제하기"
-          onClickRightButton={onClickDeleteMyCreatedTeam}
-          onClickLeftButton={onClickNoDeleteAcceptedMember}
+          onClickRightButton={onDeleteMyCreatedTeam}
+          onClickLeftButton={onCloseDeleteAcceptedMemberModal}
         />
       )}
       {isNotDeleteModalOn && (
-        <FloatingModal
+        <DialogueModal
           title={`현재 수락된 참여자가 있어 \n 완두콩 삭제가 어려워요!`}
           content="수락한 참여자 삭제시 완두콩 삭제가 가능합니다. 참여자 화면으로 이동하시겠습니까?"
           modalIcon="exclamation"
           onClose={() => setIsNotDeleteModalOn(!isNotDeleteModalOn)}
-          buttonLabel="이동하기"
-          onClickButton={onClickMoveToAcceptedMemberTab}
-          showClose={true}
+          singleButtonLabel="이동하기"
+          onClickSingleButton={onMoveToAcceptedMemberTab}
+          showCloseButton={true}
         />
       )}
       <MyCreatedTeamNavigation onClickDelete={() => setIsDeleteModalOn(!isDeleteModalOn)} />
@@ -133,15 +134,15 @@ export default function MyCurrentCreatedTeam() {
             참여자
           </button>
         </div>
-        {!isFetchValid && <p className="empty-wrapper">불러오고 있습니다...</p>}
-        {isFetchValid && category === "pending" && (isEmpty(pendingMembers) || !pendingMembers) && (
+        {isLoading && <p className="empty-wrapper">불러오고 있습니다...</p>}
+        {!isLoading && category === "pending" && (isEmpty(pendingMembers) || !pendingMembers) && (
           <p className="empty-wrapper">아직 아무도 없어요</p>
         )}
-        {isFetchValid && category === "accepted" && (isEmpty(acceptedMembers) || !acceptedMembers) && (
+        {!isLoading && category === "accepted" && (isEmpty(acceptedMembers) || !acceptedMembers) && (
           <p className="empty-wrapper">아직 아무도 없어요</p>
         )}
         <section className="applicants-wrapper">
-          {isFetchValid &&
+          {!isLoading &&
             pendingMembers &&
             category === "pending" &&
             pendingMembers.map((applicant, index) => (
@@ -157,7 +158,7 @@ export default function MyCurrentCreatedTeam() {
                 setAcceptedMembersList={setAcceptedMemberId}
               />
             ))}
-          {isFetchValid &&
+          {!isLoading &&
             acceptedMembers &&
             category === "accepted" &&
             acceptedMembers.map((applicant, index) => (

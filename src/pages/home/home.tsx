@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { HomeHeader } from "./components/homeHeader";
 import FindTeamFilter from "./components/findTeamFilter";
-import TeamItem from "./components/teamItem";
+import CreatedTeamItem from "./components/createdTeamItem";
 import styled from "@emotion/styled";
 import { useLocation, useNavigate } from "react-router-dom";
 import { isEmpty } from "../../@types/utility/typeGuard";
 import { colors } from "../../styles/colors";
 import CarouselImg from "./assets/mainBanner.png";
-import { HomeTeam } from "../../@types/dto/getHomeTeam";
+import { CreatedTeam } from "../../@types/dto/getHomeTeam";
 import { getIsValidToCreateTeamApi } from "../../api/home/getIsValidToCreateTeamApi";
-import FloatingModal from "../../components/modal/FloatingModal";
+import DialogueModal from "../../components/modal/DialogueModal";
 import { IsValidToCreateTeam } from "../../@types/dto/isValidToCreateTeam";
 import WalkThrough from "./walkThrough";
 import { getHomeTeamsApi } from "../../api/home/getHomeTeamsApi";
@@ -18,10 +18,10 @@ export default function Home() {
   const navigate = useNavigate();
   const { search } = useLocation();
   const [isWalkThroughClicked, setIsWalkThroughClicked] = useState(false);
-  const [isFetchValid, setIsFetchValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isCreateTeamFailModalOn, setIsCreateTeamFailModalOn] = useState(false);
   const [createdMyTeamId, setCreatedMyTeamId] = useState(0);
-  const [teamsData, setTeamsData] = useState<HomeTeam[]>([]);
+  const [createdTeamData, setCreatedTeamData] = useState<CreatedTeam[]>([]);
 
   const onCloseWalkThroughHandler = () => {
     localStorage.setItem("isWalkThroughClicked", "true");
@@ -35,7 +35,7 @@ export default function Home() {
       setIsCreateTeamFailModalOn(!isCreateTeamFailModalOn);
       return;
     }
-    return navigate("/request");
+    navigate("/request");
   };
 
   const onCloseModalHandler = () => {
@@ -46,8 +46,8 @@ export default function Home() {
   useEffect(() => {
     (async function () {
       const response = await getHomeTeamsApi(search);
-      setTeamsData(response);
-      setIsFetchValid(true);
+      setCreatedTeamData(response);
+      setIsLoading(!isLoading);
     })();
   }, [search]);
 
@@ -64,30 +64,30 @@ export default function Home() {
     <>
       {!isWalkThroughClicked && <WalkThrough onClick={onCloseWalkThroughHandler} />}
       {isCreateTeamFailModalOn && (
-        <FloatingModal
+        <DialogueModal
           title="아직 모집중인 완두콩이 있습니다!"
           content="현재 모집중인 완두콩이 마감 되어야 새로운 완두콩을 만들 수 있습니다. 모집중인 완두콩으로 이동하시겠습니까?"
           modalIcon="exclamation"
-          buttonLabel="내 완두콩으로 이동하기"
-          onClickButton={onCloseModalHandler}
+          singleButtonLabel="내 완두콩으로 이동하기"
+          onClickSingleButton={onCloseModalHandler}
           onClose={() => setIsCreateTeamFailModalOn(!isCreateTeamFailModalOn)}
-          showClose={true}
+          showCloseButton={true}
         />
       )}
       {isWalkThroughClicked && (
         <>
-          <HomeHeader onClickRequest={onCreateTeamHandler} />
+          <HomeHeader onCreateTeamHandler={onCreateTeamHandler} />
           <Container>
             <Carousel>
               <button onClick={onCreateTeamHandler}>완두콩 만들기</button>
             </Carousel>
             <FindTeamFilter />
-            {!isFetchValid && <p>완두콩 불러오는 중...</p>}
-            {isFetchValid && isEmpty(teamsData) && <p>아직 만들어진 완두콩이 없습니다.</p>}
-            {isFetchValid &&
-              !isEmpty(teamsData) &&
-              teamsData.map((data, index) => (
-                <TeamItem key={index} teamId={data.teamId} teamData={data} isDday={true} />
+            {isLoading && <p>완두콩 불러오는 중...</p>}
+            {!isLoading && isEmpty(createdTeamData) && <p>아직 만들어진 완두콩이 없습니다.</p>}
+            {!isLoading &&
+              !isEmpty(createdTeamData) &&
+              createdTeamData.map((data, index) => (
+                <CreatedTeamItem key={index} teamId={data.teamId} createdTeamItemData={data} isDday={true} />
               ))}
           </Container>
         </>

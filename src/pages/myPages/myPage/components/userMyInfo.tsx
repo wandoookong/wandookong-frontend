@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { colors } from "../../../../styles/colors";
 import { careerRangeText, roleMainText } from "../../../../services/convertValueToName";
-import { UserMyInfo } from "../../../../@types/dto/userMyInfo";
+import { UserMyInfoType } from "../../../../@types/dto/userMyInfoType";
 
-export default function MyInfo({ nickname, email, tagList, careerRange, roleMain }: UserMyInfo) {
+export default function UserMyInfo({ nickname, email, tagList, careerRange, roleMain }: UserMyInfoType) {
   const navigate = useNavigate();
 
   return (

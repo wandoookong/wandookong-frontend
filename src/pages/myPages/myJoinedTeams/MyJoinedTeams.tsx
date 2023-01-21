@@ -3,34 +3,34 @@ import { isEmpty } from "../../../@types/utility/typeGuard";
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/colors";
 import { useNavigate } from "react-router-dom";
-import JoinedItem from "./components/joinedItem";
+import MyJoinedTeamItem from "./components/myJoinedTeamItem";
 import { getMyJoinedTeamsApi } from "../../../api/myPages/getMyJoinedTeamsApi";
 import { MyJoinedTeamType } from "../../../@types/dto/myJoinedTeamType";
 import MyPageHeader from "../components/myPageHeader";
 
 export default function MyJoinedTeams() {
   const navigate = useNavigate();
-  const [isFetchValid, setIsFetchValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [acceptedTeamData, setAcceptedTeamData] = useState<MyJoinedTeamType[]>([]);
 
   useEffect(() => {
     (async function () {
       const response = await getMyJoinedTeamsApi();
       setAcceptedTeamData(response);
-      setIsFetchValid(!isFetchValid);
+      setIsLoading(!isLoading);
     })();
   }, []);
 
   return (
     <Container>
       <MyPageHeader title="참여한 완두콩 보기" onClick={() => navigate(-1)} />
-      {!isFetchValid && <p className="loading-wrapper">불러오는 중 입니다...</p>}
-      {isFetchValid && isEmpty(acceptedTeamData) && <p className="loading-wrapper">참여한 완두콩이 없습니다.</p>}
+      {isLoading && <p className="loading-wrapper">불러오는 중 입니다...</p>}
+      {!isLoading && isEmpty(acceptedTeamData) && <p className="loading-wrapper">참여한 완두콩이 없습니다.</p>}
       <div>
-        {isFetchValid &&
+        {!isLoading &&
           acceptedTeamData &&
           acceptedTeamData.map((team, index) => (
-            <JoinedItem
+            <MyJoinedTeamItem
               key={index}
               teamId={team.teamId}
               createdAt={team.createdAt}

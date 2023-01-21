@@ -42,26 +42,18 @@ export default function WalkThrough({ onClick }) {
           <img
             width="186px"
             src={step1}
-            alt="함께 사이드 프로젝트를 하고 싶은 직군만 있다면 팀원을 빠르게 모집할 수 있습니다."
+            alt="함께 사이드 프로젝트하고 싶은 직군만 있다면 팀원 모집이 빠르게 가능하고"
           />
           <h3>함께 사이드 프로젝트하고 싶은 직군만 있다면</h3>
           <strong>팀원 모집이 빠르게 가능하고</strong>
         </div>
         <div className="slider-item-wrapper">
-          <img
-            width="196px"
-            src={step2}
-            alt="함께 사이드 프로젝트를 하고 싶은 직군만 있다면 팀원을 빠르게 모집할 수 있습니다."
-          />
+          <img width="196px" src={step2} alt="언제 어디서나 나의 성향과 맞는 팀원을 손쉽게 찾을 수 있습니다." />
           <h3>언제 어디서나 나의 성향과 맞는 팀원을</h3>
           <strong>손쉽게 찾을 수 있습니다</strong>
         </div>
         <div className="slider-item-wrapper">
-          <img
-            width="320px"
-            src={step3}
-            alt="함께 사이드 프로젝트를 하고 싶은 직군만 있다면 팀원을 빠르게 모집할 수 있습니다."
-          />
+          <img width="320px" src={step3} alt="이젠, 완두콩으로 더욱 쉽고 재밌게 사이드 프로젝트 팀원을 찾아보세요." />
           <div className="text-wrapper">
             <strong>이젠, 완두콩으로 더욱 쉽고 재밌게</strong>
             <strong>사이드 프로젝트 팀원을 찾아보세요</strong>

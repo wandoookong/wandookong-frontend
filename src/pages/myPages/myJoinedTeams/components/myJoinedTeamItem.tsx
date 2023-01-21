@@ -8,7 +8,7 @@ import { MyJoinedTeamType } from "../../../../@types/dto/myJoinedTeamType";
 import ConfirmModal from "../../components/confirmModal";
 import { setAppliedTeamCancelApi } from "../../../../api/myPages/setAppliedTeamCancelApi";
 
-export default function JoinedItem({
+export default function MyJoinedTeamItem({
   teamId,
   teamCategory,
   title,
@@ -21,8 +21,8 @@ export default function JoinedItem({
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   const [myTeamState, setMyTeamState] = useState<TEAM_PARTY_MEMBER_STATUS>("apply");
-  const onClickCancelWaiting = async () => {
-    const response = await setAppliedTeamCancelApi(teamId);
+  const onCancelWaiting = async () => {
+    await setAppliedTeamCancelApi(teamId);
     setMyTeamState("deny");
   };
 
@@ -43,7 +43,7 @@ export default function JoinedItem({
           rightButtonLabel="아니요"
           leftButtonLabel="네"
           onClickRightButton={() => setIsCancelModalOpen(!isCancelModalOpen)}
-          onClickLeftButton={onClickCancelWaiting}
+          onClickLeftButton={onCancelWaiting}
         />
       )}
       <Container isDescriptionOpen={isDescriptionOpen} myTeamState={myTeamState}>
@@ -77,7 +77,7 @@ export default function JoinedItem({
           </button>
         </div>
         {myTeamState === "apply" && (
-          <button className="waiting-deny-button" onClick={onClickCancelWaiting}>
+          <button className="waiting-deny-button" onClick={onCancelWaiting}>
             대기 취소
           </button>
         )}

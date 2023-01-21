@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import MyInfo from "./components/myInfo";
-import MyOpenTeam from "./components/myOpenTeam";
+import UserMyInfo from "./components/userMyInfo";
+import MyCreatedTeam from "./components/myCreatedTeam";
 import CommonModalHeader from "../../../components/header/commonModalHeader";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { colors } from "../../../styles/colors";
 import { ACCESS_TOKEN_NAME } from "../../../api/config/config";
-import { getUserMyInfoApi } from "../../../api/myPages/myPage/getUserMyInfoApi";
-import { UserMyInfo } from "../../../@types/dto/userMyInfo";
-import { getMyCreatedTeamApi } from "../../../api/myPages/myPage/getMyCreatedTeamApi";
-import { MyCreatedTeam } from "../../../@types/dto/myCreatedTeam";
+import { UserMyInfoType } from "../../../@types/dto/userMyInfoType";
+import { MyCreatedTeamType } from "../../../@types/dto/myCreatedTeamType";
+import { MyPageApi } from "../../../api/myPages/myPage/myPageApi";
+import { MyPageMenuItemButton } from "../components/myPageMenuItemButton";
 
 export default function MyPage() {
   const navigate = useNavigate();
-  const [isFetchDone, setIsFetchDone] = useState(false);
-  const [myOpenTeam, setMyOpenTeam] = useState<MyCreatedTeam>({
+  const [isLoading, setIsLoading] = useState(true);
+  const [myCreatedTeam, setMyCreatedTeam] = useState<MyCreatedTeamType>({
     teamId: 1,
     teamCategory: "portfolio",
     title: "",
@@ -24,7 +24,7 @@ export default function MyPage() {
     allowCount: 0,
     capacityCount: 0,
   });
-  const [myInfo, setMyInfo] = useState<UserMyInfo>({
+  const [userMyInfo, setUserMyInfo] = useState<UserMyInfoType>({
     email: "",
     nickname: "",
     roleMain: "design",
@@ -32,7 +32,7 @@ export default function MyPage() {
     tagList: [""],
   });
 
-  const onClickLogout = () => {
+  const onLogOut = () => {
     localStorage.removeItem(ACCESS_TOKEN_NAME);
     navigate("/");
     window.location.reload();
@@ -40,10 +40,13 @@ export default function MyPage() {
 
   useEffect(() => {
     (async function () {
-      const response = await Promise.all([getUserMyInfoApi(), getMyCreatedTeamApi()]);
-      setMyInfo(response[0]);
-      setMyOpenTeam(response[1]);
-      setIsFetchDone(!isFetchDone);
+      const response = await MyPageApi();
+      if (!response.success) {
+        alert(response.message);
+      }
+      setUserMyInfo(response.userMyInfo);
+      setMyCreatedTeam(response.myCreatedTeam);
+      setIsLoading(!isLoading);
     })();
   }, []);
 
@@ -51,32 +54,30 @@ export default function MyPage() {
     <>
       <CommonModalHeader onClick={() => navigate("/")} />
       <ContentWrapper>
-        {!isFetchDone && <h1 className="loading-wrapper">불러오는 중입니다...</h1>}
-        {isFetchDone && myInfo && (
-          <MyInfo
-            nickname={myInfo.nickname}
-            email={myInfo.email}
-            roleMain={myInfo.roleMain}
-            careerRange={myInfo.careerRange}
-            tagList={myInfo.tagList}
+        {isLoading && <h1 className="loading-wrapper">불러오는 중입니다...</h1>}
+        {!isLoading && userMyInfo && (
+          <UserMyInfo
+            nickname={userMyInfo.nickname}
+            email={userMyInfo.email}
+            roleMain={userMyInfo.roleMain}
+            careerRange={userMyInfo.careerRange}
+            tagList={userMyInfo.tagList}
           />
         )}
-        {isFetchDone && myOpenTeam && (
-          <MyOpenTeam
-            teamCategory={myOpenTeam.teamCategory}
-            title={myOpenTeam.title}
-            closeDueYmd={myOpenTeam.closeDueYmd}
-            currentTimestamp={myOpenTeam.currentTimestamp}
-            applyCount={myOpenTeam.applyCount}
-            allowCount={myOpenTeam.allowCount}
-            capacityCount={myOpenTeam.capacityCount}
+        {!isLoading && myCreatedTeam && (
+          <MyCreatedTeam
+            teamCategory={myCreatedTeam.teamCategory}
+            title={myCreatedTeam.title}
+            closeDueYmd={myCreatedTeam.closeDueYmd}
+            currentTimestamp={myCreatedTeam.currentTimestamp}
+            applyCount={myCreatedTeam.applyCount}
+            allowCount={myCreatedTeam.allowCount}
+            capacityCount={myCreatedTeam.capacityCount}
           />
         )}
-        {isFetchDone && (
+        {!isLoading && (
           <ul className="menu-wrapper">
-            <li>
-              <button onClick={() => navigate("/my-team-history")}>내가 만든 완두콩 모두 보기</button>
-            </li>
+            <MyPageMenuItemButton label="내가 만든 완두콩 모두 보기" onClick={() => navigate("/my-team-history")} />
             <li>
               <button onClick={() => navigate("/my-team-party")}>참여한 완두콩 보기</button>
             </li>
@@ -104,7 +105,7 @@ export default function MyPage() {
               </a>
             </li>
             <li>
-              <button onClick={onClickLogout}>로그아웃</button>
+              <button onClick={onLogOut}>로그아웃</button>
             </li>
           </ul>
         </section>

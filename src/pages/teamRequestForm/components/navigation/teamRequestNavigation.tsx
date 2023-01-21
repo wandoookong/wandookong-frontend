@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
-import FloatingModal from "../../../../components/modal/FloatingModal";
+import DialogueModal from "../../../../components/modal/DialogueModal";
 import { useNavigate } from "react-router-dom";
 import { colors } from "../../../../styles/colors";
 import CloseIcon from "../../../../assets/icons/close-grey900.svg";
@@ -9,11 +9,11 @@ interface Props {
   step: number;
 }
 
-export function Navigation({ step }: Props) {
+export function TeamRequestNavigation({ step }: Props) {
   const navigate = useNavigate();
   const [isModalOn, setIsModalOn] = useState<boolean>(false);
 
-  const onClick = () => {
+  const onCloseModal = () => {
     setIsModalOn(!isModalOn);
   };
   const onNext = () => {
@@ -25,21 +25,21 @@ export function Navigation({ step }: Props) {
   return (
     <>
       {isModalOn && (
-        <FloatingModal
+        <DialogueModal
           title="완두콩이 거의 다 완료됐어요!"
           content={`지금 돌아가면 작성 사항이 \n 모두 삭제됩니다. 작성한 내용을 \n 삭제하시겠습니까?`}
           modalIcon="exclamation"
           onClose={() => setIsModalOn(false)}
-          showClose={false}
-          prevLabel="나가기"
-          onPrev={onNext}
-          nextLabel="이어서 작성하기"
+          showCloseButton={false}
+          previousButtonLabel="나가기"
+          onPrevious={onNext}
+          nextButtonLabel="이어서 작성하기"
           onNext={() => setIsModalOn(false)}
         />
       )}
       <Container>
         <progress value={calculateProgressBarValue} max="100" />
-        <button onClick={onClick} />
+        <button onClick={onCloseModal} />
       </Container>
     </>
   );

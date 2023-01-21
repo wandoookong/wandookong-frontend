@@ -9,23 +9,23 @@ import { Nullable } from "../../../@types/utility/nullable";
 import Logo from "../../../assets/images/logo.png";
 
 interface Props {
-  onClickRequest(value?: any): void;
+  onCreateTeamHandler(value?: any): void;
 }
 
-export const HomeHeader = ({ onClickRequest }: Props) => {
+export const HomeHeader = ({ onCreateTeamHandler }: Props) => {
   const navigate = useNavigate();
   const [isScrollOn, setIsScrollOn] = useState(false);
-  const token: Nullable<string> = localStorage.getItem(ACCESS_TOKEN_NAME);
+  const accessToken: Nullable<string> = localStorage.getItem(ACCESS_TOKEN_NAME);
 
-  const handleScroll = () => {
+  const onScroll = () => {
     if (window.scrollY >= 220) {
       return setIsScrollOn(true);
     }
     return setIsScrollOn(false);
   };
 
-  const onClickLogin = () => {
-    if (!token) {
+  const onLogin = () => {
+    if (!accessToken) {
       navigate("/login");
       return window.location.reload();
     }
@@ -33,8 +33,8 @@ export const HomeHeader = ({ onClickRequest }: Props) => {
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, true);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll, true);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
@@ -42,12 +42,12 @@ export const HomeHeader = ({ onClickRequest }: Props) => {
       <button className="logo" onClick={() => window.location.reload()} />
       <RightWrapper>
         {isScrollOn && (
-          <button className="set-team-button" onClick={onClickRequest}>
+          <button className="set-team-button" onClick={onCreateTeamHandler}>
             완두콩 만들기
           </button>
         )}
-        {token === null && <span onClick={onClickLogin}>로그인</span>}
-        {!isEmpty(token) && token !== null && (
+        {accessToken === null && <span onClick={onLogin}>로그인</span>}
+        {!isEmpty(accessToken) && accessToken !== null && (
           <button className="my-home-button" onClick={() => navigate("/myAccount")} />
         )}
       </RightWrapper>

@@ -17,7 +17,7 @@ import { applyFailModalContent } from "./utilities/applyFailModalContent";
 export function TeamDetail() {
   const navigate = useNavigate();
   const param = useParams();
-  const [isFetchValid, setIsFetchValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isApplyFailModalOn, setIsApplyFailModalOn] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   const [teamDetailData, setTeamDetailData] = useState<TeamDetailType>({
@@ -42,7 +42,7 @@ export function TeamDetail() {
     title: "",
   });
 
-  const onClickApply = () => {
+  const onApply = () => {
     if (teamDetailData.teamStatus === "open" && teamDetailData.teamDetailStatus === "ready") {
       return navigate(`/team/${param.teamId}/apply`);
     }
@@ -55,7 +55,7 @@ export function TeamDetail() {
     (async function () {
       const response = await getTeamDetailApi(Number(param.teamId));
       setTeamDetailData(response);
-      setIsFetchValid(!isFetchValid);
+      setIsLoading(!isLoading);
     })();
   }, [param.teamId]);
 
@@ -77,8 +77,8 @@ export function TeamDetail() {
           </div>
           <h1>{teamDetailData.title}</h1>
         </header>
-        {!isFetchValid && <p>불러오는 중 입니다...</p>}
-        {isFetchValid && (
+        {isLoading && <p>불러오는 중 입니다...</p>}
+        {!isLoading && (
           <div>
             <section>
               <h2>완두콩 소개</h2>
@@ -101,7 +101,7 @@ export function TeamDetail() {
                     isLeader={role.teamLead}
                     careerRangeName={role.careerRangeName}
                     tags={role.tagList}
-                    onClick={onClickApply}
+                    onClick={onApply}
                   />
                 ))}
               </ul>
@@ -111,7 +111,7 @@ export function TeamDetail() {
       </main>
       <SingleButton
         label={teamDetailData.teamStatus === "open" ? "참여하기" : "모집 마감"}
-        onClick={onClickApply}
+        onClick={onApply}
         isActive={teamDetailData.teamStatus === "open"}
       />
     </Container>

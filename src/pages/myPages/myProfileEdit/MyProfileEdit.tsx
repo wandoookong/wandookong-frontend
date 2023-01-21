@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { getUserMyInfoApi } from "../../../api/myPages/myPage/getUserMyInfoApi";
+import { getUserProfileApi } from "../../../api/myPages/myPage/getUserMyInfoApi";
 import MyPageHeader from "../components/myPageHeader";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
-import { useEditProfileReducer } from "./hooks/useEditProfileReducer";
+import { useEditProfileReducer } from "../../../hooks/useEditProfileReducer";
 import { colors } from "../../../styles/colors";
 import { SingleButton } from "../../../components/buttons/singleButton";
 import MyProfileEditPositionSelector from "./components/myProfileEditPositionSelector";
@@ -13,7 +13,7 @@ import _ from "lodash";
 import setUpdateMyProfileApi from "../../../api/myPages/myPage/setUpdateMyProfileApi";
 import InputValidationErrorMessage from "../../signUp/components/inputValidationErrorMessage";
 import { isEmpty } from "../../../@types/utility/typeGuard";
-import FloatingModal from "../../../components/modal/FloatingModal";
+import DialogueModal from "../../../components/modal/DialogueModal";
 
 export default function MyProfileEdit() {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ export default function MyProfileEdit() {
       return setErrorMessage("닉네임을 입력하세요.");
     }
     if (isDifferent) {
-      const response = await setUpdateMyProfileApi(state);
+      await setUpdateMyProfileApi(state);
       window.location.reload();
     }
   };
@@ -52,19 +52,19 @@ export default function MyProfileEdit() {
     navigate("/myAccount");
   };
 
-  const onModalSaveHandler = async () => {
+  const onSaveProfileChangesHandler = async () => {
     if (isEmpty(myInfo.nickname)) {
       return setErrorMessage("닉네임을 입력하세요.");
     }
     if (isDifferent) {
-      const response = await setUpdateMyProfileApi(state);
+      await setUpdateMyProfileApi(state);
       navigate("/myAccount");
     }
   };
 
   useEffect(() => {
     (async function () {
-      const response = await getUserMyInfoApi();
+      const response = await getUserProfileApi();
       const tagList = response.tagList.sort((a, b) => (a < b ? -1 : 1));
       setMyInfo({
         nickname: response.nickname,
@@ -91,14 +91,14 @@ export default function MyProfileEdit() {
   return (
     <>
       {isModalOn && (
-        <FloatingModal
+        <DialogueModal
           title="변경된 사항을 저장하시겠습니까?"
           content="페이지를 나가면 변경사항이 저장되지 않습니다."
-          modalIcon="ExclamationImage"
-          showClose={true}
+          modalIcon="exclamation"
+          showCloseButton={true}
           onClose={onCloseModal}
-          buttonLabel="저장하기"
-          onClickButton={onModalSaveHandler}
+          singleButtonLabel="저장하기"
+          onClickSingleButton={onSaveProfileChangesHandler}
         />
       )}
       <MyPageHeader title="프로필 수정" onClick={onNavigateBack} />
