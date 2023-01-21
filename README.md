@@ -44,6 +44,18 @@
 - Yarn
 - Google Analytics
 
+## 프로젝트 파일 구조
 
-
-
+```
+┌── src    
+│   ├── api
+│   │    ├── config           (axios config를 관리하기 위한 파일)
+│   │    ├── document         (document 상세 페이지 안에서 호출하는 api 로직들)
+│   │    └── searchResult     (search result 페이지 안에서 호출하는 api 로직들)
+│   ├── components            (전역적으로 사용되는 공통 컴포넌트들의 집합)
+│   ├── pages                 (react-router의 라우터랑 직접적으로 연결되는 컴포넌트들의 집합)
+│   │    ├── [domain page]       
+│   │    │     └── components (해당 페이지 안에서만 사용되는 컴포넌트들의 집합)
+│   ├── styles                (각 컴포넌트 내에서 사용되는 공통 스타일 변수들의 집합)
+│   └── utilities             (비즈니스 로직과는 상관없는 유틸성의 함수들 집합)
+```
