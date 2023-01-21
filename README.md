@@ -1,14 +1,14 @@
-<img width="1200" alt="Main Banner" src="https://user-images.githubusercontent.com/26430232/208241004-aad1fbf6-9a30-4c7d-9cce-0776dfb98e3f.png">
+<img width="1200" alt="Main Banner" src="https://user-images.githubusercontent.com/26430232/212911988-18aa282b-b774-4474-857c-205e109ddebe.png">
 
-# 완두콩
 
-해커톤에서 빠르게 팀원을 모아서 프로젝트를 진행하는 것과 같이 완두콩에서 사이드 프로젝트와 팀원을 구할 수 있는 플랫폼입니다. 
+## 완두콩 프로젝트 개요
 
-###### 2022.05.21 ~ | https://wandookongproject.com
+해커톤에서 모르는 사람과 팀이 되어 빠르게 프로젝트를 진행하는 것 처럼 완두콩에서 빠르고 쉽게 사이드 프로젝트와 원하는 팀원을 구할 수 있는 완두콩 플랫폼입니다. 
 
----
+###### 2022.05.21 ~ 2023.01.31
+###### https://wandookongproject.com
 
-### 팀원
+## 팀원
 
 <table>
   <tbody>
@@ -22,18 +22,27 @@
 
 ---
         
-### 사용 기술
+## 사용 기술
 
-##### Font-end
+##### General
 
-- React.js
-- TypeScript
+- Slack
+- Zoom
+- Google Meet
+- Figma
+- Github
+        
+##### Development
+        
+- React
+- Typescript
 - Emotion
-
-##### Back-end
-
-- Nest.js
-- TypeScript
+- Nest
+- ESLint
+- Prettier
+- NPM
+- Yarn
+- Google Analytics
 
 
 
