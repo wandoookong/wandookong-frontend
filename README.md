@@ -48,14 +48,21 @@
 
 ```
 ┌── src    
-│   ├── api
+│   ├── @types
+│   │    ├── dto              (데이터 전송 객체 타입들의 집합)
+│   │    ├── model            ()
+│   │    ├── utility          (유틸성 타입들의 집합)
+│   ├──  api
 │   │    ├── config           (axios config를 관리하기 위한 파일)
-│   │    ├── document         (document 상세 페이지 안에서 호출하는 api 로직들)
-│   │    └── searchResult     (search result 페이지 안에서 호출하는 api 로직들)
+│   │    ├── [domain api]     (도메인별 페이지 안에서 호출하는 api 로직들)
+│   ├── assets                (전역적으로 사용되는 공통 이미지들의 집합)
 │   ├── components            (전역적으로 사용되는 공통 컴포넌트들의 집합)
+│   ├── hooks                 (hook의 집합) 
+│   ├── modules               (비즈니스 로직과는 상관없는 유틸성 함수들의 집합)         
 │   ├── pages                 (react-router의 라우터랑 직접적으로 연결되는 컴포넌트들의 집합)
+│   │    ├── configuration    (각 페이지 별로 인증된 사용자)
 │   │    ├── [domain page]       
 │   │    │     └── components (해당 페이지 안에서만 사용되는 컴포넌트들의 집합)
-│   ├── styles                (각 컴포넌트 내에서 사용되는 공통 스타일 변수들의 집합)
-│   └── utilities             (비즈니스 로직과는 상관없는 유틸성의 함수들 집합)
+│   ├── services              (전역적으로 사용되는 비즈니스 로직을 포함하는 함수들의 집합)         
+│   └── styles                (각 컴포넌트 내에서 사용되는 공통 스타일 변수들의 집합)
 ```
