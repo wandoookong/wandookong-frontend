@@ -30,7 +30,7 @@
 - Zoom
 - Google Meet
 - Figma
-- Github
+- Google Analytics
         
 ##### Development
         
@@ -42,7 +42,7 @@
 - Prettier
 - NPM
 - Yarn
-- Google Analytics
+- Github
 
 ## 프로젝트 파일 구조
 
