@@ -226,7 +226,7 @@ export default function PrivacyTerms() {
 
 const Container = styled.div`
   margin-top: 80px;
-  padding-bottom: 80px;
+  padding: 0 24px 80px;
 
   h1 {
     margin-bottom: 44px;

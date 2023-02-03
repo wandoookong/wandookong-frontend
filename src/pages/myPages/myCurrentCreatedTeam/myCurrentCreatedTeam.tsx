@@ -17,6 +17,9 @@ import qs from "qs";
 import { deleteMyCreatedTeamApi } from "../../../api/myPages/deleteMyCreatedTeamApi";
 import { DeleteFailMyCreateTeam } from "../../../@types/dto/deleteFailMyCreateTeam";
 import { MyCreatedTeamPageApi } from "../../../api/myPages/myCreatedTeam/myCreatedTeamPageApi";
+import { getAcceptedMembersApi } from "../../../api/myPages/myCreatedTeam/getAcceptedMembersApi";
+import { isSuccess } from "../../../modules/httpValidation";
+import { getPendingMembersApi } from "../../../api/myPages/myCreatedTeam/getPendingMembersApi";
 
 export default function MyCurrentCreatedTeam() {
   const location = useLocation();
@@ -78,6 +81,26 @@ export default function MyCurrentCreatedTeam() {
     navigate("/myCreatedTeam?category=accepted");
   };
 
+  const onClickPendingTab = () => {
+    (async function () {
+      const response = await getPendingMembersApi();
+      if (isSuccess(response)) {
+        setPendingMembers(response.data);
+        navigate("/myCreatedTeam?category=pending");
+      }
+    })();
+  };
+
+  const onClickAcceptedTab = () => {
+    (async function () {
+      const response = await getAcceptedMembersApi();
+      if (isSuccess(response)) {
+        setAcceptedMembers(response.data);
+        navigate("/myCreatedTeam?category=accepted");
+      }
+    })();
+  };
+
   useEffect(() => {
     (async function () {
       const response = await MyCreatedTeamPageApi();
@@ -127,10 +150,10 @@ export default function MyCurrentCreatedTeam() {
           <h1>{myCreatedTeam.title}</h1>
         </header>
         <div className="tab-wrapper">
-          <button className="apply-button" onClick={() => navigate("/myCreatedTeam?category=pending")}>
+          <button className="apply-button" onClick={onClickPendingTab}>
             신청자
           </button>
-          <button className="allow-button" onClick={() => navigate("/myCreatedTeam?category=accepted")}>
+          <button className="allow-button" onClick={onClickAcceptedTab}>
             참여자
           </button>
         </div>
