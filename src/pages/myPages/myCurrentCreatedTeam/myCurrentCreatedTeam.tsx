@@ -150,10 +150,10 @@ export default function MyCurrentCreatedTeam() {
           <h1>{myCreatedTeam.title}</h1>
         </header>
         <div className="tab-wrapper">
-          <button className="apply-button" onClick={onClickPendingTab}>
+          <button className="apply-button" onClick={() => navigate("/myCreatedTeam?category=pending")}>
             신청자
           </button>
-          <button className="allow-button" onClick={onClickAcceptedTab}>
+          <button className="allow-button" onClick={() => navigate("/myCreatedTeam?category=accepted")}>
             참여자
           </button>
         </div>
