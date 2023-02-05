@@ -81,24 +81,24 @@ export default function MyCurrentCreatedTeam() {
     navigate("/myCreatedTeam?category=accepted");
   };
 
-  const onClickPendingTab = () => {
-    (async function () {
-      const response = await getPendingMembersApi();
-      if (isSuccess(response)) {
-        setPendingMembers(response.data);
-        navigate("/myCreatedTeam?category=pending");
-      }
-    })();
+  const onClickPendingTab = async () => {
+    const response = await getPendingMembersApi();
+    if (isSuccess(response)) {
+      setPendingMembers(response.data.list);
+      navigate("/myCreatedTeam?category=pending");
+      return;
+    }
+    alert("다시 시도해주세요.");
   };
 
-  const onClickAcceptedTab = () => {
-    (async function () {
-      const response = await getAcceptedMembersApi();
-      if (isSuccess(response)) {
-        setAcceptedMembers(response.data);
-        navigate("/myCreatedTeam?category=accepted");
-      }
-    })();
+  const onClickAcceptedTab = async () => {
+    const response = await getAcceptedMembersApi();
+    if (isSuccess(response)) {
+      setAcceptedMembers(response.data.list);
+      navigate("/myCreatedTeam?category=accepted");
+      return;
+    }
+    alert("다시 시도해주세요.");
   };
 
   useEffect(() => {
@@ -110,7 +110,7 @@ export default function MyCurrentCreatedTeam() {
       setMyCreatedTeam(response.myCreatedTeam);
       setPendingMembers(response.pendingMembers);
       setAcceptedMembers(response.acceptedMembers);
-      setIsLoading(!isLoading);
+      setIsLoading(false);
     })();
   }, []);
 
@@ -150,10 +150,10 @@ export default function MyCurrentCreatedTeam() {
           <h1>{myCreatedTeam.title}</h1>
         </header>
         <div className="tab-wrapper">
-          <button className="apply-button" onClick={() => navigate("/myCreatedTeam?category=pending")}>
+          <button className="apply-button" onClick={onClickPendingTab}>
             신청자
           </button>
-          <button className="allow-button" onClick={() => navigate("/myCreatedTeam?category=accepted")}>
+          <button className="allow-button" onClick={onClickAcceptedTab}>
             참여자
           </button>
         </div>

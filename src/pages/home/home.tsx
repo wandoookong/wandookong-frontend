@@ -45,9 +45,10 @@ export default function Home() {
 
   useEffect(() => {
     (async function () {
+      await setIsLoading(true);
       const response = await getCreateTeamsApi(search);
       setCreatedTeamData(response);
-      setIsLoading(!isLoading);
+      setIsLoading(false);
     })();
   }, [search]);
 
@@ -90,6 +91,17 @@ export default function Home() {
                 <CreatedTeamItem key={index} teamId={data.teamId} createdTeamItemData={data} isDday={true} />
               ))}
           </Container>
+          <Footer>
+            <h1>완두콩</h1>
+            <ul>
+              <li>
+                <button onClick={() => navigate("/terms")}>서비스 이용약관</button>
+              </li>
+              <li>
+                <button onClick={() => navigate("/privacy")}>개인정보처리방침</button>
+              </li>
+            </ul>
+          </Footer>
         </>
       )}
     </>
@@ -131,5 +143,34 @@ const Carousel = styled.div`
     font-weight: bold;
     color: ${colors.white};
     cursor: pointer;
+  }
+`;
+
+const Footer = styled.footer`
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 16px 40px;
+  border-top: 1px solid ${colors.subBrand50};
+
+  h1 {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  ul {
+    display: flex;
+    gap: 18px;
+
+    li {
+      button {
+        padding: 0;
+        border: none;
+        background: none;
+        font-size: 12px;
+        cursor: pointer;
+      }
+    }
   }
 `;

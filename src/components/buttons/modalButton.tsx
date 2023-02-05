@@ -27,6 +27,7 @@ const Container = styled.div`
     width: 100%;
     height: 41px;
     margin-right: 8px;
+    padding: 0;
     border-radius: 8px;
     border: 1px solid ${colors.grey200};
     background: ${colors.grey50};
@@ -40,6 +41,7 @@ const Container = styled.div`
     flex: 1;
     width: 100%;
     height: 41px;
+    padding: 0;
     border-radius: 8px;
     border: 0;
     background: ${colors.brand900};

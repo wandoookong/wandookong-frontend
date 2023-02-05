@@ -18,11 +18,13 @@ export default function PrivacyTerms() {
         <h2>1. 개인정보 수집 및 이용 현황</h2>
         <p>회원가입 시점에 완두콩 이용자로부터 수집하는 개인정보는 아래와 같습니다.</p>
         <table>
-          <tr>
-            <th>가입경로</th>
-            <th>필수 항목</th>
-            <th>보유 및 이용기간</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>가입경로</th>
+              <th>필수 항목</th>
+              <th>보유 및 이용기간</th>
+            </tr>
+          </thead>
           <tbody>
             <tr>
               <td>Google 계정을 연동한 회원가입</td>
@@ -180,11 +182,13 @@ export default function PrivacyTerms() {
         <h2>10. 권익 침해에 대한 구제방법</h2>
         <p>기타 개인정보 침해에 대한 신고나 상담이 필요한 경우에 아래 기관에 문의 가능합니다.</p>
         <table>
-          <tr>
-            <th>문의처</th>
-            <th>연락처</th>
-            <th>홈페이지</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>문의처</th>
+              <th>연락처</th>
+              <th>홈페이지</th>
+            </tr>
+          </thead>
           <tbody>
             <tr>
               <td>개인정보침해 신고센터</td>
