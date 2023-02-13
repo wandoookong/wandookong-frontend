@@ -9,7 +9,7 @@ import { Nullable } from "../../../@types/utility/nullable";
 import Logo from "../../../assets/images/logo.png";
 
 interface Props {
-  onCreateTeamHandler(value?: any): void;
+  onCreateTeamHandler(value?: unknown): void;
 }
 
 export const HomeHeader = ({ onCreateTeamHandler }: Props) => {

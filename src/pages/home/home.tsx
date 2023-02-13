@@ -168,6 +168,7 @@ const Footer = styled.footer`
         padding: 0;
         border: none;
         background: none;
+        color: ${colors.grey900};
         font-size: 12px;
         cursor: pointer;
       }

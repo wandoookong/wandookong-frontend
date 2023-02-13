@@ -13,7 +13,7 @@ import { ACCESS_TOKEN_NAME } from "../../api/config/config";
 export default function SignUp() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState(1);
   const { state, onChangeUserSocialId, onChangeNickname, onChangeRoleMain, onChangeCareerRange, onChangeTagNameList } =
     useSignUpReducer();
   const query = qs.parse(location.search, { ignoreQueryPrefix: true });
