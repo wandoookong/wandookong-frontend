@@ -10,7 +10,6 @@ export const accessTokenAuthenticationInterceptor = {
     });
     console.log(config.url);
     if (isRequiredAccessTokenUrl) {
-      console.log(config.headers);
       const accessTokenFromStorage = localStorage.getItem(ACCESS_TOKEN_NAME);
       if (accessTokenFromStorage) {
         config.headers!.Authorization = `Bearer ${accessTokenFromStorage}`;
