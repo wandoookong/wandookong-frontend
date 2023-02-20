@@ -8,7 +8,6 @@ export const accessTokenAuthenticationInterceptor = {
     const isRequiredAccessTokenUrl = requiredAccessTokenUrlWhiteList.some((whiteListUrl) => {
       return config.url?.includes(whiteListUrl);
     });
-    console.log(config.url);
     if (isRequiredAccessTokenUrl) {
       const accessTokenFromStorage = localStorage.getItem(ACCESS_TOKEN_NAME);
       if (accessTokenFromStorage) {
