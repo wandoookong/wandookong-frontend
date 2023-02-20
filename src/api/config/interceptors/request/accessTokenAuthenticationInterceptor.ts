@@ -12,10 +12,10 @@ export const accessTokenAuthenticationInterceptor = {
       const accessTokenFromStorage = localStorage.getItem(ACCESS_TOKEN_NAME);
       if (accessTokenFromStorage) {
         config.headers!.Authorization = `Bearer ${accessTokenFromStorage}`;
-        return config;
       }
       return (document.location.href = "/login");
     }
+    return config;
   },
   onRejected: (error: unknown) => {
     alert(error);
