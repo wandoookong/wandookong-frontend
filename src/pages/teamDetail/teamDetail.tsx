@@ -83,7 +83,7 @@ export function TeamDetail() {
             <section>
               <h2>완두콩 소개</h2>
               <TeamDescriptionWrapper isDescriptionOpen={isDescriptionOpen}>
-                <p>{teamDetailData.description}</p>
+                <pre>{teamDetailData.description}</pre>
                 <ShowMoreButton
                   isDescriptionOpen={isDescriptionOpen}
                   onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}
@@ -181,12 +181,13 @@ const TeamDescriptionWrapper = styled.div<{ isDescriptionOpen: boolean }>`
   border-radius: 8px;
   box-sizing: border-box;
 
-  p {
+  pre {
     display: -webkit-box;
     margin-bottom: 8px;
     font-size: 14px;
     line-height: 135%;
     color: ${colors.grey900};
+    white-space: pre-wrap;
 
     ${(props) => {
       if (!props.isDescriptionOpen) {
