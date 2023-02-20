@@ -11,7 +11,7 @@ export const accessTokenAuthenticationInterceptor = {
     if (isRequiredAccessTokenUrl) {
       const accessTokenFromStorage = localStorage.getItem(ACCESS_TOKEN_NAME);
       if (accessTokenFromStorage) {
-        config.headers = { Authorization: `Bearer ${accessTokenFromStorage}` };
+        config.headers!.Authorization = `Bearer ${accessTokenFromStorage}`;
       } else {
         return (document.location.href = "/login");
       }
